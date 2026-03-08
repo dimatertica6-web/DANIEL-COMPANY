@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRS Support · deep blue</title>
+    <!-- Современный шрифт Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0B1B2B 0%, #05121E 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            padding: 16px;
+            margin: 0;
+        }
+
+        /* главная карточка — глубокий синий стекло, строже */
+        .support-card {
+            max-width: 1150px;
+            width: 100%;
+            background: rgba(8, 25, 42, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 56px;
+            box-shadow: 0 30px 60px -25px rgba(0, 0, 0, 0.8), 
+                        0 0 0 1px rgba(45, 110, 180, 0.25),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(70, 130, 200, 0.2);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        /* хедер с лого */
+        .card-header {
+            padding: 28px 38px 20px 38px;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            border-bottom: 1px solid rgba(70, 130, 200, 0.25);
+        }
+
+        .sprite-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(145deg, #0E2C42, #062232);
+            border-radius: 40px 40px 28px 28px;
+            box-shadow: 0 15px 20px -15px #000000, 
+                        inset 0 -2px 0 #1A3F5A,
+                        0 0 0 1px rgba(90, 150, 220, 0.3);
+            transition: 0.3s;
+        }
+
+        .sprite-logo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -18px #2A5F8A, 0 0 0 1px rgba(100, 170, 250, 0.5);
+        }
+
+        .sprite-inner {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sprite-bar {
+            width: 10px;
+            height: 30px;
+            background: #4F8FB0;
+            border-radius: 12px 12px 6px 6px;
+            box-shadow: 0 3px 0 #1D4B6E;
+        }
+
+        .sprite-bar:nth-child(2) { height: 44px; background: #70A9D0; width: 12px; }
+        .sprite-bar:nth-child(3) { height: 24px; background: #3A7DA0; }
+        .sprite-bar:nth-child(4) { width: 16px; height: 38px; background: #5F99C0; }
+
+        .sprite-dot {
+            width: 14px;
+            height: 14px;
+            background: #D4A15E;
+            border-radius: 50%;
+            margin-left: 8px;
+            box-shadow: 0 0 0 2px rgba(200, 150, 80, 0.2);
+        }
+
+        .header-title {
+            font-weight: 400;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            color: #CCE2F5;
+            text-transform: uppercase;
+            line-height: 1;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-title span {
+            font-weight: 700;
+            color: #8FC5F0;
+        }
+
+        .badge-support {
+            margin-left: auto;
+            background: rgba(0, 35, 65, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 400;
+            border: 1px solid rgba(80, 150, 230, 0.3);
+            color: #C0DCF5;
+            box-shadow: 0 8px 15px -10px #000;
+            letter-spacing: 0.5px;
+        }
+
+        /* основной контейнер */
+        .columns {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 32px 36px 28px 36px;
+            gap: 32px;
+        }
+
+        .left-chat {
+            flex: 2;
+            min-width: 300px;
+            background: rgba(6, 25, 45, 0.6);
+            border-radius: 48px;
+            padding: 26px 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.03), 
+                        0 15px 25px -20px #000;
+            border: 1px solid rgba(70, 130, 200, 0.25);
+        }
+
+        .right-faq {
+            flex: 1.2;
+            min-width: 250px;
+            background: rgba(6, 22, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 48px;
+            padding: 28px 24px;
+            border: 1px solid rgba(70, 130, 200, 0.25);
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.03), 
+                        0 15px 20px -22px #000;
+        }
+
+        /* заголовки */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.3rem;
+            margin-bottom: 28px;
+            color: #B8D9F2;
+            border-left: 5px solid #2F6FA0;
+            padding-left: 22px;
+            text-shadow: 0 1px 3px #000;
+        }
+
+        .section-title .sprite-mini {
+            display: flex;
+            gap: 6px;
+        }
+        .sprite-mini div {
+            width: 9px;
+            height: 9px;
+            background: #4F8FB0;
+            border-radius: 3px;
+            transform: rotate(45deg);
+        }
+
+        /* чат */
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 30px;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: #1F4970 #0B1C2E;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: #0B1C2E;
+            border-radius: 20px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #1F4970;
+            border-radius: 20px;
+            border: 1px solid #2A5F88;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-end;
+            gap: 14px;
+            animation: messageIn 0.4s ease;
+        }
+
+        @keyframes messageIn {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .avatar-sprite {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(145deg, #12415F, #082D45);
+            border-radius: 30px 30px 30px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 15px -12px #000, 
+                        inset -1px -1px 0 #1D4F72,
+                        0 0 0 1px rgba(90, 150, 220, 0.3);
+        }
+
+        .avatar-sprite.support {
+            background: linear-gradient(145deg, #0F3E5A, #0A2A40);
+        }
+        .avatar-sprite.user {
+            background: linear-gradient(145deg, #194A68, #0C314A);
+        }
+
+        .avatar-sprite .sprite-head {
+            display: flex;
+            gap: 5px;
+        }
+        .avatar-sprite .sprite-head div {
+            width: 8px;
+            height: 8px;
+            background: #7FB0D0;
+            border-radius: 10px;
+        }
+
+        .bubble {
+            background: rgba(8, 35, 60, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 16px 22px;
+            border-radius: 32px 32px 32px 12px;
+            max-width: 300px;
+            box-shadow: 0 15px 20px -20px #000, 0 1px 0 #1D4F7A inset;
+            font-weight: 300;
+            line-height: 1.5;
+            font-size: 1rem;
+            border: 1px solid rgba(80, 140, 210, 0.3);
+            color: #D0E6FA;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+        .message.user .bubble {
+            background: rgba(12, 45, 75, 0.9);
+            border-radius: 32px 32px 12px 32px;
+            border-color: rgba(80, 150, 230, 0.4);
+            box-shadow: 0 15px 20px -20px #000, 0 1px 0 #2366A0 inset;
+        }
+
+        /* поле ввода */
+        .chat-input-area {
+            display: flex;
+            gap: 16px;
+            margin-top: 14px;
+            align-items: center;
+            background: rgba(5, 28, 50, 0.8);
+            border-radius: 70px;
+            padding: 8px 8px 8px 28px;
+            border: 1px solid rgba(70, 130, 200, 0.3);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 20px -20px #000;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            padding: 15px 0;
+            outline: none;
+            color: #D0E6FA;
+        }
+        .chat-input-area input::placeholder {
+            color: #4F779A;
+            font-weight: 300;
+        }
+
+        .send-btn {
+            background: linear-gradient(145deg, #1C4F78, #0D3452);
+            border: none;
+            border-radius: 60px;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 10px 15px -15px #000, inset 0 -1px 0 #1F5A88;
+        }
+        .send-btn:hover {
+            background: #2369A0;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px #2F6FA0;
+        }
+
+        .sprite-send {
+            width: 28px;
+            height: 28px;
+            background: transparent;
+            position: relative;
+        }
+        .sprite-send::before,
+        .sprite-send::after {
+            content: '';
+            position: absolute;
+            background: #B0D4F0;
+            border-radius: 4px;
+        }
+        .sprite-send::before {
+            width: 20px;
+            height: 5px;
+            top: 11px;
+            left: 0;
+            transform: rotate(42deg);
+            box-shadow: 8px -7px 0 #B0D4F0;
+        }
+        .sprite-send::after {
+            width: 22px;
+            height: 5px;
+            top: 16px;
+            left: 2px;
+            transform: rotate(-42deg);
+            box-shadow: 7px 7px 0 #B0D4F0;
+        }
+
+        /* FAQ */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .faq-item {
+            background: rgba(8, 35, 60, 0.6);
+            backdrop-filter: blur(6px);
+            padding: 18px 22px;
+            border-radius: 38px;
+            border: 1px solid rgba(70, 130, 200, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -20px #000;
+        }
+        .faq-item:hover {
+            background: rgba(12, 48, 80, 0.7);
+            transform: translateY(-2px);
+            border-color: #2F6FA0;
+        }
+        .faq-question {
+            font-weight: 500;
+            font-size: 1.15rem;
+            color: #C0DCF5;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .faq-question .sprite-faq {
+            width: 24px;
+            height: 24px;
+            background: #1F4F78;
+            border-radius: 14px 4px 14px 4px;
+            transition: 0.2s;
+        }
+        .faq-item:hover .sprite-faq {
+            background: #2F6FA0;
+            transform: rotate(5deg) scale(1.05);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            font-weight: 300;
+            font-size: 0.96rem;
+            color: #A0C2E0;
+            padding-left: 40px;
+            transition: max-height 0.3s ease-out;
+            border-left: 2px dashed #2F6FA0;
+            margin-top: 0;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 100px;
+            margin-top: 16px;
+        }
+
+        /* контакт админа */
+        .admin-contact {
+            background: rgba(8, 38, 65, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 22px 22px 18px 22px;
+            border: 1px solid rgba(70, 130, 200, 0.3);
+            margin-top: 28px;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            transition: 0.3s;
+            box-shadow: 0 15px 20px -22px #000;
+        }
+        .admin-contact:hover {
+            background: rgba(12, 52, 88, 0.8);
+            border-color: #3A7DB0;
+        }
+
+        .telegram-sprite {
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(145deg, #1C5A88, #0F3E62);
+            border-radius: 40px 12px 40px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 0 #093452, 0 0 0 1px #60A0D0;
+        }
+        .telegram-sprite .sprite-plane {
+            width: 0;
+            height: 0;
+            border-left: 16px solid #E0F0FF;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            transform: rotate(22deg);
+            margin-left: 9px;
+            filter: drop-shadow(0 2px 2px #000);
+        }
+
+        .admin-text {
+            font-weight: 350;
+            color: #B0D0EA;
+        }
+        .admin-nick {
+            font-weight: 600;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+            color: #80B8E0;
+            text-decoration: none;
+            border-bottom: 2px dotted #2F6FA0;
+            transition: 0.2s;
+        }
+        .admin-nick:hover {
+            color: #B0D8FF;
+            border-bottom-color: #80B8E0;
+        }
+
+        .footer-note {
+            padding: 18px 40px 24px 40px;
+            font-weight: 300;
+            color: #6F95B5;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 32px;
+            border-top: 1px solid rgba(70, 130, 200, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="support-card">
+        <div class="card-header">
+            <div class="sprite-logo">
+                <div class="sprite-inner">
+                    <div class="sprite-bar"></div>
+                    <div class="sprite-bar"></div>
+                    <div class="sprite-bar"></div>
+                    <div class="sprite-bar"></div>
+                    <div class="sprite-dot"></div>
+                </div>
+            </div>
+            <div class="header-title">
+                <span>SRS</span> support
+            </div>
+            <div class="badge-support">
+                online 24/7
+            </div>
+        </div>
+
+        <div class="columns">
+            <!-- ЧАТ -->
+            <div class="left-chat">
+                <div class="section-title">
+                    <div class="sprite-mini">
+                        <div></div><div></div><div></div>
+                    </div>
+                    Чат с поддержкой
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message support">
+                        <div class="avatar-sprite support">
+                            <div class="sprite-head">
+                                <div></div><div></div><div></div>
+                            </div>
+                        </div>
+                        <div class="bubble">Привет! Я поддержка SRS. Чем могу помочь?</div>
+                    </div>
+                    <div class="message user">
+                        <div class="avatar-sprite user">
+                            <div class="sprite-head">
+                                <div></div><div></div><div></div>
+                            </div>
+                        </div>
+                        <div class="bubble">Не могу зайти в личный кабинет</div>
+                    </div>
+                    <div class="message support">
+                        <div class="avatar-sprite support">
+                            <div class="sprite-head">
+                                <div></div><div></div><div></div>
+                            </div>
+                        </div>
+                        <div class="bubble">Попробуйте сбросить пароль. Если не поможет — напишите, передам администратору.</div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" placeholder="ваше сообщение..." id="messageInput">
+                    <button class="send-btn" id="sendMsgBtn">
+                        <div class="sprite-send"></div>
+                    </button>
+                </div>
+                <p style="font-size: 0.8rem; margin-top: 10px; padding-left: 16px; opacity: 0.7; color: #7FA5C5;">support ответит в течение пары минут</p>
+            </div>
+
+            <!-- FAQ -->
+            <div class="right-faq">
+                <div class="section-title">
+                    <div class="sprite-mini">
+                        <div></div><div></div><div></div>
+                    </div>
+                    Часто задаваемые
+                </div>
+
+                <div class="faq-list">
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            <div class="sprite-faq"></div> 
+                            Как восстановить доступ?
+                        </div>
+                        <div class="faq-answer">
+                            Нажмите «забыли пароль» на странице входа. Если не помогает — обратитесь к @Erik_kripke
+                        </div>
+                    </div>
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            <div class="sprite-faq"></div> 
+                            Где скачать SRS?
+                        </div>
+                        <div class="faq-answer">
+                            Официальный сайт: srs.help/download (или спросите у админа)
+                        </div>
+                    </div>
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            <div class="sprite-faq"></div> 
+                            Не приходит код?
+                        </div>
+                        <div class="faq-answer">
+                            Проверьте спам или напишите в Telegram @Erik_kripke — админ поможет.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-contact">
+                    <div class="telegram-sprite">
+                        <div class="sprite-plane"></div>
+                    </div>
+                    <div class="admin-text">
+                        <div style="font-weight:300;">связь с админом:</div>
+                        <a href="https://t.me/Erik_kripke" target="_blank" class="admin-nick">@Erik_kripke</a>
+                    </div>
+                </div>
+
+                <div style="margin-top: 26px; display: flex; gap: 12px; align-items: center; opacity: 0.7;">
+                    <div style="width: 9px; height: 9px; background: #2F6FA0; border-radius: 3px; rotate: 45deg;"></div>
+                    <div style="width: 9px; height: 9px; background: #2F6FA0; border-radius: 3px; rotate: 45deg;"></div>
+                    <div style="width: 9px; height: 9px; background: #2F6FA0; border-radius: 3px; rotate: 45deg;"></div>
+                    <span style="font-weight:300; font-size:0.95rem; color: #8FB5D5;">пиши в телеграм — быстрый ответ</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span>⚡ интеграция с Telegram / SRS API</span>
+            <span style="margin-left: auto;">✉ все сообщения в чате модерируются</span>
+        </div>
+    </div>
+
+    <script>
+        function toggleFaq(element) {
+            element.classList.toggle('open');
+        }
+
+        const chatMessages = document.getElementById('chatMessages');
+        const sendBtn = document.getElementById('sendMsgBtn');
+        const msgInput = document.getElementById('messageInput');
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = `avatar-sprite ${sender === 'support' ? 'support' : 'user'}`;
+            avatarDiv.innerHTML = '<div class="sprite-head"><div></div><div></div><div></div></div>';
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            bubbleDiv.innerText = text;
+
+            if (sender === 'user') {
+                messageDiv.appendChild(bubbleDiv);
+                messageDiv.appendChild(avatarDiv);
+            } else {
+                messageDiv.appendChild(avatarDiv);
+                messageDiv.appendChild(bubbleDiv);
+            }
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleUserMessage() {
+            const userText = msgInput.value.trim();
+            if (userText === '') return;
+
+            addMessage(userText, 'user');
+            msgInput.value = '';
+
+            setTimeout(() => {
+                const replies = [
+                    "Спасибо за сообщение, мы уже смотрим.",
+                    "Передал ваш вопрос администратору.",
+                    "Можете уточнить детали?",
+                    "Попробуйте перезагрузить страницу.",
+                    "Я помогу, опишите проблему подробнее.",
+                    "Свяжусь с @Erik_kripke если нужно.",
+                ];
+                const random = Math.floor(Math.random() * replies.length);
+                addMessage(replies[random], 'support');
+            }, 700);
+        }
+
+        sendBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleUserMessage();
+        });
+
+        msgInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleUserMessage();
+            }
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                addMessage("Кстати, все вопросы админу можно задать в телеграм @Erik_kripke", 'support');
+            }, 1800);
+        });
+    </script>
+</body>
+</html>
