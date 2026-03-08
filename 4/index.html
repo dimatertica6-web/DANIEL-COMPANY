@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат кодеров · синяя эстетика</title>
+    <!-- Спокойный шрифт Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (иконки) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind (только для сетки) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #0B1D2E, #0C2538);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #E0EFFA;
+        }
+
+        /* основной контейнер — синий стекло */
+        .rules-container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(10, 30, 48, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 56px;
+            box-shadow: 0 30px 60px -25px #000000, 
+                        0 0 0 1px rgba(50, 110, 180, 0.3),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(70, 130, 200, 0.2);
+            overflow: hidden;
+            animation: fadeScale 0.5s ease-out;
+        }
+
+        @keyframes fadeScale {
+            0% { opacity: 0; transform: scale(0.98) translateY(8px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* шапка — глубокий синий градиент */
+        .header {
+            background: linear-gradient(135deg, #0E2A40, #0B1F30);
+            padding: 40px 48px;
+            border-bottom: 2px solid rgba(60, 120, 190, 0.25);
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header-icon {
+            background: #1D4465;
+            width: 80px;
+            height: 80px;
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #B8D9F5;
+            font-size: 3rem;
+            box-shadow: 0 8px 15px -12px #000, 0 0 0 1px rgba(70, 130, 200, 0.3);
+        }
+
+        .header-text h1 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #C0E0F5;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-text p {
+            font-size: 1.2rem;
+            color: #9FB8D5;
+            margin-top: 8px;
+        }
+
+        .badge-list {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #1A3C58;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #C0DCF5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #2F6090;
+            backdrop-filter: blur(4px);
+        }
+
+        .badge i {
+            color: #70A9D0;
+        }
+
+        /* основной контент */
+        .content {
+            padding: 48px;
+        }
+
+        /* секция правил */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #C0E0F5;
+            margin-bottom: 32px;
+            border-left: 6px solid #2F6FA0;
+            padding-left: 24px;
+            text-shadow: 0 1px 3px #000;
+        }
+
+        .section-title i {
+            background: #1A4465;
+            padding: 14px;
+            border-radius: 24px;
+            color: #70A9D0;
+            font-size: 1.8rem;
+            box-shadow: 0 0 0 1px rgba(70, 130, 200, 0.3);
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .rule-card {
+            background: rgba(12, 38, 60, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(60, 120, 190, 0.25);
+            border-radius: 40px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            box-shadow: 0 12px 25px -20px #000000;
+        }
+
+        .rule-card:hover {
+            transform: translateY(-5px);
+            border-color: #2F6FA0;
+            background: rgba(18, 48, 78, 0.8);
+            box-shadow: 0 20px 30px -18px #1A4B78;
+        }
+
+        .rule-icon {
+            background: #1A4F78;
+            width: 60px;
+            height: 60px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #B0D0EA;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 0 #0D3550;
+        }
+
+        .rule-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #C8E0F5;
+            margin-bottom: 12px;
+        }
+
+        .rule-card p {
+            color: #B0C8E5;
+            line-height: 1.5;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .rule-tag {
+            display: inline-block;
+            background: #1F4F78;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #C0E0F5;
+            border: 1px solid #2F6FA0;
+        }
+
+        /* блок скачивания */
+        .download-block {
+            background: rgba(10, 40, 65, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 70px;
+            padding: 32px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin: 40px 0;
+            border: 2px solid rgba(70, 130, 200, 0.3);
+            box-shadow: 0 15px 25px -20px #000;
+        }
+
+        .download-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .download-left i {
+            font-size: 3rem;
+            color: #A0C8E8;
+            background: #1A4F78;
+            padding: 18px;
+            border-radius: 40px;
+            box-shadow: 0 5px 0 #0D3A58;
+        }
+
+        .download-left span {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #C0E0F5;
+        }
+
+        .download-btn {
+            background: #1A4F78;
+            color: white;
+            padding: 18px 48px;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #2F6FA0;
+            box-shadow: 0 8px 15px -15px #000;
+        }
+
+        .download-btn:hover {
+            background: #2369A0;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 20px -15px #1A4F78;
+        }
+
+        /* карточка модератора */
+        .moder-card {
+            background: rgba(12, 40, 65, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 56px;
+            padding: 36px;
+            margin: 40px 0;
+            border: 2px solid rgba(70, 130, 200, 0.3);
+        }
+
+        .moder-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #C0E0F5;
+            margin-bottom: 28px;
+        }
+
+        .moder-header i {
+            background: #1A507A;
+            padding: 16px;
+            border-radius: 32px;
+            color: #80B8E0;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .step {
+            background: #1A4165;
+            border: 1.5px solid #2F6FA0;
+            border-radius: 60px;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 1.1rem;
+            color: #D0E8FA;
+            backdrop-filter: blur(4px);
+        }
+
+        .step-num {
+            background: #1A4F78;
+            width: 36px;
+            height: 36px;
+            border-radius: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #E0F0FF;
+            border: 1px solid #2F6FA0;
+        }
+
+        .moder-note {
+            background: #1A4F78;
+            border-radius: 40px;
+            padding: 18px 28px;
+            color: #D0E8FA;
+            border: 1px solid #2F6FA0;
+        }
+
+        /* ссылки */
+        .links-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+            align-items: center;
+        }
+
+        .chat-link {
+            background: #1A4B70;
+            border: 1.5px solid #2F6FA0;
+            border-radius: 70px;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: #D0E8FA;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            flex: 1 1 300px;
+            backdrop-filter: blur(8px);
+        }
+
+        .chat-link:hover {
+            background: #1F6090;
+            border-color: #3A7DB0;
+        }
+
+        .admin-link {
+            background: #1A4B70;
+            border: 1.5px solid #2F6FA0;
+            border-radius: 70px;
+            padding: 16px 36px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            color: #D0E8FA;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+        }
+
+        .admin-link i {
+            color: #80B8E0;
+            font-size: 1.6rem;
+        }
+
+        .admin-link:hover {
+            background: #1F6090;
+            border-color: #3A7DB0;
+        }
+
+        /* подвал */
+        .footer {
+            background: #0F263A;
+            padding: 24px;
+            text-align: center;
+            color: #9FB8D5;
+            border-top: 2px solid rgba(70, 130, 200, 0.2);
+            font-weight: 400;
+        }
+
+        /* дополнительные акценты */
+        .text-blue-light {
+            color: #C0DCF5;
+        }
+        
+        i.fa-regular, i.fa-brands {
+            filter: drop-shadow(0 1px 2px #000);
+        }
+    </style>
+</head>
+<body>
+    <div class="rules-container">
+        <!-- шапка в синих тонах -->
+        <div class="header">
+            <div class="header-title">
+                <div class="header-icon">
+                    <i class="fa-regular fa-message"></i>
+                </div>
+                <div class="header-text">
+                    <h1>Чат кодеров</h1>
+                    <p>IT-сообщество · Синий кодекс</p>
+                </div>
+            </div>
+            <div class="badge-list">
+                <div class="badge"><i class="fa-regular fa-shield"></i> 8 модераторов</div>
+                <div class="badge"><i class="fa-regular fa-clock"></i> 24/7</div>
+                <div class="badge"><i class="fa-regular fa-star"></i> открытый набор</div>
+            </div>
+        </div>
+
+        <!-- основной контент -->
+        <div class="content">
+            <!-- Правила чата -->
+            <div class="section-title">
+                <i class="fa-regular fa-list"></i>
+                <span>Правила чата — 7 основных пунктов</span>
+            </div>
+
+            <!-- сетка правил -->
+            <div class="rules-grid">
+                <!-- 1 -->
+                <div class="rule-card">
+                    <div class="rule-icon"><i class="fa-regular fa-hand-peace"></i></div>
+                    <h3>Уважение</h3>
+                    <p>Никаких оскорблений, унижений, троллинга. Любой конфликт решаем в личке. Мы — комьюнити профессионалов.</p>
+                    <span class="rule-tag">#respect</span>
+                </div>
+                <!-- 2 -->
+                <div class="rule-card">
+                    <div class="rule-icon"><i class="fa-regular fa-code"></i></div>
+                    <h3>Тематика — IT</h3>
+                    <p>Обсуждаем разработку, алгоритмы, инструменты. Оффтоп только в специальный топик.</p>
+                    <span class="rule-tag">#code</span>
+                </div>
+                <!-- 3 -->
+                <div class="rule-card">
+                    <div class="rule-icon"><i class="fa-regular fa-message-slash"></i></div>
+                    <h3>Нет флуду</h3>
+                    <p>Запрещён спам, пустые сообщения, капс, избыточные emoji. Пишем по делу.</p>
+                    <span class="rule-tag">#noflood</span>
+                </div>
+                <!-- 4 -->
+                <div class="rule-card">
+                    <div class="rule-icon"><i class="fa-regular fa-lock"></i></div>
+                    <h3>Приватность</h3>
+                    <p>Не публикуем личные данные других участников без согласия.</p>
+                    <span class="rule-tag">#privacy</span>
+                </div>
+                <!-- 5 -->
+                <div class="rule-card">
+                    <div class="rule-icon"><i class="fa-regular fa-ban"></i></div>
+                    <h3>Без рекламы</h3>
+                    <p>Продвижение каналов, курсов, услуг только после согласования с админом.</p>
+                    <span class="rule-tag">#noads</span>
+                </div>
+                <!-- 6 -->
+                <div class="rule-card">
+                    <div class="rule-icon"><i class="fa-regular fa-flag"></i></div>
+                    <h3>Репорты</h3>
+                    <p>Увидел нарушение — отметь @Erik_kripke или модератора. Не устраивай разборки.</p>
+                    <span class="rule-tag">#report</span>
+                </div>
+                <!-- 7 -->
+                <div class="rule-card">
+                    <div class="rule-icon"><i class="fa-regular fa-scale-balanced"></i></div>
+                    <h3>Слушай модера</h3>
+                    <p>Решение модератора не обсуждается в чате. Споры — только с админом в личке.</p>
+                    <span class="rule-tag">#trust</span>
+                </div>
+            </div>
+
+            <!-- БЛОК СКАЧИВАНИЯ ПРАВИЛ -->
+            <div class="download-block">
+                <div class="download-left">
+                    <i class="fa-regular fa-file-lines"></i>
+                    <span>Скачать правила</span>
+                </div>
+                <a id="downloadBtn" class="download-btn" download="chat_coders_rules.txt" href="#">
+                    <i class="fa-regular fa-arrow-down"></i> .txt
+                </a>
+            </div>
+
+            <!-- КАК СТАТЬ МОДЕРАТОРОМ -->
+            <div class="moder-card">
+                <div class="moder-header">
+                    <i class="fa-regular fa-user-plus"></i>
+                    <span>Стать модератором</span>
+                </div>
+                <div class="steps">
+                    <div class="step"><span class="step-num">1</span>Активность 2+ недели</div>
+                    <div class="step"><span class="step-num">2</span>Знание правил</div>
+                    <div class="step"><span class="step-num">3</span>Помощь новичкам</div>
+                    <div class="step"><span class="step-num">4</span>Подача @Erik_kripke</div>
+                </div>
+                <div class="moder-note">
+                    <i class="fa-regular fa-gem" style="margin-right: 12px;"></i> Модераторы получают доступ в закрытый чат и бонусы от комьюнити.
+                </div>
+            </div>
+
+            <!-- ССЫЛКИ (ЧАТ И АДМИН) -->
+            <div class="links-panel">
+                <a href="https://t.me/chat_progerov" target="_blank" class="chat-link">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Чат кодеров</span>
+                    <span style="font-size: 0.9rem; color: #9FB8D5;">t.me/chat_progerov</span>
+                </a>
+                <a href="https://t.me/Erik_kripke" target="_blank" class="admin-link">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>Админ @Erik_kripke</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- подвал -->
+        <div class="footer">
+            <i class="fa-regular fa-copyright"></i> Чат кодеров · правила действуют для всех
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Текст правил для скачивания
+            const rulesText = `ЧАТ КОДЕРОВ — ОФИЦИАЛЬНЫЕ ПРАВИЛА (СИНЯЯ ВЕРСИЯ)
+
+1. УВАЖЕНИЕ
+Никаких оскорблений, унижений, троллинга. Любой конфликт решаем в личке. Мы — комьюнити профессионалов.
+
+2. ТЕМАТИКА — IT
+Обсуждаем разработку, алгоритмы, инструменты, карьеру. Оффтоп только в специальный топик.
+
+3. НЕТ ФЛУДУ
+Запрещён спам, пустые сообщения, капс, избыточные emoji. Пишем по делу.
+
+4. ПРИВАТНОСТЬ
+Не публикуем личные данные других участников без согласия.
+
+5. БЕЗ РЕКЛАМЫ
+Продвижение каналов, курсов, услуг только после согласования с админом.
+
+6. РЕПОРТЫ
+Увидел нарушение — отметь @Erik_kripke или модератора. Не устраивай разборки.
+
+7. СЛУШАЙ МОДЕРА
+Решение модератора не обсуждается в чате. Споры — только с админом в личке.
+
+---
+Ссылка на чат: https://t.me/chat_progerov
+Админ: @Erik_kripke
+Версия: Deep Blue / 2026
+`;
+
+            const blob = new Blob([rulesText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            document.getElementById('downloadBtn').href = url;
+        })();
+    </script>
+</body>
+</html>

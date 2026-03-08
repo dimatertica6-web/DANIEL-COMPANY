@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRS Маркет · синий фидбэк</title>
+    <!-- Современный шрифт Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(145deg, #0A1F2F, #061725);
+            color: #E0F0FF;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* главная карточка — синий стекло */
+        .srs-card {
+            max-width: 440px;
+            width: 100%;
+            background: rgba(8, 28, 48, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 48px;
+            box-shadow: 0 30px 60px -25px #000000, 
+                        0 0 0 1px rgba(50, 110, 180, 0.3),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(70, 130, 200, 0.25);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            animation: blueFloat 0.5s ease-out;
+        }
+
+        .srs-card:hover {
+            box-shadow: 0 35px 65px -25px #1A4B78, 0 0 0 1px rgba(80, 140, 220, 0.3);
+        }
+
+        @keyframes blueFloat {
+            0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* шапка с синим градиентом */
+        .srs-header {
+            background: linear-gradient(135deg, #0F2C45 0%, #0A1F38 100%);
+            padding: 28px 24px 32px 24px;
+            color: white;
+            position: relative;
+            isolation: isolate;
+            border-bottom: 1px solid rgba(70, 130, 200, 0.3);
+        }
+
+        .srs-header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 100% 0%, rgba(30, 100, 180, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .srs-title {
+            font-weight: 600;
+            font-size: 2.2rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        .srs-title i {
+            font-size: 2rem;
+            background: rgba(0, 70, 130, 0.5);
+            width: 48px;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(80, 140, 210, 0.4);
+        }
+
+        .srs-badge {
+            background: rgba(0, 45, 85, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 300;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            border: 1px solid rgba(80, 140, 210, 0.3);
+            color: #C0DCF5;
+        }
+
+        .srs-badge i {
+            font-size: 1rem;
+            color: #80B8E0;
+        }
+
+        /* тело чата */
+        .srs-chat-body {
+            padding: 24px;
+            background: transparent;
+        }
+
+        /* сообщения */
+        .chat-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 6px;
+            margin-bottom: 24px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #1A3F5A;
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #2F6FA0;
+            border-radius: 10px;
+            border: 1px solid #3A7DB0;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            max-width: 85%;
+            animation: messageGlide 0.3s ease;
+        }
+
+        @keyframes messageGlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: #1A4F78;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #C0E0F5;
+            box-shadow: 0 5px 10px -8px #000, 0 0 0 1px rgba(70, 130, 200, 0.3);
+            flex-shrink: 0;
+        }
+
+        .avatar.admin {
+            background: #1A4F78;
+            color: white;
+            box-shadow: 0 0 0 1px #2F6FA0;
+        }
+
+        .bubble {
+            padding: 14px 18px;
+            border-radius: 24px;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.4;
+            box-shadow: 0 8px 15px -15px #000;
+            word-break: break-word;
+            backdrop-filter: blur(4px);
+        }
+
+        .message.user .bubble {
+            background: #1A4F78;
+            color: white;
+            border-bottom-right-radius: 4px;
+            border: 1px solid #2F6FA0;
+        }
+
+        .message.admin .bubble {
+            background: rgba(12, 38, 60, 0.9);
+            backdrop-filter: blur(4px);
+            color: #D0E8FA;
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(80, 140, 210, 0.4);
+        }
+
+        .timestamp {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 4px;
+            text-align: right;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+            color: #9FB8D5;
+        }
+
+        /* поле ввода */
+        .srs-input-group {
+            display: flex;
+            gap: 12px;
+            background: rgba(8, 35, 60, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 6px 6px 6px 20px;
+            border: 1px solid rgba(70, 130, 200, 0.3);
+            transition: all 0.2s;
+        }
+
+        .srs-input-group:focus-within {
+            border-color: #2F6FA0;
+            background: #0A3250;
+        }
+
+        .srs-input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 14px 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            outline: none;
+            color: #E0F0FF;
+        }
+
+        .srs-input-group input::placeholder {
+            color: #4F779A;
+            font-weight: 300;
+        }
+
+        .srs-input-group button {
+            background: #1A4F78;
+            border: none;
+            width: 54px;
+            height: 54px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 12px -12px #000;
+            border: 1px solid #2F6FA0;
+        }
+
+        .srs-input-group button:hover {
+            background: #2369A0;
+            transform: scale(1.02);
+            box-shadow: 0 0 12px #1A4F78;
+        }
+
+        /* блок фидбэка */
+        .srs-feedback {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 2px dashed rgba(70, 130, 200, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(8, 35, 60, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            padding: 14px 20px;
+            transition: all 0.2s;
+            border: 1px solid rgba(70, 130, 200, 0.3);
+        }
+
+        .srs-feedback:hover {
+            background: rgba(12, 45, 75, 0.7);
+            border-color: #2F6FA0;
+        }
+
+        .feedback-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 400;
+            color: #C0DCF5;
+        }
+
+        .feedback-text i {
+            font-size: 1.6rem;
+            color: #80B8E0;
+            background: #1A4F78;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            border: 1px solid #2F6FA0;
+        }
+
+        .tg-link {
+            background: #0A2A45;
+            color: #D0E8FA;
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border: 1px solid #2F6FA0;
+        }
+
+        .tg-link i {
+            font-size: 1.2rem;
+            color: #80B8E0;
+        }
+
+        .tg-link:hover {
+            background: #1A4F78;
+            border-color: #3A7DB0;
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .tg-link:hover i {
+            color: white;
+        }
+
+        /* индикатор админа */
+        .admin-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #9FB8D5;
+            margin-top: 8px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #3A9B5E;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.8s infinite;
+            box-shadow: 0 0 5px #3A9B5E;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* финальный акцент */
+        .srs-footer-note {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: #6F95B5;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="srs-card">
+        <!-- шапка в синих тонах -->
+        <div class="srs-header">
+            <div class="srs-title">
+                <i class="fa-regular fa-comment-dots"></i>
+                <span>SRS Чат</span>
+            </div>
+            <div class="srs-badge">
+                <i class="fa-regular fa-message"></i>
+                <span>Фидбэк для @Erik_kripke</span>
+            </div>
+            <div class="admin-status">
+                <span class="status-dot"></span>
+                <span>Админ @Erik_kripke онлайн</span>
+            </div>
+        </div>
+
+        <!-- тело: чат + фидбэк -->
+        <div class="srs-chat-body">
+            <!-- окно сообщений -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- приветственное сообщение от админа -->
+                <div class="message admin">
+                    <div class="avatar admin"><i class="fa-regular fa-user"></i></div>
+                    <div class="bubble">
+                        Привет! Я Эрик, админ SRS. Пиши сюда — отвечу быстро 😉
+                        <div class="timestamp">12:00</div>
+                    </div>
+                </div>
+                <!-- тестовое сообщение от пользователя -->
+                <div class="message user">
+                    <div class="avatar"><i class="fa-regular fa-face-smile"></i></div>
+                    <div class="bubble">
+                        Есть предложение по улучшению!
+                        <div class="timestamp">12:05</div>
+                    </div>
+                </div>
+                <!-- ответ админа -->
+                <div class="message admin">
+                    <div class="avatar admin"><i class="fa-regular fa-user"></i></div>
+                    <div class="bubble">
+                        Слушаю, рассказывай)
+                        <div class="timestamp">12:06</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- поле ввода -->
+            <div class="srs-input-group">
+                <input type="text" id="messageInput" placeholder="Твое сообщение...">
+                <button id="sendBtn"><i class="fa-regular fa-paper-plane"></i></button>
+            </div>
+
+            <!-- БЛОК ФИДБЭКА -->
+            <div class="srs-feedback">
+                <div class="feedback-text">
+                    <i class="fa-regular fa-star"></i>
+                    <span>Связь с админом</span>
+                </div>
+                <a href="https://t.me/Erik_kripke" target="_blank" class="tg-link">
+                    <i class="fa-brands fa-telegram"></i> @Erik_kripke
+                </a>
+            </div>
+
+            <div class="srs-footer-note">
+                <i class="fa-regular fa-heart"></i> оставляй фидбэк, поможем сделать SRS лучше
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const inputField = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = `avatar ${sender === 'admin' ? 'admin' : ''}`;
+                avatarDiv.innerHTML = sender === 'admin' ? '<i class="fa-regular fa-user"></i>' : '<i class="fa-regular fa-face-smile"></i>';
+
+                const bubbleDiv = document.createElement('div');
+                bubbleDiv.className = 'bubble';
+
+                const textDiv = document.createElement('div');
+                textDiv.textContent = text;
+
+                const timeDiv = document.createElement('div');
+                timeDiv.className = 'timestamp';
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                timeDiv.textContent = `${hours}:${minutes}`;
+
+                bubbleDiv.appendChild(textDiv);
+                bubbleDiv.appendChild(timeDiv);
+
+                messageDiv.appendChild(avatarDiv);
+                messageDiv.appendChild(bubbleDiv);
+
+                messagesContainer.appendChild(messageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+
+            function handleSend() {
+                const text = inputField.value.trim();
+                if (text === '') return;
+
+                addMessage(text, 'user');
+                inputField.value = '';
+
+                setTimeout(() => {
+                    const replies = [
+                        'Спасибо за фидбэк! Обязательно учту 👍',
+                        'Отличное предложение! Напиши мне в телеграм @Erik_kripke',
+                        'Понял, принял. Если что — стучи в TG',
+                        'Интересно! Расскажи подробнее в личку @Erik_kripke',
+                        'Задокументировал. Спасибо, что помогаете делать SRS лучше!'
+                    ];
+                    const randomIndex = Math.floor(Math.random() * replies.length);
+                    addMessage(replies[randomIndex], 'admin');
+                }, 800);
+            }
+
+            sendBtn.addEventListener('click', handleSend);
+            inputField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSend();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
