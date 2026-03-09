@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRS Community | темная элегантность</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #121212;
+            font-family: 'JetBrains Mono', monospace;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 24px;
+            transition: background 0.3s ease;
+        }
+
+        /* главный контейнер с двумя колонками */
+        .dashboard {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 28px;
+            align-items: flex-start;
+        }
+
+        /* --- БОКОВАЯ ПАНЕЛЬ ПРОФИЛЯ (создаётся через JS) --- */
+        .profile-sidebar {
+            flex: 0 0 300px;
+            background: #1e1e1e;
+            border-radius: 60px;
+            padding: 36px 28px;
+            border: 1px solid #3a3a3a;
+            box-shadow: 0 25px 40px -20px #000000, 0 0 0 1px #2a2a2a inset;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            height: fit-content;
+            position: sticky;
+            top: 24px;
+        }
+
+        .profile-sidebar:hover {
+            box-shadow: 0 30px 60px -20px #000000, 0 0 0 1px #4a4a4a inset;
+            transform: translateY(-6px);
+        }
+
+        .avatar-large {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 68px;
+            font-weight: 700;
+            color: #e0e0e0;
+            border: 3px solid #4a4a4a;
+            box-shadow: 0 15px 20px -10px #000000, 0 0 0 1px #5a5a5a;
+            margin: 0 auto 8px;
+            transition: all 0.2s ease;
+        }
+
+        .profile-name {
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            color: #ffffff;
+            border-bottom: 2px dashed #4a4a4a;
+            padding-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-detail {
+            background: #252525;
+            padding: 20px;
+            border-radius: 40px;
+            border: 1px solid #3a3a3a;
+            box-shadow: 0 8px 0 #0f0f0f, inset 0 1px 4px #5a5a5a;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .profile-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 500;
+            color: #cccccc;
+        }
+
+        .profile-badge {
+            background: #2a2a2a;
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid #4a4a4a;
+            box-shadow: 0 5px 0 #0f0f0f;
+        }
+
+        .logout-btn {
+            background: #2a2a2a;
+            border: 1px solid #4a4a4a;
+            border-radius: 50px;
+            padding: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 8px 0 #0f0f0f;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e0e0e0;
+        }
+
+        .logout-btn:hover {
+            background: #333333;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 #0f0f0f;
+        }
+
+        /* основной контент (правая колонка) */
+        .main-content {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 80px 80px 56px 56px;
+            padding: 30px 40px 40px;
+            box-shadow: 0 30px 50px -20px #000000, 0 0 0 1px #d0d0d0;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            color: #222222;
+        }
+
+        .main-content:hover {
+            box-shadow: 0 40px 70px -20px #000000, 0 0 0 2px #e0e0e0;
+        }
+
+        /* ХЕДЕР */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 30px;
+            border-bottom: 2px solid #dddddd;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .logo-symbol {
+            font-size: 38px;
+            font-weight: 700;
+            background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+            color: #ffffff;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            box-shadow: 0 10px 0 #0a0a0a, 0 15px 30px rgba(0,0,0,0.3);
+            border: 1px solid #5a5a5a;
+            transition: all 0.2s ease;
+        }
+
+        .logo-symbol:hover {
+            transform: scale(1.02) rotate(-2deg);
+            box-shadow: 0 14px 0 #0a0a0a, 0 20px 40px #000000;
+        }
+
+        .logo-text h1 {
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #1a1a1a;
+        }
+
+        .badge {
+            font-size: 16px;
+            background: linear-gradient(145deg, #e0e0e0, #cccccc);
+            padding: 6px 18px;
+            border-radius: 40px;
+            color: #1a1a1a;
+            font-weight: 600;
+            border: 1px solid #aaaaaa;
+            box-shadow: 0 5px 0 #9a9a9a;
+            display: inline-block;
+        }
+
+        .main-site-link {
+            background: linear-gradient(145deg, #e8e8e8, #d0d0d0);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid #aaaaaa;
+            box-shadow: 0 8px 0 #9a9a9a, 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .main-site-link a {
+            text-decoration: none;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .main-site-link:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 0 #9a9a9a, 0 18px 30px rgba(0,0,0,0.15);
+            background: linear-gradient(145deg, #f0f0f0, #d8d8d8);
+        }
+
+        /* сетка карточек */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .link-card {
+            background: #f8f8f8;
+            border: 1px solid #dddddd;
+            border-radius: 36px;
+            padding: 28px 22px;
+            box-shadow: 0 14px 0 #c0c0c0, 0 20px 30px -8px rgba(0,0,0,0.15);
+            transition: all 0.25s cubic-bezier(0.17, 0.67, 0.21, 1.1);
+            display: flex;
+            flex-direction: column;
+            animation: cardAppear 0.5s ease backwards;
+        }
+
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .link-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 22px 0 #b0b0b0, 0 28px 40px -8px rgba(0,0,0,0.2);
+            background: #ffffff;
+            border-color: #b0b0b0;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 700;
+            border-bottom: 2px dashed #cccccc;
+            padding-bottom: 14px;
+            color: #222222;
+        }
+
+        .sprite-icon {
+            display: inline-block;
+            width: 1.4em;
+            height: 1.4em;
+            background-color: currentColor;
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            vertical-align: middle;
+            margin-right: 0.3em;
+            transition: transform 0.2s ease;
+        }
+
+        .card-header .sprite-icon {
+            width: 2em;
+            height: 2em;
+            margin-right: 12px;
+            color: #333333;
+        }
+
+        .sprite-home { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 3 L21 10 L21 21 L15 21 L15 15 L9 15 L9 21 L3 21 L3 10 Z"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 3 L21 10 L21 21 L15 21 L15 15 L9 15 L9 21 L3 21 L3 10 Z"/></svg>'); }
+        .sprite-feedback { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16 L21 8 A2 2 0 0 0 19 6 L5 6 A2 2 0 0 0 3 8 L3 18 A2 2 0 0 0 5 20 L18 20 L21 23 Z"/><line x1="9" y1="11" x2="15" y2="11"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16 L21 8 A2 2 0 0 0 19 6 L5 6 A2 2 0 0 0 3 8 L3 18 A2 2 0 0 0 5 20 L18 20 L21 23 Z"/><line x1="9" y1="11" x2="15" y2="11"/></svg>'); }
+        .sprite-support { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H5.78a1.65 1.65 0 0 0-1.51 1 1.65 1.65 0 0 0 .33 1.82L12 22z"/><path d="M4.6 9a1.65 1.65 0 0 0-.33 1.82c.26.61.86.99 1.51.99h12.44a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82L12 2z"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H5.78a1.65 1.65 0 0 0-1.51 1 1.65 1.65 0 0 0 .33 1.82L12 22z"/><path d="M4.6 9a1.65 1.65 0 0 0-.33 1.82c.26.61.86.99 1.51.99h12.44a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82L12 2z"/></svg>'); }
+        .sprite-market { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M4 4h3l1.68 9.39a2 2 0 0 0 2 1.61h6.72a2 2 0 0 0 2-1.61L21 8H7"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M4 4h3l1.68 9.39a2 2 0 0 0 2 1.61h6.72a2 2 0 0 0 2-1.61L21 8H7"/></svg>'); }
+        .sprite-doc { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'); }
+        .sprite-mod { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v7c0 5.5 9 8 9 8s9-2.5 9-8V7l-9-5z"/><path d="M12 11v4"/><circle cx="12" cy="8" r="1"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v7c0 5.5 9 8 9 8s9-2.5 9-8V7l-9-5z"/><path d="M12 11v4"/><circle cx="12" cy="8" r="1"/></svg>'); }
+        .sprite-tag { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>'); }
+        .sprite-contact { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7L12 13 2 7"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7L12 13 2 7"/></svg>'); }
+        .sprite-bot { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/><path d="M9 15h6"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/><path d="M9 15h6"/></svg>'); }
+        .sprite-sticker { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 L20 4 L20 20 L8 20 L4 16 Z"/><circle cx="12" cy="12" r="2"/><circle cx="16" cy="12" r="1.5"/><path d="M9 16 Q12 19 15 16"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4 L20 4 L20 20 L8 20 L4 16 Z"/><circle cx="12" cy="12" r="2"/><circle cx="16" cy="12" r="1.5"/><path d="M9 16 Q12 19 15 16"/></svg>'); }
+        .sprite-soft { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>'); }
+        .sprite-cloud { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>'); }
+        .sprite-donate { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>'); }
+
+        .card-description {
+            font-size: 15px;
+            margin-bottom: 20px;
+            color: #3a3a3a;
+            background: #f0f0f0;
+            padding: 14px;
+            border-radius: 20px;
+            border: 1px solid #dddddd;
+            flex: 1;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .card-link {
+            margin-top: 10px;
+            background: #eaeaea;
+            border-radius: 40px;
+            padding: 14px 18px;
+            border: 1px solid #cccccc;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 0 #b0b0b0;
+        }
+
+        .card-link a {
+            text-decoration: none;
+            color: #222222;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            word-break: break-word;
+        }
+
+        .card-link:hover {
+            background: #f5f5f5;
+            box-shadow: 0 10px 0 #a0a0a0;
+            transform: scale(1.01);
+        }
+
+        .arrow-hint {
+            margin-left: auto;
+            font-size: 20px;
+        }
+
+        .admin-section {
+            background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
+            border: 1px solid #4a4a4a;
+            border-radius: 70px;
+            padding: 36px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            box-shadow: 0 20px 0 #0f0f0f, 0 24px 40px -8px #000000;
+            margin: 30px 0 40px;
+            transition: all 0.2s ease;
+        }
+
+        .admin-section:hover {
+            box-shadow: 0 26px 0 #0f0f0f, 0 32px 50px -8px #000000;
+            transform: translateY(-4px);
+            border-color: #6a6a6a;
+        }
+
+        .admin-avatar {
+            background: linear-gradient(145deg, #3d3d3d, #2a2a2a);
+            width: 90px;
+            height: 90px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 48px;
+            font-weight: 600;
+            border: 2px solid #6a6a6a;
+            box-shadow: 0 8px 0 #0f0f0f;
+        }
+
+        .admin-detail h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 2px 2px 0 #000000;
+        }
+
+        .admin-detail p {
+            color: #cccccc;
+            font-size: 18px;
+        }
+
+        .admin-contact-link {
+            background: linear-gradient(145deg, #3d3d3d, #2a2a2a);
+            padding: 18px 38px;
+            border-radius: 70px;
+            font-size: 26px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #6a6a6a;
+            box-shadow: 0 10px 0 #0f0f0f, 0 12px 24px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .admin-contact-link a {
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-contact-link:hover {
+            background: linear-gradient(145deg, #4d4d4d, #3a3a3a);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 0 #0f0f0f, 0 20px 32px #000000;
+        }
+
+        .info-panel {
+            background: #f8f8f8;
+            border-radius: 60px;
+            padding: 30px 40px;
+            margin: 40px 0;
+            border: 1px solid #dddddd;
+            box-shadow: 0 14px 0 #c0c0c0, 0 16px 32px -8px rgba(0,0,0,0.1);
+            color: #222222;
+            transition: all 0.2s ease;
+        }
+
+        .info-panel:hover {
+            box-shadow: 0 20px 0 #b0b0b0, 0 24px 40px -8px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            border-top: 2px solid #dddddd;
+            padding: 28px 0 12px;
+            color: #555555;
+        }
+
+        /* create account modal (simple) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #1e1e1e;
+            border-radius: 60px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #4a4a4a;
+            box-shadow: 0 30px 50px #000000;
+            color: #e0e0e0;
+        }
+        .modal-content h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: white;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 18px;
+            background: #2a2a2a;
+            border: 1px solid #4a4a4a;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            color: white;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 18px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+        .modal-btn.create {
+            background: #3a3a3a;
+            color: white;
+            border: 1px solid #6a6a6a;
+            box-shadow: 0 6px 0 #0f0f0f;
+        }
+        .modal-btn.create:hover {
+            background: #4a4a4a;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 0 #0f0f0f;
+        }
+        .modal-btn.cancel {
+            background: #2a2a2a;
+            color: #cccccc;
+            border: 1px solid #3a3a3a;
+            box-shadow: 0 6px 0 #0a0a0a;
+        }
+        .modal-btn.cancel:hover {
+            background: #333333;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 0 #0a0a0a;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- profile sidebar will be injected via js -->
+        <div class="profile-sidebar" id="profileSidebar">
+            <div class="avatar-large" id="profileAvatar">👤</div>
+            <div class="profile-name" id="profileName">Гость</div>
+            <div class="profile-detail">
+                <div class="profile-detail-item"><span>🆔</span> ID: <span id="profileId">не создан</span></div>
+                <div class="profile-detail-item"><span>📅</span> рег: <span id="profileReg">—</span></div>
+                <div class="profile-detail-item"><span>⭐</span> статус: <span id="profileStatus">не авторизован</span></div>
+            </div>
+            <div class="profile-badge" id="profileBadge">🔵 создайте аккаунт</div>
+            <div class="logout-btn" id="createAccountBtn">
+                <span>➕</span> создать аккаунт
+            </div>
+        </div>
+
+        <div class="main-content">
+            <header class="header">
+                <div class="logo-area">
+                    <div class="logo-symbol">SRS</div>
+                    <div class="logo-text">
+                        <h1>SRS community · темная версия</h1>
+                        <span class="badge">2026 · все ссылки + стикерпак</span>
+                    </div>
+                </div>
+                <div class="main-site-link">
+                    <a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/1/" target="_blank" rel="noopener">
+                        <span class="sprite-icon sprite-home"></span> Главный сайт (форум)
+                    </a>
+                </div>
+            </header>
+
+            <div class="links-grid">
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-home"></span> Форум SRS</div>
+                    <div class="card-description">Центр общения: обсуждения, анонсы, помощь. Основная площадка сообщества.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/1/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/1/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-support"></span> Техподдержка</div>
+                    <div class="card-description">Помощь при проблемах, ответы на вопросы, восстановление доступа.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/2/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/2/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-feedback"></span> Фидбэк к маркету</div>
+                    <div class="card-description">Оставляйте отзывы о покупках, сообщайте о проблемах с товарами.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/3/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/3/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-doc"></span> Правила</div>
+                    <div class="card-description">Свод правил поведения, нормы общения, правила торговли и контента.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/4/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/4/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-doc"></span> Политика</div>
+                    <div class="card-description">Условия обработки данных, конфиденциальность переписки.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/5/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/5/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-mod"></span> Доп. модерация</div>
+                    <div class="card-description">Жалобы на нарушения, запросы на проверку, апелляции.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/6/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/6/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-tag"></span> Кастом теги</div>
+                    <div class="card-description">Заявка на персональный тег, цвета, значки отличия.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/7/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/7/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-cloud"></span> SRS-cloud</div>
+                    <div class="card-description">Облачное хранилище для файлов, резервных копий и обмена данными.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/8/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/8/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-donate"></span> SRS-донаты</div>
+                    <div class="card-description">Поддержка проекта, донаты, привилегии и благодарности.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/9/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/9/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-doc"></span> Правила чата SRS</div>
+                    <div class="card-description">Отдельный свод правил для чатов и мессенджеров сообщества.</div>
+                    <div class="card-link"><a href="https://dimatertica6-web.github.io/DANIEL-COMPANY/10/" target="_blank"><span>dimatertica6-web.github.io/DANIEL-COMPANY/10/</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-market"></span> Маркет SRS</div>
+                    <div class="card-description">Витрина товаров и услуг. Раздел находится в разработке, скоро появится.</div>
+                    <div class="card-link"><a href="#" onclick="return false;" style="cursor: default; opacity:0.8;"><span>ссылка появится позже</span><span class="arrow-hint">⌛</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-bot"></span> Telegram бот</div>
+                    <div class="card-description">Автоматизация, уведомления, справка. Подпишись на бота.</div>
+                    <div class="card-link"><a href="https://t.me/SRS_community_bot" target="_blank"><span>@SRS_community_bot</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-sticker"></span> Стикерпак SRS</div>
+                    <div class="card-description">Эксклюзивные стикеры для DС-кодеров и участников сообщества.</div>
+                    <div class="card-link"><a href="https://t.me/addstickers/SRSStickersDCCoding" target="_blank"><span>t.me/addstickers/SRSStickersDCCoding</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+                <div class="link-card">
+                    <div class="card-header"><span class="sprite-icon sprite-soft"></span> Софт отслеживания</div>
+                    <div class="card-description">Программа для мониторинга активности, трекинг задач. Скачать с Яндекс.Диска.</div>
+                    <div class="card-link"><a href="https://disk.yandex.ru/d/lsTFDAATmPfHzg" target="_blank"><span>disk.yandex.ru/d/lsTFDAATmPfHzg</span><span class="arrow-hint">↗</span></a></div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <div class="admin-info">
+                    <div class="admin-avatar">@</div>
+                    <div class="admin-detail">
+                        <h3>Эрик Крипке</h3>
+                        <p>основатель и главный администратор · ответит в течение часа</p>
+                    </div>
+                </div>
+                <div class="admin-contact-link">
+                    <a href="https://t.me/Erik_kripke" target="_blank" rel="noopener">
+                        <span class="sprite-icon sprite-contact"></span> @Erik_kripke
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <h2><span class="sprite-icon sprite-home" style="width: 1.8em; height: 1.8em;"></span> SRS community — темная версия, все ссылки активны</h2>
+                <p>Добро пожаловать на основной портал. Мы — объединение разработчиков, геймеров и цифровых энтузиастов, использующих JetBrains Mono как символ чистоты кода. Сообщество открыто для всех, кто ценит качественный контент и уютную атмосферу. Присоединяйтесь!</p>
+            </div>
+
+            <footer class="footer">
+                <p>SRS community · 2026 · все ссылки проверены</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // account creation
+            let currentUser = null;
+
+            const profileNameEl = document.getElementById('profileName');
+            const profileIdEl = document.getElementById('profileId');
+            const profileRegEl = document.getElementById('profileReg');
+            const profileStatusEl = document.getElementById('profileStatus');
+            const profileBadgeEl = document.getElementById('profileBadge');
+            const profileAvatarEl = document.getElementById('profileAvatar');
+            const createBtn = document.getElementById('createAccountBtn');
+
+            function updateProfileUI() {
+                if (currentUser) {
+                    profileNameEl.textContent = currentUser.name;
+                    profileIdEl.textContent = currentUser.id;
+                    profileRegEl.textContent = currentUser.regDate;
+                    profileStatusEl.textContent = 'активен';
+                    profileBadgeEl.textContent = '⭐ участник SRS';
+                    profileAvatarEl.textContent = currentUser.avatar;
+                } else {
+                    profileNameEl.textContent = 'Гость';
+                    profileIdEl.textContent = 'не создан';
+                    profileRegEl.textContent = '—';
+                    profileStatusEl.textContent = 'не авторизован';
+                    profileBadgeEl.textContent = '🔵 создайте аккаунт';
+                    profileAvatarEl.textContent = '👤';
+                }
+            }
+
+            function showCreateModal() {
+                const modalOverlay = document.createElement('div');
+                modalOverlay.className = 'modal-overlay';
+                modalOverlay.innerHTML = `
+                    <div class="modal-content">
+                        <h2>⚡ создание аккаунта</h2>
+                        <input type="text" placeholder="ваше имя" id="modalNameInput" value="coder">
+                        <div class="modal-buttons">
+                            <button class="modal-btn create" id="modalCreateBtn">создать</button>
+                            <button class="modal-btn cancel" id="modalCancelBtn">отмена</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modalOverlay);
+
+                document.getElementById('modalCancelBtn').addEventListener('click', () => {
+                    modalOverlay.remove();
+                });
+
+                document.getElementById('modalCreateBtn').addEventListener('click', () => {
+                    const nameInput = document.getElementById('modalNameInput');
+                    let name = nameInput.value.trim();
+                    if (!name) name = 'participant';
+                    
+                    // generate random id
+                    const randomId = 'SRS-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+                    const today = new Date();
+                    const regDate = today.toLocaleDateString('ru-RU');
+                    
+                    currentUser = {
+                        name: name,
+                        id: randomId,
+                        regDate: regDate,
+                        avatar: name.charAt(0).toUpperCase()
+                    };
+                    
+                    updateProfileUI();
+                    modalOverlay.remove();
+                });
+            }
+
+            createBtn.addEventListener('click', showCreateModal);
+
+            // logout (if needed, but we use create as main)
+            // we can add logout functionality to reset account
+            const logoutBtn = document.querySelector('.logout-btn');
+            // already used for create, but we can extend: if account exists, change behavior
+            // but for simplicity, keep as create only
+
+            // optional: if you want to reset account, we can add a second button, but not needed
+
+            // init
+            updateProfileUI();
+        })();
+    </script>
+</body>
+</html>
