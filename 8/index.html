@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRS-cloud — Облачное хранилище</title>
+  <!-- Подключаем красивый шрифт Inter (современный, читаемый) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome для иконок (облачко, стрелка, галочка) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #f5f9ff 0%, #e6f0fa 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Анимированные фоновые элементы (облака/шары) */
+    .bg-bubble {
+      position: absolute;
+      background: rgba(30, 100, 200, 0.03);
+      border-radius: 50%;
+      backdrop-filter: blur(2px);
+      animation: float 20s infinite ease-in-out;
+      z-index: 0;
+    }
+
+    .bubble1 {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+      animation-duration: 25s;
+    }
+
+    .bubble2 {
+      width: 500px;
+      height: 500px;
+      bottom: -200px;
+      right: -150px;
+      background: radial-gradient(circle, rgba(46, 134, 222, 0.08) 0%, transparent 70%);
+      animation-duration: 30s;
+      animation-direction: reverse;
+    }
+
+    .bubble3 {
+      width: 200px;
+      height: 200px;
+      top: 40%;
+      right: 15%;
+      background: radial-gradient(circle, rgba(72, 149, 239, 0.1) 0%, transparent 70%);
+      animation-duration: 18s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, 30px) scale(1.05); }
+      100% { transform: translate(0, 0) scale(1); }
+    }
+
+    /* Основной контейнер */
+    .card {
+      position: relative;
+      z-index: 10;
+      max-width: 680px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 64px 64px 48px 48px;
+      box-shadow: 
+        0 30px 60px -20px rgba(0, 50, 100, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      padding: 40px 44px 56px;
+      transition: all 0.3s ease;
+    }
+
+    /* Шапка как у диска */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      background: #1f6eeb;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 18px -8px rgba(0, 80, 200, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .logo-icon:hover {
+      transform: scale(1.02) rotate(2deg);
+    }
+
+    .logo-icon i {
+      font-size: 32px;
+      color: white;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .logo-text h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #0b2b5c, #1f6eeb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-text span {
+      font-size: 15px;
+      font-weight: 400;
+      color: #3a5f8b;
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* Основной блок с предложением */
+    .promo {
+      margin: 30px 0 36px;
+    }
+
+    .promo h2 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #0b2f54;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .promo .highlight {
+      background: linear-gradient(120deg, #d4e4ff 0%, #b2d4ff 80%);
+      padding: 4px 14px;
+      border-radius: 60px;
+      display: inline-block;
+      font-weight: 600;
+      color: #00337c;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.6);
+      font-size: 18px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Поле ввода (как Яндекс Диск) */
+    .input-group {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 90px;
+      padding: 6px 6px 6px 24px;
+      box-shadow: 0 8px 28px -8px rgba(0, 65, 131, 0.2), inset 0 0 0 1px rgba(0,110,255,0.2);
+      transition: box-shadow 0.3s, transform 0.2s;
+      border: 1px solid rgba(120, 180, 255, 0.3);
+      margin-top: 28px;
+    }
+
+    .input-group:focus-within {
+      box-shadow: 0 14px 36px -8px #1f6eeb55, inset 0 0 0 2px #1f6eeb;
+      transform: scale(1.01);
+    }
+
+    .input-group i {
+      color: #1f6eeb;
+      font-size: 20px;
+      opacity: 0.7;
+    }
+
+    .input-group input {
+      border: none;
+      padding: 16px 16px 16px 12px;
+      font-size: 16px;
+      font-weight: 400;
+      width: 100%;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      color: #001b3b;
+    }
+
+    .input-group input::placeholder {
+      color: #819eb9;
+      font-weight: 300;
+      letter-spacing: -0.2px;
+    }
+
+    .input-group input:focus {
+      outline: none;
+    }
+
+    .download-btn {
+      background: #1f6eeb;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: 0.15s;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 8px 14px -6px #0d3d86;
+      letter-spacing: 0.2px;
+    }
+
+    .download-btn i {
+      font-size: 16px;
+      color: white;
+      transition: transform 0.3s;
+    }
+
+    .download-btn:hover {
+      background: #0a5bd1;
+      gap: 14px;
+      padding: 12px 34px 12px 26px;
+      box-shadow: 0 12px 20px -8px #0945a0;
+    }
+
+    .download-btn:hover i {
+      transform: translateY(2px);
+    }
+
+    .download-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Анимация загрузки (появляется после клика) */
+    .loader-container {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(8px);
+      padding: 12px 24px;
+      border-radius: 80px;
+      border: 1px solid white;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+
+    .loader-container.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .file-icon {
+      background: #1f6eeb20;
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f6eeb;
+      font-size: 22px;
+      border: 1px solid #ffffffb0;
+    }
+
+    .file-details .filename {
+      font-weight: 600;
+      color: #0f2b4f;
+    }
+
+    .file-details .filesize {
+      font-size: 14px;
+      color: #506e91;
+    }
+
+    .blue-progress {
+      width: 140px;
+      height: 6px;
+      background: rgba(31, 110, 235, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+
+    .blue-progress::after {
+      content: '';
+      display: block;
+      width: 40%;
+      height: 100%;
+      background: #1f6eeb;
+      border-radius: 10px;
+      animation: loading 1.4s infinite ease-in-out;
+      box-shadow: 0 0 8px #6da5ff;
+    }
+
+    @keyframes loading {
+      0% { width: 10%; margin-left: 0; }
+      50% { width: 70%; margin-left: 15%; }
+      100% { width: 10%; margin-left: 90%; }
+    }
+
+    .direct-link {
+      color: #1351b0;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px dotted #9bbdf0;
+      margin-top: 30px;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    .direct-link:hover {
+      gap: 14px;
+      color: #002d77;
+      border-bottom-color: #1f6eeb;
+    }
+
+    /* карточки "как это работает" (доп. стиль) */
+    .features {
+      display: flex;
+      gap: 24px;
+      margin-top: 54px;
+      flex-wrap: wrap;
+    }
+
+    .feature-item {
+      flex: 1;
+      min-width: 140px;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(6px);
+      padding: 18px 8px;
+      border-radius: 36px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 6px 14px -8px #0a3e7c;
+      transition: 0.2s;
+    }
+
+    .feature-item:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.7);
+      border-color: white;
+    }
+
+    .feature-item i {
+      font-size: 28px;
+      color: #1f6eeb;
+      margin-bottom: 12px;
+    }
+
+    .feature-item p {
+      font-weight: 500;
+      color: #062753;
+      font-size: 15px;
+    }
+
+    footer {
+      margin-top: 44px;
+      text-align: center;
+      color: #627c9e;
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    footer a {
+      color: #1f6eeb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <!-- фоновые декоративные элементы -->
+  <div class="bg-bubble bubble1"></div>
+  <div class="bg-bubble bubble2"></div>
+  <div class="bg-bubble bubble3"></div>
+
+  <div class="card">
+    <div class="header">
+      <div class="logo-icon">
+        <i class="fas fa-cloud"></i>
+      </div>
+      <div class="logo-text">
+        <h1>SRS-cloud</h1>
+        <span>ваш безопасный диск</span>
+      </div>
+    </div>
+
+    <div class="promo">
+      <h2>Облако, созданное для <br>простоты и скорости</h2>
+      <div class="highlight">
+        <i class="fas fa-star" style="margin-right: 8px; font-size: 14px;"></i> 
+        Файл готов к скачиванию
+      </div>
+    </div>
+
+    <!-- основное поле ввода (имитация яндекс диска) -->
+    <div class="input-group">
+      <i class="fas fa-link"></i>
+      <input type="text" id="fileUrlInput" value="https://disk.yandex.ru/d/lsTFDAATmPfHzg" placeholder="Ссылка на файл в SRS-cloud">
+      <button class="download-btn" id="downloadTriggerBtn">
+        <span>Скачать</span>
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <!-- контейнер с анимацией загрузки (появляется после нажатия) -->
+    <div class="loader-container" id="loaderContainer">
+      <div class="file-info">
+        <div class="file-icon">
+          <i class="fas fa-file-archive"></i>
+        </div>
+        <div class="file-details">
+          <div class="filename">документы-srs.zip</div>
+          <div class="filesize">2.4 ГБ</div>
+        </div>
+      </div>
+      <div class="blue-progress"></div>
+      <i class="fas fa-download" style="color: #1f6eeb; font-size: 20px;"></i>
+    </div>
+
+    <a href="#" class="direct-link" id="finalLink">
+      <span>Скачать файл по ссылке Яндекс.Диска</span>
+      <i class="fas fa-chevron-right" style="font-size: 12px;"></i>
+    </a>
+
+    <!-- фичи как у диска -->
+    <div class="features">
+      <div class="feature-item">
+        <i class="fas fa-lock"></i>
+        <p>Шифрование</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-bolt"></i>
+        <p>Высокая скорость</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-infinity"></i>
+        <p>Безлимитное пространство</p>
+      </div>
+    </div>
+
+    <footer>
+      SRS-cloud • надёжное хранение • <a href="#">оферта</a>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      const downloadBtn = document.getElementById('downloadTriggerBtn');
+      const loader = document.getElementById('loaderContainer');
+      const inputField = document.getElementById('fileUrlInput');
+      const directLink = document.getElementById('finalLink');
+      
+      // Сама ссылка, которая должна открываться (яндекс диск)
+      const YANDEX_URL = "https://disk.yandex.ru/d/lsTFDAATmPfHzg";
+
+      // При клике на кнопку "Скачать" показываем анимацию загрузки,
+      // а также обновляем ссылку внизу и делаем её активной (чтобы можно было скачать)
+      downloadBtn.addEventListener('click', function(e) {
+        e.preventDefault(); // Предотвращаем любые лишние действия
+        
+        // Показываем контейнер с анимацией, если он скрыт
+        if (!loader.classList.contains('show')) {
+          loader.classList.add('show');
+        } else {
+          // Если уже показан, можно просто "перетряхнуть" анимацию
+          loader.style.animation = 'none';
+          loader.offsetHeight; // триггер reflow
+          loader.style.animation = null;
+        }
+
+        // Меняем текст ссылки и её href на актуальный Яндекс.Диск
+        directLink.href = YANDEX_URL;
+        directLink.setAttribute('target', '_blank'); // чтобы открывалось в новой вкладке
+        directLink.innerHTML = `<span>Открыть на Яндекс.Диске</span> <i class="fas fa-external-link-alt" style="font-size: 12px;"></i>`;
+        
+        // Небольшая дополнительная анимация для поля ввода
+        inputField.style.backgroundColor = '#f0f7ff';
+        setTimeout(() => inputField.style.backgroundColor = '', 300);
+      });
+
+      // Также можно кликать по нижней ссылке — она ведёт на реальный яндекс диск
+      directLink.addEventListener('click', function(e) {
+        // Если ссылка ещё не изменена (не было нажатия на кнопку), можно всё равно направить на диск
+        if (directLink.href === window.location.href || directLink.href === '#' || !directLink.href.includes('yandex')) {
+          e.preventDefault();
+          window.open(YANDEX_URL, '_blank');
+        }
+        // иначе поведение по умолчанию оставляем (href уже подменён)
+      });
+
+      // При желании можно предзаполнить инпut, но у нас уже стоит value. Просто для красоты добавим обработку копирования
+      inputField.addEventListener('focus', () => {
+        inputField.select();
+      });
+
+      // Эффект, что по enter тоже срабатывает
+      inputField.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          downloadBtn.click();
+        }
+      });
+
+      // Инициализация: устанавливаем ссылку в нижний блок как указатель на Яндекс.Диск
+      // но оставляем её красивой, по клику поведение переопределено выше
+      if (!directLink.href.includes('yandex')) {
+        directLink.href = YANDEX_URL;
+        directLink.target = '_blank';
+      }
+    })();
+  </script>
+  <!-- маленькая поправка: изначально нижняя ссылка ведёт на яндекс диск (установлено через href) -->
+  <!-- и красивые тени, всё готово -->
+</body>
+</html>
