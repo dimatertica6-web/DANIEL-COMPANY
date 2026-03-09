@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRS Code · Правила чата</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #eef5ff 0%, #d9e9fa 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 20px;
+            line-height: 1.5;
+            color: #13294e;
+        }
+
+        .rules-card {
+            max-width: 880px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 48px 48px 48px 48px;
+            box-shadow: 
+                0 20px 40px -10px rgba(0, 35, 80, 0.25),
+                0 8px 18px rgba(0, 30, 70, 0.1),
+                inset 0 1px 0 #ffffffcc;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(60, 120, 200, 0.15);
+        }
+
+        /* Голова — глубокий синий градиент */
+        .card-header {
+            background: linear-gradient(115deg, #0b2549 0%, #1a3b5e 75%, #1f4a6e 100%);
+            padding: 32px 40px 24px 40px;
+            color: white;
+            border-bottom: 3px solid #5880b0;
+        }
+
+        .card-header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .card-header h1 span {
+            background: #3d70b0;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+            color: #e3f0ff;
+            border: 1px solid #90b8e0;
+            box-shadow: inset 0 1px 3px #ffffff40;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #c7dcff;
+            margin-top: 12px;
+            border-left: 3px solid #5688c7;
+            padding-left: 20px;
+            background: linear-gradient(90deg, #244b73, transparent);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 32px;
+            margin-top: 24px;
+            font-size: 0.95rem;
+            color: #b6d0f0;
+            flex-wrap: wrap;
+        }
+
+        .header-meta i {
+            font-style: normal;
+            background: #133252;
+            padding: 5px 16px;
+            border-radius: 50px;
+            display: inline-block;
+            border: 1px solid #456f99;
+        }
+
+        /* Тело правил */
+        .rules-content {
+            padding: 36px 40px 40px 40px;
+            background: #ffffff;
+        }
+
+        /* основная стилистика синего, без неона */
+        .rule-section {
+            margin-bottom: 40px;
+            border-bottom: 1px dashed #b9d1ed;
+            padding-bottom: 24px;
+        }
+
+        .rule-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.7rem;
+            font-weight: 550;
+            color: #124072;
+            margin-bottom: 18px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title .title-number {
+            background: #ddeeff;
+            width: 48px;
+            height: 48px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: #0b3d74;
+            box-shadow: inset -2px -2px 6px #b3c9e5, inset 2px 2px 6px white;
+            border: 1px solid #cedff2;
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 16px;
+            padding: 8px 12px 8px 8px;
+            background: #f5faff;
+            border-radius: 24px;
+            transition: background 0.2s;
+            border: 1px solid #d4e3f7;
+        }
+
+        .rule-item:hover {
+            background: #e1efff;
+            border-color: #98b9e1;
+        }
+
+        .rule-marker {
+            min-width: 38px;
+            height: 38px;
+            background: #d4e5ff;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #174b82;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px #b0c9e7;
+            border: 1px solid #f0f8ff;
+        }
+
+        .rule-text {
+            flex: 1;
+            font-size: 1.05rem;
+            color: #1a2d44;
+            padding-top: 6px;
+        }
+
+        .rule-text strong {
+            color: #103a66;
+            font-weight: 600;
+        }
+
+        .rule-text a {
+            color: #1d5b9e;
+            text-decoration: none;
+            border-bottom: 1.5px dotted #7ba5d3;
+        }
+
+        .rule-text a:hover {
+            border-bottom: 2px solid #124683;
+        }
+
+        .tag {
+            background: #bdd6ff;
+            color: #002856;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            display: inline-block;
+            margin-left: 10px;
+            border: 1px solid #a0bee4;
+            vertical-align: middle;
+        }
+
+        .extra-note {
+            background: #ecf3fd;
+            border-radius: 18px;
+            padding: 18px 24px;
+            margin-top: 20px;
+            border-left: 6px solid #256bb0;
+            color: #0d2d51;
+            font-size: 1rem;
+            box-shadow: inset 0 1px 4px #b9d2f0;
+        }
+
+        .extra-note code {
+            background: #c5dbf8;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            color: #002252;
+            border: 1px solid #97b7e0;
+        }
+
+        /* footer / заключение */
+        .card-footer {
+            background: #e2efff;
+            padding: 18px 40px 22px 40px;
+            border-top: 1px solid #b7cde5;
+            color: #10345e;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+
+        .footer-badge {
+            display: flex;
+            gap: 8px;
+        }
+
+        .footer-badge span {
+            background: #b6d2f5;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 500;
+            border: 1px solid #80a6d6;
+        }
+
+        .footer-edit {
+            color: #0f3f70;
+            border-bottom: 1px dashed #4873aa;
+        }
+
+        /* адаптивность */
+        @media (max-width: 600px) {
+            body { margin: 10px; }
+            .card-header { padding: 24px 20px; }
+            .rules-content { padding: 24px 20px; }
+            .card-footer { padding: 18px 20px; flex-direction: column; gap: 12px; align-items: flex-start; }
+            .section-title { font-size: 1.5rem; }
+            .rule-item { flex-wrap: wrap; }
+            .rule-marker { min-width: 32px; height: 32px; }
+            .header-meta { gap: 16px; }
+        }
+
+        /* списки и код */
+        ul {
+            margin-left: 24px;
+            margin-top: 8px;
+            color: #193d62;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, #b1ccf0, transparent);
+            margin: 28px 0 10px 0;
+        }
+
+        /* имитация врезки */
+        .inline-code {
+            background: #dbeaff;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-family: monospace;
+            border: 1px solid #afcaf0;
+            color: #10345e;
+        }
+    </style>
+</head>
+<body>
+    <div class="rules-card">
+        <div class="card-header">
+            <h1>
+                ⌨️ SRS Code · Чат
+                <span>v.2.4</span>
+            </h1>
+            <div class="subhead">
+                Серьёзная разработка и здоровое общение
+            </div>
+            <div class="header-meta">
+                <i>🚀 действует с 15 марта 2025</i>
+                <i>👥 4 200+ инженеров</i>
+                <i>⚙️ #srs-чат</i>
+            </div>
+        </div>
+
+        <div class="rules-content">
+            <!-- преамбула -->
+            <div class="extra-note" style="margin-top: 0; margin-bottom: 32px;">
+                <strong>📘 Основной принцип:</strong> Мы здесь, чтобы профессионально расти, обмениваться опытом и помогать друг другу. Относись к коллегам так, как хочешь, чтобы относились к тебе. 
+                Нарушения рассматриваются мягко, но <code>3 предупреждения → mute 24h</code>.
+            </div>
+
+            <!-- Раздел 1: Общие нормы -->
+            <div class="rule-section">
+                <div class="section-title">
+                    <span class="title-number">1</span> Базовый этикет
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">📌</div>
+                    <div class="rule-text">
+                        <strong>Уважение к собеседнику</strong> — никаких оскорблений, унижений или токсичности. Разрешена конструктивная критика кода, но не личности. 
+                        <span class="tag">важно</span>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">🔹</div>
+                    <div class="rule-text">
+                        <strong>Никакого харассмента, спама, рекламы</strong> — ссылки на свои проекты только после согласования с модератором или в ветке #self-promo.
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">🔸</div>
+                    <div class="rule-text">
+                        <strong>Нестикерная помойка</strong> — избегайте бессмысленного флуда, гифок и сообщений «+1» без контекста. Для реакций есть эмодзи.
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">⚡</div>
+                    <div class="rule-text">
+                        <strong>Оффтопик</strong> — есть отдельный канал <span class="inline-code">#random</span>. В основных тредах обсуждаем только технологии, код, софт-скиллы и карьеру в IT.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Раздел 2: Технические правила -->
+            <div class="rule-section">
+                <div class="section-title">
+                    <span class="title-number">2</span> Код и контент
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">{ }</div>
+                    <div class="rule-text">
+                        <strong>Форматирование кода</strong> — используй Markdown или сниппеты (```). Длинные простыни без форматирования удаляются. 
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">🔍</div>
+                    <div class="rule-text">
+                        <strong>Запрещено выкладывать проприетарный код</strong> без разрешения. Если код с NDA — не пиши его в чат. 
+                        <span class="tag">legal</span>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">🐞</div>
+                    <div class="rule-text">
+                        <strong>Вопросы оформляй осмысленно</strong>: стек, что пробовал, ожидание/реальность. «Почему не работает?» без деталей — повод для мьюта.
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">📎</div>
+                    <div class="rule-text">
+                        <strong>Минимум внешних ссылок</strong> без пояснения. Ссылки на документацию приветствуются, но если это рефералка или вирус — бан.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Раздел 3: Коммуникация -->
+            <div class="rule-section">
+                <div class="section-title">
+                    <span class="title-number">3</span> Голос и видео
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">🎙️</div>
+                    <div class="rule-text">
+                        <strong>Войсчаты только по tech-темам</strong>. Не занимайте канал пустым трёпом. Если зашли в войс — будьте готовы говорить про разработку.
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">📹</div>
+                    <div class="rule-text">
+                        <strong>Демонстрация экрана</strong> уважай время других: настрой заранее, не показывай личные вкладки. 
+                    </div>
+                </div>
+                <div style="margin-top: 10px; background: #d9e9ff; border-radius: 28px; padding: 12px 24px; color: #002f61;">
+                    💡 <strong>Совет:</strong> Перед стримом предупреди в чате и напиши тему.
+                </div>
+            </div>
+
+            <!-- Раздел 4: Модерация и наказания -->
+            <div class="rule-section">
+                <div class="section-title">
+                    <span class="title-number">4</span> Система мер
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">⚠️</div>
+                    <div class="rule-text">
+                        <strong>Предупреждение (варн)</strong> — за мелкие нарушения: флуд, небольшой оффтопик, неотформатированный код.
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">🔇</div>
+                    <div class="rule-text">
+                        <strong>Мьют от 1 часа до 24 часов</strong> — повторный флуд, грубость, переход на личности.
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <div class="rule-marker">🚫</div>
+                    <div class="rule-text">
+                        <strong>Бан (постоянный или временный)</strong> — за рекламу спама, порнографию, призывы к насилию, оскорбление модератора.
+                    </div>
+                </div>
+
+                <div class="extra-note" style="margin-bottom: 0;">
+                    <strong>⚖️ Апелляция</strong> — если считаете наказание несправедливым, пишите в личку @srs_mod или на почту mod@srs.codes. Обязательно укажите ник и примерное время нарушения.
+                </div>
+            </div>
+
+            <!-- Раздел 5: Для модераторов и контрибьюторов -->
+            <div class="rule-section" style="border-bottom: none;">
+                <div class="section-title">
+                    <span class="title-number">5</span> Для своих
+                </div>
+                <div class="rule-item">
+                    <div class="rule-marker">🛡️</div>
+                    <div class="rule-text">
+                        <strong>Модераторы</strong> не имеют права оскорблять и использовать положение. Их задача — следить за порядком. Если модератор нарушает — пишите старшему составу.
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-marker">🤝</div>
+                    <div class="rule-text">
+                        <strong>Легенды чата (активные помощники)</strong> получают особый значок. Они могут давать советы, но не наказывать.
+                    </div>
+                </div>
+                <hr>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-top: 12px;">
+                    <div><span class="inline-code">💬 TL;DR</span> Будь профессионалом, оформляй код, не срись.</div>
+                    <div><span class="inline-code">srs.chat/rules</span></div>
+                </div>
+            </div>
+        </div> <!-- конец rules-content -->
+
+        <div class="card-footer">
+            <div class="footer-badge">
+                <span>🧑‍💻 #чат-кодеров</span>
+                <span>📅 обновлено 01.03.2025</span>
+            </div>
+            <div class="footer-edit">
+                ⚡ SRS rules — редактируются сообществом
+            </div>
+        </div>
+    </div>
+</body>
+</html>
