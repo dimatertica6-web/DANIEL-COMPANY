@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRS-CHAT | Кастомные теги</title>
+    <!-- Подключаем красивый шрифт Inter через Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #0a1120 0%, #0f1a2f 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #e1e9f5;
+            line-height: 1.5;
+            padding: 20px;
+        }
+
+        /* Контейнер для плавного появления */
+        .fade-in {
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Главный карточный контейнер с градиентной обводкой */
+        .glass-container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(18, 30, 55, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 3px;
+            background: linear-gradient(135deg, rgba(64, 128, 255, 0.25) 0%, rgba(0, 200, 255, 0.15) 50%, rgba(64, 128, 255, 0.25) 100%);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-container:hover {
+            box-shadow: 0 30px 60px -10px rgba(0, 150, 255, 0.3), 0 0 0 1px rgba(100, 180, 255, 0.2) inset;
+        }
+
+        .inner-content {
+            background: radial-gradient(128% 107% at 0% 0%, #13223f, #0b1429);
+            border-radius: 46px;
+            padding: 50px 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Заголовки с мягким градиентом */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #c8dcff, #9bbaff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.35em;
+            line-height: 1.2;
+            animation: slideFade 1s ease-out;
+        }
+
+        .subhead {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: #b0caf5;
+            margin-bottom: 2.5rem;
+            border-left: 3px solid rgba(70, 140, 255, 0.5);
+            padding-left: 24px;
+            background: linear-gradient(90deg, rgba(70, 130, 255, 0.15), transparent);
+            border-radius: 0 8px 8px 0;
+        }
+
+        @keyframes slideFade {
+            0% { opacity: 0; transform: translateX(-15px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Сетка карточек миссий */
+        .missions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin: 45px 0 30px;
+        }
+
+        /* Карточка миссии с градиентом и анимацией */
+        .mission-card {
+            background: rgba(10, 20, 40, 0.6);
+            border-radius: 32px;
+            padding: 28px 22px;
+            border: 1px solid rgba(90, 160, 255, 0.15);
+            backdrop-filter: blur(5px);
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 15px 30px -15px rgba(0,0,0,0.5);
+        }
+
+        /* Анимированный градиентный фон при наведении */
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(70, 140, 255, 0.2), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            border-radius: 32px;
+        }
+
+        .mission-card:hover::before {
+            opacity: 1;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(110, 180, 255, 0.4);
+            box-shadow: 0 30px 40px -20px rgba(0, 160, 255, 0.3);
+        }
+
+        .mission-icon {
+            font-size: 2.5rem;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 8px 12px rgba(0,100,255,0.4));
+            background: linear-gradient(145deg, #b0e0ff, #5a9eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            width: fit-content;
+        }
+
+        .mission-title {
+            font-size: 1.7rem;
+            font-weight: 600;
+            background: linear-gradient(145deg, #d9ecff, #a3c6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .mission-desc {
+            font-size: 0.98rem;
+            color: #b6d0f0;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .tag-badge {
+            background: linear-gradient(110deg, #1e3a6b, #142c52);
+            border-radius: 60px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            align-self: flex-start;
+            border: 1px solid rgba(70, 160, 255, 0.4);
+            color: #cbe2ff;
+            box-shadow: 0 4px 12px rgba(0, 60, 130, 0.3);
+            transition: 0.15s;
+        }
+
+        .tag-badge span {
+            font-size: 1.1rem;
+            filter: drop-shadow(0 0 5px #3e8aff);
+        }
+
+        /* Секция информации о тегах */
+        .info-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(90, 170, 255, 0.2);
+        }
+
+        .info-block {
+            flex: 1 1 250px;
+            background: rgba(8, 18, 38, 0.6);
+            border-radius: 30px;
+            padding: 28px 25px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(70, 130, 230, 0.2);
+            transition: 0.2s;
+        }
+
+        .info-block:hover {
+            border-color: rgba(100, 170, 255, 0.4);
+            background: rgba(15, 30, 55, 0.7);
+        }
+
+        .info-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(145deg, #9bc0ff, #6d9eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-title i {
+            font-size: 1.8rem;
+            opacity: 0.9;
+        }
+
+        .info-text {
+            color: #b8d1f5;
+            font-size: 1rem;
+            margin-bottom: 18px;
+        }
+
+        .telegram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #1f3d7a, #123166);
+            border-radius: 40px;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            margin-top: 20px;
+            border: 1px solid rgba(90, 170, 255, 0.4);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 18px -8px #0040aa;
+            backdrop-filter: blur(5px);
+        }
+
+        .telegram-link:hover {
+            background: linear-gradient(135deg, #2a4a99, #1b3d85);
+            border-color: #6eb0ff;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 18px 25px -8px #1e4eb0;
+        }
+
+        .telegram-link i {
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 5px #88bbff);
+        }
+
+        /* Стили списков */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px dashed rgba(110, 170, 255, 0.15);
+            padding-bottom: 10px;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .list-icon {
+            background: linear-gradient(145deg, #2f5090, #1b3c74);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #bfdeff;
+        }
+
+        .tag-example {
+            font-family: 'Inter', monospace;
+            background: rgba(0, 30, 70, 0.6);
+            border-radius: 30px;
+            padding: 5px 14px;
+            border: 1px solid #1f5199;
+            font-weight: 500;
+            color: #b3dbff;
+        }
+
+        /* Анимация плавного свечения для важных элементов */
+        .glow-text {
+            animation: softGlow 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes softGlow {
+            0% { text-shadow: 0 0 5px rgba(70, 140, 255, 0.2); }
+            100% { text-shadow: 0 0 15px rgba(100, 180, 255, 0.5); }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 700px) {
+            h1 { font-size: 2.6rem; }
+            .inner-content { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-container fade-in">
+        <div class="inner-content">
+            <h1>✨ SRS-CHAT<br>кастомные теги</h1>
+            <div class="subhead">
+                Информация о системе · Миссии для получения уникальных идентификаторов
+            </div>
+
+            <!-- Сетка с миссиями получения тегов -->
+            <div class="missions-grid">
+                <!-- Карточка 1: Новичок -->
+                <div class="mission-card">
+                    <div class="mission-icon">🪄</div>
+                    <div class="mission-title">Приветствие</div>
+                    <div class="mission-desc">
+                        Представьтесь в чате и расскажите немного о себе. Боты оценят активность.
+                    </div>
+                    <div class="tag-badge">
+                        <span>🏷️</span> #новичок
+                    </div>
+                </div>
+                <!-- Карточка 2: Активный -->
+                <div class="mission-card">
+                    <div class="mission-icon">⚡</div>
+                    <div class="mission-title">25 сообщений</div>
+                    <div class="mission-desc">
+                        Напишите 25 осмысленных сообщений в течение недели. Активность поощряется.
+                    </div>
+                    <div class="tag-badge">
+                        <span>🏷️</span> #активный
+                    </div>
+                </div>
+                <!-- Карточка 3: Помощник -->
+                <div class="mission-card">
+                    <div class="mission-icon">🛡️</div>
+                    <div class="mission-title">Помощь новым</div>
+                    <div class="mission-desc">
+                        Ответить на 5 вопросов от новичков в чате — и тег твой.
+                    </div>
+                    <div class="tag-badge">
+                        <span>🏷️</span> #хелпер
+                    </div>
+                </div>
+                <!-- Карточка 4: Креативный -->
+                <div class="mission-card">
+                    <div class="mission-icon">🎨</div>
+                    <div class="mission-title">Креатив</div>
+                    <div class="mission-desc">
+                        Предложи идею для развития чата или создай оригинальный контент.
+                    </div>
+                    <div class="tag-badge">
+                        <span>🏷️</span> #креатор
+                    </div>
+                </div>
+                <!-- Карточка 5: Ветеран -->
+                <div class="mission-card">
+                    <div class="mission-icon">🏆</div>
+                    <div class="mission-title">30 дней в чате</div>
+                    <div class="mission-desc">
+                        Быть участником более 30 дней и регулярно проявлять активность.
+                    </div>
+                    <div class="tag-badge">
+                        <span>🏷️</span> #старожил
+                    </div>
+                </div>
+                <!-- Карточка 6: Эксперт -->
+                <div class="mission-card">
+                    <div class="mission-icon">📚</div>
+                    <div class="mission-title">Полезные ссылки</div>
+                    <div class="mission-desc">
+                        Поделиться полезными материалами/ссылками, которые пригодятся сообществу.
+                    </div>
+                    <div class="tag-badge">
+                        <span>🏷️</span> #эксперт
+                    </div>
+                </div>
+            </div>
+
+            <!-- Информационные блоки (подробности) -->
+            <div class="info-section">
+                <div class="info-block">
+                    <div class="info-title">
+                        <i>📋</i> Что такое кастомные теги?
+                    </div>
+                    <div class="info-text">
+                        Это особые отметки рядом с ником, которые показывают ваш вклад в сообщество. 
+                        Теги выдаются автоматически при выполнении миссий или вручную администрацией за заслуги.
+                        Они дают доступ к некоторым плюшкам и уважению в чате.
+                    </div>
+                </div>
+                <div class="info-block">
+                    <div class="info-title">
+                        <i>🎯</i> Активные миссии
+                    </div>
+                    <ul>
+                        <li><span class="list-icon">✔️</span> Заполнить профиль — <span class="tag-example">#профиль</span></li>
+                        <li><span class="list-icon">✔️</span> Пригласить друга (с реф. ссылкой) — <span class="tag-example">#друг</span></li>
+                        <li><span class="list-icon">✔️</span> Участвовать в голосовании — <span class="tag-example">#выборы</span></li>
+                        <li><span class="list-icon">✔️</span> Написать отзыв о чате — <span class="tag-example">#отзыв</span></li>
+                    </ul>
+                </div>
+                <div class="info-block">
+                    <div class="info-title">
+                        <i>⚙️</i> Как отследить?
+                    </div>
+                    <div class="info-text">
+                        Бот <span style="background:#1e3b70; padding:2px 8px; border-radius:30px;">@SRS_tag_bot</span> в Telegram покажет ваш прогресс. 
+                        Также можно ввести <span class="tag-example">/mytags</span> в чате.
+                    </div>
+                    <div style="margin-top:20px; background: linear-gradient(90deg, #132c55, #07152f); border-radius: 20px; padding: 16px;">
+                        <span style="display: block; font-weight: 600; margin-bottom: 6px; color: #aac9ff;">🎁 Бонус:</span>
+                        Обладатели 3+ тегов получают доступ в закрытый канал с инсайдами.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопка-ссылка на чат -->
+            <div style="display: flex; justify-content: center; margin-top: 40px;">
+                <a href="https://t.me/srs_chat" target="_blank" class="telegram-link">
+                    <i>📱</i> Перейти в SRS-CHAT
+                </a>
+            </div>
+
+            <!-- Маленький футер с примечанием -->
+            <div style="text-align: center; margin-top: 55px; font-size: 0.9rem; color: #6c8fc0; border-top: 1px dashed #2b4880; padding-top: 25px;">
+                <span class="glow-text">✦ Информация обновляется в реальном времени ✦</span><br>
+                <span style="opacity: 0.7;">Миссии и теги могут меняться, следите за новостями в чате.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Маленький дополнительный текст для атмосферы (по желанию) -->
+    <div style="max-width: 1200px; text-align: center; color: #5e7fb0; font-size: 0.9rem; padding: 0 20px;">
+        <span style="display: inline-block; backdrop-filter: blur(5px); background: rgba(10,25,50,0.3); border-radius: 60px; padding: 8px 24px;">
+            🌊 Синие градиенты · чистый дизайн · плавные анимации · SRS-CHAT
+        </span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>SRS — синий чат</title>
+    <style>
+        /* ГЛОБАЛЬНЫЕ СБРОСЫ И ШРИФТ — ВСЁ ДЛЯ ТАЧ-ВЗАИМОДЕЙСТВИЯ */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #0b1a30 0%, #0a1f33 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            margin: 0;
+            touch-action: manipulation; /* улучшение тача */
+        }
+
+        /* ОСНОВНОЙ КОНТЕЙНЕР — КАРТОЧКА В СИНЕМ СТИЛЕ */
+        .chat-container {
+            width: 100%;
+            max-width: 420px;  /* идеально для телефона */
+            background-color: #e5f0ff;  /* очень светлый синий фон */
+            border-radius: 36px 36px 28px 28px;
+            box-shadow: 0 20px 35px -5px rgba(0, 30, 80, 0.6), 0 0 0 2px rgba(64, 128, 255, 0.2) inset;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 780px;          /* фиксированная высота для удобного просмотра */
+            max-height: 90vh;        /* на маленьких экранах не убегает */
+            backdrop-filter: blur(2px);
+            transition: all 0.2s ease;
+        }
+
+        /* ШАПКА SRS — ГЛУБОКИЙ СИНИЙ ГРАДИЕНТ */
+        .chat-header {
+            background: linear-gradient(135deg, #003a6b, #00284d);
+            padding: 24px 20px 16px 20px;
+            color: white;
+            border-bottom: 3px solid #3e92e0;
+            box-shadow: 0 4px 12px rgba(0, 30, 70, 0.5);
+            border-radius: 0 0 32px 32px;
+            margin-bottom: 6px;
+        }
+
+        .chat-header h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1;
+            text-shadow: 0 3px 0 #001e3b, 0 5px 10px rgba(0,200,255,0.4);
+        }
+
+        .chat-header .sub {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            font-weight: 400;
+            color: #c5e2ff;
+        }
+
+        .chat-header .sub span {
+            background: #00498d;
+            padding: 4px 12px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 0.5px;
+        }
+
+        /* ОБЛАСТЬ СООБЩЕНИЙ (СКРОЛЛ, ТАЧ) */
+        .messages-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 14px 20px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            background: rgba(230, 242, 255, 0.7);
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* плавный скролл на iOS */
+        }
+
+        /* СТИЛИ СООБЩЕНИЙ */
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+            animation: fadeSlide 0.2s ease;
+        }
+
+        .message.srs {
+            align-self: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        .bubble {
+            padding: 14px 18px;
+            border-radius: 26px;
+            font-size: 1rem;
+            line-height: 1.4;
+            word-break: break-word;
+            box-shadow: 0 4px 8px rgba(0, 40, 80, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            transition: all 0.1s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* синий стиль для сообщений бота (SRS) */
+        .message.srs .bubble {
+            background: linear-gradient(165deg, #d4e6ff, #c0dafc);
+            border-bottom-left-radius: 8px;
+            color: #002445;
+            font-weight: 500;
+            border-left: 5px solid #1e6dc7;
+            box-shadow: -2px 4px 10px rgba(0, 70, 150, 0.2);
+        }
+
+        /* сообщения пользователя — белые, но с синей каймой */
+        .message.user .bubble {
+            background: white;
+            border-bottom-right-radius: 8px;
+            border-right: 5px solid #1e6dc7;
+            color: #002445;
+            box-shadow: 2px 4px 10px rgba(0, 70, 150, 0.15);
+        }
+
+        .time {
+            font-size: 0.7rem;
+            color: #2f4d73;
+            margin: 6px 12px 0 12px;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+
+        /* ПРАВИЛА И МОДЕРАЦИЯ — ОСОБЫЙ БЛОК */
+        .moderation-rule-block {
+            background: #002c57;
+            margin: 5px 10px 8px 10px;
+            padding: 14px 18px;
+            border-radius: 42px 42px 42px 18px;
+            border: 2px solid #74b0ff;
+            box-shadow: 0 8px 0 #001633, 0 12px 25px -5px #003377;
+            color: white;
+            transition: 0.15s;
+        }
+
+        .moderation-rule-block .rule-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 0 #001122;
+        }
+
+        .rule-title .badge {
+            background: #ffd966;
+            color: #002244;
+            font-size: 0.9rem;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+
+        .rule-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rule-list li {
+            padding: 10px 0 8px 28px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%234aa0ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') left center no-repeat;
+            background-size: 18px;
+            margin-bottom: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.3);
+        }
+
+        .rule-list li:last-child {
+            border-bottom: none;
+        }
+
+        .moderator-take {
+            margin-top: 14px;
+            background: #10427c;
+            border-radius: 50px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #5fa3ff;
+        }
+
+        .moderator-take span {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e0f0ff;
+        }
+
+        .take-btn {
+            background: #3895ff;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.4rem;
+            padding: 8px 28px;
+            border-radius: 50px;
+            box-shadow: 0 5px 0 #003d82, 0 8px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.05s linear;
+            letter-spacing: 1px;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .take-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #003d82, 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ПАНЕЛЬ ВВОДА — БОЛЬШАЯ И УДОБНАЯ ДЛЯ ТАЧА */
+        .input-panel {
+            background: #c5ddff;
+            padding: 16px 14px 20px 14px;
+            border-top: 3px solid #1d6ed8;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 -4px 12px rgba(0, 45, 90, 0.2);
+        }
+
+        .input-panel input {
+            flex: 1 1 200px;
+            background: white;
+            border: 2px solid #1560c0;
+            border-radius: 48px;
+            padding: 18px 22px;
+            font-size: 1.1rem;
+            outline: none;
+            color: #002244;
+            font-weight: 500;
+            transition: all 0.2s;
+            -webkit-appearance: none;
+            box-shadow: 0 2px 8px rgba(0, 60, 130, 0.2);
+        }
+
+        .input-panel input:focus {
+            border-color: #003ea6;
+            box-shadow: 0 0 0 4px rgba(0, 100, 255, 0.3);
+        }
+
+        .input-panel button {
+            background: #004aad;
+            border: none;
+            border-radius: 60px;
+            padding: 18px 28px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 5px 0 #002458, 0 6px 14px rgba(0, 0, 0, 0.3);
+            transition: all 0.05s;
+            cursor: pointer;
+            touch-action: manipulation;
+            border: 1px solid #81bcff;
+            flex: 0 0 auto;
+            letter-spacing: 0.8px;
+        }
+
+        .input-panel button:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #002458, 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* анимация появления */
+        @keyframes fadeSlide {
+            0% { opacity: 0.2; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* плашка "модератор взят" */
+        .moderator-taken-message {
+            background: #105a9c;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 6px 16px;
+            border: 2px solid #78bcff;
+            box-shadow: 0 2px 15px #00284d;
+        }
+
+        /* адаптация для совсем узких */
+        @media (max-width: 380px) {
+            .chat-header h1 { font-size: 2rem; }
+            .input-panel button { padding: 16px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container" id="chatContainer">
+        <!-- ШАПКА SRS -->
+        <div class="chat-header">
+            <h1>SRS</h1>
+            <div class="sub">
+                <span>⚓ синий чат</span> 
+                <span>🤚 контактный стиль</span>
+            </div>
+        </div>
+
+        <!-- ЗОНА СООБЩЕНИЙ (чат-лог) -->
+        <div class="messages-area" id="messagesArea">
+            <!-- Приветственное сообщение от SRS -->
+            <div class="message srs">
+                <div class="bubble">
+                    👋 Добро пожаловать в SRS! Чат работает по синим правилам.
+                </div>
+                <div class="time">только что ✔</div>
+            </div>
+
+            <!-- СПЕЦИАЛЬНЫЙ БЛОК: ПРАВИЛА И ВЗЯТИЕ МОДЕРАЦИИ (вшит как часть сообщений) -->
+            <div class="moderation-rule-block" id="ruleBlock">
+                <div class="rule-title">
+                    ⚡ ПРАВИЛА SRS <span class="badge">модерация</span>
+                </div>
+                <ul class="rule-list">
+                    <li>Не грубить — синий чат без агрессии</li>
+                    <li>Не спамить (больше 2 сообщений подряд — пред)</li>
+                    <li>Уважать синий кодекс :)</li>
+                    <li>Не нарушать тематику (только ламповые беседы)</li>
+                </ul>
+                <!-- БЛОК ВЗЯТИЯ МОДЕРАЦИИ (кнопка) -->
+                <div class="moderator-take" id="moderatorTakeBlock">
+                    <span>🛡️ Взять модерацию</span>
+                    <button class="take-btn" id="takeModeratorBtn">ВЗЯТЬ</button>
+                </div>
+                <!-- сюда после взятия будет вставлен статус -->
+            </div>
+
+            <!-- Ещё одно сообщение для примера (контекст) -->
+            <div class="message user">
+                <div class="bubble">Привет! Какие тут правила?</div>
+                <div class="time">минуту назад</div>
+            </div>
+            <div class="message srs">
+                <div class="bubble">Правила в синем блоке выше 👆. И будь дружелюбным!</div>
+                <div class="time">сейчас</div>
+            </div>
+        </div>
+
+        <!-- ПАНЕЛЬ ВВОДА (тач-оптимизированная) -->
+        <div class="input-panel">
+            <input type="text" placeholder="Сообщение..." id="messageInput" enterkeyhint="send">
+            <button id="sendBtn">➤ ОТПР</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Включена полная тач-поддержка. Все кнопки с активным эффектом нажатия.
+            const messagesArea = document.getElementById('messagesArea');
+            const messageInput = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const takeModeratorBtn = document.getElementById('takeModeratorBtn');
+            const ruleBlock = document.getElementById('ruleBlock');
+            const moderatorTakeBlock = document.getElementById('moderatorTakeBlock');
+
+            // Состояние модератора: никто не взят
+            let isModeratorTaken = false;
+
+            // Звуков/вибро нет, но добавим микро-анимацию через классы (опционально)
+
+            // Функция добавления нового сообщения (user или srs)
+            function addMessage(text, sender = 'user') {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+
+                const bubbleDiv = document.createElement('div');
+                bubbleDiv.className = 'bubble';
+                bubbleDiv.textContent = text;
+
+                const timeDiv = document.createElement('div');
+                timeDiv.className = 'time';
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                timeDiv.textContent = `${timeString}`;
+
+                messageDiv.appendChild(bubbleDiv);
+                messageDiv.appendChild(timeDiv);
+
+                // Вставляем перед блоком правил? Нет, блок правил не должен перемешиваться. 
+                // Лучше добавлять в конец области сообщений, но чтобы блок правил оставался на месте.
+                // Однако нам нужно вставлять ДО блока правил? нет — блок правил должен всегда быть выше,
+                // как закрепленный. Но это не sticky. Сделаем проще: будем добавлять сообщения 
+                // непосредственно ПЕРЕД блоком правил? Но блок правил может быть где-то в середине.
+                // Мы спроектировали блок правил как статический элемент между сообщениями.
+                // Чтобы новые сообщения появлялись снизу, а блок правил оставался наверху,
+                // мы будем вставлять сообщения ПОСЛЕ блока правил, но перед панелью ввода.
+                // Но тогда нужно найти reference node — moderation-rule-block.
+                // В разметке messagesArea содержит правило и сообщения. Новые сообщения будем вставлять 
+                // перед последним элементом? Но последним может быть сообщение SRS. Лучше всегда вставлять 
+                // перед блоком правила? Тогда все новые будут выше блока правил — некрасиво.
+                // Идея: блок правил закреплён сверху, ниже идут сообщения. Значит, новые сообщения должны
+                // добавляться в конец messagesArea (перед инпутом). Но инпут вне messagesArea.
+                // Значит просто аппенд в messagesArea. Но блок правил окажется выше, это ок.
+                // Однако при добавлении сообщений они пойдут в самый низ, блок правил останется сверху.
+                // Так и должно быть — правила всегда наверху.
+                messagesArea.appendChild(messageDiv);
+
+                // Прокрутка вниз для нового сообщения (плавно)
+                messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                // Сохраняем поле ввода чистым
+            }
+
+            // Обработчик отправки сообщения (тач/клик)
+            function handleSendMessage() {
+                const text = messageInput.value.trim();
+                if (text === '') return;
+
+                // Добавляем сообщение от пользователя
+                addMessage(text, 'user');
+
+                // Эмуляция ответа SRS (синего бота) через небольшую задержку
+                setTimeout(() => {
+                    const srsAnswer = generateSRSAnswer(text);
+                    addMessage(srsAnswer, 'srs');
+                }, 300);
+
+                messageInput.value = '';
+                // Возвращаем фокус на мобильных удобно
+                messageInput.focus();
+            }
+
+            // Простейший генератор ответов (в синем стиле)
+            function generateSRSAnswer(userMsg) {
+                const lower = userMsg.toLowerCase();
+                if (lower.includes('привет') || lower.includes('здравствуй')) {
+                    return '🔵 Привет! Общайся по синим правилам.';
+                } else if (lower.includes('правила') || lower.includes('модерацию')) {
+                    return '⚙️ Правила в синем блоке. Нажми "ВЗЯТЬ", если хочешь модерировать (тест).';
+                } else if (lower.includes('спасибо')) {
+                    return '😌 Пожалуйста! Соблюдай синий кодекс.';
+                } else {
+                    const answers = [
+                        '📘 Я тебя понял. Продолжай.',
+                        '💙 Интересно. Ещё что-нибудь?',
+                        '🔷 Хорошо. Блюди порядок в чате.',
+                        '🫐 Здесь всё спокойно. Правила выше.'
+                    ];
+                    return answers[Math.floor(Math.random() * answers.length)];
+                }
+            }
+
+            // ВЗЯТИЕ МОДЕРАЦИИ (обработчик кнопки)
+            takeModeratorBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                if (isModeratorTaken) {
+                    // Если уже взята, можно показать сообщение (но по логике нельзя повторно взять)
+                    addMessage('❗ Модерация уже взята другим пользователем.', 'srs');
+                    return;
+                }
+
+                // Меняем состояние
+                isModeratorTaken = true;
+
+                // Убираем блок с кнопкой (скрываем блок moderatorTakeBlock)
+                // но оставляем правила, просто удаляем нижнюю часть.
+                if (moderatorTakeBlock) {
+                    // Удалим именно контейнер .moderator-take, чтобы больше не мозолил глаза
+                    moderatorTakeBlock.style.display = 'none';
+                }
+
+                // Создаем плашку, что модератор взят
+                const takenDiv = document.createElement('div');
+                takenDiv.className = 'moderator-taken-message';
+                takenDiv.id = 'moderatorTakenMsg';
+                takenDiv.innerHTML = '👮‍♂️ Модератор SRS назначен! Спасибо.';
+
+                // Вставим после правил (ruleBlock)
+                ruleBlock.insertAdjacentElement('afterend', takenDiv);
+
+                // Добавим сообщение в чат от имени SRS о взятии
+                addMessage('🛃 Пользователь взял модерацию. Теперь он следит за порядком (демо).', 'srs');
+
+                // Дополнительно можно послать приветствие
+                setTimeout(() => {
+                    addMessage('✨ Помни: модератор имеет право делать замечания по правилам.', 'srs');
+                }, 600);
+            });
+
+            // Отправка по кнопке
+            sendBtn.addEventListener('click', handleSendMessage);
+
+            // Отправка по Enter (с мобильной клавиатуры)
+            messageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSendMessage();
+                }
+            });
+
+            // Чтобы при тапе по кнопке не было двойных срабатываний (отключаем двойные нажатия)
+            takeModeratorBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();  // предотвращаем возможный зум/двойное нажатие
+            }, { passive: false });
+
+            sendBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+            }, { passive: false });
+
+            // Небольшая начальная прокрутка, чтобы было видно блок правил
+            window.onload = function() {
+                ruleBlock.scrollIntoView({ behavior: 'auto', block: 'center' });
+            };
+
+            // Предотвращаем случайное увеличение при двойном тапе в некоторых браузерах
+            document.querySelectorAll('button, .take-btn').forEach(btn => {
+                btn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                }, { passive: false });
+            });
+
+        })();
+    </script>
+</body>
+</html>
