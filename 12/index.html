@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ульяновск · достопримечательности · @concole_hack</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            color: #1a1a1a;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            line-height: 1.6;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes scaleIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes borderPulse {
+            0% { border-color: #eaeaea; }
+            50% { border-color: #1a1a1a; }
+            100% { border-color: #eaeaea; }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.1); }
+            50% { box-shadow: 0 0 20px 0 rgba(26, 26, 26, 0.05); }
+            100% { box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-out;
+        }
+
+        header {
+            margin-bottom: 4rem;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 1.5rem;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #1a1a1a;
+            transform: scaleX(0);
+            animation: scaleIn 0.5s ease-out 0.5s forwards;
+            transform-origin: left;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #1a1a1a, transparent);
+            margin: 2rem 0;
+            animation: scaleIn 0.8s ease-out;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin: 3rem 0 1.5rem 0;
+            position: relative;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .section-title::before {
+            content: "//";
+            color: #888;
+            margin-right: 0.8rem;
+            font-weight: 400;
+            animation: rotate 4s linear infinite;
+            display: inline-block;
+        }
+
+        .attraction-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .attraction-card {
+            border: 1px solid #eaeaea;
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: scaleIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attraction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(26, 26, 26, 0.03), transparent);
+            transition: left 0.5s;
+        }
+
+        .attraction-card:hover {
+            border-color: #1a1a1a;
+            background: #fafafa;
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.05);
+            animation: glow 2s infinite;
+        }
+
+        .attraction-card:hover::before {
+            left: 100%;
+        }
+
+        .attraction-name {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .attraction-name span {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 400;
+            background: #f0f0f0;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+            animation: float 3s infinite;
+        }
+
+        .attraction-name span:hover {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .attraction-desc {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+            line-height: 1.8;
+        }
+
+        .attraction-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #555;
+            flex-wrap: wrap;
+            animation: fadeIn 0.8s ease-out 0.3s both;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .meta-item:hover {
+            transform: translateX(5px);
+            color: #1a1a1a;
+        }
+
+        .meta-item::before {
+            content: "▹";
+            color: #888;
+            transition: transform 0.2s;
+        }
+
+        .meta-item:hover::before {
+            transform: scale(1.2);
+            color: #1a1a1a;
+        }
+
+        .footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 2px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            color: #444;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .footer a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px dotted #888;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .footer a:hover {
+            border-bottom: 1px solid #1a1a1a;
+            padding-left: 5px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+            flex-wrap: wrap;
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .stat-item {
+            font-size: 0.9rem;
+            animation: scaleIn 0.6s ease-out;
+            transition: transform 0.2s;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 500;
+            line-height: 1.2;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .stat-item:hover .stat-number {
+            transform: rotate(5deg);
+            color: #000;
+        }
+
+        .stat-label {
+            color: #666;
+        }
+
+        .quote {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: #f5f5f5;
+            border-left: 4px solid #1a1a1a;
+            font-style: italic;
+            animation: slideInLeft 0.8s ease-out;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 8rem;
+            color: rgba(26, 26, 26, 0.1);
+            font-family: serif;
+        }
+
+        .quote:hover {
+            background: #f0f0f0;
+            transform: scale(1.02);
+            border-left-width: 6px;
+        }
+
+        .quote-author {
+            margin-top: 1rem;
+            color: #666;
+            text-align: right;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eaeaea;
+            margin: 2rem 0;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 20px;
+            color: #444;
+            transition: all 0.3s;
+            animation: float 3s infinite;
+        }
+
+        .badge:hover {
+            background: #1a1a1a;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #1a1a1a, transparent);
+            margin: 4rem 0 2rem;
+            animation: scaleIn 1s ease-out;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: #1a1a1a;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+
+        .typing {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3s steps(40, end);
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            .attraction-name { font-size: 1.4rem; }
+            .typing { white-space: normal; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ульяновск <span class="cursor"></span></h1>
+            <div class="subhead">
+                <span class="typing">родина ленина · город на волге · симбирск</span>
+                <span>by @concole_hack</span>
+            </div>
+        </header>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">374</div>
+                <div class="stat-label">года истории</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2</div>
+                <div class="stat-label">названия</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">музеев</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1943</div>
+                <div class="stat-label">год переименования</div>
+            </div>
+        </div>
+
+        <div class="section-title">ленинские места</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    музей-мемориал в.и. ленина
+                    <span>главный музей</span>
+                </div>
+                <div class="attraction-desc">
+                    огромный мемориальный комплекс в центре города. музей ленина, дом-музей ульяновых, 
+                    педагогический университет. архитектура советского модернизма.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1970</div>
+                    <div class="meta-item">пл. ленина, 1</div>
+                    <div class="meta-item">ежедневно 10:00-18:00</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    дом-музей в.и. ленина
+                </div>
+                <div class="attraction-desc">
+                    деревянный дом, где прошли детские и юношеские годы владимира ульянова. 
+                    подлинная обстановка, личные вещи семьи ульяновых.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">ул. ленина, 70</div>
+                    <div class="meta-item">экскурсии каждый час</div>
+                    <div class="meta-item">подлинные интерьеры</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    квартира-музей семьи ульяновых
+                </div>
+                <div class="attraction-desc">
+                    флигель, где семья жила в 1871-1875 годах. восстановленная обстановка, 
+                    документы, фотографии, быт провинциальной интеллигенции.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">ул. ленина, 68</div>
+                    <div class="meta-item">интерактивные программы</div>
+                    <div class="meta-item">вход по билетам</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">исторический центр (симбирск)</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    бульвар новый венец
+                    <span>смотровая площадка</span>
+                </div>
+                <div class="attraction-desc">
+                    главная пешеходная улица на высоком берегу волги. потрясающий вид на реку, 
+                    старинные здания, памятник букве ё, ротонда.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">протяженность 1 км</div>
+                    <div class="meta-item">панорама волги</div>
+                    <div class="meta-item">вечерняя подсветка</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    гончаровская беседка
+                </div>
+                <div class="attraction-desc">
+                    символ города, ротонда в неоготическом стиле. построена в 1912 году в честь 
+                    столетия и.а. гончарова. место встреч и свиданий.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">1912 год</div>
+                    <div class="meta-item">венценосная ротонда</div>
+                    <div class="meta-item">отреставрирована 2012</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    дом-памятник и.а. гончарова
+                </div>
+                <div class="attraction-desc">
+                    краеведческий музей в здании, где родился автор "обломова". 
+                    экспозиция о жизни и творчестве писателя, история симбирска.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">ул. гончарова, 20</div>
+                    <div class="meta-item">основан 1895</div>
+                    <div class="meta-item">> 150 тыс. экспонатов</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    памятник букве ё
+                </div>
+                <div class="attraction-desc">
+                    единственный в мире памятник букве "ё". открыт в 2005 году в честь 
+                    уроженца симбирска н.м. карамзина, введшего эту букву.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">2005 год</div>
+                    <div class="meta-item">сквер карамзина</div>
+                    <div class="meta-item">гранитная стела</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">музеи</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    историко-мемориальный центр-музей и.а. гончарова
+                </div>
+                <div class="attraction-desc">
+                    литературная экспозиция, диван обломова, интерактивные залы. 
+                    воссозданный кабинет писателя.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">ул. гончарова, 20</div>
+                    <div class="meta-item">вт-вс 10:00-18:00</div>
+                    <div class="meta-item">экскурсии по записи</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    музей "архитектура эпохи модерна в симбирске"
+                </div>
+                <div class="attraction-desc">
+                    особняк барона фон штемпеля. интерьеры начала XX века, 
+                    коллекция мебели, предметов быта, фотографий.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">ул. л. толстого, 43</div>
+                    <div class="meta-item">1905 год</div>
+                    <div class="meta-item">виртуальные туры</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    музей гражданской авиации
+                </div>
+                <div class="attraction-desc">
+                    уникальная коллекция самолетов под открытым небом. ту-144, ан-24, яки, илы, 
+                    вертолеты. можно зайти в кабину пилота.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">аэропорт ульяновск-восточный</div>
+                    <div class="meta-item">> 30 экспонатов</div>
+                    <div class="meta-item">фотосессии разрешены</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    музей советского быта
+                </div>
+                <div class="attraction-desc">
+                    атмосфера ссср: мебель, техника, одежда, посуда, игрушки. 
+                    комната коммунальной квартиры, школьный класс.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">ул. гончарова, 3</div>
+                    <div class="meta-item">интерактив</div>
+                    <div class="meta-item">можно трогать экспонаты</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">храмы и соборы</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    спасо-вознесенский собор
+                </div>
+                <div class="attraction-desc">
+                    главный православный храм города. построен в классическом стиле, 
+                    высота колокольни 55 метров. действующий.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1841</div>
+                    <div class="meta-item">ул. ульяны громовой, 20</div>
+                    <div class="meta-item">богослужения ежедневно</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    неопалимовская церковь
+                </div>
+                <div class="attraction-desc">
+                    старейший храм города в стиле барокко. уникальный иконостас, 
+                    сохранившиеся росписи XVIII века.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">1724 год</div>
+                    <div class="meta-item">ул. 12 сентября, 91</div>
+                    <div class="meta-item">объект культурного наследия</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="quote">
+            "ульяновск — город контрастов: купеческий симбирск и советский ульяновск, 
+            родина ленина и родина гончарова, волжские просторы и авиационные заводы. 
+            здесь история встречается с современностью."
+            <div class="quote-author">— из путеводителя по ульяновской области</div>
+        </div>
+
+        <hr>
+
+        <div style="margin: 3rem 0;">
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; animation: fadeIn 1s ease-out;">
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 500; margin-bottom: 1rem; position: relative; display: inline-block;">
+                        📍 интересные факты
+                        <span style="position: absolute; bottom: -2px; left: 0; width: 100%; height: 1px; background: #1a1a1a; transform: scaleX(0); animation: scaleIn 0.5s ease-out 1s forwards;"></span>
+                    </div>
+                    <ul style="list-style: none; color: #444;">
+                        <li style="margin-bottom: 0.5rem; transition: transform 0.2s; animation: slideInLeft 0.5s ease-out;">✓ симбирск — родина ленина</li>
+                        <li style="margin-bottom: 0.5rem; transition: transform 0.2s; animation: slideInLeft 0.6s ease-out;">✓ здесь родился и.а. гончаров</li>
+                        <li style="margin-bottom: 0.5rem; transition: transform 0.2s; animation: slideInLeft 0.7s ease-out;">✓ буква ё появилась благодаря карамзину</li>
+                        <li style="margin-bottom: 0.5rem; transition: transform 0.2s; animation: slideInLeft 0.8s ease-out;">✓ авиационная столица россии</li>
+                        <li style="margin-bottom: 0.5rem; transition: transform 0.2s; animation: slideInLeft 0.9s ease-out;">✓ самый длинный мост через волгу (5.5 км)</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 500; margin-bottom: 1rem;">🚇 транспорт</div>
+                    <ul style="list-style: none; color: #444;">
+                        <li style="margin-bottom: 0.5rem; animation: slideInRight 0.5s ease-out;">✈ аэропорт ульяновск (центральный)</li>
+                        <li style="margin-bottom: 0.5rem; animation: slideInRight 0.6s ease-out;">✈ аэропорт восточный (грузовой)</li>
+                        <li style="margin-bottom: 0.5rem; animation: slideInRight 0.7s ease-out;">🚂 ж/д вокзал ульяновск-центр.</li>
+                        <li style="margin-bottom: 0.5rem; animation: slideInRight 0.8s ease-out;">🚌 автобусы, трамваи, троллейбусы</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 500; margin-bottom: 1rem;">🏛️ знаменитые люди</div>
+                    <ul style="list-style: none; color: #444;">
+                        <li style="margin-bottom: 0.5rem; animation: fadeIn 0.5s ease-out;">в.и. ленин (ульянов)</li>
+                        <li style="margin-bottom: 0.5rem; animation: fadeIn 0.6s ease-out;">и.а. гончаров</li>
+                        <li style="margin-bottom: 0.5rem; animation: fadeIn 0.7s ease-out;">н.м. карамзин</li>
+                        <li style="margin-bottom: 0.5rem; animation: fadeIn 0.8s ease-out;">а.ф. керенский</li>
+                        <li style="margin-bottom: 0.5rem; animation: fadeIn 0.9s ease-out;">и.я. яковлев</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #fafafa; padding: 2rem; margin: 3rem 0; border: 1px solid #eaeaea; animation: scaleIn 1s ease-out; transition: all 0.3s; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(45deg); animation: glow 3s infinite;"></div>
+            <div style="font-weight: 500; margin-bottom: 1rem; font-size: 1.2rem;">📍 маршрут "красный и белый"</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                <div><span style="color: #666;">начало:</span> музей ленина</div>
+                <div><span style="color: #666;">↓</span> дом ульяновых</div>
+                <div><span style="color: #666;">↓</span> новый венец</div>
+                <div><span style="color: #666;">↓</span> гончаровская беседка</div>
+                <div><span style="color: #666;">↓</span> дом гончарова</div>
+                <div><span style="color: #666;">конец:</span> набережная волги</div>
+            </div>
+            <div style="margin-top: 1rem; color: #666;">время прогулки: 3-4 часа · протяженность: 5 км</div>
+        </div>
+
+        <div class="footer">
+            <div>ульяновск · достопримечательности</div>
+            <div>by <a href="#">@concole_hack</a> · 2025 · jetbrains mono · анимации</div>
+        </div>
+    </div>
+</body>
+</html>
