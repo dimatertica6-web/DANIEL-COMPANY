@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>казань · достопримечательности · @concole_hack</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            color: #1a1a1a;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 4rem;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            background: #ccc;
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin: 3rem 0 1.5rem 0;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: "//";
+            color: #888;
+            margin-right: 0.8rem;
+            font-weight: 400;
+        }
+
+        .attraction-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .attraction-card {
+            border: 1px solid #eaeaea;
+            padding: 2rem;
+            transition: 0.2s;
+        }
+
+        .attraction-card:hover {
+            border-color: #1a1a1a;
+            background: #fafafa;
+        }
+
+        .attraction-name {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .attraction-name span {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: 400;
+            background: #f0f0f0;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .attraction-desc {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .attraction-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #555;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item::before {
+            content: "▹";
+            color: #888;
+        }
+
+        .footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 2px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            color: #444;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .footer a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px dotted #888;
+        }
+
+        .footer a:hover {
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            font-size: 0.9rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: #666;
+        }
+
+        .quote {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: #f5f5f5;
+            border-left: 4px solid #1a1a1a;
+            font-style: italic;
+        }
+
+        .quote-author {
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eaeaea;
+            margin: 2rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 20px;
+            color: #444;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #1a1a1a, transparent);
+            margin: 4rem 0 2rem;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            .attraction-name { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>казань · достопримечательности</h1>
+            <div class="subhead">
+                <span>столица татарстана · 1000+ лет истории</span>
+                <span>by @concole_hack</span>
+            </div>
+        </header>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">лет истории</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2</div>
+                <div class="stat-label">культуры</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3</div>
+                <div class="stat-label">объекта юнеско</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15</div>
+                <div class="stat-label">музеев</div>
+            </div>
+        </div>
+
+        <div class="section-title">казанский кремль</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    казанский кремль
+                    <span>объект юнеско</span>
+                </div>
+                <div class="attraction-desc">
+                    древнейшая часть города, уникальное сочетание татарской и русской архитектуры. 
+                    белокаменные стены, башни, соборы и мечети на одной территории.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан X век</div>
+                    <div class="meta-item">площадь 15 га</div>
+                    <div class="meta-item">ежедневно 8:00-22:00</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    мечеть кул-шариф
+                </div>
+                <div class="attraction-desc">
+                    главная мечеть татарстана и символ казани. построена в память о защитниках города 
+                    в 1552 году. семь этажей, голубые минареты, музей ислама.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построена 2005</div>
+                    <div class="meta-item">высота минаретов 58 м</div>
+                    <div class="meta-item">вход свободный</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    благовещенский собор
+                </div>
+                <div class="attraction-desc">
+                    древнейший православный храм казани. построен псковскими мастерами в XVI веке. 
+                    уникальные фрески, пятиярусный иконостас.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">1562 год</div>
+                    <div class="meta-item">псковская архитектура</div>
+                    <div class="meta-item">богослужения</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    башня сююмбике
+                </div>
+                <div class="attraction-desc">
+                    падающая башня, символ казани. семь ярусов, наклон 2 метра. 
+                    названа в честь последней царицы казанского ханства.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">XVII век</div>
+                    <div class="meta-item">высота 58 м</div>
+                    <div class="meta-item">отклонение 2 м</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">улица баумана</div>
+
+        <div class="attraction-card">
+            <div class="attraction-name">
+                улица баумана
+                <span>казанский арбат</span>
+            </div>
+            <div class="attraction-desc">
+                пешеходная улица в центре города. кафе, сувениры, уличные музыканты, 
+                исторические здания, бронзовые скульптуры.
+            </div>
+            <div class="attraction-meta">
+                <div class="meta-item">длина 1.5 км</div>
+                <div class="meta-item">памятник коту казанскому</div>
+                <div class="meta-item">нулевой меридиан</div>
+            </div>
+        </div>
+
+        <div class="section-title">музеи</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    музей чак-чака
+                </div>
+                <div class="attraction-desc">
+                    частный музей татарской кухни в купеческом особняке. 
+                    дегустация чак-чака, чаепитие, история купечества.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">ул. парижской коммуны, 18</div>
+                    <div class="meta-item">экскурсии каждый час</div>
+                    <div class="meta-item">дегустация включена</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    национальный музей рт
+                </div>
+                <div class="attraction-desc">
+                    главный музей республики. археология, этнография, быт народов поволжья, 
+                    коллекция золота, карета екатерины II.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1894</div>
+                    <div class="meta-item">> 900 тыс. экспонатов</div>
+                    <div class="meta-item">кремлевская, 2</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    музей социалистического быта
+                </div>
+                <div class="attraction-desc">
+                    ностальгическая коллекция предметов ссср. игрушки, техника, одежда, 
+                    музыка, атмосфера советской квартиры.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">ул. университетская, 6</div>
+                    <div class="meta-item">интерактивные экскурсии</div>
+                    <div class="meta-item">можно трогать экспонаты</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">театры</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    театр оперы и балета им. джалиля
+                </div>
+                <div class="attraction-desc">
+                    один из крупнейших театров россии. балет, опера, гала-концерты. 
+                    архитектура в стиле неоклассицизма.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">здание 1956</div>
+                    <div class="meta-item">пл. свободы, 2</div>
+                    <div class="meta-item">афиша на сайте</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    театр кукол "экият"
+                </div>
+                <div class="attraction-desc">
+                    сказочный замок для детей и взрослых. один из старейших театров кукол россии. 
+                    постановки на татарском и русском языках.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1934</div>
+                    <div class="meta-item">ул. петербургская, 57</div>
+                    <div class="meta-item">здание в стиле сказки</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">храмы разных конфессий</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    храм-памятник воинам, павшим при взятии казани
+                </div>
+                <div class="attraction-desc">
+                    уникальный храм в византийском стиле, построенный в память о погибших солдатах. 
+                    рядом — памятник воинам-артиллеристам.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">1823 год</div>
+                    <div class="meta-item">архитектор альфтан</div>
+                    <div class="meta-item">ул. карла маркса, 67</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    богородицкий монастырь
+                </div>
+                <div class="attraction-desc">
+                    место обретения казанской иконы божией матери. воссозданный собор, 
+                    пещера с источником, духовный центр.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">XVI век</div>
+                    <div class="meta-item">ул. большая красная, 5</div>
+                    <div class="meta-item">паломнический центр</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">современные символы</div>
+
+        <div class="attraction-card">
+            <div class="attraction-name">
+                центр семьи "казан"
+            </div>
+            <div class="attraction-desc">
+                дворец бракосочетаний в форме чаши. панорамный вид на волгу и кремль. 
+                символ современной казани.
+            </div>
+            <div class="attraction-meta">
+                <div class="meta-item">построен 2013</div>
+                <div class="meta-item">высота 32 м</div>
+                <div class="meta-item">смотровая площадка</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="quote">
+            "казань — город, где встречаются восток и запад, ислам и православие, 
+            древность и современность. здесь минареты соседствуют с куполами, 
+            а тысячелетняя история — с университетами и it-парками."
+            <div class="quote-author">— из путеводителя по татарстану</div>
+        </div>
+
+        <hr>
+
+        <div style="margin: 3rem 0;">
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 500; margin-bottom: 1rem;">🍴 национальная кухня</div>
+                    <ul style="list-style: none; color: #444;">
+                        <li style="margin-bottom: 0.5rem;">✓ чак-чак — медовый десерт</li>
+                        <li style="margin-bottom: 0.5rem;">✓ эчпочмак — треугольник с мясом</li>
+                        <li style="margin-bottom: 0.5rem;">✓ кыстыбый — лепешка с пшеном</li>
+                        <li style="margin-bottom: 0.5rem;">✓ татарский чай с молоком</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 500; margin-bottom: 1rem;">🚇 транспорт</div>
+                    <ul style="list-style: none; color: #444;">
+                        <li style="margin-bottom: 0.5rem;">метро (1 линия, 11 станций)</li>
+                        <li style="margin-bottom: 0.5rem;">трамваи, троллейбусы</li>
+                        <li style="margin-bottom: 0.5rem;">аэропорт казань</li>
+                        <li style="margin-bottom: 0.5rem;">вокзал казань-1, казань-2</li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <div style="font-weight: 500; margin-bottom: 1rem;">🏨 интересные факты</div>
+                    <ul style="list-style: none; color: #444;">
+                        <li style="margin-bottom: 0.5rem;">✓ тысячелетие казани (2005)</li>
+                        <li style="margin-bottom: 0.5rem;">✓ универсиада 2013</li>
+                        <li style="margin-bottom: 0.5rem;">✓ чемпионат мира по футболу 2018</li>
+                        <li style="margin-bottom: 0.5rem;">✓ бронзовый кот казанский</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #fafafa; padding: 2rem; margin: 3rem 0; border: 1px solid #eaeaea;">
+            <div style="font-weight: 500; margin-bottom: 1rem; font-size: 1.2rem;">📍 как добраться до кремля</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                <div><span style="color: #666;">метро:</span> кремлевская</div>
+                <div><span style="color: #666;">автобус:</span> 6, 15, 29, 35, 47</div>
+                <div><span style="color: #666;">трамвай:</span> 2, 3, 5, 7</div>
+                <div><span style="color: #666;">пешком:</span> от ул. баумана 5 мин</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>казань · достопримечательности</div>
+            <div>by <a href="#">@concole_hack</a> · 2025 · jetbrains mono</div>
+        </div>
+    </div>
+</body>
+</html>

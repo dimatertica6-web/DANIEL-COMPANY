@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>санкт-петербург · достопримечательности · @concole_hack</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            color: #1a1a1a;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 4rem;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 500;
+            margin: 3rem 0 1.5rem 0;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: "//";
+            color: #888;
+            margin-right: 0.8rem;
+            font-weight: 400;
+        }
+
+        .attraction-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .attraction-card {
+            border: 1px solid #eaeaea;
+            padding: 2rem;
+            transition: 0.2s;
+        }
+
+        .attraction-card:hover {
+            border-color: #1a1a1a;
+            background: #fafafa;
+        }
+
+        .attraction-name {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .attraction-name span {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 400;
+            background: #f0f0f0;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+        }
+
+        .attraction-desc {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .attraction-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #555;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item::before {
+            content: "▹";
+            color: #888;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0 3rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .quote {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: #f5f5f5;
+            border-left: 4px solid #1a1a1a;
+            font-style: italic;
+        }
+
+        .quote-author {
+            margin-top: 1rem;
+            color: #666;
+            text-align: right;
+        }
+
+        .footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 2px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            color: #444;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px dotted #888;
+        }
+
+        .footer a:hover {
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 20px;
+            color: #444;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eaeaea;
+            margin: 2rem 0;
+        }
+
+        .info-block {
+            background: #fafafa;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #eaeaea;
+        }
+
+        .info-title {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .bridge-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.8rem;
+            list-style: none;
+        }
+
+        .bridge-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2.2rem; }
+            .attraction-name { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>санкт-петербург · достопримечательности</h1>
+            <div class="subhead">
+                <span>северная столица · культурная столица · город белых ночей</span>
+                <span>by @concole_hack</span>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">1703</div>
+                <div class="stat-label">год основания</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">322</div>
+                <div class="stat-label">года истории</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">800+</div>
+                <div class="stat-label">музеев</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">342</div>
+                <div class="stat-label">моста</div>
+            </div>
+        </div>
+
+        <div class="section-title">главные символы</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    эрмитаж
+                    <span>главный музей</span>
+                </div>
+                <div class="attraction-desc">
+                    один из крупнейших художественных музеев мира. коллекция насчитывает около 3 миллионов экспонатов. 
+                    зимний дворец, главный штаб, меншиковский дворец.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1764</div>
+                    <div class="meta-item">> 3 млн экспонатов</div>
+                    <div class="meta-item">дворцовая пл., 2</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    исаакиевский собор
+                </div>
+                <div class="attraction-desc">
+                    крупнейший православный храм города. строился 40 лет, уникальные мозаики, 
+                    колоннада с видом на город.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1858</div>
+                    <div class="meta-item">высота 101.5 м</div>
+                    <div class="meta-item">исаакиевская пл., 4</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    петропавловская крепость
+                </div>
+                <div class="attraction-desc">
+                    место основания города. крепость на заячьем острове, петропавловский собор, 
+                    тюрьма, монетный двор.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">заложена 1703</div>
+                    <div class="meta-item">6 бастионов</div>
+                    <div class="meta-item">полуденный выстрел</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    храм спаса на крови
+                </div>
+                <div class="attraction-desc">
+                    храм на месте убийства императора александра ii. уникальная мозаика — 
+                    около 7000 квадратных метров.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1907</div>
+                    <div class="meta-item">наб. канала грибоедова, 2</div>
+                    <div class="meta-item">мозаика 7000 м²</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    казанский собор
+                </div>
+                <div class="attraction-desc">
+                    главный действующий храм города. колоннада в виде дуги, памятники кутузову и барклаю-де-толли, 
+                    усыпальница кутузова.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1811</div>
+                    <div class="meta-item">казанская пл., 2</div>
+                    <div class="meta-item">колонны 136 шт</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">дворцы и музеи</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    русский музей
+                </div>
+                <div class="attraction-desc">
+                    крупнейшее собрание русского искусства. михайловский дворец, корпус бенуа, 
+                    строгановский дворец, мраморный дворец.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1895</div>
+                    <div class="meta-item">> 400 тыс. экспонатов</div>
+                    <div class="meta-item">инженерная ул., 4</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    петергоф
+                    <span>русский версаль</span>
+                </div>
+                <div class="attraction-desc">
+                    дворцово-парковый ансамбль на южном берегу финского залива. 150 фонтанов, 
+                    большой дворец, монплезир, эрмитаж.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1714</div>
+                    <div class="meta-item">150 фонтанов</div>
+                    <div class="meta-item">электричка от балтийского</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    царское село (пушкин)
+                </div>
+                <div class="attraction-desc">
+                    императорская резиденция. екатерининский дворец с янтарной комнатой, 
+                    александровский дворец, лицей пушкина.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1710</div>
+                    <div class="meta-item">янтарная комната</div>
+                    <div class="meta-item">г. пушкин</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    павловск
+                </div>
+                <div class="attraction-desc">
+                    дворцово-парковый ансамбль конца xviii века. павловский дворец, 
+                    один из крупнейших пейзажных парков европы.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1777</div>
+                    <div class="meta-item">парк 600 га</div>
+                    <div class="meta-item">г. павловск</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    гатчина
+                </div>
+                <div class="attraction-desc">
+                    дворец в стиле классицизма с подземным ходом. любимая резиденция павла i, 
+                    огромный пейзажный парк.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1766</div>
+                    <div class="meta-item">краснокирпичный замок</div>
+                    <div class="meta-item">г. гатчина</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">театры</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    мариинский театр
+                </div>
+                <div class="attraction-desc">
+                    один из ведущих театров оперы и балета мира. историческая сцена, 
+                    вторая сцена (мариинский-2), концертный зал.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1860</div>
+                    <div class="meta-item">театральная пл., 1</div>
+                    <div class="meta-item">балет, опера</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    михайловский театр
+                </div>
+                <div class="attraction-desc">
+                    один из старейших музыкальных театров петербурга. опера и балет, 
+                    классические и современные постановки.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1833</div>
+                    <div class="meta-item">пл. искусств, 1</div>
+                    <div class="meta-item">реконструкция 2007</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    александринский театр
+                </div>
+                <div class="attraction-desc">
+                    старейший драматический театр россии. здание в стиле ампир, 
+                    постановки русской и зарубежной классики.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1756</div>
+                    <div class="meta-item">пл. островского, 6</div>
+                    <div class="meta-item">драма</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">площади и проспекты</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    дворцовая площадь
+                </div>
+                <div class="attraction-desc">
+                    главная площадь города. александровская колонна, здание главного штаба с триумфальной аркой, 
+                    зимний дворец.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">площадь 5.4 га</div>
+                    <div class="meta-item">колонна 47.5 м</div>
+                    <div class="meta-item">арка 1829</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    невский проспект
+                </div>
+                <div class="attraction-desc">
+                    главная улица города. от адмиралтейства до александро-невской лавры. 
+                    магазины, кафе, дворцы, мосты.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">длина 4.5 км</div>
+                    <div class="meta-item">25 м ширина</div>
+                    <div class="meta-item">канал грибоедова</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    сенатская площадь
+                </div>
+                <div class="attraction-desc">
+                    одна из старейших площадей. медный всадник — памятник петру i, 
+                    здания сената и синода.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">медный всадник 1782</div>
+                    <div class="meta-item">декабристы 1825</div>
+                    <div class="meta-item">адмиралтейская наб.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">мосты</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    дворцовый мост
+                </div>
+                <div class="attraction-desc">
+                    разводной мост через большую неву. соединяет адмиралтейскую и васильевский остров. 
+                    символ города.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1916</div>
+                    <div class="meta-item">длина 260 м</div>
+                    <div class="meta-item">разводной</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    банковский мост
+                </div>
+                <div class="attraction-desc">
+                    пешеходный мост через канал грибоедова. украшен фигурами грифонов с золотыми крыльями.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1826</div>
+                    <div class="meta-item">грифоны</div>
+                    <div class="meta-item">канал грибоедова</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    аничков мост
+                </div>
+                <div class="attraction-desc">
+                    мост через фонтанку. знаменит скульптурами "укротители коней" работы клодта.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1841</div>
+                    <div class="meta-item">4 коня</div>
+                    <div class="meta-item">невский пр.</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    ломоносова мост
+                </div>
+                <div class="attraction-desc">
+                    один из четырёх мостов через фонтанку с сохранившимися башнями. 
+                    единственный разводной с башнями.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1787</div>
+                    <div class="meta-item">башни</div>
+                    <div class="meta-item">наб. фонтанки</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">храмы и соборы</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    никольский морской собор
+                </div>
+                <div class="attraction-desc">
+                    морской собор в стиле барокко. голубые купола с золотыми звёздами, 
+                    храм моряков.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1762</div>
+                    <div class="meta-item">никольская пл., 1</div>
+                    <div class="meta-item">морской полк</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    владимирский собор
+                </div>
+                <div class="attraction-desc">
+                    собор в стиле классицизма. пятиглавый храм, колокольня, икона владимирской божьей матери.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1789</div>
+                    <div class="meta-item">владимирский пр., 20</div>
+                    <div class="meta-item">достоевский прихожанин</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    собор смольного монастыря
+                </div>
+                <div class="attraction-desc">
+                    часть смольного монастыря, архитектор растрелли. небесно-голубой собор, 
+                    так и не был освящён как храм.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построен 1835</div>
+                    <div class="meta-item">растрелли</div>
+                    <div class="meta-item">пл. растрелли, 1</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">улицы и набережные</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    улица зодчего росси
+                </div>
+                <div class="attraction-desc">
+                    уникальная улица с идеальными пропорциями: ширина равна высоте зданий (22 м), 
+                    длина 220 м (ровно в 10 раз больше).
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">построена 1832</div>
+                    <div class="meta-item">пропорции 1:10</div>
+                    <div class="meta-item">театральная ул.</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    набережная фонтанки
+                </div>
+                <div class="attraction-desc">
+                    одна из красивейших набережных. особняки, дворцы, мосты, 
+                    шереметевский дворец, аничков дворец.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">длина 6.7 км</div>
+                    <div class="meta-item">7 мостов</div>
+                    <div class="meta-item">петроградская сторона</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    малая садовая улица
+                </div>
+                <div class="attraction-desc">
+                    пешеходная улица в центре. бронзовые скульптуры: фотограф, кошка елисей, 
+                    кошка василиса.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">пешеходная</div>
+                    <div class="meta-item">длина 200 м</div>
+                    <div class="meta-item">скульптуры</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">острова и парки</div>
+
+        <div class="attraction-grid">
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    васильевский остров
+                </div>
+                <div class="attraction-desc">
+                    самый большой остров. стрелка васильевского острова с ростральными колоннами, 
+                    кунсткамера, академия художеств.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">стрелка</div>
+                    <div class="meta-item">кунсткамера</div>
+                    <div class="meta-item">ростральные колонны</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    елагин остров
+                </div>
+                <div class="attraction-desc">
+                    остров в устье невы. елагин дворец, парк, пруды, 
+                    одно из любимых мест отдыха горожан.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">парк 96 га</div>
+                    <div class="meta-item">дворец 1822</div>
+                    <div class="meta-item">еленин мост</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    крестовский остров
+                </div>
+                <div class="attraction-desc">
+                    остров с парком, стадионом "газпром арена", 
+                    аттракционами, яхт-клубом.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">стадион 2017</div>
+                    <div class="meta-item">приморский парк</div>
+                    <div class="meta-item">диво-остров</div>
+                </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-name">
+                    летний сад
+                </div>
+                <div class="attraction-desc">
+                    старейший парк города. летний дворец петра i, фонтаны, 
+                    мраморные скульптуры, ограда.
+                </div>
+                <div class="attraction-meta">
+                    <div class="meta-item">основан 1704</div>
+                    <div class="meta-item">летний дворец</div>
+                    <div class="meta-item">ограда 1784</div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="quote">
+            "петербург — самый умышленный город на свете. он весь воплощение идеи, 
+            мечты, грандиозного замысла. город контрастов: дворцы и коммуналки, 
+            парадные проспекты и глухие дворы-колодцы, белые ночи и разводные мосты."
+            <div class="quote-author">— из путеводителя по петербургу</div>
+        </div>
+
+        <div class="info-block">
+            <div class="info-title">🌉 развод мостов (график)</div>
+            <ul class="bridge-list">
+                <li>дворцовый мост — 01:10 - 02:50, 03:10 - 04:55</li>
+                <li>благовещенский мост — 01:25 - 02:45, 03:10 - 05:00</li>
+                <li>троицкий мост — 01:20 - 04:50</li>
+                <li>литейный мост — 01:40 - 04:45</li>
+                <li>большеохтинский мост — 02:00 - 05:00</li>
+                <li>александра невского мост — 02:20 - 05:10</li>
+                <li>биржевой мост — 02:00 - 04:55</li>
+            </ul>
+            <p style="margin-top: 1rem; color: #666;">в период навигации (апрель-ноябрь)</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0;">
+            <div>
+                <div style="font-weight: 500; margin-bottom: 1rem;">🥟 петербургская кухня</div>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;">✓ корюшка (май-июнь)</li>
+                    <li style="margin-bottom: 0.5rem;">✓ ленинградский плов</li>
+                    <li style="margin-bottom: 0.5rem;">✓ пирожки с вязигой</li>
+                    <li style="margin-bottom: 0.5rem;">✓ кофе в пышечной</li>
+                    <li style="margin-bottom: 0.5rem;">✓ балтика (пиво)</li>
+                </ul>
+            </div>
+            <div>
+                <div style="font-weight: 500; margin-bottom: 1rem;">🏛️ бесплатные музеи</div>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;">✓ эрмитаж (3-й четверг)</li>
+                    <li style="margin-bottom: 0.5rem;">✓ русский музей (18 число)</li>
+                    <li style="margin-bottom: 0.5rem;">✓ музей обороны и блокады</li>
+                    <li style="margin-bottom: 0.5rem;">✓ музей печати</li>
+                    <li style="margin-bottom: 0.5rem;">✓ музей-квартира пушкина</li>
+                </ul>
+            </div>
+            <div>
+                <div style="font-weight: 500; margin-bottom: 1rem;">🚂 транспорт</div>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;">✈ пулково</li>
+                    <li style="margin-bottom: 0.5rem;">🚂 московский, ладожский, финляндский</li>
+                    <li style="margin-bottom: 0.5rem;">🚇 метро (5 линий, 72 станции)</li>
+                    <li style="margin-bottom: 0.5rem;">🚌 автобусы, трамваи, троллейбусы</li>
+                    <li style="margin-bottom: 0.5rem;">⛵ аквабус (летом)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="background: #fafafa; padding: 2rem; margin: 2rem 0; border: 1px solid #eaeaea;">
+            <div class="info-title">📍 маршрут "золотой треугольник"</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                <div><span style="color: #666;">начало:</span> дворцовая пл.</div>
+                <div><span style="color: #666;">↓</span> невский пр.</div>
+                <div><span style="color: #666;">↓</span> канал грибоедова</div>
+                <div><span style="color: #666;">↓</span> спас на крови</div>
+                <div><span style="color: #666;">↓</span> исаакиевская пл.</div>
+                <div><span style="color: #666;">↓</span> адмиралтейство</div>
+                <div><span style="color: #666;">конец:</span> стрелка в.о.</div>
+            </div>
+            <div style="margin-top: 1rem; color: #666;">время прогулки: 4-5 часов · протяженность: 6 км</div>
+        </div>
+
+        <div class="footer">
+            <div>санкт-петербург · достопримечательности</div>
+            <div>by <a href="#">@concole_hack</a> · 2025 · jetbrains mono</div>
+        </div>
+    </div>
+</body>
+</html>
