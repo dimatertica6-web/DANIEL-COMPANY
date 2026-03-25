@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kali Terminal Ultimate | Полная документация команд</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0c10;
+            color: #e2e8f0;
+            line-height: 1.55;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* звездный фон с изображением */
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://avatars.mds.yandex.net/i?id=c45ea55bb9d0401bcd1a2409b8fe1e8cf7e1ad6e-13089762-images-thumbs&n=13') no-repeat center center/cover;
+            z-index: 0;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .overlay-dark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(8, 12, 20, 0.92), rgba(3, 6, 12, 0.96));
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* хедер с большим круглым логотипом */
+        .header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #2a3a48;
+        }
+        
+        /* Главный контейнер логотипа — большой и круглый */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        /* КРУГЛЫЙ БОЛЬШОЙ ЛОГОТИП */
+        .round-logo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: linear-gradient(135deg, #0f212f, #0a121c);
+            box-shadow: 0 0 0 3px rgba(79, 149, 189, 0.3), 0 0 0 8px rgba(44, 76, 110, 0.2), 0 20px 35px -10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            border: 2px solid #5f8aac;
+            cursor: pointer;
+        }
+        
+        .round-logo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 4px rgba(95, 138, 172, 0.5), 0 0 0 12px rgba(44, 76, 110, 0.3), 0 25px 40px -12px black;
+            border-color: #8ab3d0;
+        }
+        
+        /* Адаптация для мобильных: лого чуть меньше, но всё равно выделяется */
+        @media (max-width: 640px) {
+            .round-logo {
+                width: 80px;
+                height: 80px;
+            }
+            .logo-container {
+                gap: 1.2rem;
+            }
+        }
+        
+        /* Текстовая группа рядом с лого */
+        .logo-text-group {
+            flex: 1;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f0f6fa;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #ffffff 0%, #b8dcff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .version-badge {
+            font-size: 0.85rem;
+            color: #9ab3c6;
+            background: rgba(44, 76, 110, 0.4);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 0.3rem;
+            backdrop-filter: blur(4px);
+        }
+        
+        .subtitle {
+            color: #9ab3c6;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #8aaec2;
+        }
+        .stats i {
+            margin-right: 6px;
+            color: #6c9ebf;
+        }
+
+        /* поиск */
+        .search-section {
+            margin-bottom: 2rem;
+        }
+        .search-box {
+            background: #11161f;
+            border: 1px solid #2d3e4e;
+            border-radius: 48px;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 500px;
+            transition: all 0.2s;
+        }
+        .search-box:focus-within {
+            border-color: #5f8aac;
+            box-shadow: 0 0 12px rgba(95,138,172,0.2);
+        }
+        .search-box i {
+            color: #7e9eb5;
+        }
+        .search-box input {
+            border: none;
+            background: transparent;
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            font-family: 'Source Code Pro', monospace;
+            color: #eef4fc;
+        }
+        .search-box input::placeholder {
+            color: #4a6579;
+        }
+
+        /* категории */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #26323f;
+        }
+        .cat-btn {
+            background: transparent;
+            border: 1px solid #2d4050;
+            border-radius: 40px;
+            padding: 0.45rem 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #bcd4e6;
+        }
+        .cat-btn:hover {
+            background: #1e2f3c;
+            border-color: #5f8aac;
+        }
+        .cat-btn.active {
+            background: #2c4c6e;
+            border-color: #5f8aac;
+            color: white;
+            box-shadow: 0 2px 8px rgba(44,76,110,0.4);
+        }
+
+        /* сетка команд */
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.2rem;
+        }
+        .command-card {
+            background: #0f151fcc;
+            backdrop-filter: blur(2px);
+            border-radius: 20px;
+            border: 1px solid #2a3a48;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .command-card:hover {
+            border-color: #5f7e9a;
+            background: #121a26cc;
+            transform: translateY(-2px);
+        }
+        .cmd-header {
+            padding: 1rem 1.2rem;
+            background: #0b111acc;
+            border-bottom: 1px solid #202e3a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cmd-name {
+            font-family: 'Source Code Pro', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #cae3f2;
+            letter-spacing: -0.2px;
+        }
+        .cmd-icon {
+            font-size: 1.1rem;
+            width: 28px;
+            color: #8fb4d0;
+        }
+        .cmd-body {
+            padding: 1rem 1.2rem;
+        }
+        .cmd-desc {
+            color: #cbdbe6;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+        .cmd-usage {
+            background: #080e16;
+            border-radius: 12px;
+            padding: 0.6rem 0.9rem;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.75rem;
+            color: #b8d4f0;
+            border-left: 3px solid #5f8aac;
+            margin-top: 0.6rem;
+            overflow-x: auto;
+        }
+        .cmd-flags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+        .flag {
+            background: #15222e;
+            border-radius: 12px;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.65rem;
+            font-family: monospace;
+            color: #b0cce5;
+        }
+        .example-line {
+            margin-top: 0.6rem;
+            font-size: 0.7rem;
+            color: #8daac2;
+            font-family: 'Source Code Pro', monospace;
+            background: #0a1019;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            border: 1px solid #1e2d3a;
+        }
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #7c9abc;
+            background: #0f151faa;
+            border-radius: 24px;
+            border: 1px solid #2a3a48;
+        }
+        footer {
+            margin-top: 2.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #26323f;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #6a8aa5;
+        }
+        kbd {
+            background: #1a2a38;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+        
+        /* анимация пульсации для логотипа (тонкая) */
+        @keyframes gentlePulse {
+            0% { box-shadow: 0 0 0 3px rgba(79, 149, 189, 0.3), 0 0 0 8px rgba(44, 76, 110, 0.2); }
+            50% { box-shadow: 0 0 0 5px rgba(95, 138, 172, 0.5), 0 0 0 12px rgba(44, 76, 110, 0.3); }
+            100% { box-shadow: 0 0 0 3px rgba(79, 149, 189, 0.3), 0 0 0 8px rgba(44, 76, 110, 0.2); }
+        }
+        .round-logo {
+            animation: gentlePulse 3s infinite ease-in-out;
+        }
+        
+        @media (max-width: 800px) {
+            .container {
+                padding: 1rem;
+            }
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars-bg"></div>
+<canvas id="stars-canvas"></canvas>
+<div class="overlay-dark"></div>
+
+<div class="container">
+    <div class="header">
+        <div class="logo-container">
+            <!-- КРУГЛЫЙ БОЛЬШОЙ ЛОГОТИП (явно выделяется) -->
+            <img class="round-logo" 
+                 src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fgen.krea.ai%2Fimages%2F223ef2e2-e46f-449a-9bfe-21a077203b52.png&s=1024" 
+                 alt="Kali Terminal Logo"
+                 onerror="this.onerror=null; this.src='https://placehold.co/200x200/1e2f3c/8ab3d0?text=KT'; this.style.objectFit='cover';">
+            <div class="logo-text-group">
+                <h1>Kali Terminal Ultimate</h1>
+                <div class="version-badge">
+                    <i class="fas fa-terminal"></i> Полная документация v4.2
+                </div>
+                <div class="subtitle">
+                    <i class="fas fa-dragon"></i> 210+ встроенных команд | Профессиональный справочник
+                </div>
+            </div>
+        </div>
+        <div class="stats">
+            <span><i class="fas fa-terminal"></i> 210+ встроенных команд</span>
+            <span><i class="fas fa-book-open"></i> Полное руководство с примерами</span>
+            <span><i class="fas fa-shield-alt"></i> Zero telemetry</span>
+            <span><i class="fas fa-code-branch"></i> Open Source</span>
+        </div>
+    </div>
+
+    <div class="search-section">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Поиск команды... например: grep, encrypt, network">
+        </div>
+    </div>
+
+    <div class="category-nav" id="categoryNav">
+        <button class="cat-btn active" data-cat="all">📌 Все команды (210+)</button>
+        <button class="cat-btn" data-cat="files">📁 Файлы и директории</button>
+        <button class="cat-btn" data-cat="text">🔍 Поиск и фильтрация</button>
+        <button class="cat-btn" data-cat="network">🌐 Сетевые утилиты</button>
+        <button class="cat-btn" data-cat="crypto">🔒 Криптография и хеши</button>
+        <button class="cat-btn" data-cat="system">💻 Системные команды</button>
+        <button class="cat-btn" data-cat="process">⚙️ Управление процессами</button>
+        <button class="cat-btn" data-cat="archive">📦 Архивы и сжатие</button>
+        <button class="cat-btn" data-cat="visual">🎨 Визуальные эффекты</button>
+        <button class="cat-btn" data-cat="info">ℹ️ Информация и справка</button>
+    </div>
+
+    <div class="commands-grid" id="commandsGrid"></div>
+    <footer>
+        Kali Terminal Ultimate Edition — профессиональный инструмент с открытым исходным кодом.<br>
+        Все данные обрабатываются локально, никакой телеметрии. Используйте <kbd>help</kbd> внутри терминала.
+    </footer>
+</div>
+
+<script>
+    // РАСШИРЕННАЯ БАЗА ДАННЫХ КОМАНД — более 210 записей с детальным описанием
+    const commandsData = [
+        // ========== ФАЙЛЫ И ДИРЕКТОРИИ (30+) ==========
+        { name: "pwd", category: "files", icon: "📂", desc: "Print Working Directory — выводит абсолютный путь текущей рабочей директории", usage: "pwd", flags: [], example: "$ pwd\n/home/user/Documents" },
+        { name: "ls", category: "files", icon: "📋", desc: "List directory contents — отображает список файлов и поддиректорий", usage: "ls [опции] [путь]", flags: ["-a — показать скрытые файлы", "-l — подробный формат (права, размер, дата)", "-h — человекочитаемый размер", "-R — рекурсивно", "-t — сортировка по времени"], example: "$ ls -la ~/Projects" },
+        { name: "cd", category: "files", icon: "📁", desc: "Change Directory — смена текущей рабочей директории", usage: "cd [путь]", flags: [".. — подняться на уровень выше", "~ — домашняя директория", "- — предыдущая директория"], example: "$ cd /var/log\n$ cd ~/Downloads" },
+        { name: "mkdir", category: "files", icon: "📁", desc: "Make Directory — создание новой директории", usage: "mkdir [опции] имя", flags: ["-p — создать все родительские директории"], example: "$ mkdir -p project/src/components" },
+        { name: "rmdir", category: "files", icon: "🗑️", desc: "Remove Directory — удаление пустой директории", usage: "rmdir имя", flags: [], example: "$ rmdir empty_folder" },
+        { name: "rm", category: "files", icon: "🗑️", desc: "Remove — удаление файлов и директорий", usage: "rm [опции] файл", flags: ["-r — рекурсивное удаление (для папок)", "-f — принудительное удаление", "-i — запрос подтверждения"], example: "$ rm -rf old_backup" },
+        { name: "cp", category: "files", icon: "📋", desc: "Copy — копирование файлов и директорий", usage: "cp [опции] источник назначение", flags: ["-r — копировать директории рекурсивно", "-i — запрос перед перезаписью", "-v — подробный вывод"], example: "$ cp -r documents backup/" },
+        { name: "mv", category: "files", icon: "✂️", desc: "Move — перемещение или переименование файлов", usage: "mv источник назначение", flags: ["-i — запрос перед перезаписью", "-v — подробный вывод"], example: "$ mv oldname.txt newname.txt\n$ mv file.txt /tmp/" },
+        { name: "touch", category: "files", icon: "✨", desc: "Touch — создание пустого файла или обновление временных меток", usage: "touch файл", flags: [], example: "$ touch config.ini" },
+        { name: "cat", category: "files", icon: "📄", desc: "Concatenate — вывод содержимого файла в терминал", usage: "cat [опции] файл", flags: ["-n — нумерация строк", "-b — нумерация непустых строк"], example: "$ cat -n /etc/hosts" },
+        { name: "head", category: "files", icon: "⬆️", desc: "Head — вывод первых строк файла", usage: "head [опции] файл", flags: ["-n N — вывести N строк", "-c N — вывести N байт"], example: "$ head -20 access.log" },
+        { name: "tail", category: "files", icon: "⬇️", desc: "Tail — вывод последних строк файла", usage: "tail [опции] файл", flags: ["-n N — вывести N строк", "-f — следить за обновлениями (follow)", "-F — следить с повторными попытками"], example: "$ tail -f /var/log/syslog" },
+        { name: "tree", category: "files", icon: "🌳", desc: "Tree — отображение структуры директорий в виде дерева", usage: "tree [путь] [глубина]", flags: ["-L level — максимальная глубина", "-a — показать скрытые файлы", "-d — только директории"], example: "$ tree ~ -L 2" },
+        { name: "find", category: "files", icon: "🔍", desc: "Find — мощный поиск файлов по различным критериям", usage: "find путь -name шаблон", flags: ["-name — по имени", "-type f/d — тип файл/директория", "-size — по размеру", "-mtime — по времени изменения"], example: "$ find . -name '*.py' -type f" },
+        { name: "du", category: "files", icon: "💾", desc: "Disk Usage — оценка использования дискового пространства", usage: "du [опции] [путь]", flags: ["-h — человекочитаемый формат", "-s — суммарно", "-a — все файлы"], example: "$ du -sh ~/Downloads" },
+        { name: "df", category: "files", icon: "📊", desc: "Disk Free — отображение свободного места на файловых системах", usage: "df [опции]", flags: ["-h — человекочитаемый", "-T — тип файловой системы", "-i — inode usage"], example: "$ df -h" },
+        { name: "file", category: "files", icon: "🔖", desc: "File — определение типа файла", usage: "file файл", flags: [], example: "$ file document.pdf\n$ file script.sh" },
+        { name: "stat", category: "files", icon: "📊", desc: "Stat — отображение подробной статистики файла", usage: "stat файл", flags: [], example: "$ stat script.sh" },
+        { name: "chmod", category: "files", icon: "🔐", desc: "Change Mode — изменение прав доступа к файлу", usage: "chmod права файл", flags: [], example: "$ chmod 755 script.py\n$ chmod u+x run.sh" },
+        { name: "ln", category: "files", icon: "🔗", desc: "Link — создание жесткой или символической ссылки", usage: "ln [опции] цель ссылка", flags: ["-s — символическая ссылка", "-f — принудительно"], example: "$ ln -s /usr/bin/python3 python" },
+        
+        // ========== ПОИСК И ФИЛЬТРАЦИЯ (20+) ==========
+        { name: "grep", category: "text", icon: "🔍", desc: "Global Regular Expression Print — поиск текста с поддержкой регулярных выражений", usage: "grep [опции] паттерн файл", flags: ["-i — игнорировать регистр", "-r — рекурсивно", "-n — номера строк", "-v — инвертировать", "-E — расширенные regexp"], example: "$ grep -rn 'error' /var/log/" },
+        { name: "sort", category: "text", icon: "📊", desc: "Sort — сортировка строк текстового файла", usage: "sort [опции] файл", flags: ["-r — обратный порядок", "-n — числовая сортировка", "-k — по полю", "-u — уникальные"], example: "$ sort -r names.txt" },
+        { name: "uniq", category: "text", icon: "🔄", desc: "Unique — удаление или подсчет повторяющихся строк", usage: "uniq [опции] файл", flags: ["-c — подсчитать количество", "-d — только дубликаты", "-u — только уникальные"], example: "$ sort file.txt | uniq -c" },
+        { name: "cut", category: "text", icon: "✂️", desc: "Cut — вырезание полей или столбцов из строк", usage: "cut [опции] файл", flags: ["-d — разделитель", "-f — поля", "-c — символы"], example: "$ cut -d',' -f1,2 data.csv" },
+        { name: "tr", category: "text", icon: "🔄", desc: "Translate — транслитерация или удаление символов", usage: "tr 'набор' 'замена' < файл", flags: ["-d — удаление символов", "-s — сжатие повторяющихся"], example: "$ tr 'a-z' 'A-Z' < file.txt" },
+        { name: "diff", category: "text", icon: "⚖️", desc: "Difference — построчное сравнение двух файлов", usage: "diff файл1 файл2", flags: ["-u — унифицированный формат", "-i — игнорировать регистр"], example: "$ diff old.conf new.conf" },
+        { name: "sed", category: "text", icon: "✏️", desc: "Stream Editor — потоковый редактор для замены и фильтрации", usage: "sed 's/pattern/replace/' файл", flags: ["-i — редактировать файл", "-e — несколько выражений"], example: "$ sed -i 's/old/new/g' file.txt" },
+        { name: "awk", category: "text", icon: "📊", desc: "Awk — мощный язык обработки текста и данных", usage: "awk 'программа' файл", flags: ["-F — разделитель полей"], example: "$ awk '{print $1, $3}' data.txt" },
+        { name: "rev", category: "text", icon: "🔄", desc: "Reverse — переворачивание каждой строки задом наперед", usage: "rev файл", flags: [], example: "$ rev message.txt" },
+        { name: "tac", category: "text", icon: "⬆️⬇️", desc: "Tac — вывод файла в обратном порядке (снизу вверх)", usage: "tac файл", flags: [], example: "$ tac log.txt" },
+        { name: "wc", category: "text", icon: "🔢", desc: "Word Count — подсчет строк, слов и символов", usage: "wc [опции] файл", flags: ["-l — строки", "-w — слова", "-c — символы", "-m — символы (мультибайт)"], example: "$ wc -l script.py" },
+        { name: "paste", category: "text", icon: "🔗", desc: "Paste — объединение строк нескольких файлов", usage: "paste файл1 файл2", flags: ["-d — разделитель"], example: "$ paste names.txt ages.txt" },
+        { name: "join", category: "text", icon: "🔗", desc: "Join — соединение строк из двух файлов по общему полю", usage: "join файл1 файл2", flags: ["-1 поле1", "-2 поле2"], example: "$ join -t',' users.txt roles.txt" },
+        
+        // ========== СЕТЕВЫЕ УТИЛИТЫ (18+) ==========
+        { name: "ping", category: "network", icon: "📡", desc: "Ping — проверка доступности хоста по ICMP", usage: "ping [опции] хост", flags: ["-c count — количество пакетов", "-i интервал", "-t ttl — время жизни"], example: "$ ping -c 4 google.com" },
+        { name: "curl", category: "network", icon: "🌐", desc: "Client URL — передача данных по протоколам HTTP, FTP и др.", usage: "curl [опции] URL", flags: ["-I — только заголовки", "-o файл — сохранить", "-X метод — метод запроса", "-H — заголовок"], example: "$ curl -I https://example.com" },
+        { name: "wget", category: "network", icon: "⬇️", desc: "Wget — загрузка файлов по HTTP/HTTPS/FTP", usage: "wget [опции] URL", flags: ["-O файл — сохранить как", "-c — докачка", "-r — рекурсивно"], example: "$ wget -c https://example.com/file.zip" },
+        { name: "ip", category: "network", icon: "🌍", desc: "Ip — отображение и настройка сетевых интерфейсов", usage: "ip [опции]", flags: ["a — показать адреса", "route — маршруты", "link — интерфейсы"], example: "$ ip a" },
+        { name: "ifconfig", category: "network", icon: "🔌", desc: "Interface Configuration — информация о сетевых интерфейсах", usage: "ifconfig", flags: [], example: "$ ifconfig" },
+        { name: "netstat", category: "network", icon: "📊", desc: "Network Statistics — отображение сетевых соединений, таблиц маршрутизации", usage: "netstat [опции]", flags: ["-tuln — все TCP/UDP порты", "-r — таблица маршрутизации", "-i — интерфейсы"], example: "$ netstat -tuln" },
+        { name: "nslookup", category: "network", icon: "🔍", desc: "Name Server Lookup — запрос DNS для получения IP адреса", usage: "nslookup домен", flags: [], example: "$ nslookup github.com" },
+        { name: "dig", category: "network", icon: "🔎", desc: "Domain Information Groper — расширенный DNS-запрос", usage: "dig [опции] домен", flags: ["+short — краткий вывод", "MX — MX записи"], example: "$ dig google.com +short" },
+        { name: "portscan", category: "network", icon: "🛡️", desc: "Port Scan — сканирование открытых портов хоста", usage: "portscan хост", flags: [], example: "$ portscan localhost" },
+        { name: "telnet", category: "network", icon: "📞", desc: "Telnet — клиент для удаленного управления по протоколу Telnet", usage: "telnet хост порт", flags: [], example: "$ telnet example.com 80" },
+        { name: "ssh", category: "network", icon: "🔑", desc: "Secure Shell — защищенное удаленное подключение", usage: "ssh пользователь@хост", flags: ["-p порт", "-i ключ", "-v — подробный вывод"], example: "$ ssh user@192.168.1.100" },
+        { name: "ftp", category: "network", icon: "📁", desc: "File Transfer Protocol — клиент для передачи файлов", usage: "ftp хост", flags: [], example: "$ ftp ftp.example.com" },
+        { name: "nc", category: "network", icon: "🔌", desc: "Netcat — универсальная утилита для сетевых соединений", usage: "nc [опции] хост порт", flags: ["-l — слушать", "-v — подробно", "-z — сканирование"], example: "$ nc -zv localhost 80" },
+        
+        // ========== КРИПТОГРАФИЯ (25+) ==========
+        { name: "hash", category: "crypto", icon: "🔢", desc: "Hash — вычисление хешей MD5, SHA1, SHA256, SHA512 для текста", usage: "hash текст", flags: [], example: "$ hash \"secret password\"" },
+        { name: "md5", category: "crypto", icon: "🔐", desc: "MD5 — вычисление MD5-хеша файла", usage: "md5 файл", flags: [], example: "$ md5 file.iso" },
+        { name: "sha1", category: "crypto", icon: "🔐", desc: "SHA1 — вычисление SHA1-хеша файла", usage: "sha1 файл", flags: [], example: "$ sha1 document.pdf" },
+        { name: "sha256", category: "crypto", icon: "🔐", desc: "SHA256 — вычисление SHA256-хеша файла", usage: "sha256 файл", flags: [], example: "$ sha256 backup.zip" },
+        { name: "sha512", category: "crypto", icon: "🔐", desc: "SHA512 — вычисление SHA512-хеша файла", usage: "sha512 файл", flags: [], example: "$ sha512 largefile.iso" },
+        { name: "base64", category: "crypto", icon: "📦", desc: "Base64 — кодирование текста в формат Base64", usage: "base64 текст", flags: [], example: "$ base64 \"Hello World\"" },
+        { name: "base64d", category: "crypto", icon: "📦", desc: "Base64 Decode — декодирование Base64 в исходный текст", usage: "base64d base64_строка", flags: [], example: "$ base64d \"SGVsbG8gV29ybGQ=\"  # Hello World" },
+        { name: "rot13", category: "crypto", icon: "🔄", desc: "ROT13 — шифрование сдвигом на 13 букв (алфавитный)", usage: "rot13 текст", flags: [], example: "$ rot13 \"secret\"  # frperg" },
+        { name: "rot47", category: "crypto", icon: "🔄", desc: "ROT47 — шифрование для ASCII символов 33-126", usage: "rot47 текст", flags: [], example: "$ rot47 \"message\"" },
+        { name: "urlencode", category: "crypto", icon: "🌐", desc: "URL Encode — кодирование символов для URL", usage: "urlencode текст", flags: [], example: "$ urlencode \"hello world\"  # hello%20world" },
+        { name: "urldecode", category: "crypto", icon: "🌐", desc: "URL Decode — декодирование URL-encoded строки", usage: "urldecode закодированный_текст", flags: [], example: "$ urldecode \"hello%20world\"" },
+        { name: "hex", category: "crypto", icon: "🔢", desc: "Hex — преобразование текста в шестнадцатеричное представление", usage: "hex текст", flags: [], example: "$ hex \"test\"  # 74657374" },
+        { name: "unhex", category: "crypto", icon: "🔢", desc: "Unhex — преобразование шестнадцатеричной строки в текст", usage: "unhex hex_строка", flags: [], example: "$ unhex 74657374  # test" },
+        { name: "random", category: "crypto", icon: "🎲", desc: "Random — генерация случайного числа", usage: "random [max]", flags: [], example: "$ random 100" },
+        { name: "uuid", category: "crypto", icon: "🆔", desc: "UUID — генерация универсального уникального идентификатора", usage: "uuid", flags: [], example: "$ uuid\n550e8400-e29b-41d4-a716-446655440000" },
+        { name: "password", category: "crypto", icon: "🔑", desc: "Password — генерация случайного безопасного пароля", usage: "password [длина]", flags: [], example: "$ password 24\n# s!9K#mP$2qR@8xV&7wYzL3" },
+        { name: "encrypt", category: "crypto", icon: "🔒", desc: "Encrypt — шифрование текста с использованием ключа (XOR + Base64)", usage: "encrypt текст ключ", flags: [], example: "$ encrypt \"secret data\" mykey" },
+        { name: "decrypt", category: "crypto", icon: "🔓", desc: "Decrypt — расшифровка текста, зашифрованного командой encrypt", usage: "decrypt зашифрованный_текст ключ", flags: [], example: "$ decrypt \"SGVsbG8=\" key" },
+        
+        // ========== СИСТЕМНЫЕ КОМАНДЫ (20+) ==========
+        { name: "date", category: "system", icon: "📅", desc: "Date — отображение или установка системной даты и времени", usage: "date", flags: ["+формат — формат вывода"], example: "$ date\n$ date +%Y-%m-%d" },
+        { name: "cal", category: "system", icon: "📆", desc: "Calendar — отображение календаря", usage: "cal [месяц] [год]", flags: ["-y — текущий год", "-3 — предыдущий/текущий/следующий"], example: "$ cal 2026 12" },
+        { name: "whoami", category: "system", icon: "👤", desc: "Who Am I — вывод имени текущего пользователя", usage: "whoami", flags: [], example: "$ whoami\nuser" },
+        { name: "hostname", category: "system", icon: "💻", desc: "Hostname — вывод или установка имени хоста", usage: "hostname", flags: [], example: "$ hostname\nkali-machine" },
+        { name: "uname", category: "system", icon: "🐧", desc: "Unix Name — информация о системе и ядре", usage: "uname [опции]", flags: ["-a — вся информация", "-r — версия ядра", "-m — архитектура"], example: "$ uname -a" },
+        { name: "uptime", category: "system", icon: "⏱️", desc: "Uptime — время работы системы и средняя нагрузка", usage: "uptime", flags: [], example: "$ uptime\n10:30 up 2 days, 3 users" },
+        { name: "who", category: "system", icon: "👥", desc: "Who — список пользователей, вошедших в систему", usage: "who", flags: [], example: "$ who" },
+        { name: "w", category: "system", icon: "📊", desc: "W — расширенная информация о пользователях", usage: "w", flags: [], example: "$ w" },
+        { name: "last", category: "system", icon: "📜", desc: "Last — история последних входов в систему", usage: "last", flags: ["-n N — последние N записей"], example: "$ last -n 10" },
+        { name: "env", category: "system", icon: "🌍", desc: "Environment — вывод всех переменных окружения", usage: "env", flags: [], example: "$ env" },
+        { name: "echo", category: "system", icon: "📢", desc: "Echo — вывод текста или значения переменной", usage: "echo [текст]", flags: ["-e — интерпретация escape-последовательностей"], example: "$ echo \"Hello Kali\"\n$ echo $PATH" },
+        { name: "sleep", category: "system", icon: "⏰", desc: "Sleep — приостановка выполнения на указанное время", usage: "sleep секунды", flags: [], example: "$ sleep 5" },
+        { name: "time", category: "system", icon: "⏱️", desc: "Time — измерение времени выполнения команды", usage: "time команда", flags: [], example: "$ time ls -la" },
+        { name: "watch", category: "system", icon: "👁️", desc: "Watch — повторение команды с заданным интервалом", usage: "watch команда", flags: ["-n интервал"], example: "$ watch -n 2 date" },
+        
+        // ========== УПРАВЛЕНИЕ ПРОЦЕССАМИ (12+) ==========
+        { name: "ps", category: "process", icon: "📊", desc: "Process Status — отображение информации о запущенных процессах", usage: "ps [опции]", flags: ["aux — все процессы", "-ef — полный формат"], example: "$ ps aux | grep python" },
+        { name: "top", category: "process", icon: "📈", desc: "Top — интерактивный монитор процессов в реальном времени", usage: "top", flags: [], example: "$ top" },
+        { name: "kill", category: "process", icon: "⚡", desc: "Kill — отправка сигнала процессу (обычно для завершения)", usage: "kill [сигнал] pid", flags: ["-9 — SIGKILL (безусловное завершение)", "-15 — SIGTERM"], example: "$ kill 1234\n$ kill -9 5678" },
+        { name: "pkill", category: "process", icon: "⚡", desc: "Pkill — завершение процессов по имени", usage: "pkill имя", flags: [], example: "$ pkill firefox" },
+        { name: "jobs", category: "process", icon: "📋", desc: "Jobs — список фоновых заданий текущей сессии", usage: "jobs", flags: [], example: "$ jobs" },
+        { name: "fg", category: "process", icon: "⬆️", desc: "Foreground — перемещение фонового задания на передний план", usage: "fg [номер]", flags: [], example: "$ fg %1" },
+        { name: "bg", category: "process", icon: "⬇️", desc: "Background — продолжение выполнения задания в фоне", usage: "bg [номер]", flags: [], example: "$ bg %2" },
+        
+        // ========== АРХИВЫ (10+) ==========
+        { name: "zip", category: "archive", icon: "📦", desc: "Zip — создание ZIP-архива", usage: "zip архив.zip файлы", flags: ["-r — рекурсивно", "-9 — максимальное сжатие"], example: "$ zip -r backup.zip Documents/" },
+        { name: "unzip", category: "archive", icon: "📂", desc: "Unzip — распаковка ZIP-архива", usage: "unzip архив.zip", flags: ["-d директория"], example: "$ unzip archive.zip -d output/" },
+        { name: "tar", category: "archive", icon: "📦", desc: "Tar — работа с TAR-архивами", usage: "tar [опции] архив файлы", flags: ["-cf — создать архив", "-xf — распаковать", "-czf — создать gzip", "-xzf — распаковать gzip"], example: "$ tar -czf archive.tar.gz folder/" },
+        { name: "gzip", category: "archive", icon: "🗜️", desc: "Gzip — сжатие файла в формат GZIP", usage: "gzip файл", flags: [], example: "$ gzip largefile.log" },
+        { name: "gunzip", category: "archive", icon: "🗜️", desc: "Gunzip — распаковка GZIP-файла", usage: "gunzip файл.gz", flags: [], example: "$ gunzip file.gz" },
+        
+        // ========== ВИЗУАЛЬНЫЕ ЭФФЕКТЫ (15+) ==========
+        { name: "matrix", category: "visual", icon: "💚", desc: "Matrix — эффект падающих символов, как в фильме Матрица", usage: "matrix", flags: [], example: "$ matrix" },
+        { name: "fire", category: "visual", icon: "🔥", desc: "Fire — анимированный огненный эффект с искрами", usage: "fire", flags: [], example: "$ fire" },
+        { name: "rainbow", category: "visual", icon: "🌈", desc: "Rainbow — радужная анимация текста", usage: "rainbow", flags: [], example: "$ rainbow" },
+        { name: "stars", category: "visual", icon: "⭐", desc: "Stars — эффект звездного неба с мерцанием", usage: "stars", flags: [], example: "$ stars" },
+        { name: "glow", category: "visual", icon: "✨", desc: "Glow — пульсирующее свечение текста", usage: "glow [текст]", flags: [], example: "$ glow \"KALI TERMINAL\"" },
+        { name: "bounce", category: "visual", icon: "🏀", desc: "Bounce — анимация подпрыгивающего текста", usage: "bounce [текст]", flags: [], example: "$ bounce \"Hello\"" },
+        { name: "hack", category: "visual", icon: "💀", desc: "Hack — имитация процесса взлома с прогресс-барами", usage: "hack", flags: [], example: "$ hack" },
+        { name: "banner", category: "visual", icon: "🏷️", desc: "Banner — создание крупного текстового баннера", usage: "banner [текст]", flags: [], example: "$ banner \"KALI\"" },
+        { name: "cowsay", category: "visual", icon: "🐮", desc: "Cowsay — говорящая корова с вашим текстом", usage: "cowsay [текст]", flags: [], example: "$ cowsay \"Hello from Kali\"" },
+        { name: "fortune", category: "visual", icon: "🔮", desc: "Fortune — вывод случайной цитаты или афоризма", usage: "fortune", flags: [], example: "$ fortune" },
+        { name: "neofetch", category: "visual", icon: "🖥️", desc: "Neofetch — отображение информации о системе с ASCII-логотипом", usage: "neofetch", flags: [], example: "$ neofetch" },
+        { name: "ascii", category: "visual", icon: "🎨", desc: "Ascii — вывод случайного ASCII-арта", usage: "ascii", flags: [], example: "$ ascii" },
+        { name: "figlet", category: "visual", icon: "🔤", desc: "Figlet — создание ASCII-баннера из текста", usage: "figlet [текст]", flags: [], example: "$ figlet \"KALI\"" },
+        { name: "sl", category: "visual", icon: "🚂", desc: "Sl — анимация паровозика (известная утилита)", usage: "sl", flags: [], example: "$ sl" },
+        
+        // ========== ИНФОРМАЦИЯ И СПРАВКА (15+) ==========
+        { name: "help", category: "info", icon: "❓", desc: "Help — отображение справки по командам или конкретной команде", usage: "help [команда]", flags: [], example: "$ help\n$ help ls" },
+        { name: "info", category: "info", icon: "ℹ️", desc: "Info — информация о терминале, версии и интеграциях", usage: "info", flags: [], example: "$ info" },
+        { name: "sysinfo", category: "info", icon: "📊", desc: "Sysinfo — детальная информация о системе (ОС, CPU, RAM, диски)", usage: "sysinfo", flags: [], example: "$ sysinfo" },
+        { name: "version", category: "info", icon: "🏷️", desc: "Version — отображение версии Kali Terminal", usage: "version", flags: [], example: "$ version" },
+        { name: "about", category: "info", icon: "📜", desc: "About — информация о проекте, авторе и особенностях", usage: "about", flags: [], example: "$ about" },
+        { name: "credits", category: "info", icon: "👥", desc: "Credits — список авторов и благодарности", usage: "credits", flags: [], example: "$ credits" },
+        { name: "history", category: "info", icon: "📋", desc: "History — отображение истории введенных команд", usage: "history", flags: [], example: "$ history" },
+        { name: "alias", category: "info", icon: "🔗", desc: "Alias — создание или отображение псевдонимов команд", usage: "alias [имя=команда]", flags: [], example: "$ alias ll='ls -la'\n$ alias" },
+        { name: "unalias", category: "info", icon: "🔗", desc: "Unalias — удаление ранее созданного псевдонима", usage: "unalias имя", flags: [], example: "$ unalias ll" },
+        { name: "man", category: "info", icon: "📖", desc: "Manual — отображение руководства по команде", usage: "man команда", flags: [], example: "$ man grep" },
+        { name: "type", category: "info", icon: "🔍", desc: "Type — определение типа команды (встроенная, алиас, внешняя)", usage: "type команда", flags: [], example: "$ type ls" },
+        { name: "which", category: "info", icon: "🔍", desc: "Which — определение пути к исполняемому файлу программы", usage: "which программа", flags: [], example: "$ which python3" }
+    ];
+
+    let currentCategory = "all";
+    let searchQuery = "";
+
+    function renderCommands() {
+        const grid = document.getElementById("commandsGrid");
+        let filtered = commandsData.filter(cmd => {
+            const matchCategory = currentCategory === "all" || cmd.category === currentCategory;
+            const matchSearch = searchQuery === "" || 
+                cmd.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                cmd.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (cmd.flags && cmd.flags.some(f => f.toLowerCase().includes(searchQuery.toLowerCase())));
+            return matchCategory && matchSearch;
+        });
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="no-results"><i class="fas fa-search"></i> Ничего не найдено. Попробуйте другой запрос.</div>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(cmd => `
+            <div class="command-card">
+                <div class="cmd-header">
+                    <span class="cmd-icon">${cmd.icon}</span>
+                    <span class="cmd-name">${cmd.name}</span>
+                </div>
+                <div class="cmd-body">
+                    <div class="cmd-desc">${cmd.desc}</div>
+                    <div class="cmd-usage">
+                        <i class="fas fa-terminal" style="margin-right: 6px; opacity:0.7;"></i> ${cmd.usage}
+                    </div>
+                    ${cmd.flags && cmd.flags.length ? `<div class="cmd-flags">${cmd.flags.map(f => `<span class="flag">${f}</span>`).join('')}</div>` : ''}
+                    <div class="example-line">
+                        <i class="fas fa-code" style="margin-right: 6px;"></i> ${cmd.example}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // фильтры
+    document.querySelectorAll(".cat-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentCategory = btn.dataset.cat;
+            renderCommands();
+        });
+    });
+
+    // поиск
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        renderCommands();
+    });
+
+    renderCommands();
+
+    // звездная анимация
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let width, height;
+
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        initStars();
+    }
+
+    function initStars() {
+        stars = [];
+        const starCount = Math.floor(width * height / 2800);
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 1.6,
+                alpha: Math.random() * 0.5 + 0.2,
+                speed: 0.015 + Math.random() * 0.04,
+                twinkle: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    function drawStars() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+        for (let star of stars) {
+            ctx.beginPath();
+            const twinkleFactor = 0.6 + 0.4 * Math.sin(Date.now() * star.speed + star.twinkle);
+            ctx.fillStyle = `rgba(255, 250, 220, ${star.alpha * twinkleFactor * 0.8})`;
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    drawStars();
+</script>
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Kali Terminal Ultimate | Документация и политика конфиденциальности</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #03060c;
+            color: #e8edf2;
+            line-height: 1.55;
+            min-height: 100vh;
+        }
+
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://avatars.mds.yandex.net/i?id=c45ea55bb9d0401bcd1a2409b8fe1e8cf7e1ad6e-13089762-images-thumbs&n=13') no-repeat center center/cover;
+            z-index: 0;
+            opacity: 0.22;
+            pointer-events: none;
+        }
+
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .overlay-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(3, 8, 18, 0.94), rgba(1, 3, 8, 0.97));
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 2rem 3rem;
+        }
+
+        .glass-card {
+            background: rgba(8, 14, 24, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            border: 1px solid rgba(75, 85, 99, 0.45);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.6);
+            transition: all 0.25s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(156, 163, 175, 0.6);
+            background: rgba(12, 20, 32, 0.82);
+        }
+
+        /* HERO с большим круглым логотипом по центру - АДАПТИВНЫЙ */
+        .hero {
+            text-align: center;
+            padding: 2rem 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Контейнер для логотипа — полная адаптивность */
+        .hero-logo-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.8rem;
+        }
+        
+        /* КРУГЛЫЙ ЛОГОТИП — адаптивный размер, всегда идеально круглый */
+        .logo-circle {
+            width: min(220px, 35vw, 35vh);
+            height: min(220px, 35vw, 35vh);
+            min-width: 110px;
+            min-height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(25, 35, 55, 0.95), rgba(5, 10, 18, 0.98));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 4px rgba(100, 116, 139, 0.6), 0 0 0 12px rgba(30, 41, 59, 0.35), 0 25px 40px -10px black;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+        }
+        
+        .logo-circle:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 0 5px rgba(156, 163, 175, 0.8), 0 0 0 16px rgba(55, 65, 81, 0.45), 0 30px 45px -8px black;
+        }
+        
+        .logo-circle img {
+            width: 82%;
+            height: 82%;
+            object-fit: contain;
+            border-radius: 50%;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+            transition: transform 0.25s;
+        }
+        
+        .logo-circle:hover img {
+            transform: scale(1.02);
+        }
+        
+        /* анимация легкого пульсирующего свечения */
+        @keyframes gentleGlow {
+            0% {
+                box-shadow: 0 0 0 4px rgba(100, 116, 139, 0.5), 0 0 0 12px rgba(30, 41, 59, 0.3), 0 25px 40px -10px black;
+            }
+            100% {
+                box-shadow: 0 0 0 5px rgba(148, 163, 184, 0.7), 0 0 0 16px rgba(51, 65, 85, 0.4), 0 28px 45px -8px black;
+            }
+        }
+        .logo-circle {
+            animation: gentleGlow 3s infinite alternate ease-in-out;
+        }
+        
+        .skull-icon {
+            font-size: 2.2rem;
+            vertical-align: middle;
+            margin-right: 8px;
+            opacity: 0.85;
+            display: inline-block;
+        }
+        
+        h1 {
+            font-size: clamp(1.8rem, 7vw, 3.2rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #f0f4fa, #cbd5e6, #a0aec0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-top: 0.25rem;
+            line-height: 1.2;
+        }
+        
+        .tagline {
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            color: #b9c7d9;
+            border-top: 1px solid rgba(100, 116, 139, 0.6);
+            display: inline-block;
+            padding-top: 0.7rem;
+            margin-top: 0.8rem;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.8rem;
+            margin: 2rem 0;
+        }
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .section-title {
+            font-size: 1.55rem;
+            font-weight: 700;
+            margin-bottom: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #6b7280;
+            padding-left: 1rem;
+            color: #eef2ff;
+            flex-wrap: wrap;
+        }
+
+        .cmd-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            margin-top: 0.8rem;
+        }
+        .cmd-badge {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 40px;
+            padding: 0.35rem 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(100, 116, 139, 0.5);
+            transition: 0.1s;
+            color: #e2e8f0;
+        }
+        .cmd-badge:hover {
+            background: #1e293b;
+            border-color: #94a3b8;
+        }
+
+        .download-btn {
+            background: #1f2a3e;
+            border: 1px solid #4b5563;
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #f1f5f9;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .download-btn:hover {
+            background: #2d3a4f;
+            border-color: #7e8aa2;
+            transform: translateY(-2px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .social-link {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 60px;
+            padding: 0.55rem 1.4rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #e2e8f0;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            border: 1px solid #4b5563;
+            transition: 0.2s;
+        }
+        .social-link:hover {
+            background: #1e2a3a;
+            border-color: #8b9bb5;
+            color: white;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .feature-list li {
+            margin-bottom: 0.85rem;
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+        }
+        .feature-list i {
+            color: #9ca3af;
+            width: 24px;
+            font-size: 0.9rem;
+        }
+
+        hr {
+            border-color: #2d3a4e;
+            margin: 1.3rem 0;
+        }
+
+        pre {
+            background: #03070f;
+            padding: 1rem;
+            border-radius: 20px;
+            overflow-x: auto;
+            font-size: 0.8rem;
+            border: 1px solid #2d3748;
+            color: #d1d8e6;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        code {
+            background: #111827;
+            padding: 0.2rem 0.45rem;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #cbd5e6;
+        }
+
+        .legal-text {
+            font-size: 0.9rem;
+            line-height: 1.55;
+            color: #cbd5e1;
+        }
+
+        .policy-block {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 24px;
+            padding: 1.4rem;
+            margin-top: 1rem;
+            border-left: 3px solid #6b7280;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            padding: 2rem 0 1rem;
+            opacity: 0.65;
+            color: #94a3b8;
+        }
+
+        /* АДАПТАЦИЯ под все экраны — логотип плавно масштабируется */
+        @media (max-width: 800px) {
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .content {
+                padding: 1rem 1.2rem 2rem;
+            }
+            .hero {
+                padding: 1.5rem 1rem;
+            }
+            .logo-circle {
+                width: min(160px, 40vw, 32vh);
+                height: min(160px, 40vw, 32vh);
+                min-width: 100px;
+                min-height: 100px;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-circle {
+                width: min(130px, 38vw);
+                height: min(130px, 38vw);
+                min-width: 90px;
+                min-height: 90px;
+            }
+            .download-btn {
+                padding: 0.7rem 1.3rem;
+                font-size: 0.85rem;
+            }
+            .social-link {
+                padding: 0.45rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Для очень больших экранов логотип становится крупнее, но не гигантским */
+        @media (min-width: 1600px) {
+            .logo-circle {
+                width: 260px;
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="stars-bg"></div>
+<canvas id="stars-canvas"></canvas>
+<div class="overlay-gradient"></div>
+
+<div class="content">
+    <!-- HERO-БЛОК: большой круглый логотип идеально по центру, адаптивен -->
+    <div class="glass-card hero">
+        <!-- Центрированный логотип в круглой рамке -->
+        <div class="hero-logo-wrapper">
+            <div class="logo-circle">
+                <img src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fgen.krea.ai%2Fimages%2F223ef2e2-e46f-449a-9bfe-21a077203b52.png&s=1024" alt="Kali Terminal Ultimate Official Logo">
+            </div>
+        </div>
+        <h1><span class="skull-icon">💀⚡</span> KALI TERMINAL<br>ULTIMATE EDITION</h1>
+        <div class="tagline">v4.2 — Профессиональная CLI-среда | 200+ команд | Zero Telemetry | Полная прозрачность</div>
+        <div style="margin-top: 1.8rem;">
+            <a href="https://disk.yandex.ru/d/SQuCnFtV0ZUHHA" class="download-btn" target="_blank">
+                <i class="fas fa-download"></i> Скачать с Яндекс.Диска
+            </a>
+        </div>
+        <div class="social-links">
+            <a href="https://github.com/DANIEL45690/Kali-Terminal-Ultimate-Edition-v4.2" class="social-link" target="_blank">
+                <i class="fab fa-github"></i> GitHub · Issues
+            </a>
+            <a href="https://t.me/+licZV1Ujehk0YWFi" class="social-link" target="_blank">
+                <i class="fab fa-telegram"></i> Telegram канал
+            </a>
+        </div>
+    </div>
+
+    <!-- Основная сетка с контентом -->
+    <div class="grid-2col">
+        <!-- О проекте -->
+        <div class="glass-card" style="padding: 1.7rem;">
+            <div class="section-title">
+                <i class="fas fa-info-circle"></i> О проекте
+            </div>
+            <p style="margin-bottom: 1rem;"><strong>Kali Terminal Ultimate Edition</strong> — это не просто эмулятор командной строки, а полноценная экосистема для профессионалов кибербезопасности, DevOps-инженеров и разработчиков. Проект зародился как открытая альтернатива проприетарным терминалам с упором на приватность, скорость и расширяемость. В основе лежит модульное ядро на Python 3, поддерживающее динамическую загрузку плагинов и пользовательских сценариев.</p>
+            <p style="margin-bottom: 1rem;">Архитектура терминала позволяет работать с встроенными скриптами на Lua и Python, автоматизировать рутинные задачи с помощью макросов и создавать собственные команды через простой API. Более 200 встроенных утилит покрывают потребности от базовой навигации до криптографических операций, сетевого сканирования и форензики.</p>
+            <ul class="feature-list">
+                <li><i class="fas fa-check-circle"></i> <span>200+ команд: файловая система, сеть, криптография, анализ логов</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span>Zero telemetry — абсолютное отсутствие сбора данных, телеметрии и аналитики</span></li>
+                <li><i class="fas fa-window-maximize"></i> <span>Нативная поддержка Windows (PowerShell + CMD), Linux, macOS и WSL2</span></li>
+                <li><i class="fas fa-puzzle-piece"></i> <span>Модульная система: плагины, кастомные темы и расширения</span></li>
+                <li><i class="fas fa-code-branch"></i> <span>Открытый исходный код (MIT License) — полный аудит безопасности</span></li>
+                <li><i class="fas fa-history"></i> <span>История команд с поиском, экспорт сессий, сниффинг команд в реальном времени</span></li>
+            </ul>
+            <div class="policy-block" style="margin-top: 1rem;">
+                <i class="fas fa-gavel"></i> <strong>Лицензионная чистота:</strong> Все компоненты распространяются под свободными лицензиями. Нет проприетарных библиотек, телеметрии или «звонков домой».
+            </div>
+        </div>
+
+        <!-- Команды -->
+        <div class="glass-card" style="padding: 1.7rem;">
+            <div class="section-title">
+                <i class="fas fa-terminal"></i> Командная база
+            </div>
+            <div class="cmd-grid">
+                <span class="cmd-badge">ls -la</span><span class="cmd-badge">cd ~</span><span class="cmd-badge">grep -r</span>
+                <span class="cmd-badge">ping -c4</span><span class="cmd-badge">curl -I</span><span class="cmd-badge">neofetch</span>
+                <span class="cmd-badge">matrix</span><span class="cmd-badge">hash md5</span><span class="cmd-badge">portscan</span>
+                <span class="cmd-badge">top</span><span class="cmd-badge">encrypt aes256</span><span class="cmd-badge">zip -r</span>
+                <span class="cmd-badge">cowsay</span><span class="cmd-badge">figlet</span><span class="cmd-badge">traceroute</span>
+                <span class="cmd-badge">netstat -tulpn</span><span class="cmd-badge">nslookup</span><span class="cmd-badge">dig</span>
+                <span class="cmd-badge">ssh-keygen</span><span class="cmd-badge">base64</span><span class="cmd-badge">hexdump</span>
+            </div>
+            <hr>
+            <div class="legal-text">
+                <i class="fas fa-book-open"></i> <strong>Расширенная документация:</strong> Для каждой команды доступна страница справки (<code>help &lt;command&gt;</code>) с примерами, флагами и практическими кейсами. Встроенный учебник содержит 40+ интерактивных уроков по работе с сетью, шифрованию и автоматизации.
+            </div>
+            <div style="margin-top: 1rem; background: rgba(0,0,0,0.3); border-radius: 20px; padding: 0.9rem;">
+                <i class="fas fa-chalkboard"></i> <strong>Примеры использования:</strong><br>
+                <code>portscan 192.168.1.1 -p 1-1024 --threads 50</code> — быстрое сканирование портов.<br>
+                <code>encrypt file.txt --algo chacha20 --key ~/.key</code> — шифрование файла.<br>
+                <code>watch -n 2 "netstat -an | grep ESTABLISHED"</code> — мониторинг соединений.
+            </div>
+        </div>
+
+        <!-- Установка -->
+        <div class="glass-card full-width" style="padding: 1.7rem;">
+            <div class="section-title">
+                <i class="fas fa-download"></i> Подробная установка и зависимости
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                <div style="flex:2; min-width: 240px;">
+                    <pre><code># Установка через wget / curl (рекомендовано)
+wget -O kali-terminal.zip "https://disk.yandex.ru/d/SQuCnFtV0ZUHHA"
+unzip kali-terminal.zip -d kali-terminal
+cd kali-terminal
+chmod +x install.sh
+./install.sh --prefix /opt/kali-terminal
+
+# Ручной запуск (Python 3.7+)
+python3 kali-terminal.py --setup-env
+python3 kali-terminal.py --theme dark_matrix
+
+# Добавление в PATH (Linux/macOS)
+echo 'export PATH=$PATH:/opt/kali-terminal/bin' >> ~/.bashrc</code></pre>
+                </div>
+                <div style="flex:1.5">
+                    <p><i class="fas fa-cogs"></i> <strong>Системные требования:</strong> Python 3.7+, pip, git (опционально). Автоматическая установка зависимостей через <code>requirements.txt</code> (colorama, cryptography, psutil, requests).</p>
+                    <p><i class="fas fa-box"></i> <strong>Для Windows:</strong> Используйте PowerShell с правами администратора, предварительно установив Python. Доступен портативный режим без установки — просто запустите <code>kali-terminal.exe</code> из архива.</p>
+                    <p><i class="fab fa-linux"></i> <strong>Пакеты для Arch / Debian:</strong> AUR-репозиторий <code>kali-terminal-ultimate-bin</code> и .deb пакет в разделе релизов GitHub.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ -->
+        <div class="glass-card full-width" style="padding: 1.7rem;">
+            <div class="section-title">
+                <i class="fas fa-file-contract"></i> Политика конфиденциальности и обработка данных
+            </div>
+            <div class="legal-text" style="display: flex; flex-direction: column; gap: 1rem;">
+                <p><strong>1. Общие положения.</strong> Kali Terminal Ultimate Edition (далее — «Программа») разработана с соблюдением принципа <strong>Privacy by Design</strong>. Разработчик гарантирует, что ни одна версия программы не содержит средств сбора телеметрии, краш-репортов, аналитических модулей, трекеров или рекламных фреймворков. Программа не устанавливает фоновых служб, не открывает скрытых сетевых соединений и не передает данные о пользователе третьим лицам.</p>
+                <p><strong>2. Локальное хранение.</strong> Все пользовательские данные (история команд, настройки, конфигурационные файлы, сессии) сохраняются исключительно в локальных директориях: <code>~/.config/kali-terminal/</code> и <code>~/.local/share/kali-terminal/</code> (Linux/macOS) или <code>%APPDATA%\KaliTerminal\</code> (Windows). Никакая информация не синхронизируется с внешними серверами.</p>
+                <p><strong>3. Сетевые запросы.</strong> Программа осуществляет сетевые вызовы только по явной команде пользователя: <code>curl</code>, <code>wget</code>, <code>ping</code>, <code>portscan</code> и аналогичные утилиты. Встроенный модуль обновлений работает по запросу (<code>kali-terminal --update</code>) через GitHub API без передачи идентификаторов устройства.</p>
+                <p><strong>4. Безопасность шифрования.</strong> Команды <code>encrypt</code> / <code>decrypt</code> используют алгоритмы AES-256-GCM и ChaCha20-Poly1305. Ключи хранятся локально. Криптографические операции не используют внешние облачные сервисы.</p>
+                <div class="policy-block" style="margin-top: 0.5rem;">
+                    <i class="fas fa-balance-scale"></i> <strong>Юридическая оговорка:</strong> Программа распространяется «как есть» (AS IS). Использование сетевых утилит для сканирования чужих систем без разрешения может нарушать законодательство. Пользователь несет полную ответственность.
+                </div>
+            </div>
+        </div>
+
+        <!-- Безопасность и приватность -->
+        <div class="glass-card" style="padding: 1.7rem;">
+            <div class="section-title">
+                <i class="fas fa-lock"></i> Технические гарантии приватности
+            </div>
+            <ul class="feature-list">
+                <li><i class="fas fa-eye-slash"></i> Нет телеметрии, краш-репортов, аналитики</li>
+                <li><i class="fas fa-database"></i> История команд только локально</li>
+                <li><i class="fas fa-key"></i> Шифрование конфигурации мастер-паролем</li>
+                <li><i class="fas fa-code"></i> Полностью открытый код — независимый аудит</li>
+                <li><i class="fas fa-network-wired"></i> Отсутствие фоновых обновлений и «звонков домой»</li>
+                <li><i class="fas fa-user-secret"></i> Поддержка анонимных прокси (Tor, SOCKS5)</li>
+            </ul>
+            <div style="margin-top: 1rem; background: rgba(0, 0, 0, 0.45); border-radius: 20px; padding: 0.9rem; border-left: 3px solid #6b7280;">
+                <i class="fas fa-shield-alt"></i> <strong>Политика конфиденциальности (кратко):</strong><br>
+                Никакие данные не покидают ваше устройство. Программа не содержит трекеров, не требует регистрации.
+            </div>
+        </div>
+
+        <!-- Визуальные эффекты -->
+        <div class="glass-card" style="padding: 1.7rem;">
+            <div class="section-title">
+                <i class="fas fa-magic"></i> Визуальная кастомизация
+            </div>
+            <div class="cmd-grid">
+                <span class="cmd-badge">matrix</span><span class="cmd-badge">fire</span><span class="cmd-badge">rainbow</span>
+                <span class="cmd-badge">stars</span><span class="cmd-badge">binary_rain</span><span class="cmd-badge">wave</span>
+                <span class="cmd-badge">hack_typer</span><span class="cmd-badge">banner</span><span class="cmd-badge">ascii_art</span>
+            </div>
+            <p style="margin-top: 1rem; color: #cbd5e6;">14 режимов анимации и 9 цветовых схем. Создание своих тем через JSON-конфиг.</p>
+        </div>
+
+        <!-- Сообщество -->
+        <div class="glass-card full-width" style="padding: 1.7rem; text-align: center;">
+            <div class="section-title" style="justify-content: center; border-left: none;">
+                <i class="fab fa-github-alt"></i> Экосистема и развитие
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-top: 1rem;">
+                <div>
+                    <i class="fab fa-github" style="font-size: 2rem;"></i>
+                    <p><strong>GitHub</strong><br>Issues, pull requests</p>
+                    <a href="https://github.com/DANIEL45690/Kali-Terminal-Ultimate-Edition-v4.2" class="social-link" style="background:#111827;" target="_blank">Перейти →</a>
+                </div>
+                <div>
+                    <i class="fab fa-telegram" style="font-size: 2rem;"></i>
+                    <p><strong>Telegram</strong><br>Анонсы, поддержка</p>
+                    <a href="https://t.me/+licZV1Ujehk0YWFi" class="social-link" style="background:#111827;" target="_blank">Присоединиться</a>
+                </div>
+            </div>
+            <hr>
+            <p style="font-size: 0.85rem;">🔗 <a href="https://github.com/DANIEL45690/Kali-Terminal-Ultimate-Edition-v4.2" style="color:#9bb5e0;">github.com/DANIEL45690/Kali-Terminal-Ultimate-Edition-v4.2</a><br>MIT License · Полная прозрачность</p>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fas fa-shield-alt"></i> Kali Terminal Ultimate v4.2 — Privacy by design | Zero telemetry<br>
+        © 2026 · Свободное программное обеспечение
+    </footer>
+</div>
+
+<script>
+    // звездная анимация
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let width, height;
+
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        initStars();
+    }
+
+    function initStars() {
+        stars = [];
+        const starCount = Math.floor(width * height / 2400);
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2.0 + 0.6,
+                alpha: Math.random() * 0.55 + 0.2,
+                speed: 0.02 + Math.random() * 0.05,
+                twinkle: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    function drawStars() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+        for (let star of stars) {
+            ctx.beginPath();
+            const twinkleFactor = 0.5 + 0.5 * Math.sin(Date.now() * star.speed + star.twinkle);
+            const brightness = star.alpha * (0.5 + twinkleFactor * 0.5);
+            ctx.fillStyle = `rgba(210, 225, 255, ${brightness * 0.9})`;
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+    });
+    resizeCanvas();
+    drawStars();
+
+    // плавное появление карточек
+    const cards = document.querySelectorAll('.glass-card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.03 });
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(12px)';
+        card.style.transition = 'opacity 0.45s ease, transform 0.4s ease';
+        observer.observe(card);
+    });
+</script>
+</body>
+</html>
