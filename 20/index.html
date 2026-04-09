@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WikiMRI — Чёрная энциклопедия будущего</title>
+    <meta name="description" content="WikiMRI — мощная чёрная энциклопедия с форумом, комментариями, реакциями, админ-панелью, боковой панелью, анимациями и полным функционалом.">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #050505;
+            --bg-card: #0a0a0a;
+            --border-color: #1a1a1a;
+            --border-light: #2a2a2a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0b0;
+            --text-muted: #666666;
+            --accent-white: #ffffff;
+            --accent-gray: #888888;
+            --danger: #8b0000;
+            --danger-hover: #a00000;
+            --success: #1a4d1a;
+            --transition-fast: 0.2s;
+            --transition-normal: 0.3s;
+            --transition-slow: 0.5s;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, .logo, .menu-item, .btn, .card-title, .sidebar-logo, .page-title {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.98); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: var(--accent-white); }
+        }
+
+        /* Layout */
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: all var(--transition-normal) ease;
+            z-index: 200;
+            animation: slideInLeft 0.4s ease;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 4px;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .sidebar-logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent-white);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .sidebar-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            font-size: 16px;
+        }
+
+        .menu-item i {
+            width: 24px;
+            font-size: 18px;
+        }
+
+        .menu-item:hover {
+            background: rgba(255,255,255,0.03);
+            border-left-color: var(--accent-gray);
+            color: var(--text-primary);
+        }
+
+        .menu-item.active {
+            background: rgba(255,255,255,0.05);
+            border-left-color: var(--accent-white);
+            color: var(--text-primary);
+        }
+
+        .sidebar-stats {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            margin-left: 300px;
+            min-height: 100vh;
+            animation: fadeIn 0.5s;
+        }
+
+        /* Top Bar */
+        .topbar {
+            background: var(--bg-primary);
+            padding: 18px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .user-avatar:hover {
+            border-color: var(--accent-white);
+            transform: scale(1.05);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 30px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-light);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* Forms */
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 18px;
+            transition: all var(--transition-fast);
+            font-size: 14px;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-gray);
+            box-shadow: 0 0 0 2px rgba(136,136,136,0.1);
+        }
+
+        button, .btn {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover, .btn:hover {
+            background: var(--border-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: rgba(139,0,0,0.2);
+            border-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* Grids */
+        .wiki-grid, .forum-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .wiki-item, .topic-item {
+            background: var(--bg-secondary);
+            padding: 22px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-color);
+        }
+
+        .wiki-item:hover, .topic-item:hover {
+            border-color: var(--accent-gray);
+            transform: translateY(-6px);
+        }
+
+        .wiki-item h3, .topic-item h3 {
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .wiki-item p, .topic-item p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Comments */
+        .comment {
+            border-bottom: 1px solid var(--border-color);
+            padding: 18px 0;
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .comment-author {
+            color: var(--accent-white);
+            font-weight: 600;
+        }
+
+        .comment-date {
+            color: var(--text-muted);
+        }
+
+        .reaction-group {
+            display: inline-flex;
+            gap: 8px;
+            margin-left: 12px;
+        }
+
+        .reaction-btn {
+            background: var(--bg-secondary);
+            padding: 6px 14px;
+            font-size: 13px;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            animation: scaleIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Stats Grid */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            transition: all var(--transition-fast);
+        }
+
+        .stat-block:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-gray);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            font-family: 'Oswald', sans-serif;
+            color: var(--accent-white);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Admin */
+        .admin-list {
+            list-style: none;
+        }
+
+        .admin-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Mobile */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            z-index: 300;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            padding: 12px 16px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main {
+                margin-left: 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .container {
+                padding: 16px;
+            }
+            .topbar {
+                padding: 12px 16px;
+            }
+            .page-title {
+                font-size: 22px;
+            }
+        }
+
+        /* Loader */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-light);
+            border-top-color: var(--accent-white);
+            border-radius: 50%;
+            animation: rotate 0.8s linear infinite;
+        }
+
+        /* Toast */
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-gray);
+            padding: 14px 24px;
+            border-radius: 12px;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            font-size: 14px;
+        }
+
+        hr {
+            border-color: var(--border-color);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+    <div class="app">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">◼ WikiMRI</div>
+                <div class="sidebar-sub">version 4.2.0 // black core</div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item" onclick="navigateTo('home')"><i class="fas fa-home"></i><span>Главная</span></div>
+                <div class="menu-item" onclick="navigateTo('wiki')"><i class="fas fa-book-open"></i><span>Википедия</span></div>
+                <div class="menu-item" onclick="navigateTo('forum')"><i class="fas fa-comments"></i><span>Форум сообщества</span></div>
+                <div id="adminMenuBtn" style="display:none;" class="menu-item" onclick="navigateTo('admin')"><i class="fas fa-shield-alt"></i><span>Админ панель</span></div>
+                <div class="menu-item" onclick="navigateTo('about')"><i class="fas fa-info-circle"></i><span>О проекте</span></div>
+            </div>
+            <div class="sidebar-stats">
+                <div class="stat-row"><span><i class="fas fa-file-alt"></i> Вики-статей</span><span class="stat-value" id="statPages">0</span></div>
+                <div class="stat-row"><span><i class="fas fa-comment"></i> Тем форума</span><span class="stat-value" id="statTopics">0</span></div>
+                <div class="stat-row"><span><i class="fas fa-users"></i> Пользователей</span><span class="stat-value" id="statUsers">0</span></div>
+                <div class="stat-row"><span><i class="fas fa-reply-all"></i> Комментариев</span><span class="stat-value" id="statComments">0</span></div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <h1 class="page-title" id="currentPageTitle">WikiMRI</h1>
+                <div class="user-area" id="userArea"></div>
+            </div>
+
+            <div class="container">
+                <!-- Главная -->
+                <div id="homePage" class="page active">
+                    <div class="stats-dashboard">
+                        <div class="stat-block"><div class="stat-number" id="dashboardPages">0</div><div class="stat-label">Всего статей</div></div>
+                        <div class="stat-block"><div class="stat-number" id="dashboardTopics">0</div><div class="stat-label">Тем на форуме</div></div>
+                        <div class="stat-block"><div class="stat-number" id="dashboardUsers">0</div><div class="stat-label">Активных пользователей</div></div>
+                        <div class="stat-block"><div class="stat-number" id="dashboardComments">0</div><div class="stat-label">Комментариев</div></div>
+                    </div>
+                    <div class="card" style="text-align:center;">
+                        <h1 style="font-size:56px; margin-bottom:16px;">Добро пожаловать в WikiMRI</h1>
+                        <p style="font-size:18px; margin-bottom:28px; color:var(--text-secondary);">Чёрная энциклопедия будущего — создавай, обсуждай, вдохновляй</p>
+                        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                            <button onclick="navigateTo('wiki')" class="btn"><i class="fas fa-book"></i> Изучать вики</button>
+                            <button onclick="navigateTo('forum')" class="btn"><i class="fas fa-comments"></i> Перейти на форум</button>
+                        </div>
+                    </div>
+                    <div class="wiki-grid" style="margin-top:20px;">
+                        <div class="wiki-item"><h3><i class="fas fa-gem"></i> 500+ статей</h3><p>Создавай уникальные энциклопедии</p></div>
+                        <div class="wiki-item"><h3><i class="fas fa-fire"></i> Живое сообщество</h3><p>Активные обсуждения и реакции</p></div>
+                        <div class="wiki-item"><h3><i class="fas fa-chart-line"></i> Полная аналитика</h3><p>Статистика проекта в реальном времени</p></div>
+                    </div>
+                </div>
+
+                <!-- Вики -->
+                <div id="wikiPage" class="page">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fas fa-book"></i> Энциклопедия WikiMRI</h2>
+                            <button id="wikiCreateBtn" style="display:none;" onclick="showWikiCreate()"><i class="fas fa-plus"></i> Новая статья</button>
+                        </div>
+                        <div id="wikiListContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Просмотр вики -->
+                <div id="wikiViewPage" class="page">
+                    <div class="card">
+                        <div id="wikiViewContent"></div>
+                        <button onclick="backToWiki()" class="btn"><i class="fas fa-arrow-left"></i> Назад к вики</button>
+                    </div>
+                </div>
+
+                <!-- Создание вики -->
+                <div id="wikiCreatePage" class="page">
+                    <div class="card">
+                        <h2><i class="fas fa-feather-alt"></i> Новая вики-страница</h2>
+                        <input type="text" id="newWikiTitle" placeholder="Заголовок статьи">
+                        <textarea id="newWikiContent" rows="14" placeholder="Содержание статьи... поддерживает markdown"></textarea>
+                        <button onclick="createWikiArticle()">Опубликовать</button>
+                        <button onclick="backToWiki()" class="btn">Отмена</button>
+                    </div>
+                </div>
+
+                <!-- Редактирование вики -->
+                <div id="wikiEditPage" class="page">
+                    <div class="card">
+                        <h2><i class="fas fa-pen"></i> Редактирование</h2>
+                        <textarea id="editWikiContent" rows="14"></textarea>
+                        <button onclick="saveWikiEdit()">Сохранить изменения</button>
+                        <button onclick="backToWiki()" class="btn">Отмена</button>
+                    </div>
+                </div>
+
+                <!-- Форум -->
+                <div id="forumPage" class="page">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fas fa-comments"></i> Форум сообщества</h2>
+                            <button id="topicCreateBtn" style="display:none;" onclick="showTopicCreate()"><i class="fas fa-plus"></i> Новая тема</button>
+                        </div>
+                        <div id="topicsListContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Просмотр темы -->
+                <div id="topicViewPage" class="page">
+                    <div class="card">
+                        <div id="topicViewContent"></div>
+                        <button onclick="backToForum()" class="btn"><i class="fas fa-arrow-left"></i> На форум</button>
+                    </div>
+                </div>
+
+                <!-- Создание темы -->
+                <div id="topicCreatePage" class="page">
+                    <div class="card">
+                        <h2><i class="fas fa-plus-circle"></i> Новая тема</h2>
+                        <input type="text" id="newTopicTitle" placeholder="Заголовок темы">
+                        <textarea id="newTopicContent" rows="10" placeholder="Содержание..."></textarea>
+                        <button onclick="createNewTopic()">Создать тему</button>
+                        <button onclick="backToForum()" class="btn">Отмена</button>
+                    </div>
+                </div>
+
+                <!-- Админ панель -->
+                <div id="adminPage" class="page">
+                    <div class="card">
+                        <h2><i class="fas fa-crown"></i> Административная панель</h2>
+                        <div id="adminPanelContent"></div>
+                    </div>
+                </div>
+
+                <!-- О проекте -->
+                <div id="aboutPage" class="page">
+                    <div class="card" style="text-align:center;">
+                        <h2><i class="fas fa-globe"></i> О проекте WikiMRI</h2>
+                        <p style="margin:20px 0;">Версия 4.2.0 — полностью чёрная энциклопедия с форумом, реакциями, комментариями и админ-панелью.<br>Разработана как единый HTML/CSS/JS файл с боковой панелью и анимациями.</p>
+                        <p><strong>Технологии:</strong> HTML5, CSS3, JavaScript ES6, LocalStorage</p>
+                        <p><strong>Особенности:</strong> Адаптивный дизайн, тёмная тема, анимации, полное управление контентом.</p>
+                        <hr>
+                        <p><i class="fas fa-code"></i> WikiMRI — знания в чёрном цвете</p>
+                    </div>
+                </div>
+
+                <!-- Логин -->
+                <div id="loginPage" class="page">
+                    <div class="card" style="max-width:500px; margin:0 auto;">
+                        <h2><i class="fas fa-key"></i> Авторизация</h2>
+                        <input type="text" id="loginUsername" placeholder="Имя пользователя">
+                        <input type="password" id="loginPassword" placeholder="Пароль">
+                        <button onclick="loginUser()"><i class="fas fa-sign-in-alt"></i> Войти</button>
+                        <p style="margin-top:18px;">Нет аккаунта? <a href="#" onclick="navigateTo('register')">Регистрация</a></p>
+                        <p style="margin-top:8px; color:var(--text-muted);">demo: admin / admin123</p>
+                    </div>
+                </div>
+
+                <!-- Регистрация -->
+                <div id="registerPage" class="page">
+                    <div class="card" style="max-width:500px; margin:0 auto;">
+                        <h2><i class="fas fa-user-plus"></i> Регистрация</h2>
+                        <input type="text" id="regUsername" placeholder="Логин">
+                        <input type="password" id="regPassword" placeholder="Пароль">
+                        <input type="email" id="regEmail" placeholder="Email">
+                        <button onclick="registerUser()">Создать аккаунт</button>
+                        <p style="margin-top:18px;">Уже есть аккаунт? <a href="#" onclick="navigateTo('login')">Вход</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ======================== ГЛОБАЛЬНЫЕ ДАННЫЕ ========================
+        let currentUser = null;
+        let currentUserRole = null;
+        
+        // Вики страницы
+        let wikiStore = JSON.parse(localStorage.getItem('wikiMRI_pages')) || {
+            "Главная": { title: "Главная", content: "Добро пожаловать в **WikiMRI** — чёрную энциклопедию нового поколения. Здесь собраны уникальные знания.", author: "admin", created: new Date().toISOString(), edited: new Date().toISOString() },
+            "Технологии": { title: "Технологии", content: "Современные технологии: AI, ML, Web3, нейросети, блокчейн и будущее интернета.", author: "admin", created: new Date().toISOString(), edited: new Date().toISOString() },
+            "Дизайн": { title: "Дизайн", content: "Чёрный минимализм, UI/UX тренды, лучшие практики оформления интерфейсов.", author: "admin", created: new Date().toISOString(), edited: new Date().toISOString() },
+            "Кибербезопасность": { title: "Кибербезопасность", content: "Защита данных, шифрование, этичный хакинг и современные угрозы.", author: "admin", created: new Date().toISOString(), edited: new Date().toISOString() }
+        };
+        
+        // Темы форума
+        let forumStore = JSON.parse(localStorage.getItem('wikiMRI_forum')) || [];
+        
+        // Комментарии
+        let commentsStore = JSON.parse(localStorage.getItem('wikiMRI_comments')) || [];
+        
+        // Реакции
+        let reactionsStore = JSON.parse(localStorage.getItem('wikiMRI_reactions')) || {};
+        
+        // Пользователи
+        let usersStore = JSON.parse(localStorage.getItem('wikiMRI_users')) || {
+            "admin": { password: btoa("admin123"), role: "admin", email: "admin@wikimri.com", joined: new Date().toISOString() }
+        };
+        
+        // ======================== HELPER FUNCTIONS ========================
+        function saveAllData() {
+            localStorage.setItem('wikiMRI_pages', JSON.stringify(wikiStore));
+            localStorage.setItem('wikiMRI_forum', JSON.stringify(forumStore));
+            localStorage.setItem('wikiMRI_comments', JSON.stringify(commentsStore));
+            localStorage.setItem('wikiMRI_reactions', JSON.stringify(reactionsStore));
+            localStorage.setItem('wikiMRI_users', JSON.stringify(usersStore));
+            updateGlobalStats();
+        }
+        
+        function updateGlobalStats() {
+            const pagesCount = Object.keys(wikiStore).length;
+            const topicsCount = forumStore.length;
+            const usersCount = Object.keys(usersStore).length;
+            const commentsCount = commentsStore.length;
+            
+            document.getElementById('statPages').innerText = pagesCount;
+            document.getElementById('statTopics').innerText = topicsCount;
+            document.getElementById('statUsers').innerText = usersCount;
+            document.getElementById('statComments').innerText = commentsCount;
+            
+            document.getElementById('dashboardPages').innerText = pagesCount;
+            document.getElementById('dashboardTopics').innerText = topicsCount;
+            document.getElementById('dashboardUsers').innerText = usersCount;
+            document.getElementById('dashboardComments').innerText = commentsCount;
+        }
+        
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.style.background = isError ? '#2a0000' : '#0a0a0a';
+            toast.style.borderColor = isError ? '#8b0000' : '#888';
+            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        function navigateTo(pageName) {
+            const pages = ['homePage', 'wikiPage', 'wikiViewPage', 'wikiCreatePage', 'wikiEditPage', 'forumPage', 'topicViewPage', 'topicCreatePage', 'adminPage', 'aboutPage', 'loginPage', 'registerPage'];
+            pages.forEach(p => {
+                const el = document.getElementById(p);
+                if (el) el.classList.remove('active');
+            });
+            const targetPage = document.getElementById(pageName + 'Page');
+            if (targetPage) targetPage.classList.add('active');
+            
+            const titles = { home: "Главная", wiki: "Википедия", forum: "Форум", admin: "Админ панель", about: "О проекте", login: "Вход", register: "Регистрация" };
+            const titleKey = pageName.replace('Page', '');
+            document.getElementById('currentPageTitle').innerText = titles[titleKey] || "WikiMRI";
+            
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            if (pageName === 'home') document.querySelector('.menu-item[onclick*="home"]')?.classList.add('active');
+            if (pageName === 'wiki') document.querySelector('.menu-item[onclick*="wiki"]')?.classList.add('active');
+            if (pageName === 'forum') document.querySelector('.menu-item[onclick*="forum"]')?.classList.add('active');
+            if (pageName === 'admin') document.querySelector('.menu-item[onclick*="admin"]')?.classList.add('active');
+            if (pageName === 'about') document.querySelector('.menu-item[onclick*="about"]')?.classList.add('active');
+            
+            if (pageName === 'wiki') renderWikiList();
+            if (pageName === 'forum') renderForumList();
+            if (pageName === 'admin' && currentUserRole === 'admin') renderAdminPanel();
+            if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
+        }
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+        
+        function updateUIForUser() {
+            const userArea = document.getElementById('userArea');
+            const wikiCreateBtn = document.getElementById('wikiCreateBtn');
+            const topicCreateBtn = document.getElementById('topicCreateBtn');
+            const adminMenuBtn = document.getElementById('adminMenuBtn');
+            
+            if (currentUser) {
+                userArea.innerHTML = `<span style="color:#ccc;">${currentUser}</span><div class="user-avatar" onclick="logoutUser()"><i class="fas fa-user"></i></div>`;
+                if (wikiCreateBtn) wikiCreateBtn.style.display = 'inline-flex';
+                if (topicCreateBtn) topicCreateBtn.style.display = 'inline-flex';
+                if (adminMenuBtn && currentUserRole === 'admin') adminMenuBtn.style.display = 'flex';
+                else if (adminMenuBtn) adminMenuBtn.style.display = 'none';
+            } else {
+                userArea.innerHTML = `<button onclick="navigateTo('login')" class="btn">Вход</button><button onclick="navigateTo('register')" class="btn">Регистрация</button>`;
+                if (wikiCreateBtn) wikiCreateBtn.style.display = 'none';
+                if (topicCreateBtn) topicCreateBtn.style.display = 'none';
+                if (adminMenuBtn) adminMenuBtn.style.display = 'none';
+            }
+        }
+        
+        // ======================== АВТОРИЗАЦИЯ ========================
+        function loginUser() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = btoa(document.getElementById('loginPassword').value);
+            if (usersStore[username] && usersStore[username].password === password) {
+                currentUser = username;
+                currentUserRole = usersStore[username].role;
+                updateUIForUser();
+                showToast(`Добро пожаловать, ${username}!`);
+                navigateTo('home');
+            } else {
+                showToast('Неверный логин или пароль', true);
+            }
+        }
+        
+        function registerUser() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = btoa(document.getElementById('regPassword').value);
+            const email = document.getElementById('regEmail').value;
+            if (!username || !password) { showToast('Заполните все поля', true); return; }
+            if (usersStore[username]) { showToast('Пользователь уже существует', true); return; }
+            usersStore[username] = { password, role: 'user', email, joined: new Date().toISOString() };
+            saveAllData();
+            showToast('Регистрация успешна! Теперь войдите.');
+            navigateTo('login');
+        }
+        
+        function logoutUser() {
+            if (confirm('Выйти из аккаунта?')) {
+                currentUser = null;
+                currentUserRole = null;
+                updateUIForUser();
+                showToast('Вы вышли из системы');
+                navigateTo('home');
+            }
+        }
+        
+        // ======================== ВИКИ ========================
+        function renderWikiList() {
+            const container = document.getElementById('wikiListContainer');
+            if (Object.keys(wikiStore).length === 0) {
+                container.innerHTML = '<p style="text-align:center;">Нет статей. Создайте первую!</p>';
+                return;
+            }
+            let html = '<div class="wiki-grid">';
+            for (let title in wikiStore) {
+                html += `<div class="wiki-item" onclick="viewWikiArticle('${title.replace(/'/g, "\\'")}')">
+                            <h3>${escapeHtml(title)}</h3>
+                            <p>${escapeHtml(wikiStore[title].content.substring(0, 120))}...</p>
+                            <div class="meta"><span>👤 ${wikiStore[title].author}</span><span>📅 ${new Date(wikiStore[title].edited).toLocaleDateString()}</span></div>
+                         </div>`;
+            }
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        function viewWikiArticle(title) {
+            const article = wikiStore[title];
+            if (!article) return;
+            const canEdit = currentUser && (currentUser === article.author || currentUserRole === 'admin');
+            const canDelete = currentUserRole === 'admin';
+            document.getElementById('wikiViewContent').innerHTML = `
+                <h1>${escapeHtml(article.title)}</h1>
+                <div class="meta" style="margin:16px 0;">Автор: ${article.author} | Обновлено: ${new Date(article.edited).toLocaleString()}</div>
+                <div style="margin:24px 0; line-height:1.8;">${escapeHtml(article.content).replace(/\n/g, '<br>')}</div>
+                ${canEdit ? `<button onclick="editWikiArticle('${title.replace(/'/g, "\\'")}')" class="btn"><i class="fas fa-edit"></i> Редактировать</button>` : ''}
+                ${canDelete ? `<button onclick="deleteWikiArticle('${title.replace(/'/g, "\\'")}')" class="btn btn-danger"><i class="fas fa-trash"></i> Удалить</button>` : ''}
+            `;
+            navigateTo('wikiView');
+        }
+        
+        function showWikiCreate() { navigateTo('wikiCreate'); }
+        
+        function createWikiArticle() {
+            const title = document.getElementById('newWikiTitle').value.trim();
+            const content = document.getElementById('newWikiContent').value;
+            if (!title || !content) { showToast('Заполните заголовок и содержание', true); return; }
+            if (wikiStore[title]) { showToast('Страница уже существует', true); return; }
+            wikiStore[title] = { title, content, author: currentUser, created: new Date().toISOString(), edited: new Date().toISOString() };
+            saveAllData();
+            document.getElementById('newWikiTitle').value = '';
+            document.getElementById('newWikiContent').value = '';
+            renderWikiList();
+            showToast('Статья создана!');
+            navigateTo('wiki');
+        }
+        
+        function editWikiArticle(title) {
+            document.getElementById('editWikiContent').value = wikiStore[title].content;
+            window.currentEditWiki = title;
+            navigateTo('wikiEdit');
+        }
+        
+        function saveWikiEdit() {
+            const newContent = document.getElementById('editWikiContent').value;
+            wikiStore[window.currentEditWiki].content = newContent;
+            wikiStore[window.currentEditWiki].edited = new Date().toISOString();
+            saveAllData();
+            viewWikiArticle(window.currentEditWiki);
+            showToast('Сохранено');
+        }
+        
+        function deleteWikiArticle(title) {
+            if (confirm(`Удалить статью "${title}"?`)) {
+                delete wikiStore[title];
+                saveAllData();
+                renderWikiList();
+                showToast('Статья удалена');
+                navigateTo('wiki');
+            }
+        }
+        
+        function backToWiki() { renderWikiList(); navigateTo('wiki'); }
+        
+        // ======================== ФОРУМ ========================
+        function renderForumList() {
+            const container = document.getElementById('topicsListContainer');
+            if (forumStore.length === 0) {
+                container.innerHTML = '<p style="text-align:center;">Нет тем. Будьте первым!</p>';
+                return;
+            }
+            let html = '<div class="forum-grid">';
+            forumStore.forEach((topic, idx) => {
+                const reacts = reactionsStore[idx] || { like: 0, dislike: 0 };
+                const topicComments = commentsStore.filter(c => c.topicId === idx).length;
+                html += `<div class="topic-item">
+                            <h3>${escapeHtml(topic.title)}</h3>
+                            <p>${escapeHtml(topic.content.substring(0, 130))}...</p>
+                            <div class="meta">👤 ${topic.author} | 📅 ${new Date(topic.created).toLocaleDateString()}</div>
+                            <div style="margin-top:16px;">
+                                <button class="reaction-btn" onclick="addReaction(${idx}, 'like')"><i class="fas fa-thumbs-up"></i> ${reacts.like}</button>
+                                <button class="reaction-btn" onclick="addReaction(${idx}, 'dislike')"><i class="fas fa-thumbs-down"></i> ${reacts.dislike}</button>
+                                <button onclick="viewTopic(${idx})" class="btn"><i class="fas fa-comment"></i> ${topicComments} комм.</button>
+                                ${currentUserRole === 'admin' ? `<button onclick="deleteTopic(${idx})" class="btn btn-danger"><i class="fas fa-trash"></i></button>` : ''}
+                            </div>
+                         </div>`;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        function viewTopic(topicId) {
+            const topic = forumStore[topicId];
+            const topicComments = commentsStore.filter(c => c.topicId === topicId);
+            let commentsHtml = '';
+            topicComments.forEach(comment => {
+                commentsHtml += `<div class="comment">
+                                    <div class="comment-header"><span class="comment-author"><i class="fas fa-user"></i> ${comment.author}</span><span class="comment-date">${new Date(comment.created).toLocaleString()}</span></div>
+                                    <div>${escapeHtml(comment.content)}</div>
+                                    ${(currentUser === comment.author || currentUserRole === 'admin') ? `<button onclick="deleteCommentFromTopic(${comment.id}, ${topicId})" class="btn btn-danger" style="margin-top:10px; padding:5px 12px;"><i class="fas fa-trash"></i> Удалить</button>` : ''}
+                                </div>`;
+            });
+            document.getElementById('topicViewContent').innerHTML = `
+                <div class="card" style="margin-bottom:24px;">
+                    <h2>${escapeHtml(topic.title)}</h2>
+                    <p style="margin:16px 0;">${escapeHtml(topic.content)}</p>
+                    <div class="meta">Автор: ${topic.author} | ${new Date(topic.created).toLocaleString()}</div>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-comments"></i> Комментарии (${topicComments.length})</h3>
+                    <div id="commentsArea">${commentsHtml || '<p>Нет комментариев. Напишите первый!</p>'}</div>
+                    ${currentUser ? `<form onsubmit="addNewComment(event, ${topicId})" style="margin-top:24px;">
+                                        <textarea id="newCommentText" rows="4" placeholder="Ваш комментарий..." required></textarea>
+                                        <button type="submit"><i class="fas fa-paper-plane"></i> Отправить</button>
+                                    </form>` : '<p style="margin-top:20px;"><a href="#" onclick="navigateTo(\'login\')">Войдите</a> чтобы комментировать</p>'}
+                </div>
+            `;
+            window.currentTopicId = topicId;
+            navigateTo('topicView');
+        }
+        
+        function addNewComment(event, topicId) {
+            event.preventDefault();
+            const content = document.getElementById('newCommentText').value.trim();
+            if (!content) return;
+            commentsStore.push({ id: commentsStore.length, topicId, author: currentUser, content, created: new Date().toISOString() });
+            saveAllData();
+            viewTopic(topicId);
+        }
+        
+        function deleteCommentFromTopic(commentId, topicId) {
+            if (confirm('Удалить комментарий?')) {
+                commentsStore = commentsStore.filter(c => c.id !== commentId);
+                saveAllData();
+                viewTopic(topicId);
+            }
+        }
+        
+        function addReaction(topicId, type) {
+            if (!currentUser) { showToast('Войдите чтобы голосовать', true); return; }
+            if (!reactionsStore[topicId]) reactionsStore[topicId] = { like: 0, dislike: 0 };
+            if (type === 'like') reactionsStore[topicId].like++;
+            else reactionsStore[topicId].dislike++;
+            saveAllData();
+            renderForumList();
+        }
+        
+        function showTopicCreate() { navigateTo('topicCreate'); }
+        
+        function createNewTopic() {
+            const title = document.getElementById('newTopicTitle').value.trim();
+            const content = document.getElementById('newTopicContent').value.trim();
+            if (!title || !content) { showToast('Заполните все поля', true); return; }
+            forumStore.push({ title, content, author: currentUser, created: new Date().toISOString() });
+            saveAllData();
+            document.getElementById('newTopicTitle').value = '';
+            document.getElementById('newTopicContent').value = '';
+            renderForumList();
+            showToast('Тема создана');
+            navigateTo('forum');
+        }
+        
+        function deleteTopic(topicId) {
+            if (confirm('Удалить тему и все комментарии?')) {
+                forumStore.splice(topicId, 1);
+                commentsStore = commentsStore.filter(c => c.topicId !== topicId);
+                const newReactions = {};
+                for (let k in reactionsStore) {
+                    let num = parseInt(k);
+                    if (num > topicId) newReactions[num - 1] = reactionsStore[k];
+                    else if (num < topicId) newReactions[num] = reactionsStore[k];
+                }
+                reactionsStore = newReactions;
+                saveAllData();
+                renderForumList();
+                navigateTo('forum');
+                showToast('Тема удалена');
+            }
+        }
+        
+        function backToForum() { renderForumList(); navigateTo('forum'); }
+        
+        // ======================== АДМИН ПАНЕЛЬ ========================
+        function renderAdminPanel() {
+            let html = '<h3>👥 Управление пользователями</h3><ul class="admin-list">';
+            for (let u in usersStore) {
+                html += `<li>${u} — ${usersStore[u].role} <button onclick="adminDeleteUser('${u}')" class="btn btn-danger">Удалить</button></li>`;
+            }
+            html += '</ul><h3>📄 Управление вики</h3><ul class="admin-list">';
+            for (let p in wikiStore) {
+                html += `<li>${p} <button onclick="adminDeleteWikiPage('${p}')" class="btn btn-danger">Удалить</button></li>`;
+            }
+            html += '</ul><button onclick="adminClearComments()" class="btn"><i class="fas fa-trash"></i> Очистить все комментарии</button>';
+            document.getElementById('adminPanelContent').innerHTML = html;
+        }
+        
+        function adminDeleteUser(username) { if(username === 'admin'){ showToast('Нельзя удалить админа', true); return; } if(confirm(`Удалить ${username}?`)){ delete usersStore[username]; saveAllData(); renderAdminPanel(); updateGlobalStats(); showToast('Пользователь удален'); } }
+        function adminDeleteWikiPage(title) { if(confirm(`Удалить "${title}"?`)){ delete wikiStore[title]; saveAllData(); renderAdminPanel(); updateGlobalStats(); showToast('Страница удалена'); } }
+        function adminClearComments() { if(confirm('Удалить все комментарии?')){ commentsStore = []; saveAllData(); renderAdminPanel(); updateGlobalStats(); showToast('Комментарии очищены'); } }
+        
+        function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+        
+        // Инициализация
+        updateGlobalStats();
+        updateUIForUser();
+        if (localStorage.getItem('wikiMRI_pages') === null) saveAllData();
+    </script>
+</body>
+</html>
