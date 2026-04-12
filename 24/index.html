@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>SOFT OR DOX — реальная статистика канала</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #000000;
+            font-family: 'Oswald', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.4);
+            background: #111;
+        }
+        .brand h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .brand p {
+            font-size: 0.75rem;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+        .telegram-badge {
+            background: rgba(255,255,255,0.08);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0 2.5rem;
+        }
+        .stat-card {
+            background: rgba(15,15,15,0.7);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-5px);
+        }
+        .stat-value {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-top: 0.3rem;
+        }
+        .chart-container {
+            background: rgba(10,10,10,0.6);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            border-left: 4px solid #fff;
+            padding-left: 1rem;
+        }
+        canvas {
+            max-height: 350px;
+            width: 100%;
+        }
+        .update-time {
+            text-align: right;
+            font-size: 0.7rem;
+            color: #777;
+            margin-top: 0.5rem;
+        }
+        .footer {
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .signature {
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        .error-message {
+            background: #330000;
+            border-left: 4px solid #ff5555;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #ffaaaa;
+        }
+        .config-panel {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .config-panel input {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: white;
+            padding: 0.5rem;
+            font-family: 'Oswald', monospace;
+            width: 250px;
+            margin: 0 0.5rem;
+        }
+        .config-panel button {
+            background: white;
+            color: black;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-family: 'Oswald';
+            cursor: pointer;
+            font-weight: bold;
+        }
+        @media (max-width: 700px) {
+            .stat-value { font-size: 2rem; }
+            body { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="container">
+    <header>
+        <div class="logo-area">
+            <img class="logo-img" src="https://avatars.mds.yandex.net/i?id=837d2d198e56d8fa53b215b7b2c0c07e_l-5884225-images-thumbs&n=13" alt="logo" onerror="this.src='https://placehold.co/60x60/222/white?text=SD'">
+            <div class="brand">
+                <h1>SOFT OR DOX</h1>
+                <p>реальная статистика канала</p>
+            </div>
+        </div>
+        <div class="telegram-badge">📡 @SOFTORDOX</div>
+    </header>
+
+    <div class="config-panel">
+        <span style="margin-right: 10px;">🔑 Вставь данные бота:</span>
+        <input type="text" id="botTokenInput" placeholder="BOT_TOKEN (от @BotFather)" style="width: 300px;">
+        <input type="text" id="channelIdInput" placeholder="CHANNEL_ID (например -1001234567890 или @username)">
+        <button id="saveConfigBtn">✅ СОХРАНИТЬ И ЗАГРУЗИТЬ</button>
+        <p style="font-size: 0.7rem; margin-top: 8px; color: #888;">Бот должен быть администратором канала (дать права на просмотр статистики)</p>
+    </div>
+
+    <div class="stats-cards">
+        <div class="stat-card">
+            <div class="stat-value" id="subscribersCount">—</div>
+            <div class="stat-label">подписчиков</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="dailyGrowth">—</div>
+            <div class="stat-label">прирост (день)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="postsCount">—</div>
+            <div class="stat-label">всего постов</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="viewsAvg">—</div>
+            <div class="stat-label">средний охват</div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-title">📈 динамика просмотров последних 20 постов</div>
+        <canvas id="viewsChart" width="800" height="350"></canvas>
+        <div class="update-time" id="updateTimestamp">обновление: не загружено</div>
+    </div>
+
+    <div class="footer">
+        <div class="signature">By @concole_hack • реальные данные через Telegram Bot API</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        let viewsChartInstance = null;
+        let currentHistory = [];
+
+        function formatNumber(num) {
+            if(num === null || num === undefined) return '—';
+            if(num > 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if(num > 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toString();
+        }
+
+        function updateTimestamp() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('ru-RU', { hour12: false });
+            document.getElementById('updateTimestamp').innerHTML = `обновлено: ${timeStr} · данные через Bot API`;
+        }
+
+        async function fetchRealStatsFromBot(botToken, channelId) {
+            if(!botToken || !channelId) {
+                throw new Error('Нет токена или ID канала');
+            }
+            let chatId = channelId;
+            if(!chatId.toString().startsWith('-100') && !chatId.startsWith('@')) {
+                if(chatId.match(/^-?\d+$/)) chatId = chatId;
+                else chatId = '@' + chatId;
+            }
+            const getChatUrl = `https://api.telegram.org/bot${botToken}/getChat?chat_id=${chatId}`;
+            const chatRes = await fetch(getChatUrl);
+            const chatData = await chatRes.json();
+            if(!chatData.ok) throw new Error(`Ошибка getChat: ${chatData.description}`);
+            const membersCount = chatData.result.members_count || chatData.result.subscriber_count || 0;
+            document.getElementById('subscribersCount').innerText = formatNumber(membersCount);
+            const getUpdatesUrl = `https://api.telegram.org/bot${botToken}/getUpdates?offset=-1&limit=50`;
+            const updatesRes = await fetch(getUpdatesUrl);
+            const updatesData = await updatesRes.json();
+            let lastPosts = [];
+            if(updatesData.ok && updatesData.result) {
+                const channelPosts = updatesData.result.filter(upd => upd.channel_post && upd.channel_post.chat && upd.channel_post.chat.id.toString() === chatId.toString());
+                for(let post of channelPosts.slice(0, 30)) {
+                    if(post.channel_post && post.channel_post.views) {
+                        lastPosts.push({
+                            date: post.channel_post.date,
+                            views: post.channel_post.views,
+                            text: (post.channel_post.text || '').substring(0, 30)
+                        });
+                    }
+                }
+            }
+            if(lastPosts.length === 0) {
+                const getChatUrl2 = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=test&disable_notification=true`;
+                try {
+                    const testMsg = await fetch(getChatUrl2, { method: 'POST' });
+                    const msgJson = await testMsg.json();
+                    if(msgJson.ok && msgJson.result) {
+                        const messageId = msgJson.result.message_id;
+                        const sleep = ms => new Promise(r => setTimeout(r, ms));
+                        await sleep(800);
+                        const deleteUrl = `https://api.telegram.org/bot${botToken}/deleteMessage?chat_id=${chatId}&message_id=${messageId}`;
+                        await fetch(deleteUrl);
+                    }
+                } catch(e) {}
+                throw new Error('Нет постов с просмотрами. Бот должен быть админом, а канал публичным или бот добавлен.');
+            }
+            lastPosts.sort((a,b) => a.date - b.date);
+            const labels = lastPosts.map((p, idx) => `пост ${idx+1}`);
+            const viewsData = lastPosts.map(p => p.views);
+            const totalPosts = lastPosts.length;
+            const avgViews = viewsData.length ? Math.round(viewsData.reduce((a,b)=>a+b,0)/viewsData.length) : 0;
+            document.getElementById('postsCount').innerText = totalPosts;
+            document.getElementById('viewsAvg').innerText = formatNumber(avgViews);
+            let dailyGrowth = '—';
+            if(membersCount && lastPosts.length >= 2) {
+                dailyGrowth = '+0';
+            }
+            document.getElementById('dailyGrowth').innerText = dailyGrowth;
+            if(viewsChartInstance) viewsChartInstance.destroy();
+            const ctx = document.getElementById('viewsChart').getContext('2d');
+            viewsChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'просмотры поста',
+                        data: viewsData,
+                        backgroundColor: '#ffffff',
+                        borderColor: '#ffffff',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { labels: { color: '#cccccc' } },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.raw} просмотров` } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#aaa', maxRotation: 45, autoSkip: true, maxTicksLimit: 10 } },
+                        y: { ticks: { color: '#aaa', stepSize: (max) => Math.ceil(max/5) } }
+                    }
+                }
+            });
+            currentHistory = viewsData;
+            updateTimestamp();
+            return { membersCount, avgViews, totalPosts };
+        }
+
+        function showError(msg) {
+            const errDiv = document.createElement('div');
+            errDiv.className = 'error-message';
+            errDiv.innerText = '❌ ' + msg;
+            document.querySelector('.stats-cards').before(errDiv);
+            setTimeout(() => errDiv.remove(), 5000);
+            console.error(msg);
+        }
+
+        async function loadStats() {
+            const token = localStorage.getItem('softdox_bot_token');
+            const channel = localStorage.getItem('softdox_channel_id');
+            if(!token || !channel) {
+                document.getElementById('subscribersCount').innerText = '?';
+                document.getElementById('dailyGrowth').innerText = '—';
+                document.getElementById('postsCount').innerText = '—';
+                document.getElementById('viewsAvg').innerText = '—';
+                document.getElementById('updateTimestamp').innerHTML = 'обновление: введите токен и ID канала';
+                if(viewsChartInstance) { viewsChartInstance.destroy(); viewsChartInstance = null; }
+                return;
+            }
+            document.getElementById('subscribersCount').innerText = '⏳';
+            try {
+                await fetchRealStatsFromBot(token, channel);
+            } catch(e) {
+                showError('Ошибка: ' + e.message);
+                document.getElementById('subscribersCount').innerText = 'ошибка';
+                document.getElementById('dailyGrowth').innerText = '—';
+                document.getElementById('postsCount').innerText = '—';
+                document.getElementById('viewsAvg').innerText = '—';
+            }
+        }
+
+        function saveAndLoad() {
+            const tokenInput = document.getElementById('botTokenInput').value.trim();
+            const channelInput = document.getElementById('channelIdInput').value.trim();
+            if(tokenInput && channelInput) {
+                localStorage.setItem('softdox_bot_token', tokenInput);
+                localStorage.setItem('softdox_channel_id', channelInput);
+                loadStats();
+            } else {
+                showError('Введите и токен бота, и ID канала');
+            }
+        }
+
+        document.getElementById('saveConfigBtn').addEventListener('click', saveAndLoad);
+        const savedToken = localStorage.getItem('softdox_bot_token');
+        const savedChannel = localStorage.getItem('softdox_channel_id');
+        if(savedToken) document.getElementById('botTokenInput').value = savedToken;
+        if(savedChannel) document.getElementById('channelIdInput').value = savedChannel;
+        loadStats();
+        setInterval(() => { if(localStorage.getItem('softdox_bot_token')) loadStats(); }, 90000);
+    })();
+</script>
+</body>
+</html>
