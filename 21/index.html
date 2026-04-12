@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>SOFT OR DOX | Black & White Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            font-family: 'Oswald', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #ccc;
+            border-left: 2px solid #fff;
+            padding-left: 0.6rem;
+            margin-top: 0.2rem;
+        }
+
+        .telegram-link {
+            background: rgba(255,255,255,0.05);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.9rem;
+        }
+
+        .telegram-link:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .hero-logo {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0 2rem 0;
+        }
+
+        .circle-logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 0 30px rgba(255,255,255,0.2), 0 0 15px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        .circle-logo:hover {
+            transform: scale(1.05) rotate(2deg);
+            border-color: rgba(255,255,255,0.8);
+            box-shadow: 0 0 45px rgba(255,255,255,0.5);
+        }
+
+        @keyframes floatLogo {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero {
+            text-align: center;
+            margin: 1rem 0 4rem 0;
+        }
+
+        .hero .glow-text {
+            font-size: 5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-shadow: 0 0 3px rgba(255,255,255,0.4), 0 0 8px rgba(255,255,255,0.1);
+            animation: fadeUp 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .hero-sub {
+            font-size: 1.3rem;
+            color: #aaa;
+            letter-spacing: 3px;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            font-weight: 300;
+            animation: fadeUp 1s 0.2s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category {
+            margin: 5rem 0 3rem;
+        }
+
+        .category h2 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: inline-block;
+            border-bottom: 3px solid #fff;
+            padding-bottom: 0.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 2px rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: rgba(20,20,20,0.7);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 1.8rem;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255,255,255,0.6);
+            background: rgba(30,30,30,0.9);
+            box-shadow: 0 20px 30px -15px rgba(0,0,0,0.8);
+        }
+
+        .card-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 2px #fff);
+        }
+
+        .card h3 {
+            font-size: 1.9rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+        }
+
+        .card p {
+            color: #bbb;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 1px solid #fff;
+            padding: 0.2rem 0.8rem;
+            background: transparent;
+            transition: 0.2s;
+        }
+
+        .card:hover .badge {
+            background: #fff;
+            color: #000;
+        }
+
+        .footer {
+            margin-top: 7rem;
+            padding: 2rem 0 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .footer .signature {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #ddd;
+        }
+
+        .footer .console {
+            font-family: monospace;
+            font-size: 0.9rem;
+            background: #111;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            letter-spacing: 1px;
+        }
+
+        .channel-btn {
+            display: inline-block;
+            margin: 1.2rem 0 0.5rem;
+            background: none;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 0.7rem 2rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            letter-spacing: 1.5px;
+        }
+
+        .channel-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .btn-back {
+            background: none;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .btn-back:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .marquee-text {
+            background: #0a0a0a;
+            padding: 0.7rem;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+            margin: 2rem 0;
+            border-left: 4px solid #fff;
+            font-weight: 300;
+        }
+
+        .marquee-text span {
+            display: inline-block;
+            animation: marquee 18s linear infinite;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 700px) {
+            .hero .glow-text {
+                font-size: 2.5rem;
+            }
+            .category h2 {
+                font-size: 2rem;
+            }
+            .circle-logo {
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        .pulse-effect {
+            animation: softPulse 3s infinite;
+        }
+
+        @keyframes softPulse {
+            0% { opacity: 0.9; text-shadow: 0 0 0px rgba(255,255,255,0.2);}
+            50% { opacity: 1; text-shadow: 0 0 6px rgba(255,255,255,0.4);}
+            100% { opacity: 0.9; text-shadow: 0 0 0px rgba(255,255,255,0.2);}
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: #111;
+            border: 1px solid #fff;
+            padding: 2rem;
+            max-width: 500px;
+            width: 80%;
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            transform: scale(0.9);
+            transition: 0.2s;
+        }
+
+        .modal-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content p {
+            color: #ccc;
+        }
+
+        .close-modal {
+            margin-top: 2rem;
+            background: none;
+            border: 1px solid #fff;
+            padding: 0.5rem 1.5rem;
+            color: white;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+        }
+    </style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="container">
+    <header>
+        <div class="logo-area">
+            <div class="brand-text">
+                <h1>SOFT OR DOX</h1>
+                <div class="tag">arsenal · exploits · data</div>
+            </div>
+        </div>
+        <a href="https://t.me/SOFTORDOX" target="_blank" class="telegram-link">📡 TELEGRAM CHANNEL →</a>
+    </header>
+
+    <div class="hero-logo">
+        <img class="circle-logo" src="https://app-uploads.krea.ai/public/442c2cf2-4d61-4a01-9c82-9ce7274e1ed4-image.png" alt="SOFT OR DOX Core Logo" onerror="this.onerror=null;this.src='https://placehold.co/200x200/444/white?text=SOD'">
+    </div>
+
+    <div class="hero">
+        <div class="glow-text">TOOLS &<br> KNOWLEDGE</div>
+        <div class="hero-sub">/// SOFT OR DOX ///</div>
+        <div class="marquee-text">
+            <span>⚡ SOFTWARE PACKS • MANUALS • LEAKS • DATABASES • EXPLOITS • TUTORIALS ⚡ SOFTWARE PACKS • MANUALS • LEAKS • DATABASES • EXPLOITS • TUTORIALS ⚡ </span>
+        </div>
+    </div>
+
+    <div class="category">
+        <h2>◈ SOFTWARE</h2>
+        <div class="card-grid" id="softwareGrid"></div>
+    </div>
+
+    <div class="category">
+        <h2>◈ MANUALS & GUIDES</h2>
+        <div class="card-grid" id="manualsGrid"></div>
+    </div>
+
+    <div class="category">
+        <h2>◈ DATABASES / UTILS</h2>
+        <div class="card-grid" id="dbGrid"></div>
+    </div>
+
+    <div class="footer">
+        <div class="signature">By @concole_hack</div>
+        <div class="console">[ SOFT OR DOX — private vault || 0x7E5 ]</div>
+        <div>
+            <a href="https://t.me/SOFTORDOX" target="_blank" class="channel-btn">🔗 JOIN OUR CHANNEL → t.me/SOFTORDOX</a>
+            <button class="btn-back" id="refreshBtn">⟳ REFRESH ENERGY</button>
+        </div>
+    </div>
+</div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">Info</h3>
+        <p id="modalDesc">Select any card to view details.</p>
+        <button class="close-modal" id="closeModalBtn">CLOSE</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const softwareItems = [
+            { name: "ReconX Pro", desc: "Advanced OSINT framework + automation. Scraping & metadata extraction.", type: "tool" },
+            { name: "CipherGate", desc: "Encrypted tunneling & anonymizer suite. Leak-proof connection.", type: "tool" },
+            { name: "PayloadForge", desc: "Modular shellcode generator & AV evasion toolkit.", type: "tool" },
+            { name: "DoxParser v4", desc: "Intelligent data sorter from leaked DBs & archives.", type: "tool" }
+        ];
+        const manualsItems = [
+            { name: "OpSec Bible", desc: "Complete guide to digital anonymity & counter-forensics.", type: "manual" },
+            { name: "WiFi / Radio recon", desc: "Practical manual for wardriving and signal intelligence.", type: "manual" },
+            { name: "Social Engineering 2.0", desc: "Modern tactics & psychological triggers (2025 ed.)", type: "manual" },
+            { name: "Malware Dev Basics", desc: "From dropper to persistence — C++ & Assembly intro.", type: "manual" }
+        ];
+        const dbItems = [
+            { name: "Leaked Combos (2025)", desc: "2.3M records / email:pass (educational only).", type: "db" },
+            { name: "WHOIS History DB", desc: "Historical domain ownership dumps (2010-2024).", type: "db" },
+            { name: "Exploit Archives", desc: "CVE notes & 0day writeups from private sources.", type: "db" },
+            { name: "VPN Config Map", desc: "Global gateway leaks + server fingerprints.", type: "db" }
+        ];
+
+        function createCard(item, categoryName) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            let icon = '';
+            if(categoryName === 'SOFTWARE') icon = '🛠️';
+            else if(categoryName === 'MANUALS') icon = '📘';
+            else icon = '🗄️';
+            card.innerHTML = `
+                <div class="card-icon">${icon}</div>
+                <h3>${escapeHtml(item.name)}</h3>
+                <p>${escapeHtml(item.desc)}</p>
+                <div class="badge">ACCESS →</div>
+            `;
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openModal(item.name, item.desc, categoryName);
+            });
+            return card;
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                return m;
+            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+                return c;
+            });
+        }
+
+        function renderGrids() {
+            const softGrid = document.getElementById('softwareGrid');
+            const manGrid = document.getElementById('manualsGrid');
+            const dbGrid = document.getElementById('dbGrid');
+            softGrid.innerHTML = '';
+            manGrid.innerHTML = '';
+            dbGrid.innerHTML = '';
+
+            softwareItems.forEach(item => {
+                softGrid.appendChild(createCard(item, 'SOFTWARE'));
+            });
+            manualsItems.forEach(item => {
+                manGrid.appendChild(createCard(item, 'MANUALS'));
+            });
+            dbItems.forEach(item => {
+                dbGrid.appendChild(createCard(item, 'DATABASES'));
+            });
+        }
+
+        const modal = document.getElementById('infoModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const closeBtn = document.getElementById('closeModalBtn');
+
+        function openModal(title, desc, category) {
+            modalTitle.innerText = title;
+            let extra = `[${category}] — secure download link available for verified members. Full access via Telegram channel.`;
+            modalDesc.innerText = desc + "\n\n" + extra;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalFunc() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        closeBtn.addEventListener('click', closeModalFunc);
+        window.addEventListener('click', (e) => {
+            if(e.target === modal) closeModalFunc();
+        });
+
+        const refreshBtn = document.getElementById('refreshBtn');
+        refreshBtn.addEventListener('click', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => { card.style.transform = ''; }, 200);
+            });
+            const titles = document.querySelectorAll('.category h2');
+            titles.forEach(h => {
+                h.style.textShadow = '0 0 8px rgba(255,255,255,0.6)';
+                setTimeout(() => { h.style.textShadow = ''; }, 400);
+            });
+            const logo = document.querySelector('.circle-logo');
+            if(logo) {
+                logo.style.transform = 'scale(1.02)';
+                setTimeout(() => { logo.style.transform = ''; }, 300);
+            }
+        });
+
+        renderGrids();
+
+        const heroTitle = document.querySelector('.glow-text');
+        if(heroTitle) {
+            heroTitle.classList.add('pulse-effect');
+        }
+
+        const styleAnimate = document.createElement('style');
+        styleAnimate.textContent = `
+            .card {
+                opacity: 0;
+                animation: cardPop 0.5s ease forwards;
+            }
+            @keyframes cardPop {
+                from {
+                    opacity: 0;
+                    transform: translateY(25px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .card:nth-child(1) { animation-delay: 0.05s; }
+            .card:nth-child(2) { animation-delay: 0.1s; }
+            .card:nth-child(3) { animation-delay: 0.15s; }
+            .card:nth-child(4) { animation-delay: 0.2s; }
+        `;
+        document.head.appendChild(styleAnimate);
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.category').forEach(cat => {
+            cat.style.opacity = '0';
+            cat.style.transform = 'translateY(25px)';
+            cat.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(cat);
+        });
+        setTimeout(() => {
+            document.querySelectorAll('.category').forEach(cat => {
+                cat.style.opacity = '1';
+                cat.style.transform = 'translateY(0)';
+            });
+        }, 200);
+    })();
+</script>
+</body>
+</html>
