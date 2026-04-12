@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>SOFT OR DOX | CHAT — Community Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            font-family: 'Oswald', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #ccc;
+            border-left: 2px solid #fff;
+            padding-left: 0.6rem;
+            margin-top: 0.2rem;
+        }
+
+        .telegram-link {
+            background: rgba(255,255,255,0.05);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.9rem;
+        }
+
+        .telegram-link:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        .hero-logo {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0 2rem 0;
+        }
+
+        .circle-logo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.4);
+            box-shadow: 0 0 35px rgba(255,255,255,0.25), 0 0 15px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        .circle-logo:hover {
+            transform: scale(1.05) rotate(2deg);
+            border-color: rgba(255,255,255,0.8);
+            box-shadow: 0 0 50px rgba(255,255,255,0.5);
+        }
+
+        @keyframes floatLogo {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero {
+            text-align: center;
+            margin: 0.5rem 0 3rem 0;
+        }
+
+        .hero .glow-text {
+            font-size: 4.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-shadow: 0 0 3px rgba(255,255,255,0.4), 0 0 8px rgba(255,255,255,0.1);
+            animation: fadeUp 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: #aaa;
+            letter-spacing: 3px;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            font-weight: 300;
+            animation: fadeUp 1s 0.2s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-description {
+            background: rgba(10,10,10,0.7);
+            border-left: 5px solid #fff;
+            padding: 2rem;
+            margin: 2rem 0 3rem 0;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .chat-description p {
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #ddd;
+        }
+
+        .chat-description .highlight {
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .marquee-text {
+            background: #0a0a0a;
+            padding: 0.7rem;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+            margin: 1.5rem 0;
+            border-left: 4px solid #fff;
+            font-weight: 300;
+        }
+
+        .marquee-text span {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .join-card {
+            background: linear-gradient(135deg, #111, #1a1a1a);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 2.5rem;
+            text-align: center;
+            margin: 2.5rem 0;
+            transition: all 0.3s;
+        }
+
+        .join-card:hover {
+            border-color: #fff;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+
+        .join-card h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .join-link {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 0.9rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 2px;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .join-link:hover {
+            background: #000;
+            color: #fff;
+            border: 1px solid #fff;
+            transform: scale(1.02);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+            margin: 3rem 0;
+        }
+
+        .info-card {
+            background: rgba(20,20,20,0.6);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 1.8rem;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-5px);
+        }
+
+        .info-card .emoji {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .info-card h3 {
+            font-size: 1.6rem;
+            font-weight: 500;
+        }
+
+        .info-card p {
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .footer .signature {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #ddd;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #aaa;
+            text-decoration: none;
+            border-bottom: 1px dotted #aaa;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 700px) {
+            .hero .glow-text {
+                font-size: 2.5rem;
+            }
+            .chat-description p {
+                font-size: 1rem;
+            }
+            .join-card h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        .pulse-effect {
+            animation: softPulse 3s infinite;
+        }
+
+        @keyframes softPulse {
+            0% { opacity: 0.9; text-shadow: 0 0 0px rgba(255,255,255,0.2);}
+            50% { opacity: 1; text-shadow: 0 0 6px rgba(255,255,255,0.4);}
+            100% { opacity: 0.9; text-shadow: 0 0 0px rgba(255,255,255,0.2);}
+        }
+    </style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<div class="container">
+    <header>
+        <div class="logo-area">
+            <div class="brand-text">
+                <h1>SOFT OR DOX</h1>
+                <div class="tag">community · chat · lounge</div>
+            </div>
+        </div>
+        <a href="https://t.me/SOFTORDOX" target="_blank" class="telegram-link">📡 MAIN CHANNEL →</a>
+    </header>
+
+    <div class="hero-logo">
+        <img class="circle-logo" src="https://app-uploads.krea.ai/public/f90c7f5a-ddce-4ca0-ac65-229c1fc428d8-image.png" alt="SOFT OR DOX CHAT Logo" onerror="this.onerror=null;this.src='https://placehold.co/160x160/444/white?text=CHAT'">
+    </div>
+
+    <div class="hero">
+        <div class="glow-text">SOFT-OR-DOX<br>CHAT</div>
+        <div class="hero-sub">/// private community hub ///</div>
+    </div>
+
+    <div class="chat-description">
+        <p>⚡ <span class="highlight">SOFT OR DOX CHAT</span> — закрытое сообщество энтузиастов кибербезопасности, софт-архитекторов и исследователей данных. Обсуждаем инструменты, делимся мануалами, базами и эксплойтами в дружеской атмосфере. Без токсичности, только релевантный контент и взаимопомощь. Присоединяйся к движению! ⚡</p>
+    </div>
+
+    <div class="marquee-text">
+        <span>💬 ДИСКУССИИ • СОФТ • АНАЛИЗ ДАННЫХ • УТЕЧКИ • ОПСЕК • ВЗАИМОПОМОЩЬ 💬 ДИСКУССИИ • СОФТ • АНАЛИЗ ДАННЫХ • УТЕЧКИ • ОПСЕК • ВЗАИМОПОМОЩЬ 💬 </span>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="emoji">🛠️</div>
+            <h3>Софт & Тулы</h3>
+            <p>Эксклюзивные сборки, скрипты, фреймворки для OSINT и автоматизации</p>
+        </div>
+        <div class="info-card">
+            <div class="emoji">📚</div>
+            <h3>Мануалы</h3>
+            <p>Гайды по OPSEC, social engineering, reverse engineering</p>
+        </div>
+        <div class="info-card">
+            <div class="emoji">🗄️</div>
+            <h3>Базы данных</h3>
+            <p>Свежие утечки, исторические дампы, комбы и WHOIS-архивы</p>
+        </div>
+        <div class="info-card">
+            <div class="emoji">🤝</div>
+            <h3>Комьюнити</h3>
+            <p>Обмен опытом, коллаборации, инсайды и приватные ресурсы</p>
+        </div>
+    </div>
+
+    <div class="join-card">
+        <h2>🔗 ВСТУПИТЬ В ЧАТ</h2>
+        <p style="margin-bottom: 0.5rem; color: #ccc;">Присоединяйся к закрытому Telegram-чату SOFT OR DOX</p>
+        <a href="https://t.me/SOFTORDOX" target="_blank" class="join-link">ПЕРЕЙТИ В ЧАТ →</a>
+        <p style="margin-top: 1.2rem; font-size: 0.8rem; letter-spacing: 1px;">t.me/SOFTORDOX</p>
+    </div>
+
+    <div class="footer">
+        <div class="signature">By @concole_hack</div>
+        <div class="console">[ SOFT OR DOX CHAT // v.2.0 | community-driven ]</div>
+        <a href="#" class="back-link" onclick="history.back(); return false;">← back to portfolio</a>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const heroTitle = document.querySelector('.glow-text');
+        if(heroTitle) {
+            heroTitle.classList.add('pulse-effect');
+        }
+        
+        const joinBtn = document.querySelector('.join-link');
+        if(joinBtn) {
+            joinBtn.addEventListener('mouseenter', () => {
+                joinBtn.style.transform = 'scale(1.02)';
+            });
+            joinBtn.addEventListener('mouseleave', () => {
+                joinBtn.style.transform = 'scale(1)';
+            });
+        }
+
+        const cards = document.querySelectorAll('.info-card');
+        cards.forEach((card, idx) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100 + idx * 80);
+        });
+    })();
+</script>
+</body>
+</html>
