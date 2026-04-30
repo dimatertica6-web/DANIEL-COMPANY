@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUB-DB | Документация консольного файлового сервера</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0f;
+            font-family: 'Inter', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1e2a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b3b4f;
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a5a77;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: #0c0c12;
+            backdrop-filter: blur(10px);
+            border-right: 1px solid #23232e;
+            z-index: 40;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #23232e;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #4f46e5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            font-weight: 300;
+            color: #9ca3af;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+
+        .sidebar-stats {
+            background: #13131c;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+        }
+
+        .sidebar-stats div {
+            margin: 5px 0;
+            color: #9ca3af;
+        }
+
+        .sidebar-stats i {
+            width: 20px;
+            color: #4f46e5;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            margin: 4px 0;
+            border-radius: 12px;
+            color: #cbd5e6;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            width: 24px;
+            font-size: 1.1rem;
+        }
+
+        .nav-item:hover {
+            background: #1c1c26;
+            color: white;
+        }
+
+        .nav-item.active {
+            background: #2d2a3e;
+            color: #a78bfa;
+            border-left: 2px solid #8b5cf6;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 50;
+                background: #1a1a24;
+                padding: 10px;
+                border-radius: 12px;
+                border: none;
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            color: #9ca3af;
+            margin-top: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            border-left: 4px solid #4f46e5;
+            padding-left: 1rem;
+        }
+
+        .badge {
+            background: #1e1e2c;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #9ca3af;
+            display: inline-block;
+        }
+
+        .code-block {
+            background: #0b0b10;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            border-left: 3px solid #4f46e5;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .func-card {
+            background: #101018;
+            border: 1px solid #252530;
+            border-radius: 1rem;
+            padding: 1.2rem;
+            transition: all 0.25s ease;
+        }
+
+        .func-card:hover {
+            transform: translateY(-4px);
+            background: #13131c;
+            border-color: #4f46e5;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+        }
+
+        .func-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #a78bfa;
+            margin-bottom: 0.5rem;
+        }
+
+        .func-name {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            color: #ffffff;
+        }
+
+        .func-desc {
+            font-size: 0.85rem;
+            color: #a1a1b0;
+            line-height: 1.45;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            background: #0c0c12;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid #23232e;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-item i {
+            font-size: 1.3rem;
+            color: #4f46e5;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #1f1f2b;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 12px;
+            background: #1a1a24;
+            border: 1px solid #23232e;
+            color: white;
+            font-family: inherit;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-box:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .section {
+            scroll-margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">SUB-DB<span>.docs</span></div>
+        <div style="font-size: 0.75rem; margin-top: 6px;">консольный сервер с 120 функциями</div>
+    </div>
+    <div class="sidebar-stats">
+        <div><i class="fas fa-folder"></i> Файлов: 120</div>
+        <div><i class="fas fa-plug"></i> Функций: 120</div>
+        <div><i class="fas fa-shield-alt"></i> Шифрование: AES-256</div>
+    </div>
+    <input type="text" id="searchInput" class="search-box" placeholder="Поиск функций...">
+    <nav id="sidebarNav">
+        <div class="nav-item" data-section="overview"><i class="fas fa-terminal"></i> Обзор</div>
+        <div class="nav-item" data-section="install"><i class="fas fa-download"></i> Установка</div>
+        <div class="nav-item" data-section="section1"><i class="fas fa-folder"></i> 1-10: Файловый менеджер</div>
+        <div class="nav-item" data-section="section2"><i class="fas fa-database"></i> 11-20: Бэкапы и мониторинг</div>
+        <div class="nav-item" data-section="section3"><i class="fas fa-shield-alt"></i> 21-30: Сеть и безопасность</div>
+        <div class="nav-item" data-section="section4"><i class="fas fa-globe"></i> 31-40: Веб и данные</div>
+        <div class="nav-item" data-section="section5"><i class="fas fa-server"></i> 41-50: Система и базы</div>
+        <div class="nav-item" data-section="section6"><i class="fas fa-lock"></i> 51-60: Криптография</div>
+        <div class="nav-item" data-section="section7"><i class="fas fa-tools"></i> 61-70: Утилиты</div>
+        <div class="nav-item" data-section="section8"><i class="fas fa-cogs"></i> 71-80: Паттерны</div>
+        <div class="nav-item" data-section="section9"><i class="fas fa-chart-line"></i> 81-90: Мониторинг</div>
+        <div class="nav-item" data-section="section10"><i class="fas fa-search"></i> 91-100: Поиск и анализ</div>
+        <div class="nav-item" data-section="section11"><i class="fas fa-film"></i> 101-110: Медиа</div>
+        <div class="nav-item" data-section="section12"><i class="fas fa-microphone-alt"></i> 111-120: AI и речь</div>
+    </nav>
+</aside>
+
+<main class="main-content" id="mainContent">
+    <section id="overview" class="section">
+        <h1>SUB-DB</h1>
+        <div class="subtitle">Консольный файловый сервер с 120 встроенными функциями. Загрузка, шифрование, бэкапы, веб-интерфейс, сканирование сети, базы данных, AI и многое другое.</div>
+        
+        <div class="stats-row">
+            <div class="stat-item"><i class="fas fa-upload"></i> Загрузка файлов</div>
+            <div class="stat-item"><i class="fas fa-lock"></i> Fernet шифрование</div>
+            <div class="stat-item"><i class="fas fa-chart-line"></i> Мониторинг CPU/RAM</div>
+            <div class="stat-item"><i class="fas fa-qrcode"></i> QR-код доступа</div>
+        </div>
+
+        <div class="code-block">
+            pip install aiohttp colorama qrcode cryptography bcrypt pyotp dnspython whois beautifulsoup4 requests pyjwt argon2-cffi psutil
+        </div>
+        <div class="code-block">
+            python SUB-DB.py
+        </div>
+    </section>
+
+    <section id="install" class="section">
+        <h2>Установка и запуск</h2>
+        <div class="code-block">git clone https://github.com/sub-db/server<br>cd sub-db<br>pip install -r requirements.txt<br>python SUB-DB.py</div>
+        <p>После запуска откроется меню, где вы выбираете номер функции от 1 до 120. Веб-сервер запускается командой №2 на порту 8080.</p>
+    </section>
+
+    <div id="functions-container"></div>
+
+    <footer>
+        <i class="fas fa-code"></i> SUB-DB — полностью открытый консольный файловый сервер. 120 функций, полное логирование, шифрование и безопасность.
+    </footer>
+</main>
+
+<script>
+    const functionsData = {
+        1: { name: "Показать файловый менеджер", desc: "Отображает все загруженные файлы с размерами, датами изменения и MD5 хешами для проверки целостности.", range: "1-10" },
+        2: { name: "Запустить веб-сервер", desc: "Запускает HTTP сервер на порту 8080 для удаленного доступа к файлам через браузер.", range: "1-10" },
+        3: { name: "Сгенерировать QR-код", desc: "Создает QR-код со ссылкой на сервер для быстрого доступа с телефона.", range: "1-10" },
+        4: { name: "Сжать все файлы", desc: "Создает ZIP архив всех файлов в папке загрузок с максимальным сжатием.", range: "1-10" },
+        5: { name: "Зашифровать файл", desc: "Шифрует выбранный файл с помощью Fernet шифрования (AES-128).", range: "1-10" },
+        6: { name: "Расшифровать файл", desc: "Расшифровывает ранее зашифрованный файл с расширением .enc.", range: "1-10" },
+        7: { name: "Открыть веб-интерфейс", desc: "Открывает браузер с адресом файлового сервера.", range: "1-10" },
+        8: { name: "Массовая загрузка файлов", desc: "Загружает все файлы из папки 'to_upload' на сервер.", range: "1-10" },
+        9: { name: "Очистить временные файлы", desc: "Удаляет временные файлы сервера из системной temp директории.", range: "1-10" },
+        10: { name: "Полное резервное копирование", desc: "Создает полную резервную копию всех данных сервера.", range: "1-10" },
+        11: { name: "Восстановить из бэкапа", desc: "Восстанавливает данные из выбранного ZIP архива.", range: "11-20" },
+        12: { name: "Монитор системы", desc: "Показывает загрузку CPU, RAM и диска в реальном времени.", range: "11-20" },
+        13: { name: "Сканер сети", desc: "Сканирует локальную сеть и находит активные устройства.", range: "11-20" },
+        14: { name: "Менеджер заблокированных IP", desc: "Добавляет IP адреса в черный список сервера.", range: "11-20" },
+        15: { name: "Логи в реальном времени", desc: "Отображает последние 50 записей системного лога.", range: "11-20" },
+        16: { name: "Управление пользователями", desc: "Добавляет новых пользователей с ролями admin/user (bcrypt).", range: "11-20" },
+        17: { name: "Хеширование пароля", desc: "Создает bcrypt хеш из введенного пароля.", range: "11-20" },
+        18: { name: "Генерация OTP", desc: "Создает секретный ключ для двухфакторной аутентификации TOTP.", range: "11-20" },
+        19: { name: "Проверка OTP", desc: "Проверяет правильность введенного одноразового пароля.", range: "11-20" },
+        20: { name: "Проверка email", desc: "Валидирует формат email адреса по регулярному выражению.", range: "11-20" },
+        21: { name: "DNS запрос", desc: "Выполняет разрешение доменного имени в IP адрес.", range: "21-30" },
+        22: { name: "WHOIS запрос", desc: "Получает информацию о регистрации домена.", range: "21-30" },
+        23: { name: "Сканер портов", desc: "Проверяет открытые порты на указанном хосте (21,22,80,443 и др.).", range: "21-30" },
+        24: { name: "Сниффер пакетов", desc: "Захватывает сетевые пакеты (требует прав администратора).", range: "21-30" },
+        25: { name: "Хеш MD5 файла", desc: "Вычисляет MD5 хеш указанного файла.", range: "21-30" },
+        26: { name: "Хеш SHA256 файла", desc: "Вычисляет SHA256 хеш указанного файла.", range: "21-30" },
+        27: { name: "Base64 кодирование", desc: "Кодирует текст в формат Base64.", range: "21-30" },
+        28: { name: "Base64 декодирование", desc: "Декодирует Base64 строку обратно в текст.", range: "21-30" },
+        29: { name: "Сжатие текста", desc: "Сжимает текст с помощью zlib и показывает эффективность сжатия.", range: "21-30" },
+        30: { name: "Распаковка текста", desc: "Распаковывает сжатые zlib данные обратно в текст.", range: "21-30" },
+        31: { name: "Скачать файл по URL", desc: "Загружает файл из интернета с отображением прогресса.", range: "31-40" },
+        32: { name: "HTTP GET запрос", desc: "Отправляет GET запрос и показывает ответ сервера.", range: "31-40" },
+        33: { name: "HTTP POST запрос", desc: "Отправляет POST запрос с данными.", range: "31-40" },
+        34: { name: "Парсинг веб-страницы", desc: "Извлекает заголовок, ссылки, изображения и текст.", range: "31-40" },
+        35: { name: "Парсинг XML", desc: "Разбирает XML строку и показывает структуру.", range: "31-40" },
+        36: { name: "Генерация XML", desc: "Создает XML документ из введенных данных.", range: "31-40" },
+        37: { name: "Парсинг JSON", desc: "Проверяет валидность JSON строки.", range: "31-40" },
+        38: { name: "Генерация JSON", desc: "Создает JSON с информацией о сервере.", range: "31-40" },
+        39: { name: "CSV в JSON", desc: "Конвертирует CSV файл в формат JSON.", range: "31-40" },
+        40: { name: "JSON в CSV", desc: "Конвертирует JSON файл в формат CSV.", range: "31-40" },
+        41: { name: "Выполнить команду shell", desc: "Выполняет системную команду и показывает вывод.", range: "41-50" },
+        42: { name: "Информация о системе", desc: "Показывает ОС, версию Python, имя хоста, IP.", range: "41-50" },
+        43: { name: "Список процессов", desc: "Отображает все запущенные процессы с PID и CPU.", range: "41-50" },
+        44: { name: "Убить процесс", desc: "Завершает процесс по его PID.", range: "41-50" },
+        45: { name: "Проверка порта", desc: "Проверяет открыт ли указанный порт на хосте.", range: "41-50" },
+        46: { name: "TCP сервер", desc: "Запускает простой эхо-сервер на порту 8888.", range: "41-50" },
+        47: { name: "UDP клиент", desc: "Отправляет UDP сообщение на указанный хост и порт.", range: "41-50" },
+        48: { name: "Тест FTP входа", desc: "Проверяет логин на FTP сервере.", range: "41-50" },
+        49: { name: "Тест SSH соединения", desc: "Проверяет подключение по SSH.", range: "41-50" },
+        50: { name: "MySQL запрос", desc: "Выполняет SQL запрос к MySQL базе данных.", range: "41-50" },
+        51: { name: "PostgreSQL запрос", desc: "Выполняет SQL запрос к PostgreSQL.", range: "51-60" },
+        52: { name: "MongoDB вставка", desc: "Вставляет тестовый документ в MongoDB.", range: "51-60" },
+        53: { name: "Redis установка ключа", desc: "Сохраняет значение по ключу в Redis.", range: "51-60" },
+        54: { name: "Redis получение ключа", desc: "Получает значение из Redis по ключу.", range: "51-60" },
+        55: { name: "SQLite запрос", desc: "Выполняет запрос к локальной SQLite базе.", range: "51-60" },
+        56: { name: "Создать JWT токен", desc: "Генерирует JSON Web Token с payload.", range: "51-60" },
+        57: { name: "Проверить JWT токен", desc: "Верифицирует и расшифровывает JWT.", range: "51-60" },
+        58: { name: "Хеш пароля Argon2", desc: "Хеширует пароль алгоритмом Argon2 (самый безопасный).", range: "51-60" },
+        59: { name: "Проверка пароля", desc: "Сверяет пароль с Argon2 хешем.", range: "51-60" },
+        60: { name: "Генерация UUID", desc: "Создает уникальный идентификатор версии 4.", range: "51-60" },
+        61: { name: "Случайная строка", desc: "Генерирует случайную строку заданной длины.", range: "61-70" },
+        62: { name: "Определение типа файла", desc: "Определяет MIME тип файла.", range: "61-70" },
+        63: { name: "Разделить файл", desc: "Разбивает большой файл на части указанного размера.", range: "61-70" },
+        64: { name: "Объединить файлы", desc: "Собирает разделенные части обратно в один файл.", range: "61-70" },
+        65: { name: "Синхронизация папок", desc: "Копирует все файлы из исходной папки в целевую.", range: "61-70" },
+        66: { name: "Наблюдение за папкой", desc: "Отслеживает изменения в указанной директории.", range: "61-70" },
+        67: { name: "Планировщик задач", desc: "Выполняет задачу с указанной задержкой.", range: "61-70" },
+        68: { name: "Ограничитель частоты", desc: "Демонстрирует алгоритм лимитирования запросов.", range: "61-70" },
+        69: { name: "Кэш система", desc: "Простое хранилище ключ-значение с TTL.", range: "61-70" },
+        70: { name: "Очередь сообщений", desc: "Демонстрация паттерна producer-consumer.", range: "61-70" },
+        71: { name: "PubSub система", desc: "Демонстрация паттерна издатель-подписчик.", range: "71-80" },
+        72: { name: "Эмиттер событий", desc: "Система событий с подпиской на события.", range: "71-80" },
+        73: { name: "Конечный автомат", desc: "Реализация state machine с переходами.", range: "71-80" },
+        74: { name: "Движок воркфлоу", desc: "Последовательное выполнение шагов бизнес-процесса.", range: "71-80" },
+        75: { name: "Загрузчик плагинов", desc: "Динамическая загрузка Python модулей.", range: "71-80" },
+        76: { name: "API лимитер", desc: "Реализация алгоритма token bucket.", range: "71-80" },
+        77: { name: "Circuit Breaker", desc: "Паттерн отказоустойчивости (размыкание цепи).", range: "71-80" },
+        78: { name: "Логика повторов", desc: "Автоматические повторные попытки при ошибках.", range: "71-80" },
+        79: { name: "Изолятор Bulkhead", desc: "Ограничение количества параллельных задач.", range: "71-80" },
+        80: { name: "Проверка здоровья", desc: "Проверяет работоспособность всех компонентов сервера.", range: "71-80" },
+        81: { name: "Сборщик метрик", desc: "Собирает статистику о запросах, ошибках, загрузке.", range: "81-90" },
+        82: { name: "Менеджер алертов", desc: "Создает и логирует алерты (info/warning/critical).", range: "81-90" },
+        83: { name: "Аудит логгер", desc: "Записывает действия пользователей в audit лог.", range: "81-90" },
+        84: { name: "Менеджер конфигурации", desc: "Читает и создает config.ini файл.", range: "81-90" },
+        85: { name: "Переменные окружения", desc: "Отображает все переменные окружения.", range: "81-90" },
+        86: { name: "Менеджер секретов", desc: "Генерирует и сохраняет секретные ключи.", range: "81-90" },
+        87: { name: "Сервис шифрования", desc: "Демонстрация AES-256 шифрования.", range: "81-90" },
+        88: { name: "Цифровая подпись", desc: "Создает RSA подпись для сообщения.", range: "81-90" },
+        89: { name: "Проверка подписи", desc: "Верифицирует цифровую подпись.", range: "81-90" },
+        90: { name: "Генерация сертификата", desc: "Создает самоподписанный SSL сертификат.", range: "81-90" },
+        91: { name: "TLS клиент", desc: "Подключается к HTTPS сайту и показывает детали сертификата.", range: "91-100" },
+        92: { name: "SMTP email", desc: "Отправляет электронную почту через SMTP сервер.", range: "91-100" },
+        93: { name: "IMAP читатель", desc: "Читает последние письма с почтового сервера.", range: "91-100" },
+        94: { name: "SMS отправитель", desc: "Отправляет SMS через Twilio.", range: "91-100" },
+        95: { name: "Push уведомления", desc: "Демонстрация отправки push уведомлений.", range: "91-100" },
+        96: { name: "Вебхук диспатчер", desc: "Отправляет HTTP вебхук с данными события.", range: "91-100" },
+        97: { name: "Наблюдение за файлом", desc: "Отслеживает изменения конкретного файла.", range: "91-100" },
+        98: { name: "Обход директории", desc: "Рекурсивно показывает все папки и файлы.", range: "91-100" },
+        99: { name: "Поиск файлов", desc: "Ищет файлы по паттерну имени.", range: "91-100" },
+        100: { name: "Поиск контента", desc: "Ищет текст внутри файлов.", range: "91-100" },
+        101: { name: "Поиск дубликатов", desc: "Находит дубликаты файлов по MD5 хешу.", range: "101-110" },
+        102: { name: "Изменение размера изображения", desc: "Меняет размер картинки через Pillow.", range: "101-110" },
+        103: { name: "Конвертер изображений", desc: "Конвертирует изображения в другой формат.", range: "101-110" },
+        104: { name: "Извлечение текста из PDF", desc: "Извлекает текст из PDF документа.", range: "101-110" },
+        105: { name: "Объединение PDF", desc: "Склеивает несколько PDF файлов в один.", range: "101-110" },
+        106: { name: "Чтение Excel", desc: "Читает и отображает содержимое Excel файла.", range: "101-110" },
+        107: { name: "Создание Excel", desc: "Генерирует Excel файл с тестовыми данными.", range: "101-110" },
+        108: { name: "Генератор Word", desc: "Создает документ Microsoft Word.", range: "101-110" },
+        109: { name: "Создание PowerPoint", desc: "Генерирует презентацию с заголовком.", range: "101-110" },
+        110: { name: "Метаданные видео", desc: "Извлекает FPS, разрешение, длительность видео.", range: "101-110" },
+        111: { name: "Конвертер аудио", desc: "Конвертирует аудиофайлы в разные форматы.", range: "111-120" },
+        112: { name: "Текст в речь", desc: "Преобразует текст в MP3 с синтезом речи (gTTS).", range: "111-120" },
+        113: { name: "Распознавание речи", desc: "Преобразует речь с микрофона в текст.", range: "111-120" },
+        114: { name: "Определение языка", desc: "Определяет язык введенного текста.", range: "111-120" },
+        115: { name: "Перевод текста", desc: "Переводит текст на выбранный язык через Google Translate.", range: "111-120" },
+        116: { name: "Анализ тональности", desc: "Определяет позитивный/негативный оттенок текста.", range: "111-120" },
+        117: { name: "Суммаризация текста", desc: "Сокращает длинный текст до краткого содержания (AI).", range: "111-120" },
+        118: { name: "Извлечение ключевых слов", desc: "Находит главные слова в тексте через sklearn.", range: "111-120" },
+        119: { name: "Бэкап базы данных", desc: "Создает SQL дамп всей базы данных.", range: "111-120" },
+        120: { name: "Полная очистка системы", desc: "Удаляет все файлы и сбрасывает базу данных.", range: "111-120" }
+    };
+
+    const rangeTitles = {
+        "1-10": "Файловый менеджер и управление сервером",
+        "11-20": "Бекапы и системный мониторинг",
+        "21-30": "Сеть и безопасность",
+        "31-40": "Веб и обработка данных",
+        "41-50": "Система и базы данных",
+        "51-60": "Безопасность и криптография",
+        "61-70": "Утилиты и операции с файлами",
+        "71-80": "Паттерны и архитектура",
+        "81-90": "Мониторинг и безопасность",
+        "91-100": "Поиск и анализ",
+        "101-110": "Медиа обработка",
+        "111-120": "AI и расширенные функции"
+    };
+
+    function renderFunctions(filterText = "") {
+        const container = document.getElementById('functions-container');
+        const grouped = {};
+        for (let i = 1; i <= 120; i++) {
+            const fn = functionsData[i];
+            if (fn) {
+                if (!grouped[fn.range]) grouped[fn.range] = [];
+                grouped[fn.range].push({ id: i, ...fn });
+            }
+        }
+        let html = '';
+        for (const [range, items] of Object.entries(grouped)) {
+            const sectionId = `section${range.replace('-', '')}`;
+            let filteredItems = items;
+            if (filterText) {
+                filteredItems = items.filter(fn => 
+                    fn.name.toLowerCase().includes(filterText.toLowerCase()) || 
+                    fn.desc.toLowerCase().includes(filterText.toLowerCase())
+                );
+            }
+            if (filteredItems.length === 0 && filterText) continue;
+            
+            html += `<section id="${sectionId}" class="section"><div class="section-header"><h2>${range}: ${rangeTitles[range] || 'Функции'}</h2><span class="badge">${filteredItems.length} функций</span></div><div class="card-grid">`;
+            filteredItems.forEach(fn => {
+                html += `
+                    <div class="func-card">
+                        <div class="func-number"><i class="fas fa-terminal"></i> Функция #${fn.id.toString().padStart(3, '0')}</div>
+                        <div class="func-name">${fn.name}</div>
+                        <div class="func-desc">${fn.desc}</div>
+                    </div>
+                `;
+            });
+            html += `</div></section>`;
+        }
+        if (html === '') {
+            html = '<div class="no-results"><i class="fas fa-search"></i> Ничего не найдено. Попробуйте другой запрос.</div>';
+        }
+        container.innerHTML = html;
+    }
+
+    function scrollToSection(sectionId) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function initNav() {
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = item.getAttribute('data-section');
+                
+                if (sectionId === 'overview') {
+                    scrollToSection('overview');
+                } else if (sectionId === 'install') {
+                    scrollToSection('install');
+                } else if (sectionId === 'section1') {
+                    scrollToSection('section1');
+                } else if (sectionId === 'section2') {
+                    scrollToSection('section2');
+                } else if (sectionId === 'section3') {
+                    scrollToSection('section3');
+                } else if (sectionId === 'section4') {
+                    scrollToSection('section4');
+                } else if (sectionId === 'section5') {
+                    scrollToSection('section5');
+                } else if (sectionId === 'section6') {
+                    scrollToSection('section6');
+                } else if (sectionId === 'section7') {
+                    scrollToSection('section7');
+                } else if (sectionId === 'section8') {
+                    scrollToSection('section8');
+                } else if (sectionId === 'section9') {
+                    scrollToSection('section9');
+                } else if (sectionId === 'section10') {
+                    scrollToSection('section10');
+                } else if (sectionId === 'section11') {
+                    scrollToSection('section11');
+                } else if (sectionId === 'section12') {
+                    scrollToSection('section12');
+                }
+                
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                item.classList.add('active');
+                
+                if (window.innerWidth <= 768) {
+                    document.getElementById('sidebar').classList.remove('open');
+                }
+            });
+        });
+    }
+
+    function initScrollSpy() {
+        const sections = ['overview', 'install', 'section1', 'section2', 'section3', 'section4', 'section5', 'section6', 'section7', 'section8', 'section9', 'section10', 'section11', 'section12'];
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const navItem = document.querySelector(`.nav-item[data-section="${id}"]`);
+                    if (navItem) {
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        navItem.classList.add('active');
+                    }
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        sections.forEach(sectionId => {
+            const element = document.getElementById(sectionId);
+            if (element) observer.observe(element);
+        });
+    }
+
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+        renderFunctions(e.target.value);
+    });
+
+    const toggleBtn = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+    }
+
+    renderFunctions();
+    initNav();
+    initScrollSpy();
+</script>
+</body>
+</html>
