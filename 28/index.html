@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>OPTIMUS · system intelligence core</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ececec;
+      font-family: 'Oswald', 'Segoe UI', sans-serif;
+      font-weight: 300;
+      line-height: 1.45;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    code, .mono, .terminal-like {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    ::selection {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3a3a3a;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9a9a9a;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .glass-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      background: rgba(0, 0, 0, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-symbol {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #fff 0%, #b0b0b0 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 28px;
+      color: #000;
+      box-shadow: 0 0 14px rgba(255,255,255,0.2);
+      transition: transform 0.2s;
+    }
+
+    .logo-symbol:hover { transform: scale(1.03); }
+
+    .logo-text {
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      font-size: 1.7rem;
+    }
+    .logo-text span { font-weight: 300; color: #aaa; letter-spacing: 0; }
+
+    .nav-links { display: flex; gap: 40px; }
+    .nav-links a {
+      color: #ddd;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      transition: 0.2s;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 4px;
+    }
+    .nav-links a:hover { color: #fff; border-bottom-color: #fff; }
+
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .hero-content { max-width: 800px; }
+    .badge {
+      background: rgba(255,255,255,0.05);
+      padding: 6px 18px;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      border: 0.5px solid rgba(255,255,255,0.2);
+      margin-bottom: 28px;
+      display: inline-block;
+    }
+    .hero h1 {
+      font-size: clamp(3.2rem, 9vw, 5.6rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin-bottom: 28px;
+    }
+    .hero-gradient-text { background: linear-gradient(130deg, #fff, #888); background-clip: text; -webkit-background-clip: text; color: transparent; }
+    .hero p { font-size: 1.25rem; color: #bcbcbc; margin-bottom: 48px; max-width: 680px; }
+
+    .btn-group { display: flex; gap: 24px; flex-wrap: wrap; }
+    .btn-primary {
+      background: white; color: black; padding: 12px 32px; border: none;
+      font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1rem;
+      cursor: pointer; transition: all 0.2s; border-radius: 40px; text-decoration: none;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 28px -8px rgba(255,255,255,0.2); background: #f2f2f2; }
+    .btn-outline {
+      background: transparent; border: 1.5px solid #fff; color: white; padding: 10px 32px;
+      border-radius: 40px; font-family: 'Oswald', sans-serif; font-weight: 500; text-decoration: none;
+      transition: 0.2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.05); transform: translateY(-2px); }
+
+    .scroll-indicator {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      animation: bounceSoft 2s infinite; cursor: pointer;
+    }
+    @keyframes bounceSoft { 0%,100%{ transform: translateX(-50%) translateY(0); opacity: 0.6; } 50%{ transform: translateX(-50%) translateY(10px); opacity: 1; }}
+
+    section { padding: 110px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .section-title {
+      font-size: 2.9rem; font-weight: 600; letter-spacing: -1px; margin-bottom: 56px;
+      position: relative; display: inline-block;
+    }
+    .section-title::after { content: ''; position: absolute; bottom: -12px; left: 0; width: 70%; height: 2px; background: #fff; opacity: 0.5; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 44px; }
+    .card {
+      background: #080808; border: 1px solid #1f1f1f; border-radius: 32px; padding: 40px 32px;
+      transition: all 0.3s cubic-bezier(0.2,0.9,0.4,1.1);
+    }
+    .card:hover { border-color: #4a4a4a; transform: translateY(-6px); background: #0d0d0d; }
+    .card-icon { font-size: 2.8rem; margin-bottom: 24px; }
+    .card h3 { font-size: 1.9rem; font-weight: 500; margin-bottom: 14px; }
+    .card p { color: #aaa; font-size: 0.95rem; line-height: 1.4; }
+
+    .feature-tag {
+      background: #0f0f0f; border: 0.5px solid #2c2c2c; padding: 6px 18px; border-radius: 40px;
+      font-size: 0.75rem; font-weight: 400; transition: 0.2s; display: inline-block; margin: 4px 4px 0 0;
+    }
+    .feature-tag:hover { background: #1c1c1c; border-color: #aaa; }
+
+    .window-ui {
+      background: #0a0a0a; border-radius: 28px; border: 1px solid #2a2a2a; overflow: hidden;
+      margin: 48px 0 24px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.8);
+    }
+    .window-bar {
+      background: #121212; padding: 14px 20px; border-bottom: 1px solid #252525;
+      display: flex; gap: 10px; align-items: center;
+    }
+    .window-dot { width: 13px; height: 13px; border-radius: 50%; background: #3a3a3a; }
+    .window-dot.red { background: #ff5f56; }
+    .window-dot.yellow { background: #ffbd2e; }
+    .window-dot.green { background: #27c93f; }
+    .window-title { margin-left: 12px; font-size: 0.8rem; letter-spacing: 0.3px; color: #aaa; font-family: monospace; }
+    .window-content { padding: 32px; background: #030303; }
+
+    .spec-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .spec-table td { padding: 20px 12px; border-bottom: 1px solid #1c1c1c; }
+    .spec-table td:first-child { font-weight: 600; width: 32%; }
+
+    .stats-grid { display: flex; flex-wrap: wrap; gap: 28px; justify-content: space-between; margin-top: 40px; }
+    .stat-block { background: #0b0b0b; border-radius: 32px; padding: 36px 24px; flex: 1; min-width: 200px; text-align: center; border: 1px solid #202020; }
+    .stat-number { font-size: 3rem; font-weight: 700; letter-spacing: -1px; }
+
+    footer { padding: 48px 0 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: #6a6a6a; }
+
+    .fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 800px) { .container { padding: 0 24px; } .nav-inner { flex-direction: column; align-items: flex-start; } .hero { min-height: 70vh; } }
+  </style>
+</head>
+<body>
+<div class="glass-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <div class="logo-area"><div class="logo-symbol">⟠</div><div class="logo-text">OPTIMUS<span>|CORE</span></div></div>
+      <div class="nav-links"><a href="#philosophy">philosophy</a><a href="#engines">engines</a><a href="#deep-dive">deep dive</a><a href="#benchmark">benchmark</a><a href="#security">security</a></div>
+    </div>
+  </div>
+</div>
+<main>
+  <div class="container"><div class="hero"><div class="hero-content fade-up"><div class="badge">✦ NEURON OPTIMIZER v.ARCH</div><h1>operating system <span class="hero-gradient-text">deep remediation suite</span></h1><p>Three precision tools that declutter, accelerate, and restore digital hygiene. From kernel caches to bloated node_modules — engineered for silence and speed.</p><div class="btn-group"><a href="#engines" class="btn-primary">⟡ inspect modules</a><a href="#benchmark" class="btn-outline">↯ performance metrics</a></div></div><div class="scroll-indicator"><svg width="26" height="40" viewBox="0 0 24 36" fill="none" stroke="white" stroke-width="1.5"><path d="M12 3 L12 27 M8 23 L12 27 L16 23"/></svg></div></div></div>
+
+  <section id="philosophy"><div class="container"><div class="fade-up"><div class="section-title">⚡ design manifesto</div><p style="margin-bottom: 40px; max-width: 880px; font-size: 1.1rem;">The Optimus philosophy is radical transparency: every file scanned, every cache flushed, every backup logged. No telemetry, no hidden processes, and zero network chatter. Our engines are built to respect your hardware while recovering gigabytes of wasted space and improving read/write latency across all major operating systems. Over 140+ distinct optimization routines are orchestrated across three native codebases.</p></div><div class="window-ui fade-up"><div class="window-bar"><div class="window-dot red"></div><div class="window-dot yellow"></div><div class="window-dot green"></div><div class="window-title">optimus@console:~$ system_audit.log</div></div><div class="window-content"><p class="mono" style="color:#cfcfcf;">[analysis] scanning home directory structures ...<br>✔️ 24487 files reviewed | 122 temp entries | 56 duplicate candidates<br>✔️ node_modules duplication: 1.2GB potential savings<br>✔️ browser profiles: 890MB cache footprint (chrome/firefox/brave)<br>✔️ docker & pip cache detected → cleanup ready<br>✔️ last system backup: 2026-05-06 12:44:01 UTC</p></div></div><div class="grid-3" style="margin-top: 40px;"><div class="card fade-up"><div class="card-icon">🧠</div><h3>cognitive scanning</h3><p>Smart pattern recognition isolates temporary debris, old logs, duplicated media, and outdated compiler artifacts. Adaptive filters prevent critical system files from removal.</p></div><div class="card fade-up"><div class="card-icon">⚡</div><h3>performance first</h3><p>Parallel hashing and async I/O for speed. Average full‑system cleanup finishes in under 60 seconds even on spinning HDDs. Designed for daily maintenance.</p></div><div class="card fade-up"><div class="card-icon">🔄</div><h3>reversible actions</h3><p>Undo any optimization through timestamped ZIP archives. Restore previous file states directly from GUI or CLI. Zero risk, full control.</p></div></div></div></section>
+
+  <section id="engines"><div class="container"><div class="fade-up"><div class="section-title">⟡ three native engines</div><p style="margin-bottom: 48px;">Each environment receives specialized optimization pathways: Windows regtweaks, Unix permission repairs, cross‑platform cache annihilation.</p></div><div class="grid-3"><div class="card fade-up"><div class="card-icon">🐍</div><h3>Optimus · Python (Qt)</h3><p>Desktop‑grade analyzer + minifier: C/C++/HTML/CSS/JS minification, duplicate MD5 scanner, image compression (Pillow), empty folder pruner, backup/restore manager, and live directory statistics.</p><div class="feature-list"><span class="feature-tag">source minify</span><span class="feature-tag">drag&drop</span><span class="feature-tag">json/xml compressor</span></div></div><div class="card fade-up"><div class="card-icon">⚙️</div><h3>System Core · C++</h3><p>Native Windows powerhouse: prefetch cleaner, registry defrag, DNS flush, stop telemetry services, disable indexing, game mode, SSD trim, pagefile optimization, and 35+ low‑level tasks.</p><div class="feature-list"><span class="feature-tag">registry vacuum</span><span class="feature-tag">superfetch reset</span><span class="feature-tag">edge/chrome cache wipe</span></div></div><div class="card fade-up"><div class="card-icon">🌐</div><h3>Node.js · Optimus</h3><p>Terminal wizard, cross‑OS: npm/pip/docker/cargo cache nuke, node_modules blackhole, .DS_Store exterminator, thumbnail cleaner, crash report vacuum, plus memory pressure release.</p><div class="feature-list"><span class="feature-tag">npm cache clean</span><span class="feature-tag">docker prune</span><span class="feature-tag">clipboard history purge</span></div></div></div></div></section>
+
+  <section id="deep-dive"><div class="container"><div class="fade-up"><div class="section-title">📁 deep analysis windows</div><p style="margin-bottom: 28px;">Interactive panels that simulate the optimizer’s real‑time decision engine. Each card represents a critical subsystem.</p></div><div class="grid-3"><div class="card fade-up"><h3>🗑️ temp & log vacuum</h3><p>Sweeps %TEMP%, /var/log, .cache, crashdumps, WindowsPrefetch, and system log rotations. Preserves last 72h of recent logs but removes files older than 30 days.</p><div class="feature-tag">clears ~6.2GB average</div></div><div class="card fade-up"><h3>📦 package manager purifier</h3><p>Deep scans for npm/_cacache, pip cache, cargo registry, gem cache, yarn cache, and conda pkgs. Reduces development folder bloat by up to 44%.</p><div class="feature-tag">node_modules reduction</div></div><div class="card fade-up"><h3>🌐 browser forensic cleaner</h3><p>Chrome, Firefox, Edge, Brave, Opera, Vivaldi — cache, history snippets, session storage, and favicon caches removed while preserving passwords (optional).</p><div class="feature-tag">cross‑browser</div></div></div><div class="window-ui fade-up"><div class="window-bar"><div class="window-dot red"></div><div class="window-dot yellow"></div><div class="window-dot green"></div><div class="window-title">optimization simulation — advanced audit</div></div><div class="window-content"><table class="spec-table"><tr><td>🔍 total files indexed</td><td>48,742 (includes hidden .config, .local)</td></tr><tr><td>🧹 reclaimable temp files</td><td>3,200+ items ~ 1.88GB</td></tr><tr><td>📦 node_modules duplicates</td><td>126 identical packages across projects → ~1.1GB saving</td></tr><tr><td>🖼️ thumbnail/dsstore purge</td><td>~330MB scattered .DS_Store + thumbnails</td></tr><tr><td>💾 estimated final reclaim</td><td>4.7GB after full pass</td></tr></table></div></div></div></section>
+
+  <section id="benchmark"><div class="container"><div class="fade-up"><div class="section-title">📊 performance benchmarks</div><p>Real‑world results from mixed environment (Windows 11 / Ubuntu 24.04 / macOS Sonoma) after full suite execution.</p></div><div class="stats-grid"><div class="stat-block fade-up"><div class="stat-number">-42%</div><div>temporary storage footprint</div><div class="mono" style="font-size:0.7rem; margin-top:12px;">logs + caches + prefetch</div></div><div class="stat-block fade-up"><div class="stat-number">2.8x</div><div>folder enumeration speed</div><div class="mono" style="font-size:0.7rem;">after cleaning thumbnails & recent docs</div></div><div class="stat-block fade-up"><div class="stat-number">12.4GB</div><div>average disk reclaimed</div><div class="mono" style="font-size:0.7rem;">dev env + browser + docker</div></div><div class="stat-block fade-up"><div class="stat-number">32%</div><div>registry bloat reduction</div><div class="mono" style="font-size:0.7rem;">windows MRU / uninstaller leftovers</div></div></div><div class="window-ui fade-up" style="margin-top:54px;"><div class="window-bar"><div class="window-dot red"></div><div class="window-dot yellow"></div><div class="window-dot green"></div><div class="window-title">post‑optimization telemetry (offline)</div></div><div class="window-content"><p>✔️ boot time impact: shaved 4.2 seconds (cold start)<br>✔️ visual studio cache dropped from 2.1GB → 310MB<br>✔️ docker system prune released 6.8GB of dangling images<br>✔️ npm cache cleared: 1.4GB eradicated<br>✔️ memory page file usage decreased by 19% after virtual memory tuning</p></div></div></div></section>
+
+  <section id="security"><div class="container"><div class="fade-up"><div class="section-title">🛡️ zero‑trust audit & safety</div><p>Optimus never phones home, never sends analytics, and never modifies user documents without permission.</p></div><div class="grid-3"><div class="card fade-up"><h3>🔐 offline operation</h3><p>All optimizations happen locally. No cloud features, no tracking tokens, no usage metrics. The code is transparent and can be fully reviewed.</p><div class="feature-tag">GDPR compliant by design</div></div><div class="card fade-up"><h3>📀 atomic backups</h3><p>Before any destructive action (duplicate removal, minification), the suite creates a compressed ZIP snapshot. Restore with one click inside GUI or via terminal.</p><div class="feature-tag">timestamped archives</div></div><div class="card fade-up"><h3>🧪 permission guardian</h3><p>Windows: automatic ACL suggestion; Unix: uses chmod 644/755 on safe files only. Critical system directories are excluded from all write operations.</p><div class="feature-tag">no root required (optional)</div></div></div><div class="window-ui fade-up"><div class="window-bar"><div class="window-dot red"></div><div class="window-dot yellow"></div><div class="window-dot green"></div><div class="window-title">optimus@secure:~$ safety_check.log</div></div><div class="window-content"><p class="mono">[✓] system32 / boot volume not scanned<br>[✓] excluded paths: /etc, /System, C:\Windows\System32<br>[✓] backup created before modifications: 2026-05-06_optimus_restore.zip<br>[✓] hash verification for duplicates uses sha256 after md5 prefilter<br>[✓] all changes displayed in live console before commit</p></div></div></div></section>
+
+  <section style="border-bottom: none; padding: 70px 0 80px;"><div class="container"><div class="fade-up" style="text-align: center; max-width: 880px; margin: 0 auto;"><div class="logo-symbol" style="margin: 0 auto 20px; width: 80px; height: 80px; font-size: 44px;">⟠</div><h2 style="font-size: 2.8rem; letter-spacing: -1px;">designed for architects of speed</h2><p style="margin: 28px auto; color: #aaa; max-width: 700px;">Three products, one mission: de‑bloat, stabilize, and sharpen your operating environment. Whether you’re a developer, creator, or power user — Optimus restores the feel of a fresh system.</p><div class="btn-group" style="justify-content: center;"><a href="#" class="btn-primary" id="scrollToEngines">⟡ explore full stack</a><a href="#" class="btn-outline" id="backToStart">↑ return to apex</a></div></div></div></section>
+</main>
+<footer><div class="container"><p>OPTIMUS SYSTEM SUITE · open core · by @console_hack</p><p style="margin-top: 12px; font-size:0.75rem;">Windows · macOS · Linux · legacy and modern kernels supported</p><p style="margin-top: 8px;">✧ backup your data before any system operation — best practices ✧</p></div></footer>
+
+<script>
+  (function(){
+    const faders = document.querySelectorAll('.fade-up');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    faders.forEach(el => obs.observe(el));
+
+    const backBtn = document.getElementById('backToStart');
+    const exploreBtn = document.getElementById('scrollToEngines');
+    if(backBtn) backBtn.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    if(exploreBtn) exploreBtn.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('engines')?.scrollIntoView({ behavior: 'smooth' }); });
+
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e){
+        const hash = this.getAttribute('href');
+        if(hash && hash.startsWith('#')){
+          e.preventDefault();
+          const target = document.getElementById(hash.substring(1));
+          if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if(scrollIndicator){
+      scrollIndicator.addEventListener('click', () => { document.getElementById('philosophy')?.scrollIntoView({ behavior: 'smooth' }); });
+    }
+    const logoSymbol = document.querySelector('.logo-symbol');
+    if(logoSymbol) logoSymbol.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if(!ticking){
+        requestAnimationFrame(() => {
+          const nav = document.querySelector('.glass-nav');
+          if(window.scrollY > 30) nav.style.background = 'rgba(0,0,0,0.94)';
+          else nav.style.background = 'rgba(0,0,0,0.82)';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
