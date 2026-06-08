@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Zero-One Arsenal | Termux & Python</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-body: #fafcff;
+            --bg-surface: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #0a1424;
+            --text-secondary: #2d3a4b;
+            --text-muted: #5b6e8c;
+            --accent: #1e6f5c;
+            --accent-light: #e1f0ec;
+            --accent-hover: #0e5a48;
+            --border: #e3e9f2;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.02);
+            --shadow-md: 0 8px 20px rgba(0,0,0,0.04);
+            --shadow-lg: 0 20px 35px -8px rgba(0,0,0,0.08);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --font-mono: 'Roboto Mono', monospace;
+        }
+
+        body {
+            background: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            padding: 16px 0;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--accent), #2c9c86);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 4px 0;
+        }
+
+        .nav-btn:hover {
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 50px 0 24px;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+            margin: 32px 0;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .card-badge {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--accent-light);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+
+        .price {
+            font-family: var(--font-mono);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 16px 0;
+        }
+
+        .btn {
+            background: var(--accent);
+            border: none;
+            border-radius: 40px;
+            padding: 10px 20px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .pricing-table {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--accent-light);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .highlight {
+            background: var(--accent-light);
+            border-radius: var(--radius-sm);
+            padding: 2px 8px;
+            font-weight: 700;
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0 32px;
+            margin-top: 60px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .contacts {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 0 16px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">ZERO::ONE arsenal</div>
+                <div class="nav-links">
+                    <button class="nav-btn" data-section="home">Главная</button>
+                    <button class="nav-btn" data-section="products">Скрипты</button>
+                    <button class="nav-btn" data-section="pricing">Прайс</button>
+                    <button class="nav-btn" data-section="info">О канале</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>Termux / Python<br>скрипты без границ</h1>
+                <p>Боты • Парсеры • Чекеры • Докс • Снос • Мануалы — всё для профессиональных задач</p>
+            </div>
+        </section>
+
+        <section id="products" class="container">
+            <h2 class="section-title">⚡ Популярные инструменты</h2>
+            <div class="grid" id="productsGrid"></div>
+        </section>
+
+        <section id="pricing" class="container">
+            <h2 class="section-title">📋 Полный прайс-лист</h2>
+            <div class="pricing-table">
+                <table>
+                    <thead>
+                        <tr><th>Категория</th><th>Примеры софта</th><th>Ценовой диапазон (₽)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>🤖 Боты</td><td>Telegram AutoInviter, Discord MassDM, WhatsApp Spreader</td><td>400 – 1500</td></tr>
+                        <tr><td>📁 Парсеры</td><td>Avito Grabber, Wildberries Parser, Google Maps Collector</td><td>500 – 1400</td></tr>
+                        <tr><td>🔍 Чекеры</td><td>Proxy Checker, Combo Validator, CC Checker Pro</td><td>300 – 1300</td></tr>
+                        <tr><td>🕵️ Докс-тулы</td><td>PhoneOSINT, Email2Profile, Username Tracker</td><td>800 – 1500</td></tr>
+                        <tr><td>💥 Снос / DDoS</td><td>Slowloris, UDP Flooder, DNS Amplifier</td><td>700 – 1500</td></tr>
+                        <tr><td>📖 Мануалы</td><td>Svat Guide 2025, Doxing Bible, OPSEC курс</td><td>500 – 1200</td></tr>
+                        <tr><td>👑 Премиум (10 шт)</td><td>BlackMamba Suite, Reaper Intel PRO, RAT Builder Full</td><td>2500 (фикс)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="text-align:center; font-family:monospace; margin: 16px 0;">⭐ Более 90% скриптов имеют цену <strong class="highlight">до 1500 ₽</strong> — доступно каждому. 10 эксклюзивных позиций по 2500 ₽.</p>
+        </section>
+
+        <section id="info" class="container">
+            <div style="background: var(--bg-surface); border-radius: var(--radius-lg); padding: 32px; margin: 40px 0; border: 1px solid var(--border);">
+                <h3 style="font-family: monospace; margin-bottom: 16px;">▸ О закрытом канале ZERO-ONE</h3>
+                <p style="margin-bottom: 12px;">Сообщество разработчиков и пользователей скриптов для Termux и Python. Ежедневные обновления, приватные эксплойты, поддержка 24/7. Все софты проходят тестирование на стабильность и анонимность.</p>
+                <p style="margin-bottom: 20px;">📢 <strong>Реклама / сотрудничество:</strong> @User_Kingdom<br>👑 <strong>Администрация:</strong> @ssaindess , @dobriy_almaznyk</p>
+                <div style="background: var(--accent-light); padding: 16px; border-radius: var(--radius-md); font-family: monospace;">
+                    🧮 Математическая модель скидок: автоматический расчёт фрактального коэффициента (0.85–0.98) увеличивает скидку до 70% при повторных покупках. Подробности у админов.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="contacts">
+                <span>📢 Реклама: @User_Kingdom</span>
+                <span>👑 Админы: @ssaindess / @dobriy_almaznyk</span>
+            </div>
+            <p>© 2025 Zero-One Arsenal — для этических исследований. Все цены указаны в рублях.</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // генерация 24 товаров: большинство до 1500, 2 премиума по 2500 для примера
+            const categories = ['Боты', 'Парсеры', 'Чекеры', 'Докс', 'Снос', 'Мануалы'];
+            const names = [
+                'Telegram AutoInviter', 'Discord Raid Tool', 'WhatsApp Sender', 'VK Flooder', 'Signal MassDM',
+                'Avito Parser Pro', 'Wildberries Grabber', 'HHru Scraper', 'Google Maps Extractor', '2GIS Collector',
+                'Proxy Checker X', 'Combo Validator NG', 'CC Checker v4', 'Mail:Pass Tester', 'Spotify Tester',
+                'Phone OSINT Pro', 'Email2Leak', 'Username Tracker Ultra', 'IP Geolocator', 'BreachDB Searcher',
+                'Slowloris Termux', 'UDP Nuke', 'HTTPs Hammer', 'DNS Amplifier'
+            ];
+            let products = [];
+            for (let i = 0; i < 24; i++) {
+                let price = 0;
+                if (i < 2) price = 2500; // два премиума
+                else price = Math.floor(Math.random() * (1500 - 350 + 1) + 350);
+                price = Math.round(price / 10) * 10;
+                let cat = categories[i % categories.length];
+                products.push({
+                    name: names[i % names.length] + (i > 11 ? ` v${Math.floor(i/6)}` : ''),
+                    category: cat,
+                    price: price,
+                    desc: `Скрипт для ${cat.toLowerCase()}, совместим с Termux и Python 3.`
+                });
+            }
+            const container = document.getElementById('productsGrid');
+            if (container) {
+                products.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="card-badge">${p.category}</div>
+                        <h3 style="margin-bottom: 8px;">${p.name.length > 30 ? p.name.slice(0,28)+'…' : p.name}</h3>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">${p.desc}</p>
+                        <div class="price">${p.price.toLocaleString('ru-RU')} ₽</div>
+                        <button class="btn" data-name="${p.name.replace(/['"]/g, '')}" data-price="${p.price}">Заказать</button>
+                    `;
+                    container.appendChild(card);
+                });
+                document.querySelectorAll('.btn[data-name]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const name = btn.getAttribute('data-name');
+                        const price = btn.getAttribute('data-price');
+                        alert(`✅ Заказ: ${name}\nСумма: ${Number(price).toLocaleString('ru-RU')} ₽\nСвязь с админом: @ssaindess или @dobriy_almaznyk для оплаты и получения скидки.`);
+                    });
+                });
+            }
+
+            // плавная навигация
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const section = btn.getAttribute('data-section');
+                    const el = document.getElementById(section);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
