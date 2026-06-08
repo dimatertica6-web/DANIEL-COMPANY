@@ -1,0 +1,1 @@
+AegisCore cheatsheet: start -> modules -> logs
