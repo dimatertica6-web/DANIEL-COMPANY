@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ROOT‑SHOP · Полная документация бота</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            color: #111827;
+            transition: background 0.3s, color 0.2s;
+            scroll-behavior: smooth;
+        }
+        body.dark {
+            background: #0b1120;
+            color: #e2e8f0;
+        }
+        .app {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .card {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.2s;
+        }
+        body.dark .card {
+            background: rgba(18, 25, 40, 0.9);
+            border-color: rgba(71, 85, 105, 0.4);
+        }
+        .header-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        body.dark .header-section {
+            background: linear-gradient(135deg, #020617, #0f172a);
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            border-radius: 3rem;
+            padding: 0.5rem 1rem;
+            color: white;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .badge {
+            background: #2563eb20;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 1.8rem 0 1rem 0;
+            border-left: 5px solid #3b82f6;
+            padding-left: 1rem;
+        }
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.6rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.6);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark .info-card {
+            background: rgba(30,41,59,0.5);
+        }
+        .command {
+            background: #eef2ff;
+            font-family: monospace;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        body.dark .command {
+            background: #1e293b;
+            color: #93c5fd;
+        }
+        .accordion {
+            background: rgba(255,255,255,0.5);
+            border-radius: 1.2rem;
+            margin-bottom: 0.8rem;
+            overflow: hidden;
+        }
+        body.dark .accordion { background: rgba(30,41,59,0.5); }
+        .accordion-header {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .accordion.active .accordion-content {
+            padding: 0 1.5rem 1.2rem 1.5rem;
+            max-height: 500px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.4);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 0.6rem;
+            text-align: left;
+        }
+        body.dark th, body.dark td {
+            border-color: #334155;
+        }
+        th {
+            background: #f1f5f9;
+        }
+        body.dark th {
+            background: #0f172a;
+        }
+        pre {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 1rem;
+            border-radius: 1rem;
+            overflow-x: auto;
+            font-size: 0.8rem;
+        }
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid #cbd5e1;
+            font-size: 0.8rem;
+        }
+        body.dark footer {
+            border-color: #334155;
+        }
+        .btn-copy {
+            background: #eef2ff;
+            border: none;
+            padding: 0.3rem 0.9rem;
+            border-radius: 2rem;
+            cursor: pointer;
+        }
+        @media (max-width: 700px) { h1 { font-size: 1.8rem; } }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="header-section">
+        <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i> Dark / Light</button>
+        <span class="badge"><i class="fas fa-book-open"></i> Версия бота 8.0</span>
+        <h1><i class="fas fa-robot"></i> ROOT‑SHOP<br>Полная документация</h1>
+        <p style="margin-top: 1rem;">Управление, команды, оплата, активация — всё для пользователей и администраторов</p>
+    </div>
+
+    <div class="card" style="padding: 1.5rem; margin-bottom: 2rem;">
+        <h3><i class="fas fa-info-circle"></i> О боте</h3>
+        <p>ROOT‑SHOP — Telegram‑магазин профессионального софта (докс, хакинг, IP смена, DDoS, атаки, MCHS, снос, DNS докс, IP докс, извлечение метаданных и 30+ других инструментов). Интеграция с ЮKassa, лицензионные ключи, корзина, избранное, реферальная программа, тикеты поддержки и админ‑панель.</p>
+    </div>
+
+    <h2>📌 Начало работы</h2>
+    <div class="grid-2col">
+        <div class="info-card"><i class="fas fa-play-circle"></i> <strong>/start</strong> — регистрация и главное меню.<br>Пользователь получает баланс, реферальную ссылку.</div>
+        <div class="info-card"><i class="fas fa-key"></i> <strong>/activate</strong> — активация лицензионного ключа.</div>
+        <div class="info-card"><i class="fas fa-shopping-bag"></i> <strong>Магазин</strong> — 40 товаров с пагинацией, категории.</div>
+        <div class="info-card"><i class="fas fa-heart"></i> <strong>Избранное</strong> — сохранение товаров в отдельный список.</div>
+    </div>
+
+    <h2>🛒 Покупка и оплата</h2>
+    <div class="accordion" id="payAccordion">
+        <div class="accordion-header">💸 Как оплатить товар? <i class="fas fa-chevron-down"></i></div>
+        <div class="accordion-content">
+            <p>1. Выберите товар в магазине → нажмите «Купить».<br>
+            2. Бот создаёт платёж через ЮKassa и выдаёт ссылку.<br>
+            3. Оплатите картой или другим способом.<br>
+            4. После успешной оплаты бот отправит лицензионный ключ.<br>
+            Также можно пополнить внутренний баланс (кнопка «Пополнить») и оплачивать из него.</p>
+        </div>
+    </div>
+    <div class="accordion" id="cartAccordion">
+        <div class="accordion-header">🛒 Корзина <i class="fas fa-chevron-down"></i></div>
+        <div class="accordion-content">Добавляйте несколько товаров → переходите в корзину → оплата одним чеком. При покупке корзины лицензии выдаются на каждый товар отдельно.</div>
+    </div>
+
+    <h2>🎫 Промокоды и рефералы</h2>
+    <p>Активируйте промокод через меню «Промокод». Скидка применяется к следующей покупке. Реферальная ссылка генерируется автоматически: <code>https://t.me/root_shop_bot?start=ref_XXXX</code>. Приглашающий получает 50₽, новый пользователь — 25₽ на баланс.</p>
+
+    <h2>🔑 Активация софта</h2>
+    <p>После получения лицензионного кода (формат <code>DOX-1-ABCD1234</code>) используйте команду <strong>/activate</strong> или кнопку «Активация». Введите код — бот отправит файл софта (поддерживаются папки, zip, rar, exe, py и др.).</p>
+    <pre>Пример: DOX-6-F1A2B3C4 → активирует товар id 6 (MCHS Alert)</pre>
+
+    <h2>🧑‍💻 Команды для пользователей</h2>
+    <table>
+        <tr><th>Команда</th><th>Описание</th></tr>
+        <tr><td>/start</td><td>Главное меню, регистрация, баланс</td></tr>
+        <tr><td>/activate</td><td>Активация лицензионного ключа</td></tr>
+        <tr><td>/admin</td><td>Только для админов (см. ниже)</td></tr>
+        <tr><td>Кнопки в меню</td><td>Магазин, корзина, избранное, пополнение, промокоды, рефералы, отзывы, поддержка, статистика</td></tr>
+    </table>
+
+    <h2>⚙️ Админ-панель</h2>
+    <p>Команды доступны владельцу (Telegram ID в списке ADMIN_IDS).</p>
+    <table>
+        <tr><th>Команда</th><th>Описание</th></tr>
+        <tr><td>/broadcast текст</td><td>Массовая рассылка сообщений всем пользователям</td></tr>
+        <tr><td>/promo_gen % дни количество</td><td>Создание промокодов (пример: /promo_gen 20 30 5)</td></tr>
+        <tr><td>/tickets</td><td>Список открытых тикетов поддержки</td></tr>
+        <tr><td>/close_ticket &lt;id&gt;</td><td>Закрыть тикет</td></tr>
+        <tr><td>/logs</td><td>Последние логи ошибок</td></tr>
+        <tr><td>/backup</td><td>Создать резервную копию базы данных</td></tr>
+        <tr><td>/export_users</td><td>Выгрузить список пользователей в CSV</td></tr>
+        <tr><td>/maintenance 0/1</td><td>Включить/отключить режим техобслуживания</td></tr>
+    </table>
+
+    <h2>📊 Статистика пользователя</h2>
+    <p>В меню «Статистика» доступно: сумма потраченных средств, текущий баланс, количество купленных товаров, число приглашённых рефералов.</p>
+
+    <h2>🆘 Поддержка и тикеты</h2>
+    <p>Создать тикет можно через меню «Поддержка» → «Создать тикет». Администратор увидит его в списке и сможет закрыть. Ответ придёт в личные сообщения.</p>
+
+    <h2>⭐ Отзывы о товарах</h2>
+    <p>Покупатели могут оценить купленный софт (от 1 до 5) и оставить комментарий. Отзывы отображаются в меню «Отзывы» после ввода ID товара.</p>
+
+    <h2>📁 Файловая структура софта</h2>
+    <p>В папке <code>softs/</code> создаются подпапки или файлы с именем, равным ID товара. Например: <code>softs/1/</code> (содержимое), <code>softs/2.zip</code>, <code>softs/3.rar</code>, <code>softs/4.exe</code>. Бот автоматически упакует папку в ZIP при отправке.</p>
+
+    <h2>🔗 Веб-страница и мини-приложение</h2>
+    <p>Бот запускает встроенный веб-сервер (порт 8080). Доступен сайт с каталогом товаров и ссылками на бота. Также в меню есть кнопка «Мини-приложение» (Mini App) — вы можете разместить своё веб-приложение.</p>
+
+    <h2>⚠️ Устранение неполадок</h2>
+    <div class="accordion" id="faqError">
+        <div class="accordion-header">❌ Не приходит лицензия после оплаты</div>
+        <div class="accordion-content">Нажмите «Проверить оплату». Если статус «succeeded», бот повторно отправит код. Также проверьте папку SPAM в Telegram.</div>
+    </div>
+    <div class="accordion">
+        <div class="accordion-header">🔧 Ошибка «Файл софта отсутствует»</div>
+        <div class="accordion-content">Убедитесь, что в папке <code>softs/</code> есть файл или папка с номером товара. Перезапустите бота после добавления.</div>
+    </div>
+    <div class="accordion">
+        <div class="accordion-header">🌐 Проблемы с DNS/блокировкой Telegram</div>
+        <div class="accordion-content">Используйте прокси. В коде предусмотрена поддержка PROXY_URL через переменную окружения. Для локального запуска можно указать socks5/http прокси.</div>
+    </div>
+
+    <h2>🖥️ Локальный запуск (для администратора)</h2>
+    <pre>pip install aiogram yookassa aiohttp
+set BOT_TOKEN=8945697048:AAGdg2HbEvU8OTtOwM2hcSjnC8THNnio_5c
+set SHOP_ID=ваш_shop_id
+set SECRET_KEY=ваш_secret_key
+python bot.py</pre>
+    <p>Для вебхука ЮKassa укажите внешний URL в настройках мерчанта и переменную NOTIFICATION_URL.</p>
+
+    <footer>
+        <i class="fas fa-life-ring"></i> Поддержка: @concole_hack &nbsp;&nbsp;|&nbsp;&nbsp; <i class="fab fa-telegram"></i> Бот: @root_shop_bot
+        <div style="margin-top: 1rem;"><button id="copyDocLink" class="btn-copy"><i class="fas fa-copy"></i> Скопировать ссылку документации</button></div>
+    </footer>
+</div>
+
+<script>
+    (function() {
+        const toggle = document.getElementById('themeToggle');
+        const body = document.body;
+        if(localStorage.getItem('docTheme') === 'dark') body.classList.add('dark');
+        toggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            localStorage.setItem('docTheme', body.classList.contains('dark') ? 'dark' : 'light');
+        });
+        const accordions = document.querySelectorAll('.accordion');
+        accordions.forEach(acc => {
+            const header = acc.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                acc.classList.toggle('active');
+                const content = acc.querySelector('.accordion-content');
+                if(acc.classList.contains('active')) content.style.maxHeight = content.scrollHeight + 'px';
+                else content.style.maxHeight = null;
+            });
+        });
+        const copyBtn = document.getElementById('copyDocLink');
+        if(copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(window.location.href);
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+                setTimeout(() => copyBtn.innerHTML = '<i class="fas fa-copy"></i> Скопировать ссылку документации', 2000);
+            });
+        }
+    })();
+</script>
+</body>
+</html>

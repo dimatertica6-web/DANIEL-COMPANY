@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ROOT‑SHOP · Политика конфиденциальности · Защита данных</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            color: #111827;
+            transition: background 0.3s, color 0.2s;
+            scroll-behavior: smooth;
+        }
+        body.dark {
+            background: #0b1120;
+            color: #e2e8f0;
+        }
+        .app {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        /* glassmorphic card */
+        .card {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        body.dark .card {
+            background: rgba(18, 25, 40, 0.9);
+            border-color: rgba(71, 85, 105, 0.4);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5);
+        }
+        .header-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 2rem;
+            padding: 2rem 2rem 2rem 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        body.dark .header-section {
+            background: linear-gradient(135deg, #020617, #0f172a);
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            border-radius: 3rem;
+            padding: 0.5rem 1rem;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        .badge {
+            background: #2563eb20;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(2px);
+        }
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.7);
+            border-radius: 1.5rem;
+            padding: 1.4rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        body.dark .info-card {
+            background: rgba(30, 41, 59, 0.5);
+        }
+        .info-card:hover { transform: translateY(-4px); }
+        h2 { font-size: 1.8rem; font-weight: 700; margin: 1.8rem 0 1rem 0; border-left: 5px solid #3b82f6; padding-left: 1rem; }
+        h3 { font-size: 1.3rem; font-weight: 600; margin: 1.2rem 0 0.6rem 0; display: flex; align-items: center; gap: 8px; }
+        .accordion {
+            background: rgba(255,255,255,0.5);
+            border-radius: 1.2rem;
+            margin-bottom: 0.8rem;
+            overflow: hidden;
+        }
+        body.dark .accordion { background: rgba(30,41,59,0.5); }
+        .accordion-header {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.02);
+        }
+        .accordion-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .accordion.active .accordion-content { padding: 0 1.5rem 1.2rem 1.5rem; max-height: 400px; }
+        .stat-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .stat-card {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+        }
+        body.dark .stat-card { background: #1e293b; border-color: #334155; }
+        .stat-number { font-size: 2.2rem; font-weight: 800; color: #2563eb; }
+        footer { margin-top: 3rem; text-align: center; padding: 1.5rem; border-top: 1px solid #cbd5e1; font-size: 0.8rem; }
+        body.dark footer { border-color: #334155; }
+        .button-copy {
+            background: #eef2ff;
+            border: none;
+            padding: 0.3rem 0.9rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        pre {
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 1rem;
+            color: #cbd5e1;
+            overflow-x: auto;
+            font-size: 0.8rem;
+        }
+        canvas { max-width: 100%; margin: 1rem 0; background: white; border-radius: 1rem; padding: 0.5rem; }
+        @media (max-width: 700px) { .app { padding: 1rem; } h1 { font-size: 1.8rem; } }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="header-section">
+        <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i> Dark / Light</button>
+        <div><span class="badge"><i class="fas fa-shield-alt"></i> Актуально на 2026</span></div>
+        <h1><i class="fas fa-lock"></i> ROOT‑SHOP<br>Политика конфиденциальности</h1>
+        <p style="margin-top: 1rem; max-width: 650px;">Ваши данные под защитой. Мы уважаем приватность и соблюдаем 152-ФЗ.</p>
+    </div>
+
+    <div class="card" style="padding: 1.5rem; margin-bottom: 2rem;">
+        <div class="grid-2col">
+            <div><i class="fas fa-database fa-2x" style="color:#2563eb"></i><br><strong>Минимум данных</strong><br>Только Telegram ID, username, история покупок</div>
+            <div><i class="fas fa-handshake fa-2x" style="color:#2563eb"></i><br><strong>Не продаём</strong><br>Мы не передаём данные рекламным сетям</div>
+            <div><i class="fas fa-trash-alt fa-2x" style="color:#2563eb"></i><br><strong>Право на удаление</strong><br>Вы можете запросить полное удаление аккаунта</div>
+            <div><i class="fas fa-euro-sign fa-2x" style="color:#2563eb"></i><br><strong>Платежи ЮKassa</strong><br>Данные карт обрабатывает только платёжная система</div>
+        </div>
+    </div>
+
+    <div class="stat-grid">
+        <div class="stat-card"><span class="stat-number"><i class="fas fa-user-secret"></i> 0</span><br> Передач третьим лицам</div>
+        <div class="stat-card"><span class="stat-number">24/7</span><br> Контроль доступа</div>
+        <div class="stat-card"><span class="stat-number">🔒</span><br> Шифрование бэкапов</div>
+    </div>
+
+    <h2>1. Какие данные собираются</h2>
+    <div class="info-card">
+        <ul style="margin-left: 1.2rem;">
+            <li><i class="fas fa-id-card"></i> <strong>Telegram ID</strong> — для идентификации и выдачи лицензий.</li>
+            <li><i class="fas fa-at"></i> <strong>Username, first_name</strong> — для персонализации поддержки.</li>
+            <li><i class="fas fa-shopping-cart"></i> <strong>История заказов</strong> — товары в корзине, избранное, купленные лицензии.</li>
+            <li><i class="fas fa-credit-card"></i> <strong>Платёжные метаданные</strong> — сумма, дата, статус (без номеров карт).</li>
+            <li><i class="fas fa-comment-dots"></i> <strong>Тикеты поддержки</strong> — для обработки обращений.</li>
+        </ul>
+    </div>
+
+    <h2>2. Цели обработки</h2>
+    <div class="grid-2col">
+        <div class="info-card"><i class="fas fa-cart-plus"></i> <strong>Выполнение заказов</strong><br>Идентификация при оплате, выдача лицензионных ключей и файлов софта.</div>
+        <div class="info-card"><i class="fas fa-headset"></i> <strong>Техподдержка</strong><br>Ответы на тикеты, решение проблем с активацией.</div>
+        <div class="info-card"><i class="fas fa-chart-line"></i> <strong>Аналитика</strong><br>Улучшение функционала магазина, отладка.</div>
+        <div class="info-card"><i class="fas fa-gift"></i> <strong>Реферальная программа</strong><br>Начисление бонусов за приглашённых друзей.</div>
+    </div>
+
+    <h2>3. Передача данных третьим лицам</h2>
+    <p>Мы не продаём и не обмениваем данные. Единственные исключения:</p>
+    <ul>
+        <li><i class="fab fa-yandex"></i> <strong>ЮKassa (ООО «НКО «ЮMoney»)</strong> — для проведения транзакций. Передаётся user_id, сумма заказа, описание.</li>
+        <li>По законному требованию суда или правоохранительных органов.</li>
+        <li>Для защиты прав и безопасности ROOT‑SHOP (например, при DDoS-атаке или мошенничестве).</li>
+    </ul>
+    <div class="accordion" id="accordionPayment">
+        <div class="accordion-header">📌 Как ЮKassa защищает данные? <i class="fas fa-chevron-down"></i></div>
+        <div class="accordion-content">Платёжная система сертифицирована по стандарту PCI DSS. Ваши платёжные данные (номер карты, срок действия) передаются напрямую ЮKassa, мы их не видим и не храним.</div>
+    </div>
+
+    <h2>4. Хранение и защита</h2>
+    <canvas id="securityChart" width="400" height="180" style="width:100%; max-width:500px; height:auto;"></canvas>
+    <p>Данные хранятся в зашифрованной SQLite БД на защищённом VPS. Резервные копии создаются ежедневно и хранятся в изолированном хранилище. Доступ имеют только администраторы (@concole_hack и уполномоченные лица). Срок хранения — до момента удаления аккаунта или 5 лет для финансовой отчётности (по закону).</p>
+
+    <h2>5. Ваши права</h2>
+    <div class="stat-grid">
+        <div class="stat-card"><i class="fas fa-eye"></i> Доступ к данным</div>
+        <div class="stat-card"><i class="fas fa-edit"></i> Исправление неточностей</div>
+        <div class="stat-card"><i class="fas fa-trash"></i> Удаление аккаунта</div>
+        <div class="stat-card"><i class="fas fa-ban"></i> Ограничить обработку (маркетинг)</div>
+    </div>
+    <p>Для реализации прав напишите в поддержку <strong>@concole_hack</strong> или используйте команду <code>/support</code> в боте. Обычно ответ занимает до 3 рабочих дней.</p>
+
+    <h2>6. Лицензионные ключи и софт</h2>
+    <p>После покупки вы получаете уникальный код (формат <code>DOX-{id}-{hash}</code>). Мы не отслеживаем, где и как вы используете софт. Администратор не несёт ответственности за использование приобретённых инструментов в незаконных целях. Вы обязуетесь соблюдать законодательство вашей страны.</p>
+
+    <h2>7. Файлы cookie и сторонние технологии</h2>
+    <p>Бот не использует браузерные cookie. Веб-страница (документация) может использовать localStorage для темы оформления, но это не идентифицирует вас лично.</p>
+
+    <h2>8. Согласие</h2>
+    <p>Начиная использовать бота (<code>/start</code>) или открывая наш сайт, вы даёте согласие на обработку персональных данных в объёме, необходимом для работы магазина. Отозвать согласие можно, удалив аккаунт или обратившись в поддержку (в этом случае пользование ботом станет невозможным).</p>
+
+    <div class="card" style="padding: 1.5rem; margin: 1.5rem 0;">
+        <h3 style="margin-top: 0;"><i class="fas fa-question-circle"></i> Часто задаваемые вопросы (FAQ)</h3>
+        <div class="accordion" id="faq1"><div class="accordion-header">❓ Могу ли я запросить удаление истории покупок? <i class="fas fa-chevron-down"></i></div><div class="accordion-content">Да, вы можете попросить полное удаление аккаунта. Данные о транзакциях могут храниться 5 лет по налоговому кодексу, но они обезличиваются.</div></div>
+        <div class="accordion" id="faq2"><div class="accordion-header">❓ Бот собирает геолокацию? <i class="fas fa-chevron-down"></i></div><div class="accordion-content">Нет, бот не запрашивает и не хранит данные о местоположении. Мы видим только ваш IP в логах сервера (используется для технической защиты).</div></div>
+        <div class="accordion" id="faq3"><div class="accordion-header">❓ Могу ли я использовать бота анонимно? <i class="fas fa-chevron-down"></i></div><div class="accordion-content">Telegram уже предоставляет частичную анонимность. Но для покупок нужен идентификатор для выдачи лицензий.</div></div>
+    </div>
+
+    <h2>9. Изменение политики</h2>
+    <p>Мы уведомим пользователей о важных изменениях через рассылку в боте. Актуальная версия всегда доступна по команде <code>/privacy</code>. Дата последнего обновления — 10 июня 2026 г.</p>
+
+    <h2>10. Контакты ответственного за обработку</h2>
+    <pre>
+📧 Telegram: @concole_hack
+💬 Поддержка внутри бота: /support
+🏛️ Администратор ROOT‑SHOP
+    </pre>
+
+    <footer>
+        <i class="fas fa-registered"></i> ROOT‑SHOP · профессиональный магазин софта · конфиденциальность превыше всего
+        <div style="margin-top: 1rem;"><button id="copyLinkBtn" class="button-copy"><i class="fas fa-copy"></i> Скопировать ссылку на страницу</button></div>
+    </footer>
+</div>
+<script>
+    (function(){
+        // theme toggle
+        const toggle = document.getElementById('themeToggle');
+        const body = document.body;
+        if(localStorage.getItem('theme') === 'dark') body.classList.add('dark');
+        toggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // accordions dynamic
+        const accordions = document.querySelectorAll('.accordion');
+        accordions.forEach(acc => {
+            const header = acc.querySelector('.accordion-header');
+            const content = acc.querySelector('.accordion-content');
+            header.addEventListener('click', () => {
+                acc.classList.toggle('active');
+                if(acc.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    content.style.maxHeight = '0px';
+                }
+            });
+        });
+
+        // small chart for security
+        const canvas = document.getElementById('securityChart');
+        if(canvas) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = 500;
+            canvas.height = 200;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 12px Inter';
+            ctx.fillText('Уровень защиты данных (тестовая визуализация)', 20, 20);
+            const metrics = ['Шифр. БД', 'Логирование', '2FA', 'Резерв', 'Аудит'];
+            const values = [98, 94, 100, 99, 96];
+            for(let i=0; i<metrics.length; i++) {
+                const x = 60 + i*85;
+                const height = values[i] * 1.2;
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(x, canvas.height - 40 - height, 30, height);
+                ctx.fillStyle = '#111';
+                ctx.fillText(metrics[i], x+5, canvas.height - 20);
+                ctx.fillStyle = '#2563eb';
+                ctx.fillText(values[i]+'%', x+8, canvas.height - 45 - height);
+            }
+        }
+
+        // copy link
+        const copyBtn = document.getElementById('copyLinkBtn');
+        if(copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(window.location.href);
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+                setTimeout(() => copyBtn.innerHTML = '<i class="fas fa-copy"></i> Скопировать ссылку на страницу', 2000);
+            });
+        }
+
+        // additional interactive welcome
+        console.log('ROOT-SHOP privacy policy — защита данных');
+    })();
+</script>
+</body>
+</html>
