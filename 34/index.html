@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARES Bot — OSINT Framework</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f8f9fa;
+  --border: #e9ecef;
+  --text: #212529;
+  --text-secondary: #6c757d;
+  --primary: #0d6efd;
+  --accent: #0dcaf0;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --transition: 0.2s ease;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+nav {
+  display: flex;
+  gap: 24px;
+}
+nav a {
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color var(--transition);
+}
+nav a:hover {
+  color: var(--primary);
+}
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+section:last-child {
+  border-bottom: none;
+}
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: box-shadow var(--transition);
+}
+.card:hover {
+  box-shadow: var(--shadow);
+}
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+.card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.chart-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 20px 0;
+}
+.feature-list {
+  list-style: none;
+}
+.feature-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.feature-list li:last-child {
+  border-bottom: none;
+}
+code {
+  background: var(--surface);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.9em;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--surface);
+  padding: 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-family: 'SF Mono', monospace;
+  border: 1px solid var(--border);
+}
+.command-block {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+}
+.api-endpoint {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--surface);
+  border-radius: 6px;
+  margin: 8px 0;
+  border: 1px solid var(--border);
+}
+.method {
+  font-weight: 600;
+  color: var(--primary);
+  margin-right: 12px;
+}
+footer {
+  background: var(--surface);
+  padding: 32px 0;
+  text-align: center;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+}
+@media (max-width: 768px) {
+  nav {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background: var(--bg);
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+    display: none;
+    border-bottom: 1px solid var(--border);
+  }
+  nav.open {
+    display: flex;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="container header-inner">
+    <div class="logo">ARES Bot</div>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <nav id="nav">
+      <a href="#about">О проекте</a>
+      <a href="#features">Функции</a>
+      <a href="#stats">Статистика</a>
+      <a href="#api">API</a>
+      <a href="#commands">Команды</a>
+      <a href="#install">Установка</a>
+      <a href="#integrations">Интеграции</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section id="about">
+    <h2>О проекте</h2>
+    <p style="font-size:1.1rem; max-width:800px;">ARES Bot — это мощный OSINT‑инструмент с открытым исходным кодом для сбора и анализа цифровых данных. Работает в Telegram, поддерживает Mini App и предлагает гибкие интеграции.</p>
+    <div class="card-grid" style="margin-top:32px;">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h4>Быстрый поиск</h4>
+        <p>IP, email, телефон, домен, ник — результат за секунды.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h4>Приватность</h4>
+        <p>Опциональная маршрутизация через Tor и прокси.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧩</div>
+        <h4>Модульность</h4>
+        <p>Более 10 независимых источников данных.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <h2>Возможности</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h4>IP‑разведка</h4>
+        <p>Геолокация, провайдер, ASN, репутация.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📧</div>
+        <h4>Email‑анализ</h4>
+        <p>Утечки через HIBP, репутация.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h4>Номера телефонов</h4>
+        <p>Валидация, оператор, страна.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h4>Домены</h4>
+        <p>WHOIS, поддомены, DNS, SSL.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">👤</div>
+        <h4>Соцсети</h4>
+        <p>Поиск профиля в GitHub, Twitter, Instagram, VK.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h4>Граф связей</h4>
+        <p>Визуализация отношений между сущностями.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="stats">
+    <h2>Статистика использования</h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:24px;">
+      <div class="chart-container">
+        <canvas id="requestsChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <canvas id="modulesChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-container" style="max-width:600px; margin:24px auto 0;">
+      <canvas id="dailyChart"></canvas>
+    </div>
+  </section>
+
+  <section id="api">
+    <h2>API</h2>
+    <p>Mini App эндпоинт для внешних запросов.</p>
+    <div class="api-endpoint">
+      <div><span class="method">POST</span> /mini-app</div>
+      <div>Принимает JSON с полем <code>target</code></div>
+    </div>
+    <pre>{
+  "status": "processing",
+  "target": "user@example.com"
+}</pre>
+  </section>
+
+  <section id="commands">
+    <h2>Команды Telegram</h2>
+    <div class="command-block"><h4>/dox цель</h4><p>Полное досье.</p></div>
+    <div class="command-block"><h4>/ip 1.1.1.1</h4><p>Данные об IP.</p></div>
+    <div class="command-block"><h4>/email x@x.com</h4><p>Проверка утечек.</p></div>
+    <div class="command-block"><h4>/phone +7900...</h4><p>Информация о номере.</p></div>
+    <div class="command-block"><h4>/domain example.com</h4><p>WHOIS, поддомены.</p></div>
+    <div class="command-block"><h4>/user nickname</h4><p>Поиск по соцсетям.</p></div>
+  </section>
+
+  <section id="install">
+    <h2>Установка</h2>
+    <pre>git clone https://github.com/ares-bot/ares-bot
+cd ares-bot
+pip install -r requirements.txt
+python bot/bot_main.py</pre>
+  </section>
+
+  <section id="integrations">
+    <h2>Интеграции</h2>
+    <ul class="feature-list">
+      <li>ip-api.com — геолокация</li>
+      <li>AbuseIPDB — репутация IP</li>
+      <li>Have I Been Pwned — утечки почты</li>
+      <li>NumVerify — валидация телефона</li>
+      <li>WhoisXML — WHOIS</li>
+      <li>SecurityTrails — поддомены</li>
+      <li>Namechk — соцсети</li>
+      <li>GitHub API</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Контакты</h2>
+    <p>Telegram: @ares_bot_support<br>GitHub: github.com/ares-bot</p>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2025 ARES Bot. Minimal OSINT Framework.</p>
+  </div>
+</footer>
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+const nav = document.getElementById('nav');
+menuToggle.addEventListener('click', () => {
+  nav.classList.toggle('open');
+});
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => nav.classList.remove('open'));
+});
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+new Chart(document.getElementById('requestsChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн'],
+    datasets: [{
+      label: 'Запросы',
+      data: [1200, 1900, 2400, 3100, 2800, 3600],
+      backgroundColor: '#0d6efd33',
+      borderColor: '#0d6efd',
+      borderWidth: 2,
+      borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } }
+  }
+});
+
+new Chart(document.getElementById('modulesChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['IP', 'Email', 'Телефон', 'Домен', 'Соцсети'],
+    datasets: [{
+      data: [35, 25, 20, 15, 5],
+      backgroundColor: ['#0d6efd', '#6610f2', '#6f42c1', '#d63384', '#fd7e14'],
+      borderColor: '#ffffff',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position: 'bottom' } }
+  }
+});
+
+new Chart(document.getElementById('dailyChart'), {
+  type: 'line',
+  data: {
+    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+    datasets: [{
+      label: 'Нагрузка',
+      data: [20, 15, 45, 80, 95, 70],
+      borderColor: '#0dcaf0',
+      backgroundColor: '#0dcaf022',
+      fill: true,
+      tension: 0.3,
+      pointRadius: 4,
+      pointBackgroundColor: '#0dcaf0'
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: { y: { beginAtZero: true, grid: { color: '#e9ecef' } }, x: { grid: { display: false } } }
+  }
+});
+</script>
+</body>
+</html>
