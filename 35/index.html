@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Политика конфиденциальности · ares-core bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            background: radial-gradient(circle at 15% 30%, rgba(220, 235, 245, 0.9), rgba(248, 250, 252, 1));
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            color: #1a2a3a;
+            line-height: 1.5;
+        }
+
+        .privacy-glass {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+            padding: 2.2rem 2rem;
+            transition: all 0.2s ease;
+        }
+
+        .brand-header {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border-bottom: 2px solid rgba(100, 120, 140, 0.2);
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.8rem;
+        }
+        .bot-name {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            background: linear-gradient(125deg, #1e3c4c, #2b5c6f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .bot-name span {
+            font-size: 1.8rem;
+        }
+        .badge-tg {
+            background: rgba(70, 130, 200, 0.12);
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #2c5a74;
+            border: 1px solid rgba(70, 130, 200, 0.3);
+            backdrop-filter: blur(2px);
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0.5rem 0 0.3rem 0;
+            letter-spacing: -0.02em;
+            color: #0c2e3f;
+        }
+        .date-block {
+            font-size: 0.8rem;
+            color: #556b7a;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed rgba(0,0,0,0.08);
+            display: inline-block;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem 0;
+            color: #173e4f;
+            letter-spacing: -0.3px;
+            border-left: 4px solid #6c9eb3;
+            padding-left: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 0.95rem;
+            color: #1f3443;
+        }
+        ul, .policy-list {
+            margin: 0.8rem 0 1.2rem 1.8rem;
+        }
+        li {
+            margin: 0.6rem 0;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+        strong {
+            color: #1f5e76;
+            font-weight: 700;
+        }
+        a {
+            color: #2c6d8c;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(44, 109, 140, 0.4);
+            transition: border 0.2s, color 0.2s;
+        }
+        a:hover {
+            color: #0c4b64;
+            border-bottom: 1px solid #0c4b64;
+        }
+
+        .contact-card {
+            margin: 2rem 0 1rem;
+            background: rgba(235, 245, 250, 0.6);
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+        .email-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .email-address {
+            background: #ffffffcc;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            color: #1a4c63;
+            border: 1px solid #cbdde6;
+        }
+        .copy-btn {
+            background: #eef3f7;
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1d5b74;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .copy-btn:hover {
+            background: #dce8f0;
+            transform: scale(0.97);
+        }
+        .copy-toast {
+            font-size: 0.7rem;
+            background: #2b5e72;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+        footer {
+            margin-top: 2.8rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #6d8a9b;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding-top: 1.8rem;
+            letter-spacing: 0.2px;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem;
+            }
+            .privacy-glass {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .bot-name {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.25rem;
+            }
+            .contact-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        ::selection {
+            background: #bdd4de;
+            color: #0c2e3f;
+        }
+        .gradient-note {
+            background: linear-gradient(120deg, #dbeaf1, #f6fafd);
+            border-radius: 1.2rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        hr {
+            margin: 1rem 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(80,110,130,0.2), transparent);
+        }
+    </style>
+</head>
+<body>
+<div class="privacy-glass">
+    <div class="brand-header">
+        <div class="bot-name">
+            <span>⚡</span> ares-core
+        </div>
+        <div class="badge-tg">🤖 Telegram Бот</div>
+    </div>
+    <h1>Политика конфиденциальности</h1>
+    <div class="date-block">📅 Версия 1.0 | Актуально с 12 июня 2026 г.</div>
+    
+    <p><strong>ares-core</strong> — это Telegram-бот, разработанный для предоставления полезных функций и сервисов. 
+    Мы серьезно относимся к приватности пользователей и соблюдаем требования законодательства о защите данных. 
+    Этот документ описывает, какие данные обрабатываются при использовании нашего бота, как они используются и защищаются.</p>
+    
+    <h2>1. Какие данные мы собираем</h2>
+    <p>При взаимодействии с ботом <strong>ares-core</strong> могут обрабатываться следующие сведения:</p>
+    <ul>
+        <li><strong>Идентификатор Telegram (User ID)</strong> — необходим для распознавания пользователя и обеспечения работы команд.</li>
+        <li><strong>Имя, фамилия и username</strong> (если указаны в Telegram) — отображаются в интерфейсе для персонализации ответов.</li>
+        <li><strong>Текст сообщений и команд</strong>, отправленных боту. Бот обрабатывает их в реальном времени для формирования ответа. Сообщения <strong>не сохраняются</strong> в постоянных базах данных дольше, чем необходимо для выполнения команды (максимум до 24 часов в кэше обработки).</li>
+        <li><strong>Технические логи</strong> (метаданные: временные метки, тип команды, статус выполнения) — используются исключительно для отладки, улучшения стабильности и предотвращения сбоев. Логи обезличиваются и хранятся не более 30 дней.</li>
+    </ul>
+    <p>Бот не запрашивает и <strong>не хранит</strong> конфиденциальную информацию: пароли, банковские данные, документы, геолокацию, номера телефонов (если только вы не отправите их добровольно в сообщении, но они не сохраняются намеренно).</p>
+    
+    <h2>2. Как используются ваши данные</h2>
+    <ul>
+        <li><strong>Обеспечение функциональности бота:</strong> обработка команд, формирование ответов, персонализация (например, обращение по имени).</li>
+        <li><strong>Улучшение качества работы:</strong> анализ анонимной статистики использования команд для оптимизации ответов и исправления ошибок.</li>
+        <li><strong>Безопасность и мониторинг:</strong> выявление необычной активности, защита от злоупотреблений и сбоев.</li>
+        <li><strong>Коммуникация с пользователем:</strong> если вы отправляете запрос через контакты поддержки, мы можем использовать ваш ID для ответа в Telegram.</li>
+    </ul>
+    <p>Мы <strong>не продаем</strong> персональные данные, не передаём их рекламным сетям и не используем для таргетинга.</p>
+    
+    <h2>3. Хранение и защита данных</h2>
+    <p>Ваша информация хранится на защищенных серверах внутри облачной инфраструктуры. Все данные, которые временно сохраняются (логи, кэш), шифруются и доступны только ограниченному кругу лиц, непосредственно связанных с технической поддержкой бота.</p>
+    <ul>
+        <li><strong>Срок хранения:</strong> обезличенные логи автоматически удаляются через 30 дней. Данные, которые вы передаете в процессе сессии (текст команд), не архивируются и удаляются после обработки.</li>
+        <li><strong>Меры защиты:</strong> используются современные протоколы безопасности, регулярные обновления, контроль доступа по принципу минимальных привилегий.</li>
+    </ul>
+    <div class="gradient-note">🔒 Бот не использует cookies, localStorage или трекеры — вся работа происходит через Telegram API и собственный защищенный бэкенд.</div>
+    
+    <h2>4. Передача данных третьим лицам</h2>
+    <p>Мы не передаем ваши личные данные коммерческим партнерам или рекламным платформам. В исключительных случаях раскрытие может произойти:</p>
+    <ul>
+        <li>Если это требуется законодательством РФ или иным применимым законом (по официальному запросу суда или правоохранительных органов).</li>
+        <li>Для защиты прав, безопасности или имущества владельцев бота, пользователей или общественности.</li>
+        <li>В случае передачи бизнеса (реорганизация, слияние) — с предварительным уведомлением и сохранением уровня конфиденциальности.</li>
+    </ul>
+    <p>Инфраструктурные провайдеры (хостинг, облачные сервисы) могут иметь доступ к зашифрованным данным, но они связаны договорами о неразглашении и не используют данные в своих целях.</p>
+    
+    <h2>5. Права пользователей</h2>
+    <p>Вы имеете право:</p>
+    <ul>
+        <li>Запросить информацию о том, какие данные о вас хранятся у нас.</li>
+        <li>Потребовать удалить все персональные данные, связанные с вашим Telegram ID.</li>
+        <li>Отказаться от использования бота в любое время — достаточно прекратить отправку команд. В этом случае новые данные обрабатываться не будут, а старые (логи) будут удалены согласно регламенту.</li>
+        <li>Исправить неточную информацию (например, если бот неправильно распознал имя).</li>
+    </ul>
+    <p>Для реализации любых прав свяжитесь с нами по контактному email (см. раздел «Контакты»). Ответ предоставляется в течение 14 рабочих дней.</p>
+    
+    <h2>6. Дети и ограничения по возрасту</h2>
+    <p>Бот не предназначен для лиц младше 13 лет. Мы сознательно не собираем данные несовершеннолетних. Если вам станет известно, что ребёнок предоставил личную информацию без согласия родителей, свяжитесь с нами, и мы незамедлительно удалим такие данные.</p>
+    
+    <h2>7. Контакты и вопросы конфиденциальности</h2>
+    <p>Если у вас есть вопросы, запросы на удаление данных, жалобы или предложения, напишите нам. Предпочтительный способ связи — по электронной почте (ответ в течение 48 часов).</p>
+    
+    <div class="contact-card">
+        <div class="email-group">
+            <span class="email-address" id="contactEmail">privacy@ares-core.com</span>
+            <button class="copy-btn" id="copyEmailBtn">📋 Копировать email</button>
+        </div>
+        <div style="font-size: 0.75rem; color: #446b7e;">
+            ✉️ Также можно связаться через Telegram: <strong>@Arexdoxbot</strong>
+        </div>
+        <div id="copyToastMessage" class="copy-toast">Скопировано!</div>
+    </div>
+    
+    <h2>8. Изменения в Политике конфиденциальности</h2>
+    <p>Мы можем периодически обновлять этот документ. При существенных изменениях мы уведомим пользователей через канал бота (объявление в описании или через команду /policy). Новая версия вступает в силу с момента публикации на этой странице. Рекомендуем проверять актуальную версию время от времени.</p>
+    <p>Продолжая использовать <strong>ares-core</strong>, вы подтверждаете, что ознакомлены с текущей версией политики и принимаете её условия.</p>
+    
+    <footer>
+        <span>© 2026 · ares-core Telegram Bot · Все права защищены</span><br>
+        <span style="font-size: 0.68rem;">Этот документ не содержит неоновых эффектов, только элегантные градиенты и шрифт JetBrains Mono.</span>
+    </footer>
+</div>
+
+<script>
+    const copyBtn = document.getElementById('copyEmailBtn');
+    const emailSpan = document.getElementById('contactEmail');
+    const toastMsg = document.getElementById('copyToastMessage');
+    
+    async function copyEmailToClipboard() {
+        const email = emailSpan.innerText.trim();
+        if (!email) return;
+        try {
+            await navigator.clipboard.writeText(email);
+            toastMsg.style.opacity = '1';
+            toastMsg.style.transition = 'opacity 0.15s';
+            setTimeout(() => {
+                toastMsg.style.opacity = '0';
+            }, 1500);
+        } catch (err) {
+            const textarea = document.createElement('textarea');
+            textarea.value = email;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            toastMsg.style.opacity = '1';
+            setTimeout(() => {
+                toastMsg.style.opacity = '0';
+            }, 1500);
+        }
+    }
+    
+    if (copyBtn) {
+        copyBtn.addEventListener('click', copyEmailToClipboard);
+    }
+    
+    const footerYearSpan = document.querySelector('footer span:first-child');
+    if (footerYearSpan) {
+        const currentYear = new Date().getFullYear();
+        if (currentYear !== 2026) {
+            footerYearSpan.innerHTML = `© ${currentYear} · ares-core Telegram Bot · Все права защищены`;
+        }
+    }
+    
+    const glassCard = document.querySelector('.privacy-glass');
+    if (glassCard) {
+        glassCard.style.transition = 'transform 0.2s ease, box-shadow 0.25s ease';
+        glassCard.addEventListener('mouseenter', () => {
+            glassCard.style.transform = 'translateY(-2px)';
+            glassCard.style.boxShadow = '0 28px 40px -18px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255,255,240,0.5) inset';
+        });
+        glassCard.addEventListener('mouseleave', () => {
+            glassCard.style.transform = 'translateY(0)';
+            glassCard.style.boxShadow = '0 20px 35px -15px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.4) inset';
+        });
+    }
+</script>
+</body>
+</html>
