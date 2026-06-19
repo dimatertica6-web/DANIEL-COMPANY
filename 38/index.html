@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret · лучший программист</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      color: #111;
+    }
+
+    .card {
+      max-width: 1000px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 48px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+      border: 1px solid rgba(0, 0, 0, 0.02);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 2.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 720px) {
+      .card {
+        padding: 2rem 1.5rem;
+        border-radius: 32px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    /* левая колонка — профиль */
+    .profile {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #f2f2f2;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #222;
+      width: fit-content;
+      border: 1px solid #eaeaea;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #000;
+    }
+
+    h1 span {
+      background: linear-gradient(145deg, #000 30%, #333 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .title {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #333;
+      letter-spacing: -0.01em;
+      border-left: 4px solid #ccc;
+      padding-left: 1rem;
+      margin-top: -0.5rem;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #2a2a2a;
+      font-weight: 400;
+      max-width: 90%;
+      background: #fafafa;
+      padding: 1.2rem 1.5rem;
+      border-radius: 24px;
+      border: 1px solid #f0f0f0;
+    }
+
+    .description strong {
+      font-weight: 600;
+      color: #000;
+    }
+
+    .highlight {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.02em;
+      margin-top: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .highlight svg {
+      width: 28px;
+      height: 28px;
+      stroke: #000;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2rem;
+      margin-top: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ececec;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .stat-item svg {
+      width: 22px;
+      height: 22px;
+      stroke: #222;
+      stroke-width: 1.6;
+      fill: none;
+    }
+
+    .stat-item span {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .stat-item small {
+      font-weight: 400;
+      color: #777;
+      margin-left: 0.2rem;
+    }
+
+    /* правая колонка — графики + иконки */
+    .charts {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .chart-block {
+      background: #fbfbfb;
+      border-radius: 28px;
+      padding: 1.5rem 1.5rem 1.8rem;
+      border: 1px solid #efefef;
+      transition: 0.15s;
+    }
+
+    .chart-block:hover {
+      border-color: #ddd;
+      background: #fafafa;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .chart-header h3 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #555;
+    }
+
+    .chart-header svg {
+      width: 24px;
+      height: 24px;
+      stroke: #222;
+      stroke-width: 1.6;
+      fill: none;
+    }
+
+    .chart-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 0.6rem;
+      height: 110px;
+      margin-bottom: 0.25rem;
+    }
+
+    .bar {
+      width: 28px;
+      background: #d0d0d0;
+      border-radius: 20px 20px 6px 6px;
+      transition: 0.2s;
+      position: relative;
+      background: linear-gradient(180deg, #b0b0b0 0%, #d8d8d8 100%);
+    }
+
+    .bar.active {
+      background: linear-gradient(180deg, #1a1a1a 0%, #3a3a3a 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .bar-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: #555;
+      text-align: center;
+      margin-top: 0.4rem;
+    }
+
+    .row-bars {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      height: 100px;
+      gap: 0.4rem;
+    }
+
+    .row-bars .bar {
+      width: 22px;
+      min-height: 12px;
+    }
+
+    .inline-svg-grid {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.2rem;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .inline-svg-grid svg {
+      width: 36px;
+      height: 36px;
+      stroke: #1a1a1a;
+      stroke-width: 1.4;
+      fill: none;
+      opacity: 0.8;
+      transition: 0.15s;
+    }
+
+    .inline-svg-grid svg:hover {
+      opacity: 1;
+      stroke: #000;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #f2f2f2;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #111;
+      border: 1px solid #e6e6e6;
+    }
+
+    .chip svg {
+      width: 16px;
+      height: 16px;
+      stroke: #222;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .footer-note {
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    .footer-note svg {
+      width: 18px;
+      height: 18px;
+      stroke: #aaa;
+      stroke-width: 1.6;
+      fill: none;
+    }
+
+    .best-tag {
+      margin-top: 0.2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #000;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    .best-tag svg {
+      width: 30px;
+      height: 30px;
+      fill: none;
+      stroke: #000;
+      stroke-width: 2;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ececec;
+      margin: 0.5rem 0 0.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="grid">
+      <!-- левая часть: профиль Secret -->
+      <div class="profile">
+        <div class="badge">✦ профиль</div>
+        <h1><span>Secret</span></h1>
+        <div class="title">профессиональный программист</div>
+
+        <div class="description">
+          <strong>Secret</strong> — архитектор кода, мастер чистых решений.
+          С ним каждый проект обретает элегантность и силу.
+          <br><br>
+          <span style="display: inline-block; margin-top: 0.2rem;">⚡</span> 10+ лет опыта, сотни успешных релизов.
+          Его код — это искусство.
+        </div>
+
+        <div class="highlight">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+          </svg>
+          <span>лучший в своём деле</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12L18 12" />
+              <path d="M6 12L2 12" />
+              <path d="M12 6L12 2" />
+              <path d="M12 22L12 18" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span>full‑stack <small>master</small></span>
+          </div>
+          <div class="stat-item">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="6" width="20" height="12" rx="2" />
+              <path d="M8 6V4" />
+              <path d="M16 6V4" />
+              <path d="M2 10h20" />
+            </svg>
+            <span>60+ <small>проектов</small></span>
+          </div>
+        </div>
+
+        <div class="best-tag">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+          </svg>
+          №1 программист
+        </div>
+      </div>
+
+      <!-- правая часть: графики + SVG иконки -->
+      <div class="charts">
+        <!-- график 1: бары (навыки) -->
+        <div class="chart-block">
+          <div class="chart-header">
+            <h3>⚡ стек-профиль</h3>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          </div>
+          <div class="row-bars">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 88px;"></div>
+              <div class="bar-label">TS</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 74px;"></div>
+              <div class="bar-label">React</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 62px;"></div>
+              <div class="bar-label">Go</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar" style="height: 48px;"></div>
+              <div class="bar-label">Rust</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 80px;"></div>
+              <div class="bar-label">Python</div>
+            </div>
+          </div>
+          <div class="inline-svg-grid">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+            </svg>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- график 2: столбцы (активность) -->
+        <div class="chart-block">
+          <div class="chart-header">
+            <h3>📈 вклад за неделю</h3>
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20V10" />
+              <path d="M18 20V4" />
+              <path d="M6 20V14" />
+            </svg>
+          </div>
+          <div class="chart-container">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 70px;"></div>
+              <div class="bar-label">Пн</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 92px;"></div>
+              <div class="bar-label">Вт</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 48px;"></div>
+              <div class="bar-label">Ср</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 84px;"></div>
+              <div class="bar-label">Чт</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar" style="height: 30px;"></div>
+              <div class="bar-label">Пт</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar active" style="height: 66px;"></div>
+              <div class="bar-label">Сб</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="bar" style="height: 22px;"></div>
+              <div class="bar-label">Вс</div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 0.3rem;">
+            <div class="chip">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              84% продуктивность
+            </div>
+          </div>
+        </div>
+
+        <!-- нижняя строка с иконками + "лучший" -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <svg width="28" height="28" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke="#111" stroke-width="1.8" fill="none">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            </svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke="#111" stroke-width="1.8" fill="none">
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke="#111" stroke-width="1.8" fill="none">
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; background: #f5f5f5; padding: 0.3rem 1.2rem 0.3rem 0.8rem; border-radius: 60px; border: 1px solid #e8e8e8;">
+            <svg width="20" height="20" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke="#000" stroke-width="2.2" fill="none">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+            </svg>
+            <span style="font-weight: 600; font-size: 0.9rem; letter-spacing: -0.01em;">Secret — лучший</span>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span>код, которому доверяют · 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
