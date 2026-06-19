@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MiloMin — Файлы для доксинга</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f8fe;
+            color: #0b1a2f;
+            padding: 20px 16px 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-wrap {
+            max-width: 480px;
+            width: 100%;
+        }
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding: 0 2px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: -0.3px;
+            color: #0b1a2f;
+        }
+        .brand svg {
+            width: 32px;
+            height: 32px;
+        }
+        .badge {
+            background: #eef2f8;
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1e3a5f;
+            letter-spacing: 0.3px;
+        }
+        .sub-title {
+            font-size: 14px;
+            font-weight: 400;
+            color: #3b5a78;
+            margin-bottom: 22px;
+            background: rgba(59, 130, 246, 0.04);
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.5;
+            border-left: 3px solid #3b82f6;
+        }
+        .file-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        @media (max-width: 420px) {
+            .file-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+        .file-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 16px 14px 14px;
+            box-shadow: 0 2px 12px rgba(0, 20, 40, 0.04);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid rgba(11, 26, 47, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .file-card:active {
+            transform: scale(0.97);
+            background: #f9fcff;
+        }
+        .file-card .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #eef4fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+        .file-card .icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: #1e3a5f;
+            stroke-width: 1.8;
+            fill: none;
+        }
+        .file-card .name {
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: -0.2px;
+            color: #0b1a2f;
+        }
+        .file-card .meta {
+            font-size: 11px;
+            color: #4b6a88;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+        .file-card .meta span {
+            background: #f1f6fd;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            color: #1e3a5f;
+        }
+        .file-card .size {
+            font-size: 10px;
+            color: #6b8aa8;
+        }
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, rgba(11, 26, 47, 0.06), transparent);
+            margin: 6px 0 18px;
+        }
+        .service-block {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 18px 16px 20px;
+            margin-top: 6px;
+            box-shadow: 0 2px 12px rgba(0, 20, 40, 0.03);
+            border: 1px solid rgba(11, 26, 47, 0.04);
+        }
+        .service-block h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #0b1a2f;
+            letter-spacing: -0.2px;
+        }
+        .service-block p {
+            font-size: 14px;
+            color: #1f3a57;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .service-block .price-tag {
+            display: inline-block;
+            background: #eef4fc;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #0b1a2f;
+        }
+        .service-block .desc-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 14px;
+        }
+        .service-block .desc-list li {
+            position: relative;
+            padding-left: 18px;
+            font-size: 13px;
+            color: #1f3a57;
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        .service-block .desc-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55rem;
+            width: 6px;
+            height: 6px;
+            background: #3b82f6;
+            border-radius: 50%;
+            opacity: 0.25;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0b1a2f;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 6px;
+            width: 100%;
+            justify-content: center;
+        }
+        .contact-btn:active {
+            background: #1e3a5f;
+        }
+        .contact-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 26, 47, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+            animation: fadeIn 0.25s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: #ffffff;
+            border-radius: 32px;
+            max-width: 400px;
+            width: 100%;
+            padding: 28px 24px 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+        .modal .close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 22px;
+            color: #6b8aa8;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-weight: 300;
+            line-height: 1;
+        }
+        .modal .file-icon-big {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: #eef4fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .modal .file-icon-big svg {
+            width: 30px;
+            height: 30px;
+            stroke: #0b1a2f;
+            stroke-width: 1.8;
+            fill: none;
+        }
+        .modal h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b1a2f;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+        .modal .file-meta {
+            font-size: 13px;
+            color: #4b6a88;
+            margin-bottom: 14px;
+        }
+        .modal .file-desc {
+            font-size: 14px;
+            color: #1f3a57;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            background: #f8fafc;
+            padding: 14px 16px;
+            border-radius: 16px;
+        }
+        .modal .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f0f4fa;
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-top: 4px;
+        }
+        .modal .contact-row span {
+            font-size: 14px;
+            color: #0b1a2f;
+            font-weight: 500;
+        }
+        .modal .contact-row a {
+            color: #0b1a2f;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px solid #d0d8e0;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .footer-note {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #6b8aa8;
+            text-align: center;
+            letter-spacing: 0.2px;
+        }
+        .footer-note a {
+            color: #0b1a2f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #f5f8fe;
+            }
+            .file-card {
+                background: #ffffff;
+            }
+            .service-block {
+                background: #ffffff;
+            }
+            .modal {
+                background: #ffffff;
+            }
+            .modal .file-desc {
+                background: #f8fafc;
+            }
+            .contact-btn {
+                background: #0b1a2f;
+                color: #ffffff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrap">
+
+        <div class="app-header">
+            <div class="brand">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4L4 12L20 20L36 12L20 4Z" stroke="#0b1a2f" stroke-width="2" stroke-linejoin="round" />
+                    <path d="M4 12V28L20 36L36 28V12" stroke="#0b1a2f" stroke-width="2" stroke-linejoin="round" />
+                    <path d="M20 20V36" stroke="#0b1a2f" stroke-width="2" stroke-linecap="round" />
+                    <circle cx="20" cy="20" r="4" fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-width="1.5" />
+                </svg>
+                MiloMin
+            </div>
+            <span class="badge">Файлы</span>
+        </div>
+
+        <div class="sub-title">
+            📁 Файлы для доксинга — база данных, логи, профили. Нажмите на файл для подробностей.
+        </div>
+
+        <div class="file-grid" id="fileGrid">
+            <div class="file-card" data-file="0">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                        <path d="M8 8H16M8 12H14M8 16H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="name">database_2026.json</div>
+                <div class="meta"><span>База</span><span>2.4 МБ</span></div>
+            </div>
+            <div class="file-card" data-file="1">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8" />
+                        <path d="M8 8H16M8 12H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="name">logs_06_2026.csv</div>
+                <div class="meta"><span>Логи</span><span>1.8 МБ</span></div>
+            </div>
+            <div class="file-card" data-file="2">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8" />
+                        <path d="M12 4V12L16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="name">profiles_full.txt</div>
+                <div class="meta"><span>Профили</span><span>3.2 МБ</span></div>
+            </div>
+            <div class="file-card" data-file="3">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6H20V20H4V6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                        <path d="M8 4V8M16 4V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="name">ip_geo_data.db</div>
+                <div class="meta"><span>Гео</span><span>5.6 МБ</span></div>
+            </div>
+            <div class="file-card" data-file="4">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                        <path d="M8 10H16M8 14H14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="name">leaks_2026.json</div>
+                <div class="meta"><span>Утечки</span><span>4.1 МБ</span></div>
+            </div>
+            <div class="file-card" data-file="5">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8" />
+                        <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="name">social_links.txt</div>
+                <div class="meta"><span>Соцсети</span><span>2.9 МБ</span></div>
+            </div>
+            <div class="file-card" data-file="6">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="6" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.8" />
+                        <path d="M8 6V4M16 6V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="name">email_dumps.csv</div>
+                <div class="meta"><span>Email</span><span>6.3 МБ</span></div>
+            </div>
+            <div class="file-card" data-file="7">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 8L12 4L20 8L12 12L4 8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                        <path d="M4 12L12 16L20 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 16V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <div class="name">domains_list.txt</div>
+                <div class="meta"><span>Домены</span><span>1.2 МБ</span></div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="service-block">
+            <h3>📌 Полное описание услуг</h3>
+            <p><strong>MiloMin</strong> предоставляет комплексный набор файлов и данных для профессионального доксинга, сбора информации и аналитики.</p>
+            <ul class="desc-list">
+                <li><strong>Базы данных (JSON/DB)</strong> — структурированные наборы данных с информацией о пользователях, IP-адресах, устройствах и активности.</li>
+                <li><strong>Лог-файлы (CSV/LOG)</strong> — детальные логи подключений, запросов, временных меток и сетевых событий.</li>
+                <li><strong>Профили пользователей</strong> — агрегированные данные из открытых источников, соцсетей и публичных баз.</li>
+                <li><strong>Геолокационные данные</strong> — привязка IP к координатам, провайдерам, региональная статистика.</li>
+                <li><strong>Утечки и дампы</strong> — проверенные наборы данных из публичных утечек с очисткой и структурированием.</li>
+                <li><strong>Социальные графы</strong> — связи между аккаунтами, анализ аудитории, кластеризация.</li>
+            </ul>
+            <p style="font-size: 13px; color: #4b6a88; margin-top: 4px;">
+                Все файлы предоставляются в сыром или предобработанном виде. Актуализация — еженедельно.
+            </p>
+            <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px; flex-wrap: wrap;">
+                <span class="price-tag">от 500 ₽</span>
+                <span style="font-size: 13px; color: #4b6a88;">доступ по подписке</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; width: 100%;">
+            <button class="contact-btn" id="contactBtn">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Написать в Telegram — @kirowed2
+            </button>
+        </div>
+
+        <div class="footer-note">
+            MiloMin — файлы и инструменты для профессионалов. <a href="#">Политика</a>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close" id="modalClose">✕</button>
+            <div class="file-icon-big" id="modalIcon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                    <path d="M8 8H16M8 12H14M8 16H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+            </div>
+            <h2 id="modalTitle">database_2026.json</h2>
+            <div class="file-meta" id="modalMeta">База данных · 2.4 МБ</div>
+            <div class="file-desc" id="modalDesc">
+                <strong>Описание:</strong> Полная база данных с информацией о пользователях, IP-адресах, временных метках и активности. Содержит более 50 000 записей. Включает поля: ID, IP, User-Agent, время входа, геолокация, провайдер. Данные собраны из открытых источников и агрегированы в единую структуру.
+            </div>
+            <div class="contact-row">
+                <span>📩 Для получения файла напишите:</span>
+                <a href="https://t.me/kirowed2" target="_blank">@kirowed2</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const filesData = [{
+            name: 'database_2026.json',
+            meta: 'База данных · 2.4 МБ',
+            icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 8H16M8 12H14M8 16H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+            desc: 'Полная база данных с информацией о пользователях, IP-адресах, временных метках и активности. Содержит более 50 000 записей. Включает поля: ID, IP, User-Agent, время входа, геолокация, провайдер. Данные собраны из открытых источников и агрегированы в единую структуру. Подходит для аналитики, расследований и построения цифровых профилей.'
+        }, {
+            name: 'logs_06_2026.csv',
+            meta: 'Логи · 1.8 МБ',
+            icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8H16M8 12H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+            desc: 'Лог-файлы за июнь 2026 года. Включают записи о подключениях, запросах, ошибках и системных событиях. Формат CSV — легко импортируется в любые аналитические инструменты. Содержит временные метки, типы событий, IP-адреса и коды ответов. Идеально для восстановления хронологии и анализа поведения.'
+        }, {
+            name: 'profiles_full.txt',
+            meta: 'Профили · 3.2 МБ',
+            icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 4V12L16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+            desc: 'Агрегированные профили пользователей из открытых источников. Содержат имена, email, номера телефонов, ссылки на соцсети, географию, интересы. Более 10 000 уникальных записей. Данные очищены от дублей и структурированы. Подходят для реконструкции цифровых следов и анализа аудитории.'
+        }, {
+            name: 'ip_geo_data.db',
+            meta: 'Гео · 5.6 МБ',
+            icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6H20V20H4V6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 4V8M16 4V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+            desc: 'База геолокационных данных с привязкой IP-адресов к координатам, стране, региону, городу и провайдеру. Более 200 000 записей. Обновление еженедельно. Используется для определения местоположения, анализа трафика и построения тепловых карт.'
+        }, {
+            name: 'leaks_2026.json',
+            meta: 'Утечки · 4.1 МБ',
+            icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4H20V20H4V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 10H16M8 14H14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+            desc: 'Дампы публичных утечек данных за 2026 год. Включают логины, пароли (хэши), email, телефонные номера. Более 30 000 уникальных записей. Данные проверены на актуальность. Используются для анализа безопасности, поиска уязвимостей и исследований.'
+        }, {
+            name: 'social_links.txt',
+            meta: 'Соцсети · 2.9 МБ',
+            icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 8V12L15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+            desc: 'Список ссылок на профили в социальных сетях с привязкой к пользователям. Включает платформы: VK, Telegram, Instagram, Twitter, Facebook. Более 15 000 записей. Используется для построения социальных графов, анализа связей и поиска пересечений.'
+        }, {
+            name: 'email_dumps.csv',
+            meta: 'Email · 6.3 МБ',
+            icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 6V4M16 6V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+            desc: 'База email-адресов с дополнительной информацией: домен, статус валидации, дата обнаружения. Более 100 000 записей. Данные собраны из публичных источников, структурированы и очищены. Подходят для исследований, маркетинга и восстановления контактов.'
+        }, {
+            name: 'domains_list.txt',
+            meta: 'Домены · 1.2 МБ',
+            icon: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 8L12 4L20 8L12 12L4 8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 12L12 16L20 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+            desc: 'Список доменов с информацией о владельцах, регистраторах, датах регистрации и истечения. Более 8 000 записей. Включает активные и делегированные домены. Используется для анализа сети, поиска пересечений и разведки инфраструктуры.'
+        }];
+
+        const overlay = document.getElementById('modalOverlay');
+        const closeBtn = document.getElementById('modalClose');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMeta = document.getElementById('modalMeta');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalIcon = document.getElementById('modalIcon');
+
+        function openModal(index) {
+            const file = filesData[index];
+            if (!file) return;
+            modalTitle.textContent = file.name;
+            modalMeta.textContent = file.meta;
+            modalDesc.innerHTML = `<strong>Описание:</strong> ${file.desc}`;
+            modalIcon.innerHTML = file.icon;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.file-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const idx = parseInt(this.dataset.file);
+                if (!isNaN(idx) && idx < filesData.length) {
+                    openModal(idx);
+                }
+            });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        document.getElementById('contactBtn').addEventListener('click', function() {
+            window.open('https://t.me/kirowed2', '_blank');
+        });
+    </script>
+</body>
+</html>
