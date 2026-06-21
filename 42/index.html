@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Политика конфиденциальности — FIreREF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Puritan:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Puritan',sans-serif;background:#ffffff;color:#1a1a1a;line-height:1.7;-webkit-font-smoothing:antialiased}
+        .container{max-width:720px;margin:0 auto;padding:20px 24px 40px}
+        .header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 24px;border-bottom:1px solid #f0f0f0;margin-bottom:24px}
+        .header h1{font-size:26px;font-weight:700;display:flex;align-items:center;gap:10px;letter-spacing:-0.5px}
+        .header h1 svg{width:32px;height:32px;stroke:#1a1a1a;stroke-width:2;fill:none}
+        .header-avatar{width:44px;height:44px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#333}
+        .card{background:#ffffff;border-radius:20px;padding:20px 24px;margin-bottom:20px;box-shadow:0 2px 16px rgba(0,0,0,0.04);border:1px solid #f0f0f0;transition:transform 0.2s}
+        .card:hover{transform:translateY(-2px)}
+        .card-title{font-size:20px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+        .card-title svg{width:24px;height:24px;stroke:#1a1a1a;stroke-width:2;fill:none}
+        .card-desc{font-size:16px;color:#444;line-height:1.8}
+        .stat-row{display:flex;justify-content:space-between;padding:8px 0;font-size:16px;border-bottom:1px solid #f6f6f6}
+        .stat-row:last-child{border-bottom:none}
+        .stat-label{color:#888}
+        .stat-value{font-weight:700}
+        .footer{text-align:center;padding:30px 0 10px;color:#aaa;font-size:14px;border-top:1px solid #f0f0f0;margin-top:20px}
+        .footer a{color:#1a1a1a;text-decoration:none;font-weight:700}
+        .btn{display:inline-block;background:#f5f5f5;border:none;padding:12px 24px;border-radius:14px;font-size:16px;font-weight:700;color:#1a1a1a;cursor:pointer;transition:0.15s;font-family:'Puritan',sans-serif;width:100%;text-align:center}
+        .btn:active{background:#e8e8e8;transform:scale(0.97)}
+        .btn-primary{background:#1a1a1a;color:#fff}
+        .btn-primary:active{background:#333}
+        .toast{position:fixed;bottom:120px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:12px 28px;border-radius:40px;font-size:15px;font-weight:700;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap}
+        .toast.show{opacity:1}
+        .highlight{background:#f5f5f5;padding:2px 10px;border-radius:12px;font-weight:700;color:#1a1a1a}
+        .highlight-blue{background:#eef4ff;padding:2px 10px;border-radius:12px;font-weight:700;color:#1a3a6a}
+        .policy-section{margin-top:18px;padding-top:16px;border-top:1px solid #f0f0f0}
+        .policy-section:first-child{margin-top:0;border-top:none;padding-top:0}
+        .policy-section h3{font-size:18px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+        .policy-section h3 svg{width:20px;height:20px;stroke:#1a1a1a;stroke-width:2;fill:none}
+        .policy-section p{margin-bottom:8px}
+        .policy-section ul{padding-left:24px;margin:8px 0 12px}
+        .policy-section ul li{margin-bottom:4px}
+        .badge-policy{display:inline-block;background:#1a1a1a;color:#fff;padding:2px 14px;border-radius:30px;font-size:12px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase}
+        @media(max-width:480px){.container{padding:12px 16px 30px}.header h1{font-size:22px}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>FIreREF</h1>
+        <div class="header-avatar">🔒</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M9 9l6 6"/><path d="M15 9l-6 6"/></svg>Политика конфиденциальности</div>
+        <div class="card-desc">
+            <p style="font-size:18px;font-weight:700;margin-bottom:12px;">FIreREF — защита ваших данных — наш приоритет</p>
+            <p>Настоящая Политика конфиденциальности (далее — <span class="highlight">«Политика»</span>) описывает, как <span class="highlight-blue">FIreREF</span> (далее — «Клан», «Мы», «Наш») собирает, использует, хранит и защищает <span class="highlight">персональные данные</span> пользователей (далее — «Вы», «Пользователь») при использовании нашего мини-приложения и связанных с ним сервисов. Мы стремимся обеспечить максимальную <span class="highlight-blue">прозрачность</span> и <span class="highlight">безопасность</span> обработки вашей информации.</p>
+            <p style="margin-top:10px;">Используя наше приложение, вы даёте своё <span class="highlight">согласие</span> на сбор и обработку данных в соответствии с настоящей Политикой. Если вы не согласны с условиями, пожалуйста, <span class="highlight-blue">не используйте</span> приложение.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>1. Какие данные мы собираем</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>1.1. Данные, предоставляемые вами</h3>
+                <ul>
+                    <li><span class="highlight">Имя и фамилия</span> — для идентификации в системе и обращений.</li>
+                    <li><span class="highlight">Номер телефона</span> — для связи и подтверждения регистрации.</li>
+                    <li><span class="highlight">Город проживания</span> — для организации мероприятий и статистики.</li>
+                    <li><span class="highlight">Данные профиля Telegram</span> (имя пользователя, аватар) — при входе через Telegram WebApp.</li>
+                </ul>
+            </div>
+            <div class="policy-section">
+                <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>1.2. Автоматически собираемые данные</h3>
+                <ul>
+                    <li><span class="highlight">Данные об использовании</span> — записи на услуги, покупки в магазине, голосования в опросах, создание тикетов и задач.</li>
+                    <li><span class="highlight">Техническая информация</span> — тип устройства, версия браузера, язык, временная зона (анонимно).</li>
+                    <li><span class="highlight">Локальные данные</span> — всё, что вы сохраняете в приложении, хранится <span class="highlight-blue">исключительно</span> в вашем браузере (localStorage).</li>
+                </ul>
+            </div>
+            <div class="policy-section">
+                <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>1.3. Данные, которые мы НЕ собираем</h3>
+                <ul>
+                    <li>Мы <span class="highlight">не запрашиваем</span> и не храним пароли, банковские карты, паспортные данные, биометрию.</li>
+                    <li>Мы <span class="highlight">не передаём</span> ваши данные третьим лицам без вашего явного согласия.</li>
+                    <li>Мы <span class="highlight">не используем</span> файлы cookie для отслеживания между разными сайтами.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>2. Как мы используем ваши данные</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <ul>
+                    <li><span class="highlight">Для предоставления доступа</span> к функционалу приложения: регистрация, запись на услуги, покупки, опросы.</li>
+                    <li><span class="highlight">Для улучшения сервиса</span> — анализ популярности услуг, активности пользователей, чтобы сделать приложение лучше.</li>
+                    <li><span class="highlight">Для коммуникации</span> — связь с вами по вопросам записей, тикетов, уведомлений о новостях и мероприятиях клана.</li>
+                    <li><span class="highlight">Для внутренней статистики</span> — подсчёт количества участников, записей, голосов, рефералов.</li>
+                    <li><span class="highlight-blue">Важно:</span> все данные, которые вы вводите в приложение, сохраняются <span class="highlight">локально в вашем браузере</span> и не передаются на наши серверы, если иное не указано явно.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M4 4v16h16V4H4zm2 2h12v12H6V6z"/></svg>3. Хранение и защита данных</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>3.1. Локальное хранение</h3>
+                <p>Все данные, созданные вами в приложении (профиль, задачи, тикеты, голоса, покупки, инвентарь), хранятся <span class="highlight">исключительно в localStorage</span> вашего браузера. Это означает, что:</p>
+                <ul>
+                    <li>Данные <span class="highlight">не передаются</span> на внешние серверы.</li>
+                    <li>Вы <span class="highlight">контролируете</span> свои данные — можете очистить их в любой момент через настройки браузера.</li>
+                    <li>Мы <span class="highlight">не имеем доступа</span> к вашим локальным данным, если вы не поделитесь ими добровольно.</li>
+                </ul>
+            </div>
+            <div class="policy-section">
+                <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>3.2. Технические меры защиты</h3>
+                <ul>
+                    <li>Мы используем <span class="highlight">современные протоколы шифрования</span> (HTTPS) для защиты передачи данных между вашим устройством и сервисами Telegram.</li>
+                    <li>Доступ к административной панели ограничен и защищён двухфакторной аутентификацией.</li>
+                    <li>Регулярно проводим <span class="highlight">аудит безопасности</span> и обновляем зависимости.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>4. Передача данных третьим лицам</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <p>Мы <span class="highlight">не продаём, не обмениваем и не передаём</span> ваши персональные данные третьим лицам, за исключением случаев, предусмотренных законодательством.</p>
+                <ul>
+                    <li><span class="highlight-blue">Telegram</span> — при использовании WebApp мы получаем базовые данные профиля (имя, ID) в соответствии с политикой Telegram.</li>
+                    <li><span class="highlight-blue">Аналитика</span> — мы используем агрегированную анонимную статистику для улучшения сервиса, которая не содержит персональных данных.</li>
+                    <li><span class="highlight">Партнёры</span> — мы можем делиться обезличенной статистикой с партнёрами для отчётности, но никогда не передаём ваши личные данные.</li>
+                </ul>
+                <p style="margin-top:10px;">В случае, если потребуется передача данных по законному запросу (например, по решению суда), мы уведомим вас об этом, если это разрешено законом.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>5. Ваши права</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <ul>
+                    <li><span class="highlight">Право на доступ</span> — вы можете просматривать все свои данные в любое время через профиль.</li>
+                    <li><span class="highlight">Право на исправление</span> — вы можете редактировать свои данные в разделе регистрации.</li>
+                    <li><span class="highlight">Право на удаление</span> — вы можете очистить все свои данные, удалив localStorage в браузере или сбросив данные приложения.</li>
+                    <li><span class="highlight">Право на отзыв согласия</span> — вы можете в любой момент отозвать своё согласие на обработку данных, прекратив использование приложения.</li>
+                    <li><span class="highlight">Право на переносимость</span> — вы можете экспортировать свои данные в виде JSON через консоль разработчика (по запросу в поддержку).</li>
+                </ul>
+                <p style="margin-top:10px;">Для реализации любого из этих прав свяжитесь с нами через <span class="highlight-blue">@concole_hack</span> или <span class="highlight-blue">@Asya99991</span>. Мы ответим в течение 24 часов.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>6. Срок хранения данных</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <p>Мы храним ваши данные <span class="highlight">до тех пор, пока вы используете приложение</span>. Если вы не заходили в приложение более <span class="highlight">12 месяцев</span>, мы можем удалить вашу учётную запись и связанные с ней данные. Вы также можете удалить свои данные в любой момент самостоятельно.</p>
+                <p>Локальные данные (localStorage) хранятся в вашем браузере до тех пор, пока вы их не очистите. Мы <span class="highlight">не имеем возможности</span> восстановить данные, удалённые вами локально.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>7. Изменения в Политике</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <p>Мы можем периодически обновлять настоящую Политику. О всех изменениях мы будем уведомлять вас через:</p>
+                <ul>
+                    <li>Уведомление в самом приложении;</li>
+                    <li>Публикацию новой версии Политики с указанием даты изменения;</li>
+                    <li>Рассылку по каналу клана (при наличии подписки).</li>
+                </ul>
+                <p style="margin-top:10px;">Актуальная версия Политики всегда доступна по этой ссылке. <span class="highlight">Последнее обновление:</span> 21 июня 2026 года.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>8. Контакты</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <p>Если у вас есть вопросы, предложения или жалобы, связанные с обработкой ваших данных, пожалуйста, свяжитесь с нами:</p>
+                <ul>
+                    <li><span class="highlight">Поддержка:</span> <a href="https://t.me/Asya99991" target="_blank" style="color:#1a1a1a;font-weight:700;">@Asya99991</a></li>
+                    <li><span class="highlight">Техническая помощь:</span> <a href="https://t.me/concole_hack" target="_blank" style="color:#1a1a1a;font-weight:700;">@concole_hack</a></li>
+                    <li><span class="highlight">Email:</span> <span style="font-weight:700;">fireref@privacy.club</span> (защищённый канал)</li>
+                </ul>
+                <p style="margin-top:10px;">Мы обязуемся ответить на ваш запрос в течение <span class="highlight">24 часов</span> в рабочие дни и в течение <span class="highlight">72 часов</span> в выходные и праздничные дни.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>9. Согласие</div>
+        <div class="card-desc">
+            <div class="policy-section">
+                <p>Продолжая использовать приложение <span class="highlight-blue">FIreREF</span>, вы подтверждаете, что:</p>
+                <ul>
+                    <li>Прочитали и поняли настоящую Политику;</li>
+                    <li>Даёте своё <span class="highlight">согласие</span> на сбор и обработку данных в описанном объёме;</li>
+                    <li>Соглашаетесь с тем, что данные хранятся локально и вы несёте ответственность за их сохранность;</li>
+                    <li>Принимаете условия использования приложения в целом.</li>
+                </ul>
+                <p style="margin-top:12px;font-size:15px;color:#666;">Если вы не согласны с какой-либо частью Политики, пожалуйста, <span class="highlight">прекратите использование</span> приложения и удалите все локальные данные.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>FIreREF — создано с ❤️ в 2025</p>
+        <p style="margin-top:4px;">Поддержка: <a href="https://t.me/Asya99991" target="_blank">@Asya99991</a> · Техпомощь: <a href="https://t.me/concole_hack" target="_blank">@concole_hack</a></p>
+        <p style="margin-top:8px;font-size:13px;color:#bbb;">Версия Политики: 2.1 от 21.06.2026</p>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    (function(){
+        const tg = window.Telegram?.WebApp;
+        if(tg) tg.expand();
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => t.classList.remove('show'), 2600);
+        }
+
+        if(tg) {
+            tg.onEvent('backButtonClicked', function() { tg.close(); });
+            tg.BackButton.show();
+        }
+
+        document.querySelectorAll('.policy-section h3').forEach(h => {
+            h.style.cursor = 'pointer';
+            h.addEventListener('click', function() {
+                const next = this.nextElementSibling;
+                if(next && next.tagName === 'UL') {
+                    if(next.style.display === 'none') {
+                        next.style.display = 'block';
+                    } else {
+                        next.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        showToast('Политика конфиденциальности загружена');
+    })();
+</script>
+</body>
+</html>
