@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FIreREF — бесконечный скролл</title>
+    <link href="https://fonts.googleapis.com/css2?family=Puritan:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Puritan',sans-serif;background:#ffffff;color:#1a1a1a;line-height:1.7;-webkit-font-smoothing:antialiased}
+        .container{max-width:720px;margin:0 auto;padding:20px 24px 40px}
+        .header{display:flex;align-items:center;justify-content:space-between;padding:16px 0 24px;border-bottom:1px solid #f0f0f0;margin-bottom:24px}
+        .header h1{font-size:26px;font-weight:700;display:flex;align-items:center;gap:10px;letter-spacing:-0.5px}
+        .header h1 svg{width:32px;height:32px;stroke:#1a1a1a;stroke-width:2;fill:none}
+        .header-avatar{width:44px;height:44px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#333}
+        .card{background:#ffffff;border-radius:20px;padding:20px 24px;margin-bottom:20px;box-shadow:0 2px 16px rgba(0,0,0,0.04);border:1px solid #f0f0f0;transition:transform 0.2s}
+        .card:hover{transform:translateY(-2px)}
+        .card-title{font-size:20px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+        .card-title svg{width:24px;height:24px;stroke:#1a1a1a;stroke-width:2;fill:none}
+        .card-desc{font-size:16px;color:#444;line-height:1.8}
+        .stat-row{display:flex;justify-content:space-between;padding:8px 0;font-size:16px;border-bottom:1px solid #f6f6f6}
+        .stat-row:last-child{border-bottom:none}
+        .stat-label{color:#888}
+        .stat-value{font-weight:700}
+        .service-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #f0f0f0}
+        .service-item:last-child{border-bottom:none}
+        .service-name{font-weight:700;font-size:16px}
+        .service-price{color:#888;font-size:15px}
+        .ref-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;gap:12px}
+        .ref-item:last-child{border-bottom:none}
+        .ref-name{font-weight:700;font-size:15px;min-width:80px}
+        .ref-url{font-size:13px;color:#666;word-break:break-all;flex:1}
+        .copy-btn{background:none;border:none;cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;color:#1a1a1a;transition:0.15s}
+        .copy-btn:hover{opacity:0.6}
+        .copy-btn svg{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none}
+        .news-item{padding:14px 0;border-bottom:1px solid #f0f0f0}
+        .news-item:last-child{border-bottom:none}
+        .news-title{font-weight:700;font-size:17px}
+        .news-date{font-size:13px;color:#aaa;margin-top:4px}
+        .faq-q{font-weight:700;font-size:17px;margin-top:16px}
+        .faq-a{font-size:16px;color:#555;margin-bottom:10px}
+        .profile-row{display:flex;align-items:center;gap:14px;padding:8px 0}
+        .profile-row .label{color:#888;width:110px;font-size:16px}
+        .profile-row .value{font-weight:700;font-size:16px}
+        .badge{display:inline-block;background:#f0f0f0;padding:2px 14px;border-radius:30px;font-size:13px;font-weight:700;color:#333}
+        .divider{height:1px;background:#f0f0f0;margin:20px 0}
+        .text-muted{color:#999;font-size:15px}
+        .footer{text-align:center;padding:30px 0 10px;color:#aaa;font-size:14px;border-top:1px solid #f0f0f0;margin-top:20px}
+        .footer a{color:#1a1a1a;text-decoration:none;font-weight:700}
+        .btn{display:inline-block;background:#f5f5f5;border:none;padding:12px 24px;border-radius:14px;font-size:16px;font-weight:700;color:#1a1a1a;cursor:pointer;transition:0.15s;font-family:'Puritan',sans-serif;width:100%;text-align:center}
+        .btn:active{background:#e8e8e8;transform:scale(0.97)}
+        .btn-primary{background:#1a1a1a;color:#fff}
+        .btn-primary:active{background:#333}
+        .btn-success{background:#2e7d32;color:#fff}
+        .toast{position:fixed;bottom:120px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:12px 28px;border-radius:40px;font-size:15px;font-weight:700;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap}
+        .toast.show{opacity:1}
+        .inventory-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0}
+        .inventory-item:last-child{border-bottom:none}
+        .inventory-name{font-weight:700;font-size:15px}
+        .inventory-qty{color:#888;font-size:14px}
+        .clan-stat{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0}
+        .clan-stat span{background:#f5f5f5;padding:4px 16px;border-radius:30px;font-size:14px;font-weight:700}
+        @media(max-width:480px){.container{padding:12px 16px 30px}.header h1{font-size:22px}.ref-name{min-width:60px;font-size:14px}.ref-url{font-size:12px}.profile-row .label{width:80px;font-size:14px}}
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div class="header">
+        <h1><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>FIreREF</h1>
+        <div class="header-avatar" id="avatarInit">A</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Добро пожаловать в FIreREF!</div>
+        <div class="card-desc">
+            <p>Мы — клан профессионалов, объединяющий экспертов в IT, маркетинге, консалтинге и предпринимательстве. Наша миссия — создавать ценные проекты, обучать и помогать расти каждому участнику. Бот предоставляет широкий спектр возможностей: запись на услуги, реферальные программы, сотрудничество, внутренний магазин, тикеты, задачи, опросы и ежедневные бонусы.</p>
+            <p style="margin-top:12px;">Клан основан в 2023 году, сейчас нас более 180 активных участников. Мы проводим еженедельные вебинары, хакатоны, турниры и выездные мероприятия. Присоединяйтесь к нам — получите доступ к уникальной экосистеме и развивайтесь вместе с лучшими!</p>
+            <p style="margin-top:12px;">В этом мини-приложении вы можете управлять своим профилем, записываться на услуги, просматривать реферальные ссылки, покупать товары в магазине, создавать тикеты, вести список задач, участвовать в опросах и получать ежедневные бонусы. Все данные сохраняются локально в вашем браузере.</p>
+            <p style="margin-top:12px;">Мы гордимся тем, что создали сообщество, где каждый может найти поддержку, знания и вдохновение. Наши участники уже запустили более 50 совместных проектов, а общий оборот внутри клана превысил 10 миллионов рублей. Присоединяйся к нам и стань частью чего-то большего!</p>
+            <p style="margin-top:12px;">Каждый месяц мы проводим конкурсы с призовым фондом, организуем мастер-классы от приглашённых экспертов и устраиваем неформальные встречи. У нас есть свои традиции, мерч и даже гимн клана. Мы — семья, которая движется к одной цели: сделать мир технологий и бизнеса доступнее и интереснее.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>О клане</div>
+        <div class="card-desc">
+            <div class="clan-stat"><span>🏆 Основан: 2023</span><span>👥 Участников: 184</span><span>📈 Проектов: 52</span><span>🌍 Городов: 14</span></div>
+            <div class="clan-stat"><span>💎 Рейтинг: 4.9</span><span>🎯 Миссия: развитие</span><span>🧠 Экспертов: 36</span></div>
+            <p style="margin-top:12px;">Клан FIreREF — это не просто группа единомышленников, это мощная экосистема, где каждый может реализовать свой потенциал. Мы поддерживаем стартапы, проводим обучение, организуем совместные выезды и создаём продукты, которые меняют рынок. Наши участники — это топ-менеджеры, разработчики, маркетологи, дизайнеры и предприниматели из разных уголков мира. Мы верим в силу коллективного разума и постоянно развиваемся.</p>
+            <p style="margin-top:12px;">Ежемесячно мы выбираем «Лучшего участника месяца», который получает ценный приз и особый статус. Также у нас есть система наставничества, где опытные участники помогают новичкам адаптироваться и расти. Мы проводим внутренние хакатоны с призовым фондом до 100 000 рублей, а также участвуем во внешних конкурсах и конференциях.</p>
+            <p style="margin-top:12px;">В этом году мы запустили собственную академию, где любой желающий может пройти курсы по программированию, дизайну, SMM, управлению проектами и многим другим направлениям. Преподаватели — действующие эксперты клана, которые делятся реальным опытом и кейсами. Мы также активно сотрудничаем с крупными компаниями и стартапами, предоставляя нашим участникам возможность стажировок и трудоустройства.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Инвентарь</div>
+        <div class="card-desc" id="inventoryContainer"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Реферальные ссылки</div>
+        <div class="card-desc" id="refList"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Услуги</div>
+        <div class="card-desc" id="servicesList"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Магазин</div>
+        <div class="card-desc" id="shopList"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Новости</div>
+        <div class="card-desc">
+            <div class="news-item"><div class="news-title">Запуск курса по Python</div><div class="news-date">10.06.2025</div><div class="text-muted">Старт 20 июня, регистрация открыта. 10 занятий, практика и менторство от опытных разработчиков. Участие бесплатное для членов клана.</div></div>
+            <div class="news-item"><div class="news-title">Набор разработчиков в команду</div><div class="news-date">08.06.2025</div><div class="text-muted">Ищем Middle Python/Django разработчиков на удалёнку. Отличные условия, гибкий график. Присылайте резюме в поддержку.</div></div>
+            <div class="news-item"><div class="news-title">Хакатон завершён</div><div class="news-date">05.06.2025</div><div class="text-muted">Победители получили ценные призы и приглашение в основной состав. Следующий хакатон запланирован на август 2025.</div></div>
+            <div class="news-item"><div class="news-title">Обновление бота до версии 3.0</div><div class="news-date">01.06.2025</div><div class="text-muted">Добавлены магазин, тикеты, задачи, опросы и ежедневные бонусы. Улучшен интерфейс и производительность.</div></div>
+            <div class="news-item"><div class="news-title">Новый вебинар по SMM</div><div class="news-date">28.05.2025</div><div class="text-muted">В пятницу в 19:00 состоится вебинар по продвижению в социальных сетях. Регистрация открыта.</div></div>
+            <div class="news-item"><div class="news-title">Выездной корпоратив</div><div class="news-date">20.05.2025</div><div class="text-muted">С 1 по 3 июля состоится выездной корпоратив в Сочи. Участие бесплатное для активных участников.</div></div>
+            <div class="news-item"><div class="news-title">Конкурс стартапов</div><div class="news-date">15.05.2025</div><div class="text-muted">Приём заявок на конкурс стартапов до 30 июня. Призовой фонд — 500 000 рублей.</div></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Часто задаваемые вопросы</div>
+        <div class="card-desc">
+            <div class="faq-q">Как записаться на услугу?</div>
+            <div class="faq-a">Выберите услугу в разделе «Услуги» и нажмите «Записаться». После записи с вами свяжется менеджер.</div>
+            <div class="faq-q">Как вступить в клан?</div>
+            <div class="faq-a">Напишите @Asya99991 с пометкой «Вступление в клан» и расскажите о себе. Мы рассмотрим вашу заявку.</div>
+            <div class="faq-q">Как получить ежедневный бонус?</div>
+            <div class="faq-a">Нажмите кнопку «Получить бонус» в разделе «Ежедневный бонус». Вы получите от 10 до 50 монет.</div>
+            <div class="faq-q">Как заработать монеты?</div>
+            <div class="faq-a">Записываясь на услуги, выполняя задачи, участвуя в опросах и получая ежедневный бонус. Также вы получаете монеты за приглашение друзей.</div>
+            <div class="faq-q">Что такое реферальная программа?</div>
+            <div class="faq-a">Вы можете делиться ссылками из раздела «Рефералки» и получать вознаграждение за переходы и регистрации.</div>
+            <div class="faq-q">Как связаться с техподдержкой?</div>
+            <div class="faq-a">Напишите @concole_hack или создайте тикет в разделе «Тикеты». Мы ответим в течение 24 часов.</div>
+            <div class="faq-q">Есть ли платные услуги?</div>
+            <div class="faq-a">Да, некоторые услуги платные. Стоимость указана в описании. Вы можете оплатить монетами или реальными деньгами.</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Мой профиль</div>
+        <div class="card-desc" id="profileCard">
+            <div class="profile-row"><span class="label">Имя</span><span class="value" id="profName">—</span></div>
+            <div class="profile-row"><span class="label">Телефон</span><span class="value" id="profPhone">—</span></div>
+            <div class="profile-row"><span class="label">Город</span><span class="value" id="profCity">—</span></div>
+            <div class="profile-row"><span class="label">Баланс</span><span class="value" id="profBalance">0 монет</span></div>
+            <div class="profile-row"><span class="label">Рефералов</span><span class="value" id="profRefs">0</span></div>
+            <div class="profile-row"><span class="label">Ранг</span><span class="value" id="profRank">Новичок</span></div>
+            <div class="profile-row"><span class="label">Записей</span><span class="value" id="profBookings">0</span></div>
+            <div class="profile-row"><span class="label">Задач</span><span class="value" id="profTodos">0</span></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Регистрация</div>
+        <div class="card-desc">
+            <p style="margin-bottom:12px;">Заполните поля, чтобы зарегистрироваться в системе FIreREF.</p>
+            <input type="text" id="regName" placeholder="Имя" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:16px;font-family:'Puritan',sans-serif;margin-bottom:10px;outline:none;">
+            <input type="text" id="regPhone" placeholder="Телефон" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:16px;font-family:'Puritan',sans-serif;margin-bottom:10px;outline:none;">
+            <input type="text" id="regCity" placeholder="Город" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:16px;font-family:'Puritan',sans-serif;margin-bottom:10px;outline:none;">
+            <button class="btn btn-primary" onclick="registerUser()">Зарегистрироваться</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M4 4v16h16V4H4zm2 2h12v12H6V6z"/></svg>Тикеты</div>
+        <div class="card-desc">
+            <input type="text" id="ticketSubject" placeholder="Тема тикета" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:16px;font-family:'Puritan',sans-serif;margin-bottom:10px;outline:none;">
+            <textarea id="ticketMessage" rows="3" placeholder="Описание проблемы" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:16px;font-family:'Puritan',sans-serif;margin-bottom:10px;outline:none;resize:vertical;"></textarea>
+            <button class="btn btn-primary" onclick="createTicket()">Создать тикет</button>
+            <div id="ticketList"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>Задачи</div>
+        <div class="card-desc">
+            <input type="text" id="todoInput" placeholder="Новая задача" style="width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:12px;font-size:16px;font-family:'Puritan',sans-serif;margin-bottom:10px;outline:none;">
+            <button class="btn btn-primary" onclick="addTodo()">Добавить задачу</button>
+            <div id="todoList"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Опросы</div>
+        <div class="card-desc" id="pollsContainer"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Ежедневный бонус</div>
+        <div class="card-desc">
+            <p>Получите от 10 до 50 монет каждый день. Нажмите кнопку ниже.</p>
+            <div id="bonusStatus" style="margin-top:10px;font-weight:700;font-size:16px;"></div>
+            <button class="btn btn-success" style="margin-top:12px;" onclick="claimDailyBonus()">Получить бонус</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>FIreREF — создано с ❤️ в 2025</p>
+        <p style="margin-top:4px;">Поддержка: <a href="https://t.me/Asya99991" target="_blank">@Asya99991</a> · Техпомощь: <a href="https://t.me/concole_hack" target="_blank">@concole_hack</a></p>
+        <p style="margin-top:8px;font-size:13px;color:#bbb;">Все данные сохраняются локально. Безопасность гарантирована.</p>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    (function(){
+        const tg = window.Telegram?.WebApp;
+        if(tg) tg.expand();
+
+        const user = tg?.initDataUnsafe?.user;
+        if(user) {
+            document.getElementById('avatarInit').textContent = user.first_name ? user.first_name.charAt(0).toUpperCase() : 'A';
+        }
+
+        let appData = {
+            users: [],
+            bookings: [],
+            todos: [],
+            tickets: [],
+            polls: [
+                {id:1, question:'Какой проект вам интересен?', options:['IT','Маркетинг','Дизайн','Обучение'], votes:[0,0,0,0]},
+                {id:2, question:'Тема следующего вебинара?', options:['Python','SMM','Управление','Финансы'], votes:[0,0,0,0]}
+            ],
+            dailyBonus: null,
+            currentUser: null,
+            inventory: [
+                {name:'Значок клана', qty:0},
+                {name:'Скидка 5%', qty:0},
+                {name:'Футболка FIreREF', qty:0},
+                {name:'Набор стикеров', qty:0},
+                {name:'Книга по маркетингу', qty:0}
+            ]
+        };
+
+        function loadData() {
+            const saved = localStorage.getItem('fireref_data');
+            if(saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    appData = parsed;
+                    appData.polls.forEach(p => { if(!p.votes) p.votes = new Array(p.options.length).fill(0); });
+                    if(!appData.inventory) {
+                        appData.inventory = [
+                            {name:'Значок клана', qty:0},
+                            {name:'Скидка 5%', qty:0},
+                            {name:'Футболка FIreREF', qty:0},
+                            {name:'Набор стикеров', qty:0},
+                            {name:'Книга по маркетингу', qty:0}
+                        ];
+                    }
+                } catch(e) {}
+            } else {
+                appData.polls = [
+                    {id:1, question:'Какой проект вам интересен?', options:['IT','Маркетинг','Дизайн','Обучение'], votes:[0,0,0,0]},
+                    {id:2, question:'Тема следующего вебинара?', options:['Python','SMM','Управление','Финансы'], votes:[0,0,0,0]}
+                ];
+                appData.inventory = [
+                    {name:'Значок клана', qty:0},
+                    {name:'Скидка 5%', qty:0},
+                    {name:'Футболка FIreREF', qty:0},
+                    {name:'Набор стикеров', qty:0},
+                    {name:'Книга по маркетингу', qty:0}
+                ];
+                saveData();
+            }
+            if(user && !appData.currentUser) {
+                const existing = appData.users.find(u => u.id === user.id);
+                if(existing) {
+                    appData.currentUser = existing;
+                } else {
+                    const newUser = {
+                        id: user.id,
+                        name: user.first_name || 'Пользователь',
+                        phone: '',
+                        city: '',
+                        balance: 0,
+                        refs: 0,
+                        bookings: 0,
+                        todosCount: 0,
+                        rank: 'Новичок'
+                    };
+                    appData.users.push(newUser);
+                    appData.currentUser = newUser;
+                    saveData();
+                }
+            }
+            updateUI();
+        }
+
+        function saveData() {
+            localStorage.setItem('fireref_data', JSON.stringify(appData));
+        }
+
+        function updateUI() {
+            if(appData.currentUser) {
+                const u = appData.currentUser;
+                document.getElementById('profName').textContent = u.name || '—';
+                document.getElementById('profPhone').textContent = u.phone || '—';
+                document.getElementById('profCity').textContent = u.city || '—';
+                document.getElementById('profBalance').textContent = (u.balance || 0) + ' монет';
+                document.getElementById('profRefs').textContent = u.refs || 0;
+                document.getElementById('profRank').textContent = u.rank || 'Новичок';
+                document.getElementById('profBookings').textContent = u.bookings || 0;
+                document.getElementById('profTodos').textContent = appData.todos.filter(t => !t.done).length;
+            }
+            document.getElementById('userCount').textContent = appData.users.length || 0;
+            document.getElementById('appCount').textContent = appData.bookings.length || 0;
+            renderServices();
+            renderRefs();
+            renderShop();
+            renderTodos();
+            renderTickets();
+            renderPolls();
+            updateBonusStatus();
+            renderInventory();
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => t.classList.remove('show'), 2600);
+        }
+
+        function copyText(text) {
+            if(navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => showToast('Ссылка скопирована!'))
+                    .catch(() => showToast('Ошибка копирования'));
+            } else {
+                const el = document.createElement('textarea');
+                el.value = text;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                showToast('Ссылка скопирована!');
+            }
+        }
+
+        window.registerUser = function() {
+            const name = document.getElementById('regName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const city = document.getElementById('regCity').value.trim();
+            if(!name) { showToast('Введите имя'); return; }
+            let uid = user ? user.id : Date.now();
+            let existing = appData.users.find(u => u.id === uid);
+            if(existing) {
+                existing.name = name;
+                existing.phone = phone;
+                existing.city = city;
+                appData.currentUser = existing;
+            } else {
+                const nu = { id: uid, name, phone, city, balance: 0, refs: 0, bookings: 0, todosCount: 0, rank: 'Новичок' };
+                appData.users.push(nu);
+                appData.currentUser = nu;
+            }
+            saveData();
+            updateUI();
+            showToast('Регистрация успешна!');
+        };
+
+        const services = [
+            {name:'Консультация по карьере', price:'1500 ₽'},
+            {name:'Обучение продажам', price:'5000 ₽'},
+            {name:'Менторство для бизнеса', price:'8000 ₽'},
+            {name:'Создание сайтов/ботов', price:'от 15000 ₽'},
+            {name:'Маркетинг и SMM', price:'от 3000 ₽'},
+            {name:'Юридические консультации', price:'2000 ₽'},
+            {name:'Бухгалтерские услуги', price:'2500 ₽'},
+            {name:'Дизайн и брендинг', price:'от 4000 ₽'},
+            {name:'HR-консалтинг', price:'6000 ₽'},
+            {name:'Инвестиционные стратегии', price:'7000 ₽'}
+        ];
+
+        function renderServices() {
+            const c = document.getElementById('servicesList');
+            if(!c) return;
+            c.innerHTML = '';
+            services.forEach(s => {
+                const d = document.createElement('div');
+                d.className = 'service-item';
+                d.innerHTML = `<span class="service-name">${s.name}</span><span class="service-price">${s.price}</span>`;
+                const b = document.createElement('button');
+                b.className = 'btn btn-outline';
+                b.style.width = 'auto';
+                b.style.padding = '6px 16px';
+                b.style.fontSize = '14px';
+                b.textContent = 'Записаться';
+                b.onclick = function(e) {
+                    e.stopPropagation();
+                    if(!appData.currentUser) { showToast('Сначала зарегистрируйтесь'); return; }
+                    appData.bookings.push({user: appData.currentUser.id, service: s.name, date: new Date().toISOString()});
+                    appData.currentUser.bookings = (appData.currentUser.bookings || 0) + 1;
+                    saveData();
+                    updateUI();
+                    showToast('Вы записаны на ' + s.name);
+                };
+                d.appendChild(b);
+                c.appendChild(d);
+            });
+        }
+
+        const refs = {
+            '🍉𝓐𝓷𝓪𝓼𝓽𝓪𝓼𝓲𝓪🌴': {
+                'ARKADE': 'https://orbit-burn.com/s92dde4ee',
+                'KOMETA': 'https://eclipse-vectorial.com/sf063dfba',
+                'R7': 'https://hyper-trail.com/df97c06bd',
+                'KENT': 'https://cosmic-kinetics.com/de99f4d25',
+                'DADDY': 'https://eclipse-propel.com/d05db57bf',
+                'CAT': 'https://catchthecatthree.com/d95c953a2',
+                'GAMA': 'https://cosmic-vectorial.com/db5a966a2'
+            },
+            'JOZZ': 'https://jozz-promo1.com/alt/jozz10_ru/?888ce99a2c21cebaa3cbd07ffc4a53ec',
+            'PLAYFORTUNA': 'https://fortuna-promo1.com/alt/pf_new_wheel_ru//?1f0f97f1631b1959a4dfe5b625f952b5',
+            'BOOI': 'https://booi-promo.com/alt/booi_sweet_ru/?a10924fc027fd4622baa06c5dd3da082',
+            'WINITI': 'https://winity.one/alt/win_aviator_ru/?c683b82d9450ebd4b6b089ffd468f840',
+            'KILOGRAM': 'https://kgpar2.com/refs/share?refId=First&partnerId=14030&authorization=signup&promocode=lilu555',
+            'JETTON': 'https://jetton.tips/chBFLWX6SZU?click_id={click_id}',
+            'SYKAAA CASINO': 'https://s-way-k.com/?source=dozafs&pid=27272&promo=SY4KA',
+            'VAVADA CASINO': 'https://gate707.com/?promo=dbbbdbc9-c0b3-45fe-ad10-056ab8e72659&target=register',
+            'MOSBET': 'https://mqcfwa81cktwmst.com/qEFU',
+            'EZCASH': 'https://ezc1.sh/r/7XUt4N',
+            'VODKABET': 'https://go430.com/?id=17629',
+            'WIN-WIN': 'https://refpa712080.pro/L?tag=d_5406888m_94904c_&site=5406888&ad=94904',
+            'REMENBET': 'https://29633.call2me.xyz/ru/?partner=p29633p3324838p11c4',
+            'CASINO X': 'https://29633.gameshere.xyz/ru/?partner=p29633p3329272p2c90',
+            'FENIX': 'https://fnx-abs.net/dbseqdlsf',
+            'HYPE': 'https://hype-combo.com/d9732124f',
+            'HONEY MONEY': 'https://honey-abs.net/d021e143e',
+            'AUF': 'https://au-wave.xyz/d4bf7f812',
+            'UNLIM': 'https://unlimbot-c.com/d2ff4b3ca',
+            'CRYPTO BOSS': 'https://cbc-abs.net/df83830c9',
+            'EVA': 'https://eva23-3xpress.com/dwild1rjd',
+            'KUSH': 'https://pl4y-flow-ksh.com/dc1c21135',
+            'BANDA': 'https://b4nd4-balncr.com/dc85ebf24',
+            'LEEBET': 'https://play-leebet-4th.com/daf68e6b3',
+            'SNEKET': 'https://sneket.com/sub/822369'
+        };
+
+        function renderRefs() {
+            const c = document.getElementById('refList');
+            if(!c) return;
+            c.innerHTML = '';
+            for(const [key, value] of Object.entries(refs)) {
+                if(typeof value === 'object') {
+                    const group = document.createElement('div');
+                    group.style.marginTop = '8px';
+                    const title = document.createElement('div');
+                    title.style.fontWeight = '700';
+                    title.style.fontSize = '16px';
+                    title.textContent = key;
+                    group.appendChild(title);
+                    for(const [sub, url] of Object.entries(value)) {
+                        const item = document.createElement('div');
+                        item.className = 'ref-item';
+                        item.innerHTML = `
+                            <span class="ref-name">${sub}</span>
+                            <span class="ref-url">${url}</span>
+                            <button class="copy-btn" onclick="copyText('${url}')">
+                                <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            </button>
+                        `;
+                        group.appendChild(item);
+                    }
+                    c.appendChild(group);
+                } else {
+                    const item = document.createElement('div');
+                    item.className = 'ref-item';
+                    item.innerHTML = `
+                        <span class="ref-name">${key}</span>
+                        <span class="ref-url">${value}</span>
+                        <button class="copy-btn" onclick="copyText('${value}')">
+                            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                    `;
+                    c.appendChild(item);
+                }
+            }
+        }
+
+        const shopItems = [
+            {name:'Ускоренная запись', price:'100 монет'},
+            {name:'Скидка 10%', price:'200 монет'},
+            {name:'Консультация эксперта', price:'150 монет'},
+            {name:'Набор стикеров', price:'50 монет'},
+            {name:'Доступ к вебинару', price:'300 монет'}
+        ];
+
+        function renderShop() {
+            const c = document.getElementById('shopList');
+            if(!c) return;
+            c.innerHTML = '';
+            shopItems.forEach(item => {
+                const d = document.createElement('div');
+                d.className = 'service-item';
+                d.innerHTML = `<span class="service-name">${item.name}</span><span class="service-price">${item.price}</span>`;
+                const b = document.createElement('button');
+                b.className = 'btn btn-outline';
+                b.style.width = 'auto';
+                b.style.padding = '6px 16px';
+                b.style.fontSize = '14px';
+                b.textContent = 'Купить';
+                b.onclick = function(e) {
+                    e.stopPropagation();
+                    if(!appData.currentUser) { showToast('Сначала зарегистрируйтесь'); return; }
+                    const price = parseInt(item.price);
+                    if(appData.currentUser.balance < price) { showToast('Недостаточно монет!'); return; }
+                    appData.currentUser.balance -= price;
+                    const inv = appData.inventory.find(i => i.name === item.name);
+                    if(inv) inv.qty = (inv.qty || 0) + 1;
+                    else appData.inventory.push({name: item.name, qty: 1});
+                    saveData();
+                    updateUI();
+                    showToast('Вы купили ' + item.name);
+                };
+                d.appendChild(b);
+                c.appendChild(d);
+            });
+        }
+
+        function renderInventory() {
+            const c = document.getElementById('inventoryContainer');
+            if(!c) return;
+            c.innerHTML = '';
+            if(!appData.inventory || appData.inventory.length === 0) {
+                c.innerHTML = '<p class="text-muted">Инвентарь пуст. Купите что-нибудь в магазине!</p>';
+                return;
+            }
+            appData.inventory.forEach(item => {
+                if(item.qty <= 0) return;
+                const d = document.createElement('div');
+                d.className = 'inventory-item';
+                d.innerHTML = `<span class="inventory-name">${item.name}</span><span class="inventory-qty">× ${item.qty}</span>`;
+                c.appendChild(d);
+            });
+            if(c.children.length === 0) {
+                c.innerHTML = '<p class="text-muted">Инвентарь пуст. Купите что-нибудь в магазине!</p>';
+            }
+        }
+
+        function renderTodos() {
+            const c = document.getElementById('todoList');
+            if(!c) return;
+            c.innerHTML = '';
+            const todos = appData.todos || [];
+            todos.forEach((todo, index) => {
+                const d = document.createElement('div');
+                d.className = 'todo-item';
+                d.style.display = 'flex';
+                d.style.alignItems = 'center';
+                d.style.gap = '10px';
+                d.style.padding = '6px 0';
+                const span = document.createElement('span');
+                span.style.flex = '1';
+                span.style.textDecoration = todo.done ? 'line-through' : 'none';
+                span.style.color = todo.done ? '#aaa' : '#1a1a1a';
+                span.textContent = todo.text;
+                d.appendChild(span);
+                if(!todo.done) {
+                    const b = document.createElement('button');
+                    b.className = 'btn btn-success';
+                    b.style.width = 'auto';
+                    b.style.padding = '4px 14px';
+                    b.style.fontSize = '14px';
+                    b.textContent = 'Выполнено';
+                    b.onclick = function() {
+                        todo.done = true;
+                        saveData();
+                        updateUI();
+                        showToast('Задача выполнена!');
+                    };
+                    d.appendChild(b);
+                }
+                const del = document.createElement('button');
+                del.className = 'btn';
+                del.style.width = 'auto';
+                del.style.padding = '4px 14px';
+                del.style.fontSize = '14px';
+                del.style.background = '#fee';
+                del.style.color = '#c00';
+                del.textContent = 'Удалить';
+                del.onclick = function() {
+                    appData.todos.splice(index, 1);
+                    saveData();
+                    updateUI();
+                    showToast('Задача удалена');
+                };
+                d.appendChild(del);
+                c.appendChild(d);
+            });
+        }
+
+        window.addTodo = function() {
+            const input = document.getElementById('todoInput');
+            const text = input.value.trim();
+            if(!text) { showToast('Введите задачу'); return; }
+            if(!appData.todos) appData.todos = [];
+            appData.todos.push({text, done: false});
+            input.value = '';
+            saveData();
+            updateUI();
+            showToast('Задача добавлена');
+        };
+
+        function renderTickets() {
+            const c = document.getElementById('ticketList');
+            if(!c) return;
+            c.innerHTML = '';
+            const tickets = appData.tickets || [];
+            tickets.forEach(t => {
+                const d = document.createElement('div');
+                d.className = 'ticket-item';
+                d.style.padding = '10px 0';
+                d.style.borderBottom = '1px solid #f0f0f0';
+                d.innerHTML = `<div style="font-weight:700;">${t.subject}</div><div style="font-size:14px;color:#666;">${t.message} — ${t.status || 'открыт'}</div>`;
+                c.appendChild(d);
+            });
+        }
+
+        window.createTicket = function() {
+            const s = document.getElementById('ticketSubject').value.trim();
+            const m = document.getElementById('ticketMessage').value.trim();
+            if(!s || !m) { showToast('Заполните все поля'); return; }
+            if(!appData.tickets) appData.tickets = [];
+            appData.tickets.push({subject: s, message: m, status: 'открыт', created: new Date().toISOString()});
+            document.getElementById('ticketSubject').value = '';
+            document.getElementById('ticketMessage').value = '';
+            saveData();
+            updateUI();
+            showToast('Тикет создан');
+        };
+
+        function renderPolls() {
+            const c = document.getElementById('pollsContainer');
+            if(!c) return;
+            c.innerHTML = '';
+            appData.polls.forEach((poll) => {
+                const d = document.createElement('div');
+                d.style.marginBottom = '16px';
+                d.style.paddingBottom = '12px';
+                d.style.borderBottom = '1px solid #f0f0f0';
+                const title = document.createElement('div');
+                title.style.fontWeight = '700';
+                title.style.fontSize = '17px';
+                title.textContent = poll.question;
+                d.appendChild(title);
+                poll.options.forEach((opt, idx) => {
+                    const row = document.createElement('div');
+                    row.style.display = 'flex';
+                    row.style.alignItems = 'center';
+                    row.style.gap = '10px';
+                    row.style.padding = '6px 0';
+                    const btn = document.createElement('button');
+                    btn.textContent = opt;
+                    btn.style.background = 'none';
+                    btn.style.border = '1px solid #ddd';
+                    btn.style.borderRadius = '8px';
+                    btn.style.padding = '4px 14px';
+                    btn.style.fontSize = '15px';
+                    btn.style.cursor = 'pointer';
+                    btn.style.fontFamily = "'Puritan',sans-serif";
+                    btn.onclick = function() {
+                        if(!appData.currentUser) { showToast('Сначала зарегистрируйтесь'); return; }
+                        poll.votes[idx] = (poll.votes[idx] || 0) + 1;
+                        saveData();
+                        updateUI();
+                        showToast('Голос учтён');
+                    };
+                    const count = document.createElement('span');
+                    count.style.fontSize = '14px';
+                    count.style.color = '#444';
+                    count.textContent = ` (${poll.votes[idx] || 0} голосов)`;
+                    row.appendChild(btn);
+                    row.appendChild(count);
+                    d.appendChild(row);
+                });
+                c.appendChild(d);
+            });
+        }
+
+        function updateBonusStatus() {
+            const s = document.getElementById('bonusStatus');
+            if(!s) return;
+            const last = appData.dailyBonus;
+            if(last) {
+                const diff = Date.now() - last;
+                const hours = Math.floor((24 * 3600 * 1000 - diff) / (3600 * 1000));
+                if(hours > 0) {
+                    s.textContent = 'Бонус уже получен. Доступен через ' + hours + ' ч.';
+                    s.style.color = '#888';
+                } else {
+                    s.textContent = 'Бонус доступен!';
+                    s.style.color = '#2e7d32';
+                }
+            } else {
+                s.textContent = 'Бонус доступен!';
+                s.style.color = '#2e7d32';
+            }
+        }
+
+        window.claimDailyBonus = function() {
+            const last = appData.dailyBonus;
+            if(last && (Date.now() - last) < 24 * 3600 * 1000) {
+                showToast('Вы уже получали бонус сегодня. Подождите 24 часа.');
+                return;
+            }
+            if(!appData.currentUser) { showToast('Сначала зарегистрируйтесь'); return; }
+            const bonus = Math.floor(Math.random() * 41) + 10;
+            appData.currentUser.balance = (appData.currentUser.balance || 0) + bonus;
+            appData.dailyBonus = Date.now();
+            saveData();
+            updateUI();
+            showToast('🎉 Вы получили ' + bonus + ' монет!');
+        };
+
+        loadData();
+
+        if(tg) {
+            tg.onEvent('backButtonClicked', function() { tg.close(); });
+            tg.BackButton.show();
+        }
+    })();
+</script>
+</body>
+</html>
