@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NifyDox · Документация</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            background: #fafafa;
+            color: #1e1e1e;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            z-index: 1000;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            font-weight: 300;
+            line-height: 1;
+            color: #1e1e1e;
+        }
+        .sidebar-toggle svg {
+            width: 24px;
+            height: 24px;
+            stroke: #1e1e1e;
+            stroke-width: 2;
+            fill: none;
+            vertical-align: middle;
+        }
+        .sidebar {
+            width: 280px;
+            background: #ffffff;
+            border-right: 1px solid #eaeaea;
+            padding: 40px 24px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            flex-shrink: 0;
+            transition: transform 0.25s ease, margin 0.25s;
+        }
+        .sidebar.closed {
+            transform: translateX(-100%);
+            margin-right: -280px;
+        }
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+        .sidebar-brand svg {
+            width: 36px;
+            height: 36px;
+            stroke: #1e1e1e;
+            stroke-width: 1.8;
+            fill: none;
+        }
+        .sidebar-brand span {
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+            color: #0b0b0b;
+        }
+        .sidebar-brand small {
+            font-weight: 300;
+            color: #7a7a7a;
+            display: block;
+            font-size: 12px;
+            letter-spacing: 0.3px;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+            color: #2c2c2c;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 16px;
+            transition: background 0.2s, color 0.2s;
+            cursor: pointer;
+        }
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            stroke: #4a4a4a;
+            stroke-width: 1.8;
+            fill: none;
+        }
+        .nav-item:hover {
+            background: #f0f0f0;
+            color: #000;
+        }
+        .nav-item.active {
+            background: #eaeaea;
+            font-weight: 700;
+            color: #000;
+        }
+        .nav-item.active svg {
+            stroke: #000;
+        }
+        .nav-divider {
+            height: 1px;
+            background: #eaeaea;
+            margin: 20px 0;
+        }
+        .main {
+            flex: 1;
+            padding: 48px 64px 80px;
+            max-width: 1100px;
+            transition: margin 0.25s;
+        }
+        .hero {
+            margin-bottom: 56px;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+        .hero h1 span {
+            background: linear-gradient(145deg, #1e1e1e, #3d3d3d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            font-weight: 300;
+            color: #3d3d3d;
+            max-width: 640px;
+            line-height: 1.6;
+        }
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            margin: 24px 0 16px;
+        }
+        .badge {
+            background: #f0f0f0;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 400;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .badge svg {
+            width: 16px;
+            height: 16px;
+            stroke: #1e1e1e;
+            stroke-width: 2;
+            fill: none;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 40px 0 48px;
+        }
+        .stat-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 28px 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid #ededed;
+        }
+        .stat-card h3 {
+            font-weight: 400;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6e6e6e;
+            margin-bottom: 8px;
+        }
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .stat-card .desc {
+            font-weight: 300;
+            color: #4a4a4a;
+            margin-top: 6px;
+        }
+        .section {
+            margin-top: 56px;
+        }
+        .section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section h2 svg {
+            width: 28px;
+            height: 28px;
+            stroke: #1e1e1e;
+            stroke-width: 2;
+            fill: none;
+        }
+        .section p, .section li {
+            font-weight: 300;
+            font-size: 17px;
+            line-height: 1.7;
+            color: #262626;
+        }
+        .section strong {
+            font-weight: 700;
+            color: #000;
+        }
+        .code-block {
+            background: #f5f5f5;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin: 24px 0;
+            font-family: 'Roboto Condensed', monospace;
+            font-weight: 300;
+            border-left: 4px solid #1e1e1e;
+            overflow-x: auto;
+            font-size: 15px;
+        }
+        .code-block .cmd {
+            color: #a83232;
+            font-weight: 400;
+        }
+        .code-block .path {
+            color: #1e6f5c;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 24px;
+            margin: 24px 0;
+        }
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 300;
+        }
+        .feature-list li svg {
+            width: 18px;
+            height: 18px;
+            stroke: #1e1e1e;
+            stroke-width: 2.2;
+            flex-shrink: 0;
+            fill: none;
+        }
+        .chart-placeholder {
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid #eaeaea;
+            padding: 28px 20px;
+            margin: 32px 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 120px;
+            padding: 0 8px;
+        }
+        .bar {
+            width: 40px;
+            background: #d0d0d0;
+            border-radius: 8px 8px 0 0;
+            transition: height 0.6s ease;
+            height: 40px;
+        }
+        .bar:nth-child(1) { height: 72px; background: #2c2c2c; }
+        .bar:nth-child(2) { height: 98px; background: #1a1a1a; }
+        .bar:nth-child(3) { height: 44px; background: #4a4a4a; }
+        .bar:nth-child(4) { height: 84px; background: #2e2e2e; }
+        .bar:nth-child(5) { height: 60px; background: #3a3a3a; }
+        .bar:nth-child(6) { height: 110px; background: #0f0f0f; }
+        .bar:nth-child(7) { height: 34px; background: #555; }
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            font-size: 13px;
+            font-weight: 300;
+            color: #4a4a4a;
+            padding: 0 4px;
+        }
+        .animation-demo {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin: 32px 0;
+        }
+        .anim-box {
+            background: #ffffff;
+            border: 1px solid #eaeaea;
+            border-radius: 20px;
+            padding: 20px 28px;
+            flex: 1;
+            min-width: 180px;
+            transition: transform 0.25s ease, box-shadow 0.3s;
+        }
+        .anim-box:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px -12px rgba(0,0,0,0.08);
+        }
+        .anim-box .label {
+            font-weight: 300;
+            font-size: 14px;
+            color: #5a5a5a;
+            margin-bottom: 6px;
+        }
+        .anim-box .value {
+            font-weight: 700;
+            font-size: 24px;
+        }
+        .dot-pulse {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #1e1e1e;
+            border-radius: 50%;
+            animation: pulse 1.4s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.3; transform: scale(0.95); }
+        }
+        .footer-doc {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid #eaeaea;
+            font-weight: 300;
+            color: #6a6a6a;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .footer-doc a {
+            color: #1e1e1e;
+            text-decoration: none;
+            font-weight: 400;
+            border-bottom: 1px dotted #c0c0c0;
+        }
+        .layout-tip {
+            background: #f5f5f5;
+            border-radius: 16px;
+            padding: 20px 28px;
+            margin: 28px 0;
+            border-left: 4px solid #1e1e1e;
+        }
+        .layout-tip strong {
+            font-weight: 700;
+        }
+        @media (max-width: 780px) {
+            .sidebar-toggle {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 999;
+                height: 100vh;
+                transform: translateX(0);
+                box-shadow: 4px 0 24px rgba(0,0,0,0.04);
+            }
+            .sidebar.closed {
+                transform: translateX(-100%);
+                margin-right: 0;
+            }
+            .main {
+                padding: 32px 20px 60px;
+                margin-left: 0;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .sidebar-toggle {
+                top: 12px;
+                left: 12px;
+                padding: 6px 14px;
+                font-size: 18px;
+            }
+            .sidebar-brand {
+                margin-top: 20px;
+            }
+        }
+        @media (min-width: 781px) {
+            .sidebar-toggle {
+                display: none !important;
+            }
+        }
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.1);
+            z-index: 998;
+        }
+        .sidebar-backdrop.show {
+            display: block;
+        }
+        @media (max-width: 780px) {
+            .sidebar-backdrop.show {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar-backdrop" id="backdrop"></div>
+    <button class="sidebar-toggle" id="toggleSidebar" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <svg viewBox="0 0 24 24" stroke="#1e1e1e" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <div><span>NifyDox</span><small>документация</small></div>
+        </div>
+        <nav>
+            <a href="#start" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg> Начало</a>
+            <a href="#install" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg> Установка</a>
+            <a href="#run" class="nav-item"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Запуск</a>
+            <a href="#commands" class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 17l4 4 8-12"/><path d="M8 21l4-4"/></svg> Команды</a>
+            <a href="#export" class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 17v4h16v-4"/><path d="M12 3v12m-4-4l4 4 4-4"/></svg> Экспорт</a>
+            <a href="#security" class="nav-item"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Безопасность</a>
+            <div class="nav-divider"></div>
+            <a href="#graphics" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 12v4a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h7"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Графика</a>
+            <a href="#layout" class="nav-item"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="8" y1="2" x2="8" y2="22"/><line x1="16" y1="2" x2="16" y2="22"/></svg> Адаптивность</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <section id="start" class="hero">
+            <h1><span>NifyDox</span> · intelligence suite</h1>
+            <p>Многофункциональный инструмент для OSINT, анализа данных и визуализации. Полная документация по запуску и использованию.</p>
+            <div class="badge-row">
+                <span class="badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> v3.0</span>
+                <span class="badge"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> AES-256</span>
+                <span class="badge"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> PBKDF2</span>
+            </div>
+        </section>
+
+        <div class="grid-2">
+            <div class="stat-card"><h3>встроенных команд</h3><div class="number">18</div><div class="desc">от /phone до /subdomain</div></div>
+            <div class="stat-card"><h3>алгоритмы шифрования</h3><div class="number">3</div><div class="desc">AES-256 · PBKDF2 · SHA256</div></div>
+        </div>
+
+        <section id="install" class="section">
+            <h2><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg> Установка</h2>
+            <p><strong>NifyDox</strong> работает на Python 3.8+. Для установки зависимостей выполните:</p>
+            <div class="code-block"><span class="cmd">python3 NifyDox.py --install</span></div>
+            <p>Скрипт автоматически установит <strong>pystyle</strong> и <strong>cryptography</strong>. После установки вы можете запускать программу без флага.</p>
+            <ul class="feature-list">
+                <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Кроссплатформенность</li>
+                <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Авто-инсталлер</li>
+                <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Минимальные зависимости</li>
+                <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Работает в любой ОС</li>
+            </ul>
+            <p>Если у вас уже установлены зависимости, пропустите флаг <strong>--install</strong> и переходите к запуску.</p>
+        </section>
+
+        <section id="run" class="section">
+            <h2><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Запуск</h2>
+            <p>После установки достаточно выполнить в терминале:</p>
+            <div class="code-block"><span class="cmd">python3 NifyDox.py</span></div>
+            <p>При первом запуске будет запрошен пароль. По умолчанию: <strong>Dox</strong> (регистр важен). После авторизации откроется главное меню со всеми доступными командами.</p>
+            <div class="code-block"><span class="path">[dox] $ /help</span> — список всех команд</div>
+            <div class="animation-demo">
+                <div class="anim-box"><div class="label">авторизация</div><div class="value">✔</div></div>
+                <div class="anim-box"><div class="label">сессия</div><div class="value">активна <span class="dot-pulse"></span></div></div>
+                <div class="anim-box"><div class="label">шифрование</div><div class="value">AES-256</div></div>
+            </div>
+            <p>Для завершения работы используйте <strong>/exit</strong> или <strong>Ctrl+C</strong>. Все данные хранятся в зашифрованном виде.</p>
+        </section>
+
+        <section id="commands" class="section">
+            <h2><svg viewBox="0 0 24 24"><path d="M4 17l4 4 8-12"/><path d="M8 21l4-4"/></svg> Основные команды</h2>
+            <p>Все команды начинаются с <strong>/</strong>. Примеры:</p>
+            <div class="code-block">
+                /phone +71234567890 &nbsp;&nbsp;/ip 192.168.0.1 &nbsp;&nbsp;/email user@domain.com<br>
+                /name Иванов Иван &nbsp;&nbsp;/photo img.jpg &nbsp;&nbsp;/ddos 1.1.1.1:80
+            </div>
+            <ul class="feature-list">
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/phone</strong> — поиск по номеру</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/ip</strong> — геолокация и ISP</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/email</strong> — проверка утечек</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/whois</strong> — информация о домене</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/scan</strong> — сканирование портов</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/hash</strong> — взлом хэша</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/geo</strong> — детальная геолокация</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/social</strong> — поиск по соцсетям</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/breach</strong> — утечки паролей</li>
+                <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> <strong>/subdomain</strong> — перебор поддоменов</li>
+            </ul>
+            <p>Полный список доступен по <strong>/help</strong> в интерактивном режиме. Каждая команда поддерживает экспорт результата.</p>
+        </section>
+
+        <section id="export" class="section">
+            <h2><svg viewBox="0 0 24 24"><path d="M4 17v4h16v-4"/><path d="M12 3v12m-4-4l4 4 4-4"/></svg> Экспорт данных</h2>
+            <p>Любой результат можно экспортировать в <strong>HTML</strong> с кастомными SVG‑иконками. Используйте <strong>/export /путь/папка</strong> для массового экспорта данных.</p>
+            <div class="code-block"><span class="cmd">/export ./reports</span> — создаст папку и экспортирует записи</div>
+            <p>Также после каждого поиска (телефон, IP, email) можно нажать <strong>e</strong> для сохранения отчёта.</p>
+            <div class="chart-placeholder">
+                <div style="display:flex; justify-content:space-between; font-weight:300; color:#3d3d3d;">
+                    <span>📊 экспорты по типам</span>
+                    <span>последние 30 дней</span>
+                </div>
+                <div class="chart-bars">
+                    <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                </div>
+                <div class="chart-labels"><span>phone</span><span>ip</span><span>email</span><span>name</span><span>whois</span><span>social</span><span>breach</span></div>
+            </div>
+            <p>Экспорты сохраняются в папку <strong>exports/</strong> с временной меткой. Каждый HTML-файл включает метаданные и хэш-сумму.</p>
+        </section>
+
+        <section id="security" class="section">
+            <h2><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Безопасность</h2>
+            <p><strong>NifyDox</strong> использует гибридное шифрование: <strong>Fernet (AES-256)</strong> для данных и <strong>PBKDF2-HMAC-SHA256</strong> с 150 000 итераций для хранения пароля. Все записи в базе зашифрованы.</p>
+            <p>Пароль доступа к программе — <strong>Dox</strong> (можно изменить в коде, функция <em>hash_password</em>).</p>
+            <div class="code-block"><span class="path">ENCRYPTION_KEY</span> = base64.urlsafe_b64encode(hashlib.sha256(b"D0x_S3cur3_K3y_2024_M4st3r_K3y").digest())</div>
+            <p>Все экспорты содержат метку времени и хэш-сумму для верификации. Рекомендуется использовать в изолированной среде.</p>
+            <div class="layout-tip">
+                <strong>🔒 Совет:</strong> при работе с реальными данными всегда проверяйте источники и соблюдайте законодательство.
+            </div>
+        </section>
+
+        <section id="graphics" class="section">
+            <h2><svg viewBox="0 0 24 24"><path d="M21 12v4a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h7"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Графика и анимации</h2>
+            <p>Интерфейс построен на <strong>pystyle</strong> с градиентами и анимацией загрузки. В веб-экспортах используются минималистичные SVG-иконки и адаптивная сетка.</p>
+            <div class="animation-demo">
+                <div class="anim-box"><div class="label">градиент</div><div class="value" style="background:linear-gradient(90deg,#1e1e1e,#7a7a7a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">текст</div></div>
+                <div class="anim-box"><div class="label">анимация</div><div class="value"><span style="display:inline-block; animation: pulse 1.2s infinite;">●</span> живой</div></div>
+                <div class="anim-box"><div class="label">svg иконки</div><div class="value"><svg width="28" height="28" viewBox="0 0 24 24" stroke="#1e1e1e" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg> кастомные</div></div>
+            </div>
+            <p>Каждая страница экспорта адаптируется под мобильные устройства и содержит анимированные карточки. Цветовая схема — минималистичная, с акцентами на контрасте.</p>
+        </section>
+
+        <section id="layout" class="section">
+            <h2><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="8" y1="2" x2="8" y2="22"/><line x1="16" y1="2" x2="16" y2="22"/></svg> Адаптивность и расположение</h2>
+            <p><strong>Для ПК:</strong> боковая панель всегда видна, ширина контента ограничена 1100px для удобочитаемости. Шрифт <strong>Roboto Condensed</strong> обеспечивает отличную читаемость.</p>
+            <p><strong>Для телефонов:</strong> при ширине экрана менее 780px боковая панель скрывается за гамбургер-меню (кнопка в левом верхнем углу). Контент растягивается на всю ширину, отступы уменьшаются.</p>
+            <div class="layout-tip">
+                <strong>📱</strong> Нажмите на кнопку <strong>☰</strong> в левом верхнем углу (на телефоне), чтобы скрыть или показать боковую панель. На ПК кнопка отсутствует — панель всегда открыта.
+            </div>
+            <p>Все таблицы, графики и блоки кода автоматически подстраиваются под ширину экрана. Карточки с анимацией сохраняют свою структуру даже на узких экранах.</p>
+            <div class="code-block" style="font-size:14px;">
+                <span class="path">@media (max-width: 780px)</span> { .sidebar { transform: translateX(-100%); } .sidebar-toggle { display: flex; } }
+            </div>
+            <p>Боковая панель имеет фиксированное положение, а основной контент прокручивается независимо. Это позволяет быстро переключаться между разделами документации.</p>
+        </section>
+
+        <section class="section" style="margin-top:20px;">
+            <p><strong>NifyDox</strong> — это не только инструмент, но и платформа для изучения OSINT и криптографии. Все данные демонстрационные и предназначены для образовательных целей.</p>
+            <div style="background:#f5f5f5; border-radius:20px; padding:20px 28px; margin:24px 0; border:1px solid #e0e0e0;">
+                <p style="font-weight:400; display:flex; gap:12px; align-items:center;"><svg width="24" height="24" viewBox="0 0 24 24" stroke="#1e1e1e" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg> Рекомендуется запускать в изолированной среде.</p>
+            </div>
+            <p>Для получения дополнительной информации обратитесь к встроенной справке <strong>/help</strong> или изучите исходный код <strong>NifyDox.py</strong>.</p>
+        </section>
+
+        <div class="footer-doc">
+            <span>NifyDox · документация v3.0</span>
+            <span><a href="#">github</a> · <a href="#">telegram</a></span>
+            <span>2026 · свободное использование</span>
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('toggleSidebar');
+            const backdrop = document.getElementById('backdrop');
+            let isOpen = true;
+
+            function toggleSidebar() {
+                isOpen = !isOpen;
+                sidebar.classList.toggle('closed', !isOpen);
+                backdrop.classList.toggle('show', !isOpen && window.innerWidth <= 780);
+            }
+
+            toggleBtn.addEventListener('click', toggleSidebar);
+            backdrop.addEventListener('click', function() {
+                if (window.innerWidth <= 780 && !sidebar.classList.contains('closed')) {
+                    toggleSidebar();
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 780) {
+                    sidebar.classList.remove('closed');
+                    backdrop.classList.remove('show');
+                    isOpen = true;
+                } else {
+                    if (!isOpen) {
+                        sidebar.classList.add('closed');
+                        backdrop.classList.add('show');
+                    } else {
+                        sidebar.classList.remove('closed');
+                        backdrop.classList.remove('show');
+                    }
+                }
+            });
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    this.classList.add('active');
+                    if (window.innerWidth <= 780) {
+                        if (!sidebar.classList.contains('closed')) {
+                            toggleSidebar();
+                        }
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
