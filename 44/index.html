@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Rare breeds of cats</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #fafcfa;
+      color: #1f2e1d;
+      line-height: 1.7;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: linear-gradient(90deg, #3e8e3e, #7bc07b);
+      z-index: 9999;
+      transition: width 0.08s linear;
+      box-shadow: 0 0 12px rgba(60, 160, 60, 0.25);
+    }
+
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .bg-animation span {
+      position: absolute;
+      display: block;
+      width: 40px;
+      height: 40px;
+      background: rgba(80, 140, 80, 0.04);
+      border-radius: 50%;
+      animation: floatBg 18s infinite linear;
+      bottom: -60px;
+    }
+    .bg-animation span:nth-child(1) { left: 10%; width: 60px; height: 60px; animation-duration: 22s; animation-delay: 0s; }
+    .bg-animation span:nth-child(2) { left: 25%; width: 30px; height: 30px; animation-duration: 26s; animation-delay: 2s; }
+    .bg-animation span:nth-child(3) { left: 45%; width: 80px; height: 80px; animation-duration: 20s; animation-delay: 4s; }
+    .bg-animation span:nth-child(4) { left: 65%; width: 50px; height: 50px; animation-duration: 24s; animation-delay: 1s; }
+    .bg-animation span:nth-child(5) { left: 85%; width: 40px; height: 40px; animation-duration: 28s; animation-delay: 3s; }
+    .bg-animation span:nth-child(6) { left: 50%; width: 70px; height: 70px; animation-duration: 30s; animation-delay: 5s; }
+    .bg-animation span:nth-child(7) { left: 5%; width: 90px; height: 90px; animation-duration: 20s; animation-delay: 6s; }
+    .bg-animation span:nth-child(8) { left: 75%; width: 45px; height: 45px; animation-duration: 27s; animation-delay: 2s; }
+    @keyframes floatBg {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      50% { opacity: 0.7; transform: translateY(-80vh) rotate(180deg); }
+      100% { transform: translateY(-120vh) rotate(360deg); opacity: 0.1; }
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 2rem 3rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding-bottom: 1.8rem;
+      border-bottom: 2px solid #cfe0cf;
+      margin-bottom: 3rem;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 450;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .logo svg {
+      width: 44px;
+      height: 44px;
+      stroke: #2e6b2e;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .sidebar-trigger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 12px;
+      transition: background 0.2s;
+      color: inherit;
+    }
+    .sidebar-trigger:hover {
+      background: #e4f0e4;
+    }
+    .sidebar-trigger svg {
+      width: 32px;
+      height: 32px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -340px;
+      width: 320px;
+      height: 100%;
+      background: #ffffff;
+      border-left: 2px solid #cfe0cf;
+      padding: 2rem 1.8rem;
+      transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 1000;
+      overflow-y: auto;
+      box-shadow: -8px 0 30px rgba(0, 20, 0, 0.06);
+      backdrop-filter: blur(12px);
+    }
+    .sidebar.open {
+      right: 0;
+    }
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: inherit;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0;
+      transition: opacity 0.2s;
+    }
+    .sidebar-close:hover {
+      opacity: 0.6;
+    }
+    .sidebar-close svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+    }
+    .sidebar h3 {
+      font-weight: 450;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.8rem;
+      font-size: 1.4rem;
+      border-bottom: 1px solid #dcecdc;
+      padding-bottom: 0.8rem;
+    }
+    .sidebar ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .sidebar ul li a {
+      display: block;
+      padding: 0.7rem 1rem;
+      border-radius: 14px;
+      text-decoration: none;
+      color: inherit;
+      font-weight: 420;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .sidebar ul li a:hover {
+      background: #eaf5ea;
+      border-color: #b8d4b8;
+      transform: translateX(4px);
+    }
+    .sidebar .sidebar-footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #dcecdc;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.15);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .breed-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+    .breed-card {
+      background: #ffffff;
+      border-radius: 2rem;
+      padding: 1.8rem 1.8rem 2.2rem;
+      box-shadow: 0 8px 24px rgba(0, 20, 0, 0.04);
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      border: 1px solid #eaf3ea;
+      animation: cardAppear 0.6s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+    .breed-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #6bb86b, #a8e0a8, #6bb86b);
+      background-size: 200% 100%;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .breed-card:hover::before {
+      opacity: 1;
+      animation: shimmer 2s infinite linear;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes cardAppear {
+      0% { opacity: 0; transform: translateY(30px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .breed-card:nth-child(1) { animation-delay: 0.02s; }
+    .breed-card:nth-child(2) { animation-delay: 0.06s; }
+    .breed-card:nth-child(3) { animation-delay: 0.10s; }
+    .breed-card:nth-child(4) { animation-delay: 0.14s; }
+    .breed-card:nth-child(5) { animation-delay: 0.18s; }
+    .breed-card:nth-child(6) { animation-delay: 0.22s; }
+    .breed-card:nth-child(7) { animation-delay: 0.26s; }
+    .breed-card:nth-child(8) { animation-delay: 0.30s; }
+    .breed-card:nth-child(9) { animation-delay: 0.34s; }
+    .breed-card:nth-child(10) { animation-delay: 0.38s; }
+    .breed-card:hover {
+      transform: translateY(-10px) scale(1.008);
+      box-shadow: 0 24px 56px rgba(40, 80, 40, 0.10);
+    }
+
+    .breed-photo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .photo-frame {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      padding: 6px;
+      background: linear-gradient(135deg, #b8d9b8, #8bbf8b);
+      box-shadow: 0 6px 16px rgba(60, 110, 60, 0.12);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .breed-card:hover .photo-frame {
+      transform: scale(1.06) rotate(2deg);
+      box-shadow: 0 14px 32px rgba(60, 110, 60, 0.20);
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      background: #f0f7f0;
+      transition: transform 0.5s;
+    }
+    .breed-card:hover .photo-frame img {
+      transform: scale(1.02);
+    }
+
+    .breed-name {
+      font-size: 1.9rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .breed-name svg {
+      width: 28px;
+      height: 28px;
+      stroke: #2e6b2e;
+      stroke-width: 1.6;
+      fill: none;
+      flex-shrink: 0;
+    }
+    .breed-sub {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      margin-bottom: 1rem;
+      font-weight: 350;
+      letter-spacing: 0.02em;
+    }
+    .breed-text {
+      font-size: 0.98rem;
+      text-align: justify;
+      hyphens: auto;
+      word-break: break-word;
+    }
+    .breed-text strong {
+      font-weight: 600;
+      color: #1f6b1f;
+      background: linear-gradient(to right, #e2f0e2, #d2e8d2);
+      padding: 0 0.25rem;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .breed-text em {
+      font-style: italic;
+      color: #3f7a3f;
+      font-weight: 450;
+      border-bottom: 1px dashed rgba(60, 140, 60, 0.2);
+    }
+    .stats {
+      margin: 1.4rem 0 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.5rem;
+      background: #f0f8f0;
+      padding: 0.9rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      border: 1px solid #d6e8d6;
+      transition: all 0.3s;
+    }
+    .stats span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .stats svg {
+      width: 20px;
+      height: 20px;
+      stroke: #2f6b2f;
+      stroke-width: 1.6;
+      fill: none;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin: 2rem 0 1rem;
+      border-radius: 1.8rem;
+      border: 1px solid #d6e8d6;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .breed-card:hover .table-wrap {
+      box-shadow: 0 4px 12px rgba(60, 120, 60, 0.04);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: #fafffa;
+    }
+    th, td {
+      padding: 0.9rem 1.2rem;
+      text-align: left;
+      border-bottom: 1px solid #dcecdc;
+    }
+    th {
+      background: #eaf5ea;
+      font-weight: 500;
+    }
+    .chart-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0 0.5rem;
+    }
+    .bar-label {
+      width: 80px;
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+    .bar-track {
+      flex: 1;
+      height: 10px;
+      background: #dcecdc;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3e8e3e, #7bc07b);
+      border-radius: 20px;
+      width: 0%;
+      transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+    }
+    .bar-fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15));
+      border-radius: 20px;
+    }
+    .divider {
+      height: 2px;
+      background: linear-gradient(to right, #d0e4d0, transparent);
+      margin: 2.5rem 0;
+    }
+    .footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #cfe0cf;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    .info-blocks {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .info-block {
+      background: #f0f8f0;
+      border-radius: 2rem;
+      padding: 1.5rem 2.5rem;
+      border: 1px solid #d6e8d6;
+      min-width: 200px;
+      transition: all 0.3s ease;
+      animation: cardAppear 0.6s ease both;
+      animation-delay: 0.1s;
+      position: relative;
+      overflow: hidden;
+    }
+    .info-block::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(80, 180, 80, 0.03), transparent 70%);
+      pointer-events: none;
+    }
+    .info-block:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 12px 28px rgba(40, 80, 40, 0.06);
+      border-color: #b8d4b8;
+    }
+    .info-block p:first-child {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .info-block p:last-child {
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+    }
+
+    @media (max-width: 1200px) {
+      .breed-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+      .container {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.2rem;
+      }
+      .breed-grid {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+      }
+      .header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+      .logo {
+        font-size: 1.5rem;
+      }
+      .logo svg {
+        width: 36px;
+        height: 36px;
+      }
+      .sidebar-trigger {
+        display: flex;
+      }
+      .sidebar {
+        width: 280px;
+        right: -300px;
+        padding: 1.5rem;
+      }
+      .sidebar.open {
+        right: 0;
+      }
+      .info-blocks {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .info-block {
+        min-width: auto;
+        padding: 1.2rem 1.8rem;
+      }
+      .breed-card {
+        padding: 1.2rem;
+      }
+      .photo-frame {
+        width: 130px;
+        height: 130px;
+      }
+      .breed-name {
+        font-size: 1.6rem;
+      }
+      .stats {
+        padding: 0.7rem 1rem;
+        gap: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+      .table-wrap {
+        margin: 1.2rem 0 0.8rem;
+      }
+      th, td {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+      }
+      .chart-bar {
+        gap: 0.6rem;
+      }
+      .bar-label {
+        width: 60px;
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0.8rem;
+      }
+      .breed-grid {
+        gap: 1.2rem;
+      }
+      .breed-card {
+        padding: 1rem;
+        border-radius: 1.5rem;
+      }
+      .photo-frame {
+        width: 110px;
+        height: 110px;
+        padding: 4px;
+      }
+      .breed-name {
+        font-size: 1.3rem;
+      }
+      .breed-name svg {
+        width: 22px;
+        height: 22px;
+      }
+      .breed-text {
+        font-size: 0.9rem;
+      }
+      .header {
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .logo {
+        font-size: 1.2rem;
+      }
+      .logo svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scrollProgress"></div>
+
+<div class="bg-animation">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar">
+  <button class="sidebar-close" id="sidebarClose">
+    <svg viewBox="0 0 24 24"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2"/></svg>
+    Закрыть
+  </button>
+  <h3>Породы</h3>
+  <ul>
+    <li><a href="#lykoi">Ликой</a></li>
+    <li><a href="#levkoy">Украинский левкой</a></li>
+    <li><a href="#pixiebob">Пиксибоб</a></li>
+    <li><a href="#caracal">Каракал</a></li>
+    <li><a href="#toyger">Тойгер</a></li>
+    <li><a href="#serengeti">Серенгети</a></li>
+    <li><a href="#ojos">Охос азулес</a></li>
+    <li><a href="#kurilian">Курильский бобтейл</a></li>
+    <li><a href="#minskin">Минскин</a></li>
+    <li><a href="#burmilla">Бурмилла</a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <p>Rare breeds · 2026</p>
+  </div>
+</aside>
+
+<div class="container">
+  <header class="header">
+    <div class="logo">
+      <svg viewBox="0 0 48 48"><path d="M24 8 L8 20 L8 38 L24 46 L40 38 L40 20 L24 8 Z M16 28 L20 28 L20 32 L16 32 Z M28 28 L32 28 L32 32 L28 32 Z M18 22 Q24 18 30 22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="24" r="2" fill="currentColor"/><circle cx="30" cy="24" r="2" fill="currentColor"/></svg>
+      Rare breeds of cats
+    </div>
+    <div class="header-controls">
+      <button class="sidebar-trigger" id="sidebarTrigger" aria-label="Открыть меню">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="breed-grid">
+
+    <div class="breed-card" id="lykoi">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fgen.krea.ai%2Fimages%2F7ea40477-17ec-461d-adb1-0cd27397893f.png" alt="Ликой"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M9 12 L11 14 L9 16 M19 12 L17 14 L19 16" stroke="currentColor" stroke-linecap="round"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/></svg>Ликой</div>
+      <div class="breed-sub">Lykoi · «кошка-оборотень»</div>
+      <div class="breed-text"><strong>Ликой</strong> — одна из самых необычных пород, возникшая в результате естественной мутации. Эти кошки имеют частично бесшёрстный покров, что придаёт им волчий облик. <em>Генетически ликои близки к домашним короткошёрстным, но их уникальная шерсть растёт циклами.</em> Они очень умны, активны и общительны. Ликои обожают охотиться и играть в догонялки. Их характер напоминает собачий: они привязываются к хозяину, могут приносить игрушки. Несмотря на диковатый вид, ликои нежны и ласковы. У них отличное здоровье, но чувствительная кожа требует бережного ухода. Порода признана TICA в 2017 году. <strong>Ликой</strong> — результат скрещивания мутировавших кошек с домашними, чтобы закрепить уникальный фенотип. Шерсть редкая, с проплешинами, особенно на морде, ушах и лапах. <em>Эти кошки обожают высоту</em> и часто забираются на шкафы. Их голос похож на тихое мурлыканье с металлическим оттенком. Ликои очень чистоплотны и легко приучаются к лотку. Они отлично ладят с детьми и другими животными, если те не агрессивны. В еде неприхотливы, но любят разнообразие. <strong>Интересно</strong>, что ликои не линяют как обычные кошки — их шерсть выпадает клочьями, что требует регулярного вычёсывания. Порода считается гипоаллергенной, хотя это индивидуально. Ликой — это настоящий компаньон, который будет следовать за вами по пятам. Их игривость сохраняется до старости. В среднем они живут 15–18 лет. <em>Ликой</em> — идеальный выбор для тех, кто ищет нестандартного друга.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor" stroke-linecap="round"/></svg>15–18 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>2.5–4.5 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★★☆</td></tr><tr><td>Ласковость</td><td>★★★★★</td></tr><tr><td>Интеллект</td><td>★★★★★</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Шерсть (редкость)</span><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="levkoy">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fgen.krea.ai%2Fimages%2Fc9040787-4f84-418e-ac4d-3eb30e9d7316.png" alt="Украинский левкой"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M8 12 L11 15 L8 18 M20 12 L17 15 L20 18" stroke="currentColor" stroke-linecap="round"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/></svg>Украинский левкой</div>
+      <div class="breed-sub">Ukrainian Levkoy · изящный сфинкс</div>
+      <div class="breed-text"><strong>Украинский левкой</strong> — это грациозная бесшёрстная кошка с характерными загнутыми ушами. Порода выведена в Киеве в 2004 году. <em>Левкои обладают уникальной складчатой кожей и большими миндалевидными глазами.</em> Они очень социальны, любят внимание и тактильный контакт. Их тело гибкое, мускулистое, с длинными лапами. <strong>Левкой</strong> отличается спокойным и уравновешенным нравом, но при этом игрив. Они прекрасно уживаются с собаками и другими кошками. Из-за отсутствия шерсти они нуждаются в тепле и регулярном купании. Кожа левкоя выделяет особый секрет, поэтому уход требует мягких средств. <em>Эти кошки очень умны</em>, легко обучаются командам и любят головоломки. Украинский левкой — редкая порода, даже на родине их немного. Они обладают тонким голосом и редко мяукают без причины. Левкои обожают спать под одеялом и греться на руках. Их средняя продолжительность жизни — 14–16 лет. <strong>Важно</strong> следить за питанием, так как у них быстрый метаболизм. Они едят часто, но небольшими порциями. Левкои — идеальные компаньоны для пожилых людей и семей с детьми. Их нежная кожа требует защиты от солнца. <em>Украинский левкой</em> — это элегантность и преданность в одном флаконе. Порода признана в Украине и постепенно завоёвывает мир. Их глаза всегда выражают любопытство и доброту. Левкои очень привязаны к дому и тяжело переносят разлуку.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>14–16 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>3–5.5 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★☆☆</td></tr><tr><td>Ласковость</td><td>★★★★★</td></tr><tr><td>Интеллект</td><td>★★★★☆</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Уход (кожа)</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="pixiebob">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fgen.krea.ai%2Fimages%2F4b2c2f68-3c48-4837-8c83-d2217070dc6b.png" alt="Пиксибоб"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M8 11 L11 14 L8 17 M20 11 L17 14 L20 17" stroke="currentColor" stroke-linecap="round"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/></svg>Пиксибоб</div>
+      <div class="breed-sub">Pixiebob · домашняя рысь</div>
+      <div class="breed-text"><strong>Пиксибоб</strong> — это порода, которая внешне напоминает маленькую рысь. Отличительная черта — короткий хвост (5–10 см) и кисточки на ушах. <em>Пиксибобы очень дружелюбны и социальны, они обожают людей.</em> У них сильное телосложение, мощные лапы и густая шерсть с пятнистым окрасом. <strong>Пиксибоб</strong> — одна из немногих пород, которые могут быть как короткошёрстными, так и полудлинношёрстными. Они отлично ладят с детьми и собаками. Их характер спокойный, но игривый. Пиксибобы очень привязчивы и следуют за хозяином из комнаты в комнату. <em>У них развитый охотничий инстинкт</em>, поэтому они обожают интерактивные игрушки. Порода выведена в США в 1980-х годах. Они имеют полидактилию (лишние пальцы) — это допустимый стандарт. Пиксибобы умны и легко поддаются дрессировке. Их голос — мягкое мурлыканье, редко мяукают. <strong>Средний вес</strong> — 3.5–6 кг, живут 14–16 лет. Они очень терпеливы и редко проявляют агрессию. Пиксибобы требуют регулярного вычёсывания, особенно в период линьки. Их дикий вид сочетается с домашним нравом. <em>Пиксибоб</em> — отличный выбор для активных семей.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>14–16 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>3.5–6 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★★☆</td></tr><tr><td>Ласковость</td><td>★★★★★</td></tr><tr><td>Интеллект</td><td>★★★★☆</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Дикость (внешность)</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="caracal">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://media.istockphoto.com/id/967720384/ru/фото/каракал.jpg?s=612x612&w=0&k=20&c=1YQI4ztaPrKgMJpGarYmYNO0t4_2ANGhJdb0fvqGLyk=" alt="Каракал"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M7 10 L10 13 L7 16 M21 10 L18 13 L21 16" stroke="currentColor" stroke-linecap="round"/><circle cx="9" cy="11" r="1.5" fill="currentColor"/><circle cx="19" cy="11" r="1.5" fill="currentColor"/></svg>Каракал</div>
+      <div class="breed-sub">Caracal · степная рысь</div>
+      <div class="breed-text"><strong>Каракал</strong> — это дикая кошка с длинными чёрными кисточками на ушах. В последние годы каракалов одомашнивают, но это требует опыта. <em>Каракалы очень грациозны и обладают мощным прыжком до 3 метров.</em> Они ведут сумеречный образ жизни. <strong>Каракал</strong> — хищник, но при правильном воспитании становится ласковым. Они любят играть с водой и мячами. Каракалы нуждаются в просторном вольере и активных прогулках. Их шерсть короткая и густая, окрас — песчаный или красноватый. <em>Дикие каракалы распространены в Африке и Азии</em>. Домашние особи требуют особого питания — мясо, субпродукты, добавки. Они чистоплотны и быстро привыкают к лотку. Каракалы не лают, но издают урчание, шипение и мяуканье. <strong>Продолжительность жизни</strong> в неволе — 14–16 лет. Вес взрослого самца может достигать 18 кг. Каракалы умны и хитры, их нельзя оставлять без присмотра. Они привязываются к одному хозяину. <em>Каракал</em> — это не просто кошка, это статусное животное. В ряде стран требуются разрешения на содержание. Каракалы любят лазать и прыгать, поэтому нужно высокое ограждение. Их кисточки — это не просто украшение, они помогают в общении. Каракалы хорошо уживаются с собаками, если те не агрессивны.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>14–16 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>11–18 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★★★</td></tr><tr><td>Ласковость</td><td>★★★☆☆</td></tr><tr><td>Интеллект</td><td>★★★★★</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Экзотичность</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="toyger">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://avatars.mds.yandex.net/i?id=5bc8f280f00905ac7d16ebb38f17d141_l-8497272-images-thumbs&n=13" alt="Тойгер"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M8 12 L11 15 L8 18 M20 12 L17 15 L20 18" stroke="currentColor" stroke-linecap="round"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/></svg>Тойгер</div>
+      <div class="breed-sub">Toyger · мини-тигр</div>
+      <div class="breed-text"><strong>Тойгер</strong> — порода, выведенная для напоминания тигра. У них яркий полосатый окрас на оранжево-золотистом фоне. <em>Тойгеры активны, умны и очень общительны.</em> Они любят водные процедуры и игрушки. <strong>Тойгер</strong> — результат скрещивания бенгальских и полосатых домашних кошек. У них округлая голова, маленькие уши и мускулистое тело. <em>Эти кошки очень энергичны</em>, им нужно много пространства для игр. Тойгеры хорошо ладят с детьми и другими животными. Они не агрессивны, но любят доминировать. Их шерсть плотная и блестящая, требует минимального ухода. <strong>Средний вес</strong> — 3.5–6.5 кг, живут около 15 лет. Тойгеры обожают бегать и прыгать, часто участвуют в выставках. Они очень сообразительны и могут открывать двери. Тойгеры имеют спокойный голос и редко мяукают без нужды. <em>Порода признана TICA</em> в 2007 году. Тойгеры — это кошки для активных людей. Они любят гулять на поводке и не боятся собак. Их полоски уникальны, как отпечатки пальцев. Тойгеры быстро привязываются к семье, но могут быть насторожены с незнакомцами. У них отличный аппетит, но склонность к ожирению, поэтому важно контролировать рацион. <strong>Тойгер</strong> — это воплощение дикой красоты в домашнем формате.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>14–16 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>3.5–6.5 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★★★</td></tr><tr><td>Ласковость</td><td>★★★★☆</td></tr><tr><td>Интеллект</td><td>★★★★★</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Тигровость</span><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="serengeti">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://avatars.mds.yandex.net/i?id=62001af69978a127e62d13c9c7237b89_l-10613167-images-thumbs&n=13" alt="Серенгети"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M8 13 L11 16 L8 19 M20 13 L17 16 L20 19" stroke="currentColor" stroke-linecap="round"/><circle cx="10" cy="13" r="1.5" fill="currentColor"/><circle cx="18" cy="13" r="1.5" fill="currentColor"/></svg>Серенгети</div>
+      <div class="breed-sub">Serengeti · дикий окрас</div>
+      <div class="breed-text"><strong>Серенгети</strong> — порода, напоминающая дикую африканскую кошку. У них длинные ноги, крупные уши и пятнистый окрас. <em>Серенгети очень активны и любопытны</em>, они обожают высоту. <strong>Серенгети</strong> — результат скрещивания бенгальских и ориентальных кошек. Они элегантны и мускулисты, вес до 5–7 кг. <em>Эти кошки очень общительны</em>, любят быть в центре внимания. Серенгети имеют мелодичный голос и часто «разговаривают» с хозяином. Они легко обучаются командам и любят апортировку. <strong>Шерсть</strong> короткая, блестящая, с чёткими тёмными пятнами. Серенгети — это порода для опытных владельцев, так как они очень энергичны. Им нужны высокие когтеточки и много игрушек. <em>Серенгети обожают воду</em> и могут играть с краном. Они уживаются с собаками и другими кошками, но не терпят грубого обращения. Продолжительность жизни — 14–17 лет. Серенгети редко мяукают, но издают урчащие звуки. Их глаза выразительные, зелёные или жёлтые. <strong>Серенгети</strong> — это африканская грация в вашем доме.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>14–17 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>4–7 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★★★</td></tr><tr><td>Ласковость</td><td>★★★★☆</td></tr><tr><td>Интеллект</td><td>★★★★★</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Энергия</span><div class="bar-track"><div class="bar-fill" style="width:98%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="ojos">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://resizer.mail.ru/p/efb19e65-d283-50db-b7f0-42a49751432b/AQAObAASnX5szUd2IMVOVE19843mbfiX7PaZjZVAnZhzEazCA1WPRDa-R1bVylhkFhTBX9JXQIWgjfu9cWA9pbxGtIA.jpg" alt="Охос азулес"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M9 13 L12 16 L9 19 M19 13 L16 16 L19 19" stroke="currentColor" stroke-linecap="round"/><circle cx="11" cy="13" r="1.5" fill="currentColor"/><circle cx="17" cy="13" r="1.5" fill="currentColor"/></svg>Охос азулес</div>
+      <div class="breed-sub">Ojos Azules · голубоглазые</div>
+      <div class="breed-text"><strong>Охос азулес</strong> — порода с яркими голубыми глазами любого окраса шерсти. Это редкая мутация, выявленная в 1980-х годах в США. <em>Их глаза — насыщенного сапфирового оттенка</em>, что делает их невероятно красивыми. <strong>Охос азулес</strong> — кошки среднего размера, с короткой шерстью и стройным телом. Они очень игривы и любопытны, но при этом спокойны. <em>Эти кошки обладают мягким голосом</em> и редко мяукают. Они хорошо ладят с детьми и другими животными. Охос азулес обожают сидеть на руках и греться. Их характер — уравновешенный, без агрессии. <strong>Особенность</strong> — ген голубых глаз не связан с окрасом шерсти. Это делает их уникальными среди кошек. Порода очень редка, даже в США их немного. <em>Охос азулес</em> требуют стандартного ухода: чистка ушей, когтей и регулярное вычёсывание. Они склонны к полноте, поэтому нужно дозировать корм. Продолжительность жизни — 13–16 лет. <strong>Охос азулес</strong> — это драгоценность в мире кошек.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>13–16 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>3–5 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★☆☆</td></tr><tr><td>Ласковость</td><td>★★★★★</td></tr><tr><td>Интеллект</td><td>★★★★☆</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Редкость</span><div class="bar-track"><div class="bar-fill" style="width:99%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="kurilian">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://avatars.mds.yandex.net/i?id=d628a0276be90ae2989051131c4fa280_l-5221095-images-thumbs&n=13" alt="Курильский бобтейл"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M7 12 L10 15 L7 18 M21 12 L18 15 L21 18" stroke="currentColor" stroke-linecap="round"/><circle cx="9" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>Курильский бобтейл</div>
+      <div class="breed-sub">Kurilian Bobtail · пушистый охотник</div>
+      <div class="breed-text"><strong>Курильский бобтейл</strong> — аборигенная порода с островов Курильской гряды. Главная особенность — короткий хвост-помпон. <em>Эти кошки обладают мощным телом и густой шерстью.</em> <strong>Курилец</strong> — отличный охотник, ловит грызунов и даже рыбу. Они очень самостоятельны, но при этом привязаны к семье. <em>У них спокойный, уравновешенный характер</em>, они терпеливы с детьми. Курильские бобтейлы бывают как короткошёрстными, так и полудлинношёрстными. Окрасы разнообразны, но наиболее ценны дикие табби. <strong>Их хвост</strong> — это результат естественной мутации, он может быть разной формы. Курильцы умны, легко обучаются и любят играть в догонялки. Они обожают высоту и часто забираются на шкафы. <em>Эти кошки очень чистоплотны</em> и не доставляют хлопот. Курильский бобтейл — порода, признанная во всём мире. Они хорошо переносят холод благодаря подшёрстку. <strong>Средний вес</strong> — 4–7 кг, живут 15–18 лет. Курильцы — идеальные компаньоны для загородной жизни. Они не боятся собак и умеют за себя постоять. <em>Курильский бобтейл</em> — это воплощение дикой силы и домашней нежности.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>15–18 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>4–7 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★★☆</td></tr><tr><td>Ласковость</td><td>★★★★☆</td></tr><tr><td>Интеллект</td><td>★★★★★</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Охотничьи навыки</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="minskin">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://avatars.mds.yandex.net/i?id=1b0860e0a92aba22c3616c9ad57164f6_l-10701575-images-thumbs&n=13" alt="Минскин"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M9 14 L12 17 L9 20 M19 14 L16 17 L19 20" stroke="currentColor" stroke-linecap="round"/><circle cx="11" cy="14" r="1.5" fill="currentColor"/><circle cx="17" cy="14" r="1.5" fill="currentColor"/></svg>Минскин</div>
+      <div class="breed-sub">Minskin · карликовый сфинкс</div>
+      <div class="breed-text"><strong>Минскин</strong> — это маленькая кошка с короткими ногами и частично бесшёрстным телом. Порода выведена в США путём скрещивания сфинкса и манчкина. <em>У минскинов большие уши, круглые глаза и шелковистая кожа.</em> <strong>Минскины</strong> очень игривы, энергичны и любознательны, несмотря на короткие лапы. Они обожают забираться на мебель и играть с игрушками. <em>Эти кошки очень социальны</em> и требуют много внимания. Минскины хорошо ладят с детьми и другими питомцами. Они не агрессивны и легко адаптируются. <strong>Шерсть</strong> у них растёт только на морде, лапах и хвосте, остальное тело гладкое. Это делает их гипоаллергенными (индивидуально). Минскины нуждаются в тепле и мягкой лежанке. Они обожают спать под одеялом вместе с хозяином. <em>У них мягкий голос</em>, они редко мяукают, но активно мурлыкают. Минскины — одна из самых редких пород. Их вес составляет 2–3.5 кг, живут они 12–15 лет. <strong>Минскины</strong> — идеальный выбор для тех, кто ищет миниатюрного друга. Они очень преданны и остро чувствуют настроение хозяина.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>12–15 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>2–3.5 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★★☆</td></tr><tr><td>Ласковость</td><td>★★★★★</td></tr><tr><td>Интеллект</td><td>★★★★☆</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Миниатюрность</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+    </div>
+
+    <div class="breed-card" id="burmilla">
+      <div class="breed-photo"><div class="photo-frame"><img src="https://media.istockphoto.com/id/495384821/ru/фото/белый-burmilla-кошка-лежать-на-черном-фоне-и-всматриваться-право.jpg?s=612x612&w=0&k=20&c=sZAXkFem9lXIfSa6en4B9GDqD111iZmIXmBN1w_Rgyg=" alt="Бурмилла"></div></div>
+      <div class="breed-name"><svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.4"/><path d="M8 14 L11 17 L8 20 M20 14 L17 17 L20 20" stroke="currentColor" stroke-linecap="round"/><circle cx="10" cy="14" r="1.5" fill="currentColor"/><circle cx="18" cy="14" r="1.5" fill="currentColor"/></svg>Бурмилла</div>
+      <div class="breed-sub">Burmilla · серебристое сияние</div>
+      <div class="breed-text"><strong>Бурмилла</strong> — элегантная кошка с серебристо-дымчатой шерстью и зелёными глазами. Порода возникла случайно в Великобритании в 1980-х. <em>Бурмиллы имеют гладкую, плотную шерсть и изящное тело.</em> <strong>Бурмилла</strong> — это кошка с уравновешенным характером: спокойная, но игривая. Они очень привязаны к семье, но не навязчивы. <em>Эти кошки обожают сидеть на коленях</em> и мурлыкать. Бурмиллы умны, легко учатся и любят игры-головоломки. Они хорошо уживаются с другими животными. <strong>Окрас</strong> — оттенки серебра с эффектом «типпинга», когда каждый волосок окрашен в два цвета. Бурмиллы бывают короткошёрстными и полудлинношёрстными. <em>Их глаза — изумрудно-зелёные</em>, что придаёт им особый шарм. Бурмиллы не склонны к агрессии и хорошо ладят с детьми. Они чистоплотны и не требуют сложного ухода. <strong>Средний вес</strong> — 3–5.5 кг, живут 14–17 лет. Бурмиллы — идеальные кошки для квартиры. Они редко мяукают, но активно общаются телом. <em>Бурмилла</em> — это аристократизм и нежность в одном животном.</div>
+      <div class="stats"><span><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 4 L10 10 L14 13" stroke="currentColor"/></svg>14–17 лет</span><span><svg viewBox="0 0 20 20"><rect x="3" y="6" width="14" height="10" stroke="currentColor" stroke-width="1.4" rx="1"/><path d="M6 4 L6 6 M14 4 L14 6" stroke="currentColor"/></svg>3–5.5 кг</span></div>
+      <div class="table-wrap"><table><tr><th>Характеристика</th><th>Оценка</th></tr><tr><td>Активность</td><td>★★★☆☆</td></tr><tr><td>Ласковость</td><td>★★★★★</td></tr><tr><td>Интеллект</td><td>★★★★☆</td></tr></table></div>
+      <div class="chart-bar"><span class="bar-label">Элегантность</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div></div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+  <div class="info-blocks">
+    <div class="info-block">
+      <p><svg width="28" height="28" viewBox="0 0 24 24" stroke="#2e6b2e" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Средняя продолжительность</p>
+      <p>15.2 года</p>
+    </div>
+    <div class="info-block">
+      <p><svg width="28" height="28" viewBox="0 0 24 24" stroke="#2e6b2e" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="1"/><path d="M7 4v3 M17 4v3"/></svg>Средний вес</p>
+      <p>4.5 кг</p>
+    </div>
+    <div class="info-block">
+      <p><svg width="28" height="28" viewBox="0 0 24 24" stroke="#2e6b2e" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Редкие породы</p>
+      <p>10 видов</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Rare breeds of cats · коллекция уникальных пород</p>
+    <p style="margin-top: 0.5rem; opacity: 0.6;">© 2026 · все права защищены</p>
+  </footer>
+</div>
+
+<script>
+  (function(){
+    const progressBar = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', function() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = progress + '%';
+    });
+
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const trigger = document.getElementById('sidebarTrigger');
+    const closeBtn = document.getElementById('sidebarClose');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    trigger.addEventListener('click', openSidebar);
+    closeBtn.addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeSidebar();
+    });
+
+    document.querySelectorAll('.sidebar ul li a').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(closeSidebar, 300);
+        }
+      });
+    });
+
+    document.querySelectorAll('.breed-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        const fills = this.querySelectorAll('.bar-fill');
+        fills.forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0%';
+          setTimeout(() => { bar.style.width = w; }, 50);
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
