@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>NanoAlpha · штаб защиты</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #fcfdff;
+      color: #141414;
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background: #f7fafd;
+      border-right: 1px solid #e2e9f2;
+      padding: 2rem 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      flex-shrink: 0;
+      overflow-y: auto;
+      transition: 0.2s;
+      z-index: 10;
+    }
+    .sidebar-brand {
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.5px;
+      color: #0a0a0a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-brand svg {
+      width: 30px;
+      height: 30px;
+      stroke: #141414;
+      stroke-width: 2.2;
+      fill: none;
+    }
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .sidebar-nav a {
+      text-decoration: none;
+      color: #1c1c1c;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 10px;
+      border-radius: 16px;
+      transition: 0.15s;
+      cursor: pointer;
+    }
+    .sidebar-nav a:hover {
+      background: #eaf0f9;
+    }
+    .sidebar-nav a.active {
+      background: #dce6f2;
+      font-weight: 600;
+    }
+    .sidebar-nav svg {
+      width: 20px;
+      height: 20px;
+      stroke: #1f1f1f;
+      stroke-width: 1.8;
+      fill: none;
+    }
+    .sidebar-founders {
+      margin-top: auto;
+      border-top: 1px solid #d7e0ea;
+      padding-top: 1.5rem;
+    }
+    .sidebar-founders p {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #55626f;
+      margin-bottom: 12px;
+    }
+    .founder-tag {
+      background: #e7eef8;
+      padding: 6px 18px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+      margin: 4px 6px 4px 0;
+      color: #111;
+      cursor: default;
+    }
+    .main {
+      flex: 1;
+      padding: 2rem 2.8rem 4rem;
+      max-width: 1240px;
+      background: #ffffff;
+    }
+    .logo-center {
+      display: flex;
+      justify-content: center;
+      margin: 0.2rem 0 1.2rem 0;
+    }
+    .circle-logo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #f2f6fe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.03);
+      border: 1px solid #e2eaf5;
+      overflow: hidden;
+      transition: 0.25s;
+      cursor: pointer;
+    }
+    .circle-logo:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 36px rgba(0,20,40,0.06);
+    }
+    .circle-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .coords-block {
+      text-align: center;
+      font-weight: 400;
+      font-size: 1.05rem;
+      background: #f0f5fe;
+      padding: 0.6rem 2.2rem;
+      border-radius: 60px;
+      display: inline-block;
+      margin: 0 auto 1.6rem auto;
+      border: 1px solid #dce4f0;
+      letter-spacing: 0.3px;
+      cursor: default;
+    }
+    .coords-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .badge-ip {
+      background: #e6eefa;
+      padding: 0.3rem 1.6rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-block;
+      margin: 0 0 0.6rem 0;
+      border: 1px solid #d0dbe9;
+    }
+    .section-title {
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: -0.3px;
+      margin: 2.2rem 0 0.7rem 0;
+      border-bottom: 1px solid #e6edf7;
+      padding-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .desc-text {
+      font-weight: 300;
+      line-height: 1.8;
+      color: #1f1f1f;
+      max-width: 800px;
+      margin-bottom: 0.8rem;
+      font-size: 0.98rem;
+    }
+    .photo-placeholder {
+      background: #f1f6fd;
+      border: 1px dashed #b6c3d4;
+      border-radius: 32px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1.8rem 0 2.5rem 0;
+      color: #41505f;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.2px;
+      background-image: repeating-linear-gradient(45deg, #f6faff 0px, #f6faff 14px, #ecf2fa 14px, #ecf2fa 28px);
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .photo-placeholder:hover {
+      background-color: #eaf1fb;
+    }
+    .api-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.4rem;
+      margin: 1.5rem 0 2rem 0;
+    }
+    .api-card {
+      background: #f8fbfe;
+      border-radius: 28px;
+      padding: 1.3rem 1.2rem 1.2rem;
+      border: 1px solid #e6eef8;
+      transition: 0.15s;
+      cursor: pointer;
+    }
+    .api-card:hover {
+      background: #f1f7ff;
+      border-color: #c8d5e8;
+      transform: translateY(-2px);
+    }
+    .api-card .api-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .api-card .api-desc {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #3a414b;
+      opacity: 0.85;
+    }
+    .api-card svg {
+      width: 20px;
+      height: 20px;
+      stroke: #1a1a1a;
+      stroke-width: 1.8;
+      fill: none;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1.6rem 0 1rem 0;
+      border-radius: 28px;
+      border: 1px solid #dfe8f3;
+      background: #fbfdff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
+    th {
+      text-align: left;
+      padding: 1rem 1.2rem;
+      background: #eef4fd;
+      font-weight: 600;
+      color: #111;
+      border-bottom: 1px solid #d3ddea;
+    }
+    td {
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid #e8eef8;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 1.2rem;
+      border-radius: 60px;
+      background: #ddf0e5;
+      color: #1a6a3e;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+    .status-badge.off {
+      background: #f0e2e2;
+      color: #8a4242;
+    }
+    .status-badge.warn {
+      background: #f5ecda;
+      color: #8a753a;
+    }
+    .footer-ip {
+      margin-top: 2.8rem;
+      font-size: 0.95rem;
+      background: #f0f6fe;
+      padding: 0.6rem 2.2rem;
+      border-radius: 60px;
+      display: inline-block;
+      border: 1px solid #d9e3f0;
+    }
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.4rem;
+      margin: 1.6rem 0 1.2rem 0;
+    }
+    .extra-card {
+      background: #fafcff;
+      border-radius: 24px;
+      padding: 1.2rem 1.2rem 1rem;
+      border: 1px solid #e0e9f4;
+      transition: 0.12s;
+      cursor: pointer;
+    }
+    .extra-card:hover {
+      background: #f3f9ff;
+      border-color: #becddb;
+    }
+    .extra-card h4 {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .extra-card p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: #2a323d;
+    }
+    .mini-badge {
+      background: #eaf1fa;
+      border-radius: 30px;
+      padding: 0.15rem 1.2rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .double-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 1.2rem 0;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.open {
+      display: flex;
+    }
+    .modal-content {
+      background: #ffffff;
+      border-radius: 40px;
+      padding: 2.4rem 2.8rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+      border: 1px solid #e6edf8;
+      position: relative;
+      animation: modalFade 0.2s ease;
+    }
+    @keyframes modalFade {
+      0% { opacity: 0; transform: scale(0.96); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 22px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: #6b7a8b;
+      font-weight: 300;
+      transition: 0.1s;
+      background: none;
+      border: none;
+    }
+    .modal-close:hover {
+      color: #111;
+    }
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #1d1f25;
+      color: #f0f5fe;
+      padding: 0.9rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      z-index: 1000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 0.25s ease;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .status-indicator {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot.green { background: #2d8f5a; }
+    .dot.red { background: #b34a4a; }
+    .dot.yellow { background: #b3983a; }
+    @media (max-width: 820px) {
+      body { flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid #e2e9f2;
+        padding: 1rem 1.2rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.4rem 1.2rem;
+      }
+      .sidebar-brand { font-size: 1.2rem; }
+      .sidebar-nav { flex-direction: row; flex-wrap: wrap; gap: 0.2rem 0.6rem; margin: 0; }
+      .sidebar-nav a { padding: 4px 10px; font-size: 0.8rem; }
+      .sidebar-founders { margin-top: 0; border-top: none; padding-top: 0; margin-left: auto; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+      .sidebar-founders p { margin-bottom: 0; font-size: 0.6rem; }
+      .main { padding: 1.5rem 1rem 2.5rem; }
+      .photo-placeholder { height: 140px; }
+      .double-col { grid-template-columns: 1fr; gap: 0.8rem; }
+      .api-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .sidebar { flex-direction: column; align-items: stretch; gap: 0.3rem; }
+      .sidebar-nav { flex-wrap: wrap; gap: 0.2rem 0.4rem; }
+      .sidebar-founders { margin-left: 0; justify-content: flex-start; }
+      .api-grid { grid-template-columns: 1fr; }
+      .extra-grid { grid-template-columns: 1fr; }
+      .coords-block { font-size: 0.8rem; padding: 0.3rem 1rem; }
+      .circle-logo { width: 100px; height: 100px; }
+      .modal-content { padding: 1.8rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+    </svg>
+    NanoAlpha
+  </div>
+  <nav class="sidebar-nav">
+    <a class="active" data-page="main"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> панель</a>
+    <a data-page="monitor"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> монитор</a>
+    <a data-page="data"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M9 4v16M15 4v16"/></svg> дата</a>
+    <a data-page="tracker"><svg viewBox="0 0 24 24"><path d="M20 12H4M12 4v16"/></svg> трекер</a>
+    <a data-page="analytics"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> аналитика</a>
+    <a data-page="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg> настройки</a>
+  </nav>
+  <div class="sidebar-founders">
+    <p>основатели</p>
+    <div><span class="founder-tag" data-founder="dymonaft">@dymonaft</span> <span class="founder-tag" data-founder="concole_hack">@concole_hack</span></div>
+  </div>
+</aside>
+
+<main class="main" id="mainContent">
+  <div class="logo-center">
+    <div class="circle-logo" id="logoClick">
+      <img src="https://www.krea.ai/api/img?f=webp&i=https%3A%2F%2Fgen.krea.ai%2Fimages%2Fe14a6057-6b4e-4673-8142-7c3eeb294fad.png" alt="NanoAlpha logo">
+    </div>
+  </div>
+
+  <div class="coords-wrap">
+    <div class="coords-block" id="coordsBlock">📍 4861.968 / 63.000000 / -7028.887</div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; align-items: center; margin-bottom: 1rem;">
+    <span class="badge-ip" id="serverBadge">⚡ mc.dexland.org</span>
+    <span style="font-weight: 600; letter-spacing: 0.2px;">Dexland · штаб NanoAlpha</span>
+    <span class="mini-badge" id="versionBadge">v.3.0.2</span>
+    <span class="mini-badge" id="statusBadge">защита активна</span>
+  </div>
+
+  <section id="page-main">
+    <h2 class="section-title">о миссии</h2>
+    <div class="desc-text">
+      Штаб защиты игроков — координация, мониторинг и быстрая реакция на угрозы. 
+      Здесь собираются данные о безопасности, обрабатываются запросы и выдаются рекомендации. 
+      Наша цель — сохранить честную игру и защитить каждого участника сообщества Dexland.
+      <br><br>
+      NanoAlpha — центр оперативного реагирования, аналитический узел и точка сбора логов. 
+      Мы обеспечиваем прозрачность, защиту от читеров и стабильность игрового процесса.
+    </div>
+
+    <div class="photo-placeholder" id="photoPlaceholder">
+      <span>📸  Зона фото штаба  •  (нажмите для загрузки)</span>
+    </div>
+
+    <h2 class="section-title">интеграции & API</h2>
+    <div class="api-grid" id="apiGrid">
+      <div class="api-card" data-api="ShieldAPI"><div class="api-name"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> ShieldAPI</div><div class="api-desc">проверка статуса игрока, онлайн</div></div>
+      <div class="api-card" data-api="LogBridge"><div class="api-name"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 21v-6h8v6"/></svg> LogBridge</div><div class="api-desc">поток событий, аудит</div></div>
+      <div class="api-card" data-api="RadarV2"><div class="api-name"><svg viewBox="0 0 24 24"><path d="M20 12H4M12 4v16"/></svg> RadarV2</div><div class="api-desc">координаты, трекинг</div></div>
+      <div class="api-card" data-api="VaultCore"><div class="api-name"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> VaultCore</div><div class="api-desc">доступ, роли, ключи</div></div>
+      <div class="api-card" data-api="MetaScan"><div class="api-name"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M9 4v16M15 4v16"/></svg> MetaScan</div><div class="api-desc">сканирование метаданных</div></div>
+      <div class="api-card" data-api="PulseWatch"><div class="api-name"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> PulseWatch</div><div class="api-desc">мониторинг задержек</div></div>
+    </div>
+
+    <h2 class="section-title">сервера / IP (демо)</h2>
+    <div class="table-wrap">
+      <table id="serverTable">
+        <thead><tr><th>IP / хост</th><th>порт</th><th>статус</th><th>назначение</th><th>нагрузка</th></tr></thead>
+        <tbody>
+          <tr><td>10.23.45.12</td><td>25565</td><td><span class="status-badge">онлайн</span></td><td>основной хаб</td><td>22%</td></tr>
+          <tr><td>10.23.45.14</td><td>25570</td><td><span class="status-badge warn">нагрузка</span></td><td>API-шлюз</td><td>78%</td></tr>
+          <tr><td>10.23.45.18</td><td>8080</td><td><span class="status-badge off">офлайн</span></td><td>логирование</td><td>—</td></tr>
+          <tr><td>10.23.45.22</td><td>3306</td><td><span class="status-badge">онлайн</span></td><td>база данных</td><td>34%</td></tr>
+          <tr><td>10.23.45.30</td><td>443</td><td><span class="status-badge">онлайн</span></td><td>веб-интерфейс</td><td>12%</td></tr>
+          <tr><td>10.23.45.40</td><td>25580</td><td><span class="status-badge">онлайн</span></td><td>аналитика</td><td>47%</td></tr>
+          <tr><td>10.23.45.55</td><td>9000</td><td><span class="status-badge warn">нагрузка</span></td><td>кэш-сервер</td><td>81%</td></tr>
+          <tr><td>10.23.45.67</td><td>25590</td><td><span class="status-badge">онлайн</span></td><td>авторизация</td><td>19%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="double-col">
+      <div>
+        <h2 class="section-title" style="margin-top: 0.2rem;">дополнительные модули</h2>
+        <div class="extra-grid" style="grid-template-columns: 1fr;">
+          <div class="extra-card" data-module="anticheat"><h4>🛡️ AntiCheat Engine</h4><p>Обнаружение читов, автоматическая блокировка</p></div>
+          <div class="extra-card" data-module="dashboard"><h4>📊 Dashboard Lite</h4><p>Графики активности, топ игроков</p></div>
+          <div class="extra-card" data-module="auth"><h4>🔐 2FA / Auth</h4><p>Двухфакторная аутентификация</p></div>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-title" style="margin-top: 0.2rem;">быстрый доступ</h2>
+        <div class="extra-grid" style="grid-template-columns: 1fr;">
+          <div class="extra-card" data-module="webhook"><h4>📡 WebHook</h4><p>Уведомления в Discord, Telegram</p></div>
+          <div class="extra-card" data-module="apikey"><h4>🧩 API Key</h4><p>Генерация ключей, управление</p></div>
+          <div class="extra-card" data-module="logs"><h4>📁 Логи сессий</h4><p>Хранение 30 дней, фильтры</p></div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">реестр правил & политика</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.8rem; background: #f4f9ff; border-radius: 30px; padding: 1.2rem 1.8rem; margin: 0.2rem 0 1.8rem 0;">
+      <span style="font-weight: 400; cursor: pointer;" class="rule-item">⚖️ кодекс игрока</span>
+      <span style="font-weight: 400; cursor: pointer;" class="rule-item">📋 конфиденциальность</span>
+      <span style="font-weight: 400; cursor: pointer;" class="rule-item">⏳ сроки реагирования</span>
+      <span style="font-weight: 400; cursor: pointer;" class="rule-item">🔄 апелляции</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+      <div style="background: #fafcfe; border-radius: 20px; padding: 0.7rem 1rem; border:1px solid #e6edf8;" class="stat-item"><span style="font-weight:600;">протокол</span> 3.1.2</div>
+      <div style="background: #fafcfe; border-radius: 20px; padding: 0.7rem 1rem; border:1px solid #e6edf8;" class="stat-item"><span style="font-weight:600;">регистраций</span> 14.2k</div>
+      <div style="background: #fafcfe; border-radius: 20px; padding: 0.7rem 1rem; border:1px solid #e6edf8;" class="stat-item"><span style="font-weight:600;">запросов/мин</span> 843</div>
+      <div style="background: #fafcfe; border-radius: 20px; padding: 0.7rem 1rem; border:1px solid #e6edf8;" class="stat-item"><span style="font-weight:600;">онлайн</span> 1.2k</div>
+    </div>
+
+    <div style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.8rem 2rem; align-items: center;">
+      <span class="footer-ip">🌐 mc.dexland.org · Dexland</span>
+      <span style="font-weight: 500; font-size: 0.95rem; color: #2a3645;">штаб NanoAlpha · защита игроков</span>
+      <span style="font-weight: 300; font-size: 0.8rem; color: #5b6a7c;">© 2026 · демо-данные</span>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <h3 id="modalTitle" style="margin-bottom: 0.4rem; font-weight: 700;">Заголовок</h3>
+    <p id="modalBody" style="font-weight: 300; line-height: 1.6; color: #1e1e1e;">Содержание</p>
+  </div>
+</div>
+
+<div class="toast" id="toast">✔️ Готово</div>
+
+<script>
+  (function() {
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalClose = document.getElementById('modalClose');
+    const toast = document.getElementById('toast');
+
+    function showToast(text) {
+      toast.textContent = text || '✔️ выполнено';
+      toast.classList.add('show');
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function openModal(title, body) {
+      modalTitle.textContent = title || 'Информация';
+      modalBody.innerHTML = body || '—';
+      modal.classList.add('open');
+    }
+
+    modalClose.addEventListener('click', () => modal.classList.remove('open'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.sidebar-nav a').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        showToast('📂 раздел: ' + this.textContent.trim());
+      });
+    });
+
+    document.querySelectorAll('.api-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const name = this.dataset.api || 'API';
+        openModal('🧩 ' + name, 'Демо-информация о <strong>' + name + '</strong><br>Статус: активен<br>Версия: 2.4.1<br>Документация: /api/' + name.toLowerCase());
+      });
+    });
+
+    document.querySelectorAll('.extra-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const mod = this.dataset.module || 'модуль';
+        openModal('📦 ' + mod, 'Модуль <strong>' + mod + '</strong><br>Статус: работает<br>Нагрузка: низкая<br>Доступен с версии 3.0');
+      });
+    });
+
+    document.querySelectorAll('.rule-item').forEach(item => {
+      item.addEventListener('click', function() {
+        openModal('📜 ' + this.textContent.trim(), 'Политика ' + this.textContent.trim() + '<br>Версия: 1.2<br>Актуально с 2026-01-01');
+      });
+    });
+
+    document.querySelectorAll('.stat-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const txt = this.textContent.trim();
+        openModal('📊 ' + txt, 'Значение: ' + txt.split(' ').pop() + '<br>Обновлено: сейчас<br>Источник: демо');
+      });
+    });
+
+    document.querySelectorAll('.founder-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        const name = this.dataset.founder || 'основатель';
+        openModal('👤 ' + name, 'Основатель штаба NanoAlpha<br>Роль: администратор безопасности<br>Статус: активен');
+      });
+    });
+
+    document.getElementById('logoClick').addEventListener('click', function() {
+      openModal('🛡️ NanoAlpha', 'Штаб защиты игроков<br>Версия логотипа: 2.0<br>Координаты штаба: 4861.968 / 63.000000 / -7028.887');
+    });
+
+    document.getElementById('coordsBlock').addEventListener('click', function() {
+      openModal('📍 Координаты', '4861.968 / 63.000000 / -7028.887<br>Точка входа в штаб NanoAlpha<br>Зона: безопасная');
+    });
+
+    document.getElementById('serverBadge').addEventListener('click', function() {
+      openModal('🌐 Сервер', 'mc.dexland.org<br>Порт: 25565<br>Статус: онлайн<br>Игроков: 1.2k');
+    });
+
+    document.getElementById('versionBadge').addEventListener('click', function() {
+      openModal('📌 Версия', 'NanoAlpha v.3.0.2<br>Дата сборки: 2026-06-28<br>API: совместим с v2');
+    });
+
+    document.getElementById('statusBadge').addEventListener('click', function() {
+      openModal('⚡ Статус', 'Защита активна<br>Уровень угрозы: низкий<br>Последнее событие: 12 мин назад');
+    });
+
+    document.getElementById('photoPlaceholder').addEventListener('click', function() {
+      openModal('📸 Фото штаба', 'Загрузите панораму NanoAlpha<br>Формат: PNG, JPG, WEBP<br>Макс. размер: 10MB<br><br><em>(демо-зона)</em>');
+    });
+
+    document.querySelectorAll('#serverTable tbody tr').forEach(row => {
+      row.addEventListener('click', function() {
+        const cells = this.querySelectorAll('td');
+        const ip = cells[0]?.textContent || '—';
+        const port = cells[1]?.textContent || '—';
+        const status = cells[2]?.textContent?.trim() || '—';
+        const purpose = cells[3]?.textContent || '—';
+        const load = cells[4]?.textContent || '—';
+        openModal('🖥️ ' + ip, 'IP: ' + ip + '<br>Порт: ' + port + '<br>Статус: ' + status + '<br>Назначение: ' + purpose + '<br>Нагрузка: ' + load);
+      });
+    });
+
+    document.querySelectorAll('.sidebar-nav a').forEach((link, idx) => {
+      link.addEventListener('click', function(e) {
+        if (this.dataset.page === 'settings') {
+          openModal('⚙️ Настройки', 'Режим: защита<br>Уровень логирования: подробный<br>Автообновление: включено<br>Тема: светлая');
+        } else if (this.dataset.page === 'monitor') {
+          openModal('📊 Монитор', 'Онлайн: 1.2k<br>Серверов: 8<br>Средний пинг: 34ms<br>Событий за час: 142');
+        } else if (this.dataset.page === 'data') {
+          openModal('🗃️ Данные', 'База: 14.2k записей<br>API-запросов: 843/мин<br>Кэш: 81% нагрузка');
+        } else if (this.dataset.page === 'tracker') {
+          openModal('📍 Трекер', 'Активных сессий: 312<br>Координаты: обновляются<br>Зоны: 6');
+        } else if (this.dataset.page === 'analytics') {
+          openModal('📈 Аналитика', 'Графики: онлайн, события, нагрузка<br>Период: 24 часа<br>Тренд: стабильный');
+        } else {
+          openModal('📋 Панель', 'Главная панель NanoAlpha<br>Все системы работают штатно');
+        }
+      });
+    });
+
+    document.querySelectorAll('.status-badge').forEach(badge => {
+      badge.addEventListener('click', function() {
+        const text = this.textContent.trim();
+        openModal('🔵 Статус', 'Текущий статус: <strong>' + text + '</strong><br>Обновлено: только что<br>Данные демо');
+      });
+    });
+
+    console.log('NanoAlpha · защита активна');
+  })();
+</script>
+</body>
+</html>
