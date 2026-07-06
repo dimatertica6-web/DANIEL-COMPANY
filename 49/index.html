@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MelloANTI — Документация</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d0d0d0;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0a0a0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            border-bottom: 1px solid #e8e8e8;
+            padding: 30px 0 20px 0;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            animation: fadeInDown 0.8s ease;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo svg {
+            width: 48px;
+            height: 48px;
+        }
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #1a1a1a;
+        }
+        .logo h1 span {
+            color: #6c6c6c;
+            font-weight: 300;
+        }
+        .version {
+            font-size: 14px;
+            color: #888;
+            background: #f5f5f5;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 400;
+        }
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0 30px 0;
+            animation: fadeIn 1s ease 0.2s both;
+        }
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-size: 13px;
+            padding: 8px 18px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background: #f8f8f8;
+            border: 1px solid transparent;
+        }
+        nav a:hover {
+            background: #1a1a1a;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .hero {
+            padding: 40px 0 30px 0;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+        .hero h2 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            font-weight: 300;
+        }
+        .badge-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0 10px 0;
+        }
+        .badge {
+            font-size: 12px;
+            background: #f0f0f0;
+            padding: 4px 14px;
+            border-radius: 20px;
+            color: #444;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            border: 1px solid #e8e8e8;
+        }
+        .badge svg {
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        .section {
+            margin: 60px 0;
+            animation: fadeInUp 0.8s ease both;
+        }
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 16px;
+        }
+        .section-title svg {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+        }
+        .card {
+            background: #fafafa;
+            border: 1px solid #ececec;
+            border-radius: 12px;
+            padding: 28px 24px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.04);
+            border-color: #d0d0d0;
+        }
+        .card svg {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 14px;
+            opacity: 0.8;
+        }
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+        }
+        .card p {
+            font-size: 14px;
+            color: #666;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+        .card .code-block {
+            background: #f4f4f4;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #333;
+            margin-top: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+            border: 1px solid #e8e8e8;
+        }
+        .table-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #ececec;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        th {
+            background: #f5f5f5;
+            text-align: left;
+            padding: 14px 18px;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+        }
+        td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+            font-weight: 300;
+        }
+        tr:hover td {
+            background: #fafafa;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #444;
+        }
+        .feature-list li svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .badge-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0f0f0;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #555;
+        }
+        .badge-icon svg {
+            width: 14px;
+            height: 14px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ececec;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+        .stat-item .number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: -1px;
+        }
+        .stat-item .label {
+            font-size: 13px;
+            color: #888;
+            font-weight: 300;
+            margin-top: 4px;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid #f0f0f0;
+            margin: 50px 0;
+        }
+        .footer {
+            border-top: 1px solid #e8e8e8;
+            padding: 30px 0 20px 0;
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 13px;
+            color: #999;
+        }
+        .footer a {
+            color: #555;
+            text-decoration: none;
+            border-bottom: 1px dotted #ddd;
+        }
+        .footer a:hover {
+            color: #1a1a1a;
+            border-bottom-color: #1a1a1a;
+        }
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.02;
+            background: radial-gradient(circle at 20% 50%, #1a1a1a 0%, transparent 70%);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .pulse {
+            animation: pulse 3s ease-in-out infinite;
+        }
+        .slide-in {
+            animation: fadeInUp 0.6s ease both;
+        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+        .delay-7 { animation-delay: 0.7s; }
+        .delay-8 { animation-delay: 0.8s; }
+        .delay-9 { animation-delay: 0.9s; }
+        .delay-10 { animation-delay: 1.0s; }
+        .mt-1 { margin-top: 10px; }
+        .mt-2 { margin-top: 20px; }
+        .mt-3 { margin-top: 30px; }
+        .mb-1 { margin-bottom: 10px; }
+        .mb-2 { margin-bottom: 20px; }
+        .mb-3 { margin-bottom: 30px; }
+        .text-center { text-align: center; }
+        .text-small { font-size: 13px; color: #888; }
+        .flex { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        @media (max-width: 768px) {
+            .container { padding: 20px 16px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .hero h2 { font-size: 28px; }
+            header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .logo h1 { font-size: 22px; }
+            nav a { font-size: 11px; padding: 6px 12px; }
+            .stats { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .stats { grid-template-columns: 1fr; }
+            .section-title { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<div class="container">
+
+<header>
+    <div class="logo">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="40" height="40" rx="10" stroke="#1a1a1a" stroke-width="2"/>
+            <path d="M16 18L32 18M16 24L32 24M16 30L26 30" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="34" cy="18" r="3" stroke="#1a1a1a" stroke-width="2"/>
+            <circle cx="34" cy="30" r="3" stroke="#1a1a1a" stroke-width="2"/>
+            <circle cx="12" cy="36" r="2" fill="#1a1a1a"/>
+            <circle cx="20" cy="36" r="2" fill="#1a1a1a"/>
+            <circle cx="28" cy="36" r="2" fill="#1a1a1a"/>
+            <circle cx="36" cy="36" r="2" fill="#1a1a1a"/>
+            <path d="M24 12L24 8M24 40L24 44" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h1>Mello<span>ANTI</span></h1>
+    </div>
+    <div class="version">v3.0 · 28.03.2026</div>
+</header>
+
+<nav>
+    <a href="#overview">Обзор</a>
+    <a href="#features">Функции</a>
+    <a href="#encryption">Шифрование</a>
+    <a href="#sessions">Сессии</a>
+    <a href="#security">Безопасность</a>
+    <a href="#api">API</a>
+    <a href="#commands">Команды</a>
+    <a href="#tables">Таблицы</a>
+    <a href="#faq">FAQ</a>
+</nav>
+
+<section class="hero" id="overview">
+    <h2>Полная защита Telegram<br>аккаунта нового поколения</h2>
+    <p>MelloANTI — это комплексное решение для шифрования, анти-сноса, защиты сессий и мониторинга активности вашего Telegram аккаунта с реальной интеграцией и автоматической защитой.</p>
+    <div class="badge-container">
+        <span class="badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4L8 8L10 10"/></svg>Активная защита</span>
+        <span class="badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M6 6L10 10M10 6L6 10"/></svg>Шифрование AES-256</span>
+        <span class="badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8L6 11L13 4"/></svg>Анти-снос</span>
+        <span class="badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="14" height="10" rx="1"/><path d="M5 2L8 4L11 2"/></svg>Защита сессий</span>
+        <span class="badge"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L6 12L14 4"/></svg>Автоматическое резервирование</span>
+    </div>
+</section>
+
+<div class="stats">
+    <div class="stat-item slide-in delay-1"><div class="number">28+</div><div class="label">Функций защиты</div></div>
+    <div class="stat-item slide-in delay-2"><div class="number">20</div><div class="label">Кнопок управления</div></div>
+    <div class="stat-item slide-in delay-3"><div class="number">100%</div><div class="label">Шифрование трафика</div></div>
+    <div class="stat-item slide-in delay-4"><div class="number">24/7</div><div class="label">Мониторинг сессий</div></div>
+    <div class="stat-item slide-in delay-5"><div class="number">6</div><div class="label">Фоновых процессов</div></div>
+    <div class="stat-item slide-in delay-6"><div class="number">∞</div><div class="label">Неограниченные сессии</div></div>
+</div>
+
+<hr class="divider">
+
+<section class="section" id="features">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><rect x="2" y="2" width="24" height="24" rx="4"/><path d="M8 8L20 8M8 14L20 14M8 20L16 20"/></svg>
+        Ключевые возможности
+    </div>
+    <div class="grid-3">
+        <div class="card slide-in delay-1">
+            <svg viewBox="0 0 32 32" fill="none" stroke="#1a1a1a" stroke-width="1.8"><rect x="6" y="6" width="20" height="20" rx="3"/><path d="M12 6L12 26M20 6L20 26"/></svg>
+            <h3>Шифрование сообщений</h3>
+            <p>Полное шифрование всех исходящих и входящих сообщений с использованием симметричного алгоритма AES-256 и Fernet. Ключи генерируются индивидуально для каждого пользователя на основе номера телефона и соли, что обеспечивает уникальность и невозможность подбора.</p>
+            <div class="code-block">encrypted = Fernet(key).encrypt(text)</div>
+        </div>
+        <div class="card slide-in delay-2">
+            <svg viewBox="0 0 32 32" fill="none" stroke="#1a1a1a" stroke-width="1.8"><path d="M16 4C9 4 4 9 4 16C4 23 9 28 16 28C23 28 28 23 28 16C28 9 23 4 16 4Z"/><path d="M16 12L16 18M16 22L16 24"/></svg>
+            <h3>Анти-снос сессий</h3>
+            <p>Система непрерывного мониторинга всех активных сессий с проверкой цифровых отпечатков. При обнаружении подозрительной сессии с несовпадающим fingerprint происходит автоматическая блокировка и уведомление пользователя с детальным логированием.</p>
+            <div class="code-block">fingerprint = SHA256(dc_id + auth_key + server)</div>
+        </div>
+        <div class="card slide-in delay-3">
+            <svg viewBox="0 0 32 32" fill="none" stroke="#1a1a1a" stroke-width="1.8"><rect x="2" y="6" width="28" height="20" rx="2"/><path d="M8 2L12 6M24 2L20 6"/></svg>
+            <h3>Защита от перехвата</h3>
+            <p>Многоуровневая защита от MITM-атак, сниффинга и перехвата сессий. Используется ротация ключей каждые 24 часа, привязка к устройству через уникальный device_id и проверка IP-адресов с автоматической блокировкой подозрительных.</p>
+            <div class="code-block">auto_rotation = 86400 seconds</div>
+        </div>
+        <div class="card slide-in delay-4">
+            <svg viewBox="0 0 32 32" fill="none" stroke="#1a1a1a" stroke-width="1.8"><path d="M4 16L28 16M16 4L16 28"/><circle cx="16" cy="16" r="10"/></svg>
+            <h3>Блокировка IP</h3>
+            <p>Ручная и автоматическая блокировка IP-адресов при подозрительной активности. Поддерживается постоянная и временная блокировка с возможностью указания причины и срока действия. Все заблокированные IP сохраняются в базе данных.</p>
+            <div class="code-block">block_ip(ip, reason, expires_at)</div>
+        </div>
+        <div class="card slide-in delay-5">
+            <svg viewBox="0 0 32 32" fill="none" stroke="#1a1a1a" stroke-width="1.8"><path d="M4 8L12 16L4 24M20 8L28 16L20 24"/></svg>
+            <h3>Ротация ключей</h3>
+            <p>Автоматическая и ручная ротация ключей шифрования для обеспечения максимальной безопасности. При ротации старый ключ архивируется в таблице key_rotation с указанием причины и времени, что позволяет отслеживать историю изменений.</p>
+            <div class="code-block">rotate_key(user_id, "manual rotation")</div>
+        </div>
+        <div class="card slide-in delay-6">
+            <svg viewBox="0 0 32 32" fill="none" stroke="#1a1a1a" stroke-width="1.8"><path d="M4 20L12 12L18 18L28 8"/><circle cx="12" cy="12" r="2"/><circle cx="28" cy="8" r="2"/></svg>
+            <h3>Планирование сообщений</h3>
+            <p>Отправка зашифрованных сообщений по расписанию с указанием времени в UNIX формате. Сообщения хранятся в базе данных и отправляются автоматически фоновым процессом, что позволяет планировать коммуникацию заранее.</p>
+            <div class="code-block">schedule_message(receiver, time, text)</div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="encryption">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><rect x="4" y="8" width="20" height="16" rx="2"/><path d="M8 8L8 6C8 3 10 2 14 2C18 2 20 3 20 6L20 8"/></svg>
+        Система шифрования
+    </div>
+    <div class="grid-2">
+        <div>
+            <p style="font-size:15px;color:#444;font-weight:300;margin-bottom:16px;">MelloANTI использует гибридную систему шифрования на основе двух криптографических библиотек: Fernet (симметричное шифрование) и AES-256 в режиме CFB. Каждый пользователь получает уникальный ключ, генерируемый с помощью PBKDF2HMAC с 200000 итераций и солью длиной 32 байта.</p>
+            <ul class="feature-list">
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Генерация ключа на основе номера телефона</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Использование соли для уникальности</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>200000 итераций PBKDF2 для стойкости</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Автоматическая ротация каждые 24 часа</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Хранение истории ключей для аудита</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Поддержка ручной смены ключа</li>
+            </ul>
+        </div>
+        <div>
+            <div class="card" style="background:#f8f8f8;border-color:#e0e0e0;">
+                <h3 style="font-size:16px;">Алгоритм шифрования</h3>
+                <div class="code-block" style="background:#fff;font-size:13px;line-height:1.9;">
+                    <span style="color:#888;"># Генерация ключа</span><br>
+                    salt = os.urandom(32)<br>
+                    kdf = PBKDF2HMAC(algorithm=SHA256, length=32, salt=salt, iterations=200000)<br>
+                    key = base64.urlsafe_b64encode(kdf.derive(phone.encode()))<br><br>
+                    <span style="color:#888;"># Шифрование</span><br>
+                    f = Fernet(key)<br>
+                    encrypted = f.encrypt(text.encode()).decode()<br><br>
+                    <span style="color:#888;"># Дешифрование</span><br>
+                    decrypted = f.decrypt(encrypted.encode()).decode()
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="sessions">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><rect x="2" y="6" width="24" height="16" rx="2"/><circle cx="8" cy="14" r="2"/><circle cx="14" cy="14" r="2"/><circle cx="20" cy="14" r="2"/></svg>
+        Управление сессиями
+    </div>
+    <div class="grid-2">
+        <div>
+            <p style="font-size:15px;color:#444;font-weight:300;margin-bottom:16px;">Система управления сессиями обеспечивает полный контроль над всеми активными подключениями к вашему аккаунту. Каждая сессия получает уникальный fingerprint на основе DC ID, ключа авторизации и адреса сервера.</p>
+            <ul class="feature-list">
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Отслеживание всех активных сессий</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Автоматическая блокировка подозрительных</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Детальная информация об устройстве и IP</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Очистка неактивных сессий каждые 24 часа</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Возможность принудительного завершения</li>
+            </ul>
+        </div>
+        <div>
+            <div class="card" style="background:#f8f8f8;border-color:#e0e0e0;">
+                <h3 style="font-size:16px;">Структура сессии</h3>
+                <div class="code-block" style="background:#fff;font-size:12px;line-height:2;">
+                    {<br>
+                    &nbsp;&nbsp;"session_id": "8945457416",<br>
+                    &nbsp;&nbsp;"device_name": "Main Device",<br>
+                    &nbsp;&nbsp;"ip_address": "192.168.1.1",<br>
+                    &nbsp;&nbsp;"login_time": 1711641600,<br>
+                    &nbsp;&nbsp;"fingerprint": "a3f5c8d9e1b2...",<br>
+                    &nbsp;&nbsp;"is_active": true<br>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="security">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M14 2L4 6V14C4 20 8 24 14 26C20 24 24 20 24 14V6L14 2Z"/><path d="M10 14L13 17L19 11"/></svg>
+        Безопасность и защита
+    </div>
+    <div class="grid-3">
+        <div class="card slide-in delay-1">
+            <h3>Многофакторная защита</h3>
+            <p>Комбинация шифрования, анти-сноса, ротации ключей и мониторинга сессий создает многоуровневую систему безопасности, которая предотвращает несанкционированный доступ к аккаунту.</p>
+        </div>
+        <div class="card slide-in delay-2">
+            <h3>Автоматическое резервирование</h3>
+            <p>Ежедневное создание резервных копий всех данных пользователя, включая ключи шифрования, настройки защиты и историю сессий. Резервные копии хранятся локально.</p>
+        </div>
+        <div class="card slide-in delay-3">
+            <h3>Аудит и логирование</h3>
+            <p>Полное логирование всех действий пользователя с указанием времени, типа действия и IP-адреса. Логи хранятся 30 дней с автоматической очисткой старых записей.</p>
+        </div>
+        <div class="card slide-in delay-4">
+            <h3>Фильтрация спама</h3>
+            <p>Встроенная система фильтрации нежелательных сообщений на основе регулярных выражений и пользовательских правил. Позволяет автоматически блокировать спам-сообщения.</p>
+        </div>
+        <div class="card slide-in delay-5">
+            <h3>Защита от брутфорса</h3>
+            <p>Автоматическая блокировка IP-адресов при множественных неудачных попытках авторизации с настраиваемым порогом срабатывания и временем блокировки.</p>
+        </div>
+        <div class="card slide-in delay-6">
+            <h3>Двухфакторная аутентификация</h3>
+            <p>Поддержка двухфакторной аутентификации с генерацией одноразовых кодов и привязкой к устройству для дополнительного уровня защиты аккаунта.</p>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="api">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><rect x="2" y="6" width="24" height="16" rx="2"/><path d="M8 10L12 14L8 18M16 10L20 14L16 18"/></svg>
+        Интеграция с Telegram API
+    </div>
+    <div class="grid-2">
+        <div>
+            <p style="font-size:15px;color:#444;font-weight:300;margin-bottom:16px;">MelloANTI использует официальный Telegram API через библиотеку Telethon для полной интеграции с аккаунтом. Поддерживаются все основные функции: отправка сообщений, управление сессиями, изменение статуса и многое другое.</p>
+            <ul class="feature-list">
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>API ID: 33089170</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>API Hash: 2fd3f9a90c9621a0dcfee08ab3e5679d</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Поддержка всех DC серверов</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Автоматическое переподключение</li>
+                <li><svg viewBox="0 0 20 20" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 10L8 14L16 6"/></svg>Обработка ошибок и флуд-контроль</li>
+            </ul>
+        </div>
+        <div>
+            <div class="card" style="background:#f8f8f8;border-color:#e0e0e0;">
+                <h3 style="font-size:16px;">Подключение к API</h3>
+                <div class="code-block" style="background:#fff;font-size:12px;line-height:2;">
+                    client = TelegramClient(session_file, API_ID, API_HASH)<br>
+                    await client.start(phone=phone)<br>
+                    me = await client.get_me()<br>
+                    await client.send_message(receiver, text)<br>
+                    await client.disconnect()
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="commands">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><rect x="2" y="2" width="24" height="24" rx="4"/><path d="M8 8L20 8M8 14L20 14M8 20L16 20"/></svg>
+        Команды и кнопки управления
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>Команда</th><th>Описание</th><th>Категория</th><th>Доступность</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>/start</td><td>Регистрация и активация бота</td><td>Базовые</td><td>Всегда</td></tr>
+                <tr><td>/help</td><td>Справка по всем функциям</td><td>Базовые</td><td>Всегда</td></tr>
+                <tr><td>🔐 Шифровать</td><td>Шифрование текста</td><td>Шифрование</td><td>После регистрации</td></tr>
+                <tr><td>🔓 Дешифровать</td><td>Дешифрование текста</td><td>Шифрование</td><td>После регистрации</td></tr>
+                <tr><td>🔄 Ротация ключа</td><td>Смена ключа шифрования</td><td>Шифрование</td><td>После регистрации</td></tr>
+                <tr><td>📱 Защита сессий</td><td>Активация защиты сессий</td><td>Безопасность</td><td>После регистрации</td></tr>
+                <tr><td>🛡 Анти-снос</td><td>Активация анти-сноса</td><td>Безопасность</td><td>После регистрации</td></tr>
+                <tr><td>🚫 Блокировка IP</td><td>Ручная блокировка IP</td><td>Безопасность</td><td>После регистрации</td></tr>
+                <tr><td>📊 Логи</td><td>Просмотр логов действий</td><td>Мониторинг</td><td>После регистрации</td></tr>
+                <tr><td>👤 Профиль</td><td>Просмотр профиля</td><td>Информация</td><td>После регистрации</td></tr>
+                <tr><td>🔑 Сменить ключ</td><td>Ручная смена ключа</td><td>Шифрование</td><td>После регистрации</td></tr>
+                <tr><td>📁 Экспорт данных</td><td>Экспорт данных в JSON</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>📥 Импорт данных</td><td>Импорт данных из JSON</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>⏰ Автоблокировка</td><td>Настройка автоблокировки</td><td>Безопасность</td><td>После регистрации</td></tr>
+                <tr><td>🌐 Сменить DC</td><td>Смена дата-центра</td><td>Интеграция</td><td>После регистрации</td></tr>
+                <tr><td>🔄 Перезапуск сессии</td><td>Перезапуск сессии</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>📩 Отправить зашифрованно</td><td>Отправка шифрованного сообщения</td><td>Шифрование</td><td>После регистрации</td></tr>
+                <tr><td>📨 Получить зашифрованно</td><td>Расшифровка полученного</td><td>Шифрование</td><td>После регистрации</td></tr>
+                <tr><td>🗑 Очистить сессии</td><td>Удаление всех сессий</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>📋 Список сессий</td><td>Просмотр активных сессий</td><td>Мониторинг</td><td>После регистрации</td></tr>
+                <tr><td>🔒 Заблокировать аккаунт</td><td>Блокировка аккаунта</td><td>Безопасность</td><td>После регистрации</td></tr>
+                <tr><td>🔓 Разблокировать аккаунт</td><td>Разблокировка аккаунта</td><td>Безопасность</td><td>После регистрации</td></tr>
+                <tr><td>📞 Контакты</td><td>Управление контактами</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>🔔 Уведомления</td><td>Просмотр уведомлений</td><td>Мониторинг</td><td>После регистрации</td></tr>
+                <tr><td>💾 Резервное копирование</td><td>Создание бэкапа</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>🔄 Восстановление</td><td>Восстановление из бэкапа</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>📅 Расписание</td><td>Планирование сообщений</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>📢 Рассылка</td><td>Массовая рассылка</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>🔍 Фильтры</td><td>Управление фильтрами</td><td>Безопасность</td><td>После регистрации</td></tr>
+                <tr><td>📱 Устройства</td><td>Управление устройствами</td><td>Управление</td><td>После регистрации</td></tr>
+                <tr><td>ℹ️ Инфо</td><td>Информация о боте</td><td>Информация</td><td>Всегда</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="tables">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><rect x="2" y="2" width="24" height="24" rx="2"/><path d="M2 8L26 8M2 14L26 14M2 20L26 20"/></svg>
+        Структура базы данных
+    </div>
+    <div class="grid-2">
+        <div>
+            <h3 style="font-size:16px;margin-bottom:10px;">Таблица users</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead>
+                    <tbody>
+                        <tr><td>user_id</td><td>INTEGER</td><td>ID пользователя</td></tr>
+                        <tr><td>phone</td><td>TEXT</td><td>Номер телефона</td></tr>
+                        <tr><td>encrypted_key</td><td>TEXT</td><td>Ключ шифрования</td></tr>
+                        <tr><td>created_at</td><td>INTEGER</td><td>Дата регистрации</td></tr>
+                        <tr><td>protection_level</td><td>INTEGER</td><td>Уровень защиты</td></tr>
+                        <tr><td>anti_sniff</td><td>BOOLEAN</td><td>Анти-снос</td></tr>
+                        <tr><td>device_id</td><td>TEXT</td><td>ID устройства</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <h3 style="font-size:16px;margin-bottom:10px;">Таблица sessions</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead>
+                    <tbody>
+                        <tr><td>id</td><td>INTEGER</td><td>ID записи</td></tr>
+                        <tr><td>user_id</td><td>INTEGER</td><td>ID пользователя</td></tr>
+                        <tr><td>session_id</td><td>TEXT</td><td>ID сессии</td></tr>
+                        <tr><td>ip_address</td><td>TEXT</td><td>IP адрес</td></tr>
+                        <tr><td>fingerprint</td><td>TEXT</td><td>Отпечаток</td></tr>
+                        <tr><td>is_active</td><td>BOOLEAN</td><td>Активна</td></tr>
+                        <tr><td>location</td><td>TEXT</td><td>Геолокация</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <h3 style="font-size:16px;margin-bottom:10px;">Таблица messages</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead>
+                    <tbody>
+                        <tr><td>id</td><td>INTEGER</td><td>ID сообщения</td></tr>
+                        <tr><td>sender_id</td><td>INTEGER</td><td>Отправитель</td></tr>
+                        <tr><td>receiver_id</td><td>INTEGER</td><td>Получатель</td></tr>
+                        <tr><td>encrypted_text</td><td>TEXT</td><td>Зашифрованный текст</td></tr>
+                        <tr><td>decrypted_text</td><td>TEXT</td><td>Расшифрованный текст</td></tr>
+                        <tr><td>timestamp</td><td>INTEGER</td><td>Время</td></tr>
+                        <tr><td>is_encrypted</td><td>BOOLEAN</td><td>Зашифровано</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <h3 style="font-size:16px;margin-bottom:10px;">Таблица logs</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead>
+                    <tbody>
+                        <tr><td>id</td><td>INTEGER</td><td>ID записи</td></tr>
+                        <tr><td>user_id</td><td>INTEGER</td><td>ID пользователя</td></tr>
+                        <tr><td>action</td><td>TEXT</td><td>Действие</td></tr>
+                        <tr><td>details</td><td>TEXT</td><td>Детали</td></tr>
+                        <tr><td>timestamp</td><td>INTEGER</td><td>Время</td></tr>
+                        <tr><td>severity</td><td>INTEGER</td><td>Уровень важности</td></tr>
+                        <tr><td>ip_address</td><td>TEXT</td><td>IP адрес</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="faq">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><circle cx="14" cy="14" r="10"/><path d="M14 10V14M14 18H14.01"/></svg>
+        Часто задаваемые вопросы
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>Как активировать бота?</h3>
+            <p>Отправьте команду /start с указанием номера телефона в формате /start +79991234567. После регистрации ключ шифрования будет сгенерирован автоматически.</p>
+        </div>
+        <div class="card">
+            <h3>Как работает шифрование?</h3>
+            <p>Используется симметричное шифрование AES-256 через библиотеку Fernet. Ключ генерируется на основе номера телефона с использованием PBKDF2 и соли.</p>
+        </div>
+        <div class="card">
+            <h3>Что такое анти-снос?</h3>
+            <p>Система мониторинга сессий, которая проверяет цифровые отпечатки всех активных подключений и автоматически блокирует подозрительные сессии.</p>
+        </div>
+        <div class="card">
+            <h3>Как восстановить данные?</h3>
+            <p>Используйте кнопку "Восстановление" и укажите путь к файлу резервной копии. Резервные копии создаются автоматически каждый день.</p>
+        </div>
+        <div class="card">
+            <h3>Безопасно ли хранить ключи?</h3>
+            <p>Ключи хранятся в локальной базе данных SQLite с шифрованием. Доступ к базе данных имеет только владелец аккаунта.</p>
+        </div>
+        <div class="card">
+            <h3>Поддерживается ли рассылка?</h3>
+            <p>Да, поддерживается массовая рассылка зашифрованных сообщений списку получателей с автоматической обработкой ошибок.</p>
+        </div>
+        <div class="card">
+            <h3>Как запланировать сообщение?</h3>
+            <p>Используйте команду "Расписание" и введите ID получателя, время в UNIX формате и текст сообщения.</p>
+        </div>
+        <div class="card">
+            <h3>Что делать при подозрительной сессии?</h3>
+            <p>Бот автоматически заблокирует подозрительную сессию и отправит уведомление. Вы можете вручную очистить все сессии через соответствующую кнопку.</p>
+        </div>
+        <div class="card">
+            <h3>Как обновить ключ шифрования?</h3>
+            <p>Используйте кнопку "Сменить ключ" или "Ротация ключа" для принудительной замены ключа с сохранением истории.</p>
+        </div>
+        <div class="card">
+            <h3>Поддерживается ли двухфакторная аутентификация?</h3>
+            <p>Да, в боте встроена поддержка двухфакторной аутентификации с генерацией одноразовых кодов и привязкой к устройству.</p>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<section class="section">
+    <div class="section-title">
+        <svg viewBox="0 0 28 28" fill="none" stroke="#1a1a1a" stroke-width="2"><path d="M4 14L10 20L24 6"/></svg>
+        Заключение
+    </div>
+    <p style="font-size:15px;color:#444;font-weight:300;line-height:2;max-width:900px;">
+        MelloANTI представляет собой комплексное решение для защиты Telegram аккаунта от несанкционированного доступа, перехвата сообщений и угона сессий. Благодаря интеграции с официальным API Telegram, использованию современных криптографических алгоритмов и автоматизированной системе мониторинга, бот обеспечивает высокий уровень безопасности, сравнимый с корпоративными решениями. Все ключи шифрования генерируются индивидуально, хранятся локально и регулярно ротируются. Система анти-сноса в реальном времени отслеживает все активные сессии, блокируя подозрительные подключения. Дополнительные функции, такие как планирование сообщений, массовая рассылка, резервное копирование и управление устройствами, делают MelloANTI универсальным инструментом для полного контроля над безопасностью аккаунта. Бот разработан с учетом всех современных требований к безопасности и конфиденциальности, предоставляя пользователю прозрачный и простой интерфейс управления через Telegram. Регулярные обновления и поддержка обеспечивают актуальность защиты перед новыми угрозами. Использование MelloANTI — это гарантия того, что ваш аккаунт находится под надежной защитой 24 часа в сутки 7 дней в неделю.
+    </p>
+</section>
+
+<hr class="divider">
+
+<div class="footer">
+    <span>© 2026 MelloANTI — полная документация</span>
+    <span>
+        <a href="#">GitHub</a> · 
+        <a href="#">Telegram</a> · 
+        <a href="#">Версия 3.0</a>
+    </span>
+</div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.section, .card, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+        setTimeout(() => {
+            document.querySelectorAll('.section, .card, .stat-item').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
+        }, 200);
+    });
+</script>
+</body>
+</html>
