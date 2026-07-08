@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PornHab — Полная документация</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c9d6;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aab8;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+        @keyframes rotateGlow {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .animate-fadeUp {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .animate-slideLeft {
+            animation: slideInLeft 0.6s ease forwards;
+        }
+        .animate-slideRight {
+            animation: slideInRight 0.6s ease forwards;
+        }
+        .animate-scale {
+            animation: scaleIn 0.5s ease forwards;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+        .delay-5 {
+            animation-delay: 0.5s;
+        }
+        .header {
+            padding: 48px 0 32px;
+            border-bottom: 1px solid #edf2f7;
+            background: linear-gradient(180deg, #fafcfe 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(200, 215, 235, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .logo-block img {
+            height: 52px;
+            width: auto;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease;
+        }
+        .logo-block img:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+        .logo-block h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            background: linear-gradient(135deg, #0a0a0a, #3a4a5a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        .logo-block h1::after {
+            content: '™';
+            font-size: 14px;
+            font-weight: 400;
+            -webkit-text-fill-color: #8a9aa8;
+            position: absolute;
+            top: -6px;
+            right: -22px;
+        }
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .header-meta .version {
+            background: #edf2f7;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .header-meta .version:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .header-meta .version svg {
+            width: 18px;
+            height: 18px;
+            stroke: #2d3748;
+        }
+        .authors {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .authors span {
+            background: #edf2f7;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .authors span:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .authors span svg {
+            width: 16px;
+            height: 16px;
+            stroke: #2d3748;
+        }
+        .nav {
+            background: #ffffff;
+            padding: 14px 0;
+            border-bottom: 1px solid #edf2f7;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            background: rgba(255,255,255,0.92);
+            transition: box-shadow 0.3s ease;
+        }
+        .nav:hover {
+            box-shadow: 0 2px 20px rgba(0,0,0,0.03);
+        }
+        .nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            list-style: none;
+            justify-content: center;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1a1a1a, #6a7a8a);
+            transition: width 0.3s ease;
+        }
+        .nav a:hover::after {
+            width: 100%;
+        }
+        .nav a:hover {
+            color: #000;
+        }
+        .section {
+            padding: 56px 0 48px;
+            border-bottom: 1px solid #edf2f7;
+            position: relative;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section-title {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 28px;
+            position: relative;
+            padding-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .section-title svg {
+            width: 32px;
+            height: 32px;
+            stroke: #1a1a1a;
+            flex-shrink: 0;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 56px;
+            height: 3px;
+            background: linear-gradient(90deg, #1a1a1a, #8a9aa8);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        .section-title:hover::after {
+            width: 80px;
+        }
+        .section-sub {
+            color: #4a5a6a;
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            line-height: 1.8;
+        }
+        .card {
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 26px 30px;
+            margin-bottom: 22px;
+            border: 1px solid #edf2f7;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card:hover {
+            border-color: #d2dce8;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.04);
+        }
+        .card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1a1a1a;
+        }
+        .card h3 svg {
+            width: 24px;
+            height: 24px;
+            stroke: #1a1a1a;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .card:hover h3 svg {
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .card p,
+        .card li {
+            color: #2d3f4f;
+            font-size: 15px;
+        }
+        .card ul {
+            padding-left: 22px;
+            margin: 10px 0;
+        }
+        .card ul li {
+            margin-bottom: 4px;
+            position: relative;
+        }
+        .card ul li::marker {
+            color: #6a7a8a;
+        }
+        .code-block {
+            background: #1a1e26;
+            color: #e2e8f0;
+            padding: 16px 22px;
+            border-radius: 14px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 12px 0 6px;
+            border: 1px solid #2d3748;
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .code-block:hover {
+            border-color: #4a5a6a;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .code-block .cmd {
+            color: #68d391;
+        }
+        .code-block .str {
+            color: #f6ad55;
+        }
+        .code-block .key {
+            color: #63b3ed;
+        }
+        .code-block .var {
+            color: #fc8181;
+        }
+        .code-block .comment {
+            color: #718096;
+            font-style: italic;
+        }
+        .light-code {
+            background: #f0f4f8;
+            color: #1a202c;
+            border-color: #e2e8f0;
+        }
+        .light-code .cmd {
+            color: #276749;
+        }
+        .light-code .str {
+            color: #9c4221;
+        }
+        .light-code .key {
+            color: #2a69ac;
+        }
+        .light-code .var {
+            color: #9b2c2c;
+        }
+        .light-code .comment {
+            color: #6a7a8a;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 16px;
+        }
+        .func-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 14px 0 4px;
+        }
+        .func-item {
+            background: #edf2f7;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: default;
+        }
+        .func-item:hover {
+            background: #e2e8f0;
+            transform: translateX(6px) scale(1.02);
+            border-color: #b0c0d0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .func-item svg {
+            width: 16px;
+            height: 16px;
+            stroke: #2d3748;
+            flex-shrink: 0;
+        }
+        .api-item {
+            background: #f8fafc;
+            border-left: 4px solid #1a1a1a;
+            padding: 18px 24px;
+            margin-bottom: 16px;
+            border-radius: 0 14px 14px 0;
+            border: 1px solid #edf2f7;
+            border-left-width: 4px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+        .api-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.02));
+            transition: width 0.4s ease;
+        }
+        .api-item:hover::after {
+            width: 100%;
+        }
+        .api-item:hover {
+            border-color: #b0c0d0;
+            transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+        }
+        .api-item h4 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .api-item h4 svg {
+            width: 20px;
+            height: 20px;
+            stroke: #1a1a1a;
+            flex-shrink: 0;
+        }
+        .api-item .url {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #2a69ac;
+            word-break: break-all;
+            background: #edf2f7;
+            padding: 2px 14px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+        .api-item .url:hover {
+            background: #e2e8f0;
+        }
+        .api-item .desc {
+            color: #4a5a6a;
+            font-size: 14px;
+            margin: 4px 0;
+        }
+        .api-item .key-tag {
+            background: #edf2f7;
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #1a202c;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .api-item .key-tag:hover {
+            background: #e2e8f0;
+        }
+        .api-highlight {
+            background: #f0f7ff;
+            border-left-color: #2a69ac;
+        }
+        .step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 18px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+            padding: 6px 0;
+        }
+        .step:hover {
+            transform: translateX(4px);
+        }
+        .step-num {
+            background: #1a1a1a;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: all 0.3s ease;
+        }
+        .step:hover .step-num {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-content strong {
+            color: #1a1a1a;
+        }
+        .footer {
+            background: #fafcfe;
+            padding: 40px 0 32px;
+            border-top: 1px solid #edf2f7;
+            text-align: center;
+            color: #4a5a6a;
+            font-size: 14px;
+            position: relative;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #edf2f7, transparent);
+        }
+        .footer .brand {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 12px;
+        }
+        .footer .social-links a {
+            color: #4a5a6a;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+        }
+        .footer .social-links a:hover {
+            color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+        .footer .social-links a svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+        .icon-sm {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+        .icon-md {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+        @media (max-width: 1024px) {
+            .grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 820px) {
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav ul {
+                gap: 16px;
+            }
+            .nav a {
+                font-size: 13px;
+            }
+            .func-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .section-title {
+                font-size: 24px;
+            }
+            .logo-block h1 {
+                font-size: 26px;
+            }
+            .grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 14px;
+            }
+            .card {
+                padding: 18px 16px;
+            }
+            .code-block {
+                font-size: 12px;
+                padding: 12px 14px;
+            }
+            .authors span {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .func-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .badge-new {
+            background: #e8f0fe;
+            color: #1a56db;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+        .badge-popular {
+            background: #fef3e8;
+            color: #9c4221;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+        .glow-text {
+            background: linear-gradient(135deg, #1a1a1a, #4a5a6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .shimmer-line {
+            background: linear-gradient(90deg, #edf2f7 0%, #f8fafc 50%, #edf2f7 100%);
+            background-size: 200% auto;
+            animation: shimmer 2s linear infinite;
+            height: 2px;
+            width: 100%;
+            border-radius: 2px;
+            margin: 8px 0;
+        }
+        .icon-rotate {
+            transition: transform 0.6s ease;
+        }
+        .card:hover .icon-rotate {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <div class="logo-block animate-fadeUp">
+            <img src="https://gen.krea.ai/images/38df7331-c3be-4d1e-80c3-6db687848fe8.png" alt="PornHab logo" class="animate-float">
+            <h1>PornHab</h1>
+        </div>
+        <div class="header-meta animate-fadeUp delay-1">
+            <div class="version">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                v6.0.0
+            </div>
+            <div class="authors">
+                <span>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    @ssaindess
+                </span>
+                <span>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    @concole_hack
+                </span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav class="nav">
+    <ul>
+        <li><a href="#install">📦 Установка</a></li>
+        <li><a href="#functions">⚡ Функции</a></li>
+        <li><a href="#api">🔑 API</a></li>
+        <li><a href="#usage">📖 Примеры</a></li>
+        <li><a href="#db">🗄️ БД</a></li>
+        <li><a href="#authors">👥 Авторы</a></li>
+        <li><a href="#faq">❓ FAQ</a></li>
+    </ul>
+</nav>
+
+<main>
+
+<section id="install" class="section">
+    <div class="container">
+        <h2 class="section-title animate-fadeUp">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Установка и запуск
+        </h2>
+        <p class="section-sub animate-fadeUp delay-1">Полное руководство по установке, настройке и первому запуску PornHab. Следуйте инструкциям для быстрого старта.</p>
+
+        <div class="card animate-fadeUp delay-1">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Системные требования
+            </h3>
+            <ul>
+                <li><strong>Python 3.8+</strong> — основная среда выполнения</li>
+                <li><strong>pip</strong> — менеджер пакетов Python</li>
+                <li><strong>Доступ к интернету</strong> — для установки библиотек и работы API</li>
+                <li><strong>Операционная система:</strong> Windows 10+, Linux (Ubuntu 20.04+), macOS 11+</li>
+                <li><strong>Оперативная память:</strong> от 512 MB (рекомендуется 1+ GB)</li>
+                <li><strong>Свободное место:</strong> от 200 MB для кода и баз данных</li>
+            </ul>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:8px; font-size:14px; color:#4a5a6a;">Для работы с архивами дополнительно требуются утилиты: <strong>unzip, unrar, 7z</strong> (устанавливаются автоматически на Linux/macOS).</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-2">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                Установка всех библиотек
+            </h3>
+            <p style="margin-bottom:10px; color:#4a5a6a; font-size:14px;">Скопируйте и выполните команду в терминале для установки всех зависимостей:</p>
+            <div class="code-block">
+<span class="cmd">pip install</span> requests beautifulsoup4 lxml dnspython phonenumbers psutil python-nmap pyautogui opencv-python numpy pyaudio keyboard selenium cryptography paramiko ftplib scapy tweepy instaloader facebook-scraper python-telegram-bot discord.py slack-sdk boto3 redis pymongo mysql-connector-python psycopg2-binary whois rarfile py7zr pycryptodome pysocks
+            </div>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:10px; font-size:14px; color:#4a5a6a;">📌 <strong>Примечание:</strong> Для работы с архивами также рекомендуется установить:</p>
+            <div class="code-block light-code" style="margin-top:4px;">
+<span class="cmd">pip install</span> rarfile py7zr
+            </div>
+            <p style="margin-top:10px; font-size:14px; color:#4a5a6a;">Общее количество устанавливаемых библиотек — <strong>45+</strong>. Время установки может занять 2-5 минут в зависимости от скорости интернета.</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-3">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 3 22 7 2 7 5 3"/><polyline points="4 7 4 21 20 21 20 7"/></svg>
+                Запуск программы
+            </h3>
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">Скачайте файл <strong>pornhab.py</strong> из репозитория или архива</div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">Откройте терминал (командную строку) в папке с файлом</div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">Выполните команду запуска:</div>
+                <div class="code-block light-code" style="margin-top:4px;">
+<span class="cmd">python</span> pornhab.py
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">Введите логин и пароль. <strong>По умолчанию:</strong> admin / admin. Или зарегистрируйтесь через меню 2.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">После авторизации откроется главное меню с <strong>150+ функциями</strong>. Выбирайте номер и следуйте инструкциям.</div>
+            </div>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:10px; font-size:14px; color:#4a5a6a;">💡 <strong>Совет:</strong> Для удобства создайте ярлык или alias: <code>alias pornhab='python /path/to/pornhab.py'</code></p>
+        </div>
+
+        <div class="card animate-fadeUp delay-4">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><polyline points="20 10 12 18 8 14 4 18"/></svg>
+                Структура проекта и файлов
+            </h3>
+            <div class="code-block light-code" style="font-size:13px;">
+pornhab.py              <span class="comment"># Основной исполняемый файл</span>
+users.db                <span class="comment"># База данных пользователей (SQLite)</span>
+pornhab_main.db         <span class="comment"># Основная БД с данными (SQLite)</span>
+data/
+  ├── output/           <span class="comment"># Экспортированные файлы (JSON, HTML, CSV)</span>
+  ├── logs/             <span class="comment"># Логи работы программы</span>
+  ├── screenshots/      <span class="comment"># Снимки экрана и веб-камеры</span>
+  ├── extracted/        <span class="comment"># Извлеченные архивы</span>
+  ├── scans/            <span class="comment"># Результаты сканирования (Nmap, Shodan)</span>
+  └── reports/          <span class="comment"># Сгенерированные отчеты в HTML</span>
+            </div>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:10px; font-size:14px; color:#4a5a6a;">📁 Все данные сохраняются локально. Базы данных можно просматривать через <strong>SQLite Browser</strong> или встроенные функции программы (83, 139, 140).</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-5" style="background:#f0f7ff; border-color:#d2dce8;">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Первые шаги после запуска
+            </h3>
+            <ul>
+                <li><strong>Шаг 1:</strong> Зарегистрируйте пользователя (меню 2) или войдите (меню 1)</li>
+                <li><strong>Шаг 2:</strong> Настройте API ключи (меню 143) — для работы функций требуется минимум Telegram или Hunter</li>
+                <li><strong>Шаг 3:</strong> Протестируйте базовые функции: 3 (Email Verify), 8 (Port Scanner), 38 (IP Geo)</li>
+                <li><strong>Шаг 4:</strong> Для работы с архивами используйте функции 136-142</li>
+                <li><strong>Шаг 5:</strong> Экспортируйте результаты через меню 147-149</li>
+            </ul>
+            <p style="margin-top:8px; font-size:14px; color:#4a5a6a;">📖 Полная документация по каждой функции доступна в разделе <a href="#functions" style="color:#1a56db; text-decoration:none; font-weight:500;">Функции</a>.</p>
+        </div>
+    </div>
+</section>
+
+<section id="functions" class="section">
+    <div class="container">
+        <h2 class="section-title animate-fadeUp">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Все функции (150+)
+        </h2>
+        <p class="section-sub animate-fadeUp delay-1">Полный каталог доступных функций, сгруппированных по категориям. Каждая функция выполняет определенную задачу — от поиска данных до сканирования сетей и работы с базами данных.</p>
+
+        <div class="card animate-fadeUp delay-1">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                Doxxing & OSINT (45 функций)
+                <span class="badge-popular">популярные</span>
+            </h3>
+            <p style="color:#4a5a6a; font-size:14px; margin-bottom:10px;">Функции для сбора информации о целях: email, телефон, соцсети, домены, IP-адреса.</p>
+            <div class="func-grid">
+                <span class="func-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>1. Telegram Dox</span>
+                <span class="func-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>2. Phone Lookup</span>
+                <span class="func-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="8" y1="16" x2="16" y2="8"/></svg>3. Email Verify</span>
+                <span class="func-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>4. Shodan Scan</span>
+                <span class="func-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 7 18 3-9h4"/></svg>5. WHOIS Lookup</span>
+                <span class="func-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>6. DNS Enumeration</span>
+                <span class="func-item">7. Subdomain Scan</span>
+                <span class="func-item">8. Port Scanner</span>
+                <span class="func-item">9. HTTP Headers</span>
+                <span class="func-item">10. Server Info</span>
+                <span class="func-item">11. Github Lookup</span>
+                <span class="func-item">12. Twitter Lookup</span>
+                <span class="func-item">13. Instagram Lookup</span>
+                <span class="func-item">14. Facebook Lookup</span>
+                <span class="func-item">15. Reddit Lookup</span>
+                <span class="func-item">16. Discord Lookup</span>
+                <span class="func-item">17. Slack Lookup</span>
+                <span class="func-item">18. HIBP Lookup</span>
+                <span class="func-item">19. Dehashed Search</span>
+                <span class="func-item">20. LeakCheck</span>
+                <span class="func-item">21. IntelX</span>
+                <span class="func-item">22. Clearbit</span>
+                <span class="func-item">23. FullContact</span>
+                <span class="func-item">24. Pipl Search</span>
+                <span class="func-item">25. SpyCloud</span>
+                <span class="func-item">26. VirusTotal</span>
+                <span class="func-item">27. AbuseIPDB</span>
+                <span class="func-item">28. SecurityTrails</span>
+                <span class="func-item">29. crt.sh</span>
+                <span class="func-item">30. GreyNoise</span>
+                <span class="func-item">31. Censys</span>
+                <span class="func-item">32. RiskIQ</span>
+                <span class="func-item">33. RecordFuture</span>
+                <span class="func-item">34. Flashpoint</span>
+                <span class="func-item">35. Digital Shadows</span>
+                <span class="func-item">36. ThreatCrowd</span>
+                <span class="func-item">37. BufferOver</span>
+                <span class="func-item">38. IP Geo</span>
+                <span class="func-item">39. Reverse IP</span>
+                <span class="func-item">40. ASN Lookup</span>
+                <span class="func-item">41. GeoIP</span>
+                <span class="func-item">42. Tor Check</span>
+                <span class="func-item">43. VPN Check</span>
+                <span class="func-item">44. Proxy Check</span>
+                <span class="func-item">45. SSL Check</span>
+            </div>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:10px; font-size:14px; color:#4a5a6a;">🔍 <strong>Наиболее востребованные:</strong> 3 (Email Verify), 8 (Port Scanner), 38 (IP Geo), 5 (WHOIS Lookup). Для работы требуется настройка API ключей (меню 143).</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-2">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Security & Headers (18 функций)
+            </h3>
+            <p style="color:#4a5a6a; font-size:14px; margin-bottom:10px;">Анализ безопасности веб-ресурсов: заголовки, куки, сессии, скрытые директории.</p>
+            <div class="func-grid">
+                <span class="func-item">46. Security Headers</span>
+                <span class="func-item">47. Cookie Grab</span>
+                <span class="func-item">48. Session Sniff</span>
+                <span class="func-item">49. Meta Scanner</span>
+                <span class="func-item">106. Header Analysis</span>
+                <span class="func-item">107. Cookie Analysis</span>
+                <span class="func-item">108. Redirect Trace</span>
+                <span class="func-item">109. Robots Check</span>
+                <span class="func-item">110. Sitemap Check</span>
+                <span class="func-item">111. Favicon Check</span>
+                <span class="func-item">112. Admin Panel Finder</span>
+                <span class="func-item">113. Backup Finder</span>
+                <span class="func-item">114. Hidden Dir Scan</span>
+                <span class="func-item">115. Tech Stack Detect</span>
+                <span class="func-item">116. Version Detect</span>
+                <span class="func-item">117. Cloud Detect</span>
+                <span class="func-item">118. CDN Detect</span>
+            </div>
+        </div>
+
+        <div class="card animate-fadeUp delay-3">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="8" y1="2" x2="8" y2="22"/><line x1="16" y1="2" x2="16" y2="22"/></svg>
+                Network & System (19 функций)
+                <span class="badge-new">новое</span>
+            </h3>
+            <p style="color:#4a5a6a; font-size:14px; margin-bottom:10px;">Сетевая диагностика, системная информация, мониторинг ресурсов.</p>
+            <div class="func-grid">
+                <span class="func-item">62. Domain Check</span>
+                <span class="func-item">63. Ping Test</span>
+                <span class="func-item">64. Traceroute</span>
+                <span class="func-item">65. NSLookup</span>
+                <span class="func-item">66. Dig Query</span>
+                <span class="func-item">67. WHOIS Domain</span>
+                <span class="func-item">68. Nmap Scan</span>
+                <span class="func-item">69. Netstat</span>
+                <span class="func-item">70. Process List</span>
+                <span class="func-item">71. System Info</span>
+                <span class="func-item">72. CPU Info</span>
+                <span class="func-item">73. Memory Info</span>
+                <span class="func-item">74. Disk Info</span>
+                <span class="func-item">75. Network Info</span>
+                <span class="func-item">76. Screenshot</span>
+                <span class="func-item">77. Webcam Capture</span>
+                <span class="func-item">78. Microphone Rec</span>
+                <span class="func-item">79. Keylog Start</span>
+                <span class="func-item">80. Keylog Stop</span>
+            </div>
+        </div>
+
+        <div class="card animate-fadeUp delay-4">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                Generators & Utilities (11 функций)
+            </h3>
+            <p style="color:#4a5a6a; font-size:14px; margin-bottom:10px;">Генерация данных: хеши, пароли, UUID, IP, MAC, User-Agent.</p>
+            <div class="func-grid">
+                <span class="func-item">54. Hash Generator</span>
+                <span class="func-item">55. Base64 Convert</span>
+                <span class="func-item">56. UUID Generator</span>
+                <span class="func-item">57. Random String</span>
+                <span class="func-item">58. Password Generator</span>
+                <span class="func-item">59. IP Generator</span>
+                <span class="func-item">60. MAC Generator</span>
+                <span class="func-item">61. User-Agent Gen</span>
+                <span class="func-item">81. WebDriver Init</span>
+                <span class="func-item">82. Selenium Scrape</span>
+                <span class="func-item">83. SQLite Query</span>
+            </div>
+        </div>
+
+        <div class="card animate-fadeUp delay-5">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                Databases & Cloud (16 функций)
+            </h3>
+            <p style="color:#4a5a6a; font-size:14px; margin-bottom:10px;">Подключение к базам данных и облачным сервисам: MySQL, PostgreSQL, Redis, MongoDB, AWS, Azure, GCP.</p>
+            <div class="func-grid">
+                <span class="func-item">84. MySQL Connect</span>
+                <span class="func-item">85. PostgreSQL Connect</span>
+                <span class="func-item">86. Redis Connect</span>
+                <span class="func-item">87. MongoDB Connect</span>
+                <span class="func-item">88. SSH Connect</span>
+                <span class="func-item">89. FTP Connect</span>
+                <span class="func-item">90. SMTP Check</span>
+                <span class="func-item">91. POP3 Check</span>
+                <span class="func-item">92. IMAP Check</span>
+                <span class="func-item">93. AWS Connect</span>
+                <span class="func-item">94. Azure Connect</span>
+                <span class="func-item">95. GCP Connect</span>
+                <span class="func-item">96. Docker Connect</span>
+                <span class="func-item">97. Kubernetes Connect</span>
+                <span class="func-item">98. MQTT Publish</span>
+                <span class="func-item">99. WebSocket Connect</span>
+            </div>
+        </div>
+
+        <div class="card animate-fadeUp delay-5">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 12 17 3 8"/><polyline points="21 16 12 25 3 16"/></svg>
+                Archive & Data Extraction (7 функций)
+                <span class="badge-popular">популярные</span>
+            </h3>
+            <p style="color:#4a5a6a; font-size:14px; margin-bottom:10px;">Работа с архивами: сканирование, извлечение, поиск, экспорт данных из файлов.</p>
+            <div class="func-grid">
+                <span class="func-item">136. Archive Scan</span>
+                <span class="func-item">137. Extract Archive</span>
+                <span class="func-item">138. Search Extracted</span>
+                <span class="func-item">139. Archive Stats</span>
+                <span class="func-item">140. Export Extracted</span>
+                <span class="func-item">141. Process Current Dir</span>
+                <span class="func-item">142. Deep Archive Scan</span>
+            </div>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:10px; font-size:14px; color:#4a5a6a;">📦 <strong>Функции 136-142</strong> автоматически находят архивы в текущей директории, извлекают их и парсят содержимое. Поддерживаются форматы: ZIP, RAR, 7z, TAR, GZ, BZ2, XZ, TGZ, TBZ2, TXZ и другие (всего 20+ форматов).</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-5">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Export & Management (8 функций)
+            </h3>
+            <p style="color:#4a5a6a; font-size:14px; margin-bottom:10px;">Управление результатами, экспорт в JSON, HTML, CSV, настройка API и конфигурации.</p>
+            <div class="func-grid">
+                <span class="func-item">143. API Config</span>
+                <span class="func-item">144. System Config</span>
+                <span class="func-item">145. View Results</span>
+                <span class="func-item">146. Clear Results</span>
+                <span class="func-item">147. Export JSON</span>
+                <span class="func-item">148. Export HTML</span>
+                <span class="func-item">149. Export CSV</span>
+                <span class="func-item">150. Exit</span>
+            </div>
+        </div>
+
+        <div class="card animate-fadeUp delay-5" style="background:#f0f7ff; border-color:#d2dce8;">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Как использовать функции
+            </h3>
+            <ol style="padding-left:22px; margin:8px 0;">
+                <li>После авторизации вы увидите главное меню со списком функций</li>
+                <li>Введите номер функции (например, <strong>3</strong> для Email Verify)</li>
+                <li>Следуйте инструкциям на экране — введите данные для обработки</li>
+                <li>Результат отобразится в консоли и автоматически сохранится в БД</li>
+                <li>Для экспорта используйте функции 147-149</li>
+            </ol>
+            <p style="margin-top:8px; font-size:14px; color:#4a5a6a;">💡 <strong>Совет:</strong> Для быстрого поиска нужной функции используйте <kbd>Ctrl+F</kbd> в документации или введите первые цифры номера.</p>
+        </div>
+    </div>
+</section>
+
+<section id="api" class="section">
+    <div class="container">
+        <h2 class="section-title animate-fadeUp">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/></svg>
+            API Ключи — Полная документация
+        </h2>
+        <p class="section-sub animate-fadeUp delay-1">Для работы большинства функций (особенно OSINT) требуются API ключи. Ниже приведены подробные инструкции по получению ключей для каждого сервиса. Вставьте их через меню 143.</p>
+
+        <div class="api-item animate-slideLeft delay-1">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Telegram
+            </h4>
+            <div class="desc">Получение данных из Telegram — сообщения, пользователи, чаты.</div>
+            <div class="url">https://api.telegram.org/bot{TOKEN}/</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Напишите <strong>@BotFather</strong> в Telegram и отправьте <code>/newbot</code></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Выберите имя и username бота, получите токен вида <code>123456:ABC-DEF1234ghIkl</code></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте токен в <span class="key-tag">API_KEYS["telegram"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>1 (Telegram Dox)</strong> для получения обновлений</p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-2">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Twilio (Phone Lookup)
+            </h4>
+            <div class="desc">Проверка и валидация телефонных номеров, определение оператора и страны.</div>
+            <div class="url">https://www.twilio.com/lookup</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>twilio.com</strong> и получите <strong>Account SID</strong> и <strong>Auth Token</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Вставьте в формате <span class="key-tag">API_KEYS["twilio"] = "SID:TOKEN"</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Используйте функцию <strong>2 (Phone Lookup)</strong> для проверки номеров</p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-3">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="8" y1="16" x2="16" y2="8"/></svg>
+                Hunter.io (Email Verify)
+            </h4>
+            <div class="desc">Валидация email адресов, проверка доставляемости и существования почтового ящика.</div>
+            <div class="url">https://hunter.io/api/v2/email-verifier</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>hunter.io</strong> (бесплатный план — 25 запросов/месяц)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ в панели управления → API</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["hunter"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>3 (Email Verify)</strong> для проверки</p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-4">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Shodan
+            </h4>
+            <div class="desc">Сканирование хостов, поиск открытых портов, уязвимостей и информации об устройствах.</div>
+            <div class="url">https://api.shodan.io/shodan/host/{IP}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>shodan.io</strong> (бесплатный API — 1 кредит/сек)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ в профиле → API</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["shodan"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>4 (Shodan Scan)</strong> для сканирования</p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                GitHub
+            </h4>
+            <div class="desc">Поиск пользователей GitHub, получение информации о репозиториях и активности.</div>
+            <div class="url">https://api.github.com/users/{username}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>github.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Создайте <strong>Personal Access Token</strong> (Settings → Developer settings → Personal access tokens → Generate new token)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте токен в <span class="key-tag">API_KEYS["github"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>11 (Github Lookup)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+                Twitter (X)
+            </h4>
+            <div class="desc">Поиск пользователей Twitter/X, получение данных профиля и твитов.</div>
+            <div class="url">https://api.twitter.com/2/users/by/username/{username}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь в <strong>developer.twitter.com</strong> и создайте проект</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Bearer Token</strong> в разделе Keys and Tokens</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["twitter"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>12 (Twitter Lookup)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="8" y1="2" x2="8" y2="22"/><line x1="16" y1="2" x2="16" y2="22"/></svg>
+                Instagram
+            </h4>
+            <div class="desc">Поиск пользователей Instagram, получение данных профиля и публикаций.</div>
+            <div class="url">https://graph.instagram.com/v12.0/{username}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь в <strong>developers.facebook.com</strong> и создайте приложение</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Access Token</strong> через Instagram Basic Display API</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["instagram"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>13 (Instagram Lookup)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                Facebook
+            </h4>
+            <div class="desc">Поиск пользователей Facebook, получение публичных данных профиля.</div>
+            <div class="url">https://graph.facebook.com/v18.0/{username}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь в <strong>developers.facebook.com</strong> и создайте приложение</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Access Token</strong> через Facebook Graph API</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["facebook"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>14 (Facebook Lookup)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                Discord
+            </h4>
+            <div class="desc">Поиск пользователей Discord, получение данных профиля по ID.</div>
+            <div class="url">https://discord.com/api/v10/users/{user_id}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь в <strong>discord.com/developers</strong> и создайте приложение</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Создайте бота и получите <strong>Bot Token</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["discord"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>16 (Discord Lookup)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><polyline points="20 10 12 18 8 14 4 18"/></svg>
+                Slack
+            </h4>
+            <div class="desc">Поиск пользователей Slack, получение данных профиля.</div>
+            <div class="url">https://slack.com/api/users.info</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь в <strong>api.slack.com</strong> и создайте приложение</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>User Token</strong> (OAuth 2.0)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["slack"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>17 (Slack Lookup)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                HaveIBeenPwned (HIBP)
+            </h4>
+            <div class="desc">Проверка email на наличие в базах утечек данных.</div>
+            <div class="url">https://haveibeenpwned.com/api/v3/breachedaccount/{email}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>haveibeenpwned.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ в разделе API</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["hibp"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>18 (HIBP Lookup)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Dehashed
+            </h4>
+            <div class="desc">Поиск по базам утечек и компрометации данных.</div>
+            <div class="url">https://api.dehashed.com/search</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>dehashed.com</strong> (платный сервис)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Email:Password</strong> для базовой аутентификации</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["dehashed"] = "email:password"</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>19 (Dehashed Search)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                LeakCheck
+            </h4>
+            <div class="desc">Поиск утекших данных по email, телефону, логину.</div>
+            <div class="url">https://leakcheck.io/api/v1/query</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>leakcheck.io</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ в панели управления</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["leakcheck"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>20 (LeakCheck)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                IntelX
+            </h4>
+            <div class="desc">Поиск по базам данных и утечкам через IntelX.</div>
+            <div class="url">https://2.intelx.io/phonebook/search</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>intelx.io</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ в панели</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["intelx"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>21 (IntelX)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 7 18 3-9h4"/></svg>
+                Clearbit
+            </h4>
+            <div class="desc">Информация о компаниях: название, домен, логотип, соцсети.</div>
+            <div class="url">https://company.clearbit.com/v2/companies/find</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>clearbit.com</strong> (бесплатно до 50 запросов)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["clearbit"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>22 (Clearbit)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                FullContact
+            </h4>
+            <div class="desc">Обогащение данных о личности: соцсети, email, телефоны.</div>
+            <div class="url">https://api.fullcontact.com/v3/person.enrich</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>fullcontact.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["fullcontact"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>23 (FullContact)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Pipl
+            </h4>
+            <div class="desc">Поиск людей по имени, email, телефону, логину.</div>
+            <div class="url">https://pipl.ir/v1/search</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>pipl.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["pipl"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>24 (Pipl Search)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                SpyCloud
+            </h4>
+            <div class="desc">Поиск утечек данных по email.</div>
+            <div class="url">https://api.spycloud.io/v2/breach-data/email/{email}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>spycloud.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["spycloud"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>25 (SpyCloud)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/></svg>
+                VirusTotal
+            </h4>
+            <div class="desc">Проверка хешей файлов на наличие вирусов и вредоносного ПО.</div>
+            <div class="url">https://www.virustotal.com/api/v3/files/{hash}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>virustotal.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ в панели</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["virustotal"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>26 (VirusTotal)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/></svg>
+                AbuseIPDB
+            </h4>
+            <div class="desc">Проверка IP на наличие злоупотреблений и спам-активности.</div>
+            <div class="url">https://api.abuseipdb.com/api/v2/check</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>abuseipdb.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["abuseipdb"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>27 (AbuseIPDB)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 7 18 3-9h4"/></svg>
+                SecurityTrails
+            </h4>
+            <div class="desc">Информация о доменах: DNS, WHOIS, SSL, субдомены.</div>
+            <div class="url">https://api.securitytrails.com/v1/domain/{domain}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>securitytrails.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["securitytrails"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>28 (SecurityTrails)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                crt.sh
+            </h4>
+            <div class="desc">Поиск SSL сертификатов и субдоменов через Certificate Transparency.</div>
+            <div class="url">https://crt.sh/?q=%25.{domain}&output=json</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">Бесплатный, без API ключа. Используйте функцию <strong>29 (crt.sh)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/></svg>
+                GreyNoise
+            </h4>
+            <div class="desc">Анализ IP адресов на наличие вредоносной активности.</div>
+            <div class="url">https://api.greynoise.io/v3/community/{ip}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>greynoise.io</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["greynoise"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>30 (GreyNoise)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/></svg>
+                Censys
+            </h4>
+            <div class="desc">Сканирование интернета и поиск информации о хостах.</div>
+            <div class="url">https://search.censys.io/api/v2/hosts/{ip}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>censys.io</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>API ID:Secret</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["censys"] = "ID:SECRET"</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>31 (Censys)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 7 18 3-9h4"/></svg>
+                RiskIQ
+            </h4>
+            <div class="desc">Безопасность доменов, обнаружение угроз и уязвимостей.</div>
+            <div class="url">https://api.riskiq.net/api/v1/domain/{domain}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>riskiq.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Email:Token</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["riskiq"] = "email:token"</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>32 (RiskIQ)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                RecordFuture
+            </h4>
+            <div class="desc">Разведка угроз и анализ безопасности.</div>
+            <div class="url">https://api.recordfuture.com/v2/domain/{domain}</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>recordfuture.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["recordfuture"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>33 (RecordFuture)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Flashpoint
+            </h4>
+            <div class="desc">Поиск утечек данных и компрометации.</div>
+            <div class="url">https://api.flashpoint.io/breach/person</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>flashpoint.io</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["flashpoint"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>34 (Flashpoint)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                Digital Shadows
+            </h4>
+            <div class="desc">Мониторинг угроз и утечек данных.</div>
+            <div class="url">https://api.digitalshadows.com/api/v1/breaches</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>digitalshadows.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите API ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["digital_shadows"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>35 (Digital Shadows)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                ThreatCrowd
+            </h4>
+            <div class="desc">Разведка угроз по доменам и IP.</div>
+            <div class="url">https://www.threatcrowd.org/searchApi/v2/domain/report</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">Бесплатный, без API ключа. Используйте функцию <strong>36 (ThreatCrowd)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                BufferOver
+            </h4>
+            <div class="desc">DNS и SSL сканирование.</div>
+            <div class="url">https://dns.bufferover.run/dns</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">Бесплатный, без API ключа. Используйте функцию <strong>37 (BufferOver)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                AWS
+            </h4>
+            <div class="desc">Amazon Web Services — подключение к EC2, S3, и другим сервисам.</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>aws.amazon.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Access Key ID</strong> и <strong>Secret Access Key</strong> в IAM</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["aws_key"]</span> и <span class="key-tag">API_KEYS["aws_secret"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>93 (AWS Connect)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                Azure
+            </h4>
+            <div class="desc">Microsoft Azure — подключение к облачным сервисам.</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>azure.microsoft.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Connection String</strong> для Blob Storage или другого сервиса</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["azure"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>94 (Azure Connect)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                GCP
+            </h4>
+            <div class="desc">Google Cloud Platform — подключение к сервисам Google.</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>cloud.google.com</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Создайте <strong>Service Account</strong> и скачайте JSON ключ</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте путь к JSON в <span class="key-tag">API_KEYS["gcp"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>95 (GCP Connect)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                MongoDB
+            </h4>
+            <div class="desc">Подключение к MongoDB базе данных.</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Зарегистрируйтесь на <strong>mongodb.com</strong> (бесплатно до 512 MB)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Connection URI</strong> в панели управления</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Вставьте в <span class="key-tag">API_KEYS["mongodb"]</span></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">4. Используйте функцию <strong>87 (MongoDB Connect)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                Redis
+            </h4>
+            <div class="desc">Подключение к Redis — in-memory база данных.</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Установите Redis локально или используйте облачный (Redis Cloud)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Host</strong> и <strong>Port</strong> для подключения</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Используйте функцию <strong>86 (Redis Connect)</strong> с указанием хоста</p>
+        </div>
+
+        <div class="api-item animate-slideRight delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                MySQL
+            </h4>
+            <div class="desc">Подключение к MySQL базе данных.</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Установите MySQL сервер (локально или облачный)</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Host, User, Password, Database</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Используйте функцию <strong>84 (MySQL Connect)</strong></p>
+        </div>
+
+        <div class="api-item animate-slideLeft delay-5">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                PostgreSQL
+            </h4>
+            <div class="desc">Подключение к PostgreSQL базе данных.</div>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">1. Установите PostgreSQL сервер</p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">2. Получите <strong>Host, User, Password, Database</strong></p>
+            <p style="margin:4px 0; font-size:13px; color:#4a5568;">3. Используйте функцию <strong>85 (PostgreSQL Connect)</strong></p>
+        </div>
+
+        <div class="api-item api-highlight animate-scale delay-5" style="margin-top:24px;">
+            <h4>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Как вставить API ключи в программе
+            </h4>
+            <p style="margin:4px 0; font-size:14px; color:#4a5568;">1. Запустите программу и войдите в систему</p>
+            <p style="margin:4px 0; font-size:14px; color:#4a5568;">2. Выберите пункт меню <strong>143 (API Config)</strong></p>
+            <p style="margin:4px 0; font-size:14px; color:#4a5568;">3. Введите название ключа (например: <code>telegram</code>, <code>shodan</code>, <code>hunter</code>)</p>
+            <p style="margin:4px 0; font-size:14px; color:#4a5568;">4. Введите значение ключа (токен или другие данные)</p>
+            <p style="margin:4px 0; font-size:14px; color:#4a5568;">5. Ключ сохранится в памяти программы и будет доступен для всех функций</p>
+            <p style="margin:4px 0; font-size:14px; color:#4a5568;">6. Для проверки работы используйте соответствующую функцию (например, 3 для Email Verify)</p>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:8px; font-size:14px; color:#4a5568;">💡 <strong>Совет:</strong> Храните API ключи в безопасном месте. Не передавайте их третьим лицам.</p>
+        </div>
+    </div>
+</section>
+
+<section id="usage" class="section">
+    <div class="container">
+        <h2 class="section-title animate-fadeUp">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="8" y1="16" x2="16" y2="8"/></svg>
+            Примеры использования
+        </h2>
+        <p class="section-sub animate-fadeUp delay-1">Практические примеры работы с функциями PornHab. Каждый пример показывает ввод, процесс и результат.</p>
+
+        <div class="grid-2">
+            <div class="card animate-fadeUp delay-1">
+                <h3>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="8" y1="16" x2="16" y2="8"/></svg>
+                    Пример 1: Проверка email
+                </h3>
+                <p style="color:#4a5a6a; font-size:14px; margin-bottom:8px;">Функция <strong>3 (Email Verify)</strong> проверяет существование email адреса.</p>
+                <div class="code-block light-code" style="font-size:13px;">
+<span class="cmd">> Выберите функцию:</span> 3
+<span class="cmd">> Введите email:</span> user@example.com
+<span class="cmd">> Результат:</span>
+{
+  "status": 200,
+  "data": {
+    "email": "user@example.com",
+    "valid": true,
+    "domain": "example.com",
+    "score": 85
+  }
+}
+                </div>
+                <p style="margin-top:8px; font-size:13px; color:#4a5a6a;">✅ Ответ показывает, что email валидный. Используется API Hunter.io.</p>
+            </div>
+
+            <div class="card animate-fadeUp delay-2">
+                <h3>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></svg>
+                    Пример 2: Сканирование портов
+                </h3>
+                <p style="color:#4a5a6a; font-size:14px; margin-bottom:8px;">Функция <strong>8 (Port Scanner)</strong> сканирует открытые порты на IP-адресе.</p>
+                <div class="code-block light-code" style="font-size:13px;">
+<span class="cmd">> Выберите функцию:</span> 8
+<span class="cmd">> Введите IP:</span> 8.8.8.8
+<span class="cmd">> Результат:</span>
+[53, 80, 443, 8080]
+<span class="comment"># Найдено 4 открытых порта</span>
+                </div>
+                <p style="margin-top:8px; font-size:13px; color:#4a5a6a;">🌐 Порты 53 (DNS), 80 (HTTP), 443 (HTTPS), 8080 (HTTP-альтернативный) открыты.</p>
+            </div>
+
+            <div class="card animate-fadeUp delay-3">
+                <h3>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 12 17 3 8"/><polyline points="21 16 12 25 3 16"/></svg>
+                    Пример 3: Сканирование архивов
+                </h3>
+                <p style="color:#4a5a6a; font-size:14px; margin-bottom:8px;">Функция <strong>136 (Archive Scan)</strong> находит все архивы в текущей папке.</p>
+                <div class="code-block light-code" style="font-size:13px;">
+<span class="cmd">> Выберите функцию:</span> 136
+<span class="cmd">> Сканирование...</span>
+<span class="cmd">> Найдено:</span>
+  - data.zip (2.3 MB)
+  - backup.rar (1.1 MB)
+  - secrets.7z (0.5 MB)
+  - photos.tar.gz (3.7 MB)
+<span class="comment"># Всего найдено 4 архива</span>
+                </div>
+                <p style="margin-top:8px; font-size:13px; color:#4a5a6a;">📦 Поддерживаются форматы: ZIP, RAR, 7z, TAR, GZ, BZ2, XZ и другие.</p>
+            </div>
+
+            <div class="card animate-fadeUp delay-4">
+                <h3>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Пример 4: Поиск в извлеченных данных
+                </h3>
+                <p style="color:#4a5a6a; font-size:14px; margin-bottom:8px;">Функция <strong>138 (Search Extracted)</strong> ищет данные в извлеченных архивах.</p>
+                <div class="code-block light-code" style="font-size:13px;">
+<span class="cmd">> Выберите функцию:</span> 138
+<span class="cmd">> Введите запрос:</span> @gmail.com
+<span class="cmd">> Найдено:</span> 47 email адресов
+  - user1@gmail.com
+  - user2@gmail.com
+  - contact@gmail.com
+  - ...
+<span class="comment"># Всего 47 уникальных email</span>
+                </div>
+                <p style="margin-top:8px; font-size:13px; color:#4a5a6a;">🔍 Поиск работает по всем извлеченным файлам и базам данных.</p>
+            </div>
+
+            <div class="card animate-fadeUp delay-5">
+                <h3>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Пример 5: Экспорт данных в CSV
+                </h3>
+                <p style="color:#4a5a6a; font-size:14px; margin-bottom:8px;">Функция <strong>140 (Export Extracted)</strong> экспортирует данные в выбранном формате.</p>
+                <div class="code-block light-code" style="font-size:13px;">
+<span class="cmd">> Выберите функцию:</span> 140
+<span class="cmd">> Выберите формат (csv/json/html):</span> csv
+<span class="cmd">> Файл сохранен:</span>
+data/output/extracted_data_20250101_120000.csv
+<span class="comment"># Размер файла: 156 KB</span>
+                </div>
+                <p style="margin-top:8px; font-size:13px; color:#4a5a6a;">📊 Поддерживаются форматы: CSV, JSON, HTML. Файлы сохраняются в папку data/output.</p>
+            </div>
+
+            <div class="card animate-fadeUp delay-5">
+                <h3>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Пример 6: Проверка безопасности сайта
+                </h3>
+                <p style="color:#4a5a6a; font-size:14px; margin-bottom:8px;">Функция <strong>46 (Security Headers)</strong> анализирует заголовки безопасности.</p>
+                <div class="code-block light-code" style="font-size:13px;">
+<span class="cmd">> Выберите функцию:</span> 46
+<span class="cmd">> Введите URL:</span> https://example.com
+<span class="cmd">> Результат:</span>
+{
+  "Strict-Transport-Security": "max-age=31536000",
+  "X-Frame-Options": "SAMEORIGIN",
+  "X-Content-Type-Options": "nosniff",
+  "Content-Security-Policy": "default-src 'self'"
+}
+<span class="comment"># Все основные заголовки безопасности присутствуют</span>
+                </div>
+                <p style="margin-top:8px; font-size:13px; color:#4a5a6a;">🛡️ Анализ показывает, что сайт правильно настроен с точки зрения безопасности.</p>
+            </div>
+        </div>
+
+        <div class="card animate-fadeUp delay-5" style="background:#f0f7ff; border-color:#d2dce8; margin-top:12px;">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Советы по использованию
+            </h3>
+            <ul>
+                <li><strong>Для быстрых проверок</strong> используйте функции 3 (Email), 8 (Ports), 38 (IP Geo) — они не требуют сложной настройки.</li>
+                <li><strong>Для глубокого анализа</strong> используйте функции 68 (Nmap), 4 (Shodan), 28 (SecurityTrails) — требуют API ключей.</li>
+                <li><strong>Для работы с архивами</strong> используйте функции 136-142 — они автоматически обработают все файлы в текущей папке.</li>
+                <li><strong>Для экспорта результатов</strong> используйте функции 147-149 — можно выгрузить в JSON, HTML или CSV.</li>
+                <li><strong>Для настройки API</strong> используйте функцию 143 — это ускорит работу с внешними сервисами.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="db" class="section">
+    <div class="container">
+        <h2 class="section-title animate-fadeUp">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            База данных — Полная структура
+        </h2>
+        <p class="section-sub animate-fadeUp delay-1">PornHab использует SQLite для хранения всех данных: пользователей, архивов, извлеченной информации и результатов поиска. Все данные хранятся локально.</p>
+
+        <div class="grid-2">
+            <div class="card animate-slideLeft delay-1">
+                <h3>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    users.db — Пользователи
+                </h3>
+                <div class="code-block light-code" style="font-size:12px;">
+<span class="key">Таблица: users</span>
+- id          <span class="comment">INTEGER PRIMARY KEY</span>
+- username    <span class="comment">TEXT — уникальное имя</span>
+- password    <span class="comment">TEXT — SHA256 хеш</span>
+- created     <span class="comment">TEXT — дата регистрации</span>
+- last_login  <span class="comment">TEXT — последний вход</span>
+
+<span class="key">Индексы:</span>
+- UNIQUE(username) <span class="comment">для предотвращения дубликатов</span>
+                </div>
+                <p style="margin-top:8px; font-size:13px; color:#4a5a6a;">🔐 Пароли хранятся в зашифрованном виде (SHA256). Никакой другой информации о пользователях не сохраняется.</p>
+            </div>
+
+            <div class="card animate-slideRight delay-2">
+                <h3>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    pornhab_main.db — Основная БД
+                </h3>
+                <div class="code-block light-code" style="font-size:12px;">
+<span class="key">Таблица: archive_index</span>
+- id          INTEGER PRIMARY KEY
+- filename    TEXT
+- path        TEXT
+- size        INTEGER
+- hash        TEXT
+- extracted   TEXT
+- scanned     TEXT
+- created     TEXT
+
+<span class="key">Таблица: file_entries</span>
+- id          INTEGER PRIMARY KEY
+- archive_id  INTEGER
+- filename    TEXT
+- path        TEXT
+- size        INTEGER
+- type        TEXT
+- hash        TEXT
+- content     TEXT
+- created     TEXT
+
+<span class="key">Таблица: extracted_data</span>
+- id          INTEGER PRIMARY KEY
+- source      TEXT
+- data_type   TEXT
+- data        TEXT
+- found_in    TEXT
+- timestamp   TEXT
+
+<span class="key">Таблица: search_results</span>
+- id          INTEGER PRIMARY KEY
+- query       TEXT
+- result      TEXT
+- source      TEXT
+- timestamp   TEXT
+                </div>
+            </div>
+        </div>
+
+        <div class="card animate-fadeUp delay-3">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><polyline points="20 10 12 18 8 14 4 18"/></svg>
+                Как просматривать и управлять БД
+            </h3>
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">Откройте терминал и перейдите в папку с программой</div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">Выполните команду для открытия БД:</div>
+                <div class="code-block light-code" style="margin-top:4px;">
+<span class="cmd">sqlite3</span> pornhab_main.db
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">Просмотрите таблицы:</div>
+                <div class="code-block light-code" style="margin-top:4px;">
+<span class="cmd">.tables</span>
+<span class="comment"># archive_index  file_entries  extracted_data  search_results</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">Выполните запросы:</div>
+                <div class="code-block light-code" style="margin-top:4px;">
+<span class="cmd">SELECT * FROM extracted_data LIMIT 10;</span>
+<span class="cmd">SELECT data_type, COUNT(*) FROM extracted_data GROUP BY data_type;</span>
+<span class="cmd">.quit</span>
+                </div>
+            </div>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:10px; font-size:14px; color:#4a5a6a;">📊 Для удобного просмотра рекомендуется использовать <strong>SQLite Browser</strong> (бесплатное приложение).</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-4" style="background:#f0f7ff; border-color:#d2dce8;">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Резервное копирование
+            </h3>
+            <p style="color:#4a5a6a; font-size:14px; margin-bottom:8px;">Рекомендуется регулярно создавать резервные копии баз данных:</p>
+            <div class="code-block light-code" style="font-size:13px;">
+<span class="cmd">cp</span> pornhab_main.db pornhab_main_backup_$(date +%Y%m%d).db
+<span class="cmd">cp</span> users.db users_backup_$(date +%Y%m%d).db
+            </div>
+            <p style="margin-top:8px; font-size:13px; color:#4a5a6a;">💾 Все данные сохраняются локально. Рекомендуется делать бэкапы перед обновлением программы.</p>
+        </div>
+    </div>
+</section>
+
+<section id="authors" class="section">
+    <div class="container">
+        <h2 class="section-title animate-fadeUp">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Авторы и команда
+        </h2>
+        <p class="section-sub animate-fadeUp delay-1">PornHab создан командой разработчиков и исследователей безопасности. Мы стремимся сделать инструмент максимально полезным и удобным.</p>
+
+        <div class="grid-3">
+            <div class="card animate-fadeUp delay-1" style="text-align:center;">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="width:48px;height:48px;stroke:#1a1a1a;margin:0 auto 12px;display:block;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <h3 style="justify-content:center;">@ssaindess</h3>
+                <p style="color:#4a5a6a; font-weight:500;">Lead Developer</p>
+                <p style="font-size:14px; color:#4a5a6a; margin-top:8px;">Основной разработчик, архитектура проекта, интеграция всех API, оптимизация производительности.</p>
+                <p style="font-size:13px; color:#6a7a8a; margin-top:6px;">Telegram: @ssaindess</p>
+            </div>
+
+            <div class="card animate-fadeUp delay-2" style="text-align:center;">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="width:48px;height:48px;stroke:#1a1a1a;margin:0 auto 12px;display:block;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <h3 style="justify-content:center;">@concole_hack</h3>
+                <p style="color:#4a5a6a; font-weight:500;">Security Researcher</p>
+                <p style="font-size:14px; color:#4a5a6a; margin-top:8px;">Исследователь безопасности, тестирование уязвимостей, разработка новых функций, документация.</p>
+                <p style="font-size:13px; color:#6a7a8a; margin-top:6px;">Telegram: @concole_hack</p>
+            </div>
+
+            <div class="card animate-fadeUp delay-3" style="text-align:center;background:#f0f7ff;border-color:#d2dce8;">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="width:48px;height:48px;stroke:#1a1a1a;margin:0 auto 12px;display:block;"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                <h3 style="justify-content:center;">PornHab Team</h3>
+                <p style="color:#4a5a6a; font-weight:500;">Команда разработки</p>
+                <p style="font-size:14px; color:#4a5a6a; margin-top:8px;">Создание, поддержка и развитие проекта. Версия 6.0.0 — результат совместной работы.</p>
+                <p style="font-size:13px; color:#6a7a8a; margin-top:6px;">TG: @PornHabSupport</p>
+            </div>
+        </div>
+
+        <div class="card animate-fadeUp delay-4" style="margin-top:12px;">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Связь и обратная связь
+            </h3>
+            <div style="display:flex;flex-wrap:wrap;gap:20px;margin-top:8px;">
+                <div>
+                    <p style="font-weight:500; font-size:14px;">Telegram:</p>
+                    <p style="font-size:14px; color:#4a5a6a;">@ssaindess — вопросы по разработке</p>
+                    <p style="font-size:14px; color:#4a5a6a;">@concole_hack — вопросы по безопасности</p>
+                    <p style="font-size:14px; color:#4a5a6a;">@PornHabSupport — общая поддержка</p>
+                </div>
+                <div>
+                    <p style="font-weight:500; font-size:14px;">Email:</p>
+                    <p style="font-size:14px; color:#4a5a6a;">pornhab@protonmail.com — для общих вопросов</p>
+                    <p style="font-size:14px; color:#4a5a6a;">security@pornhab.io — для баг-репортов</p>
+                </div>
+            </div>
+            <div class="shimmer-line"></div>
+            <p style="margin-top:8px; font-size:14px; color:#4a5a6a;">📢 Мы открыты к сотрудничеству, предложениям и сообщениям об ошибках. Присоединяйтесь к нашему сообществу!</p>
+        </div>
+    </div>
+</section>
+
+<section id="faq" class="section">
+    <div class="container">
+        <h2 class="section-title animate-fadeUp">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Часто задаваемые вопросы (FAQ)
+        </h2>
+        <p class="section-sub animate-fadeUp delay-1">Ответы на самые частые вопросы о PornHab. Если вы не нашли ответ — свяжитесь с нами.</p>
+
+        <div class="card animate-fadeUp delay-1">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                ❓ Какие форматы архивов поддерживаются?
+            </h3>
+            <p style="color:#4a5a6a;">Поддерживаются: <strong>ZIP, RAR, 7z, TAR, GZ, BZ2, XZ, TGZ, TBZ2, TXZ, ZST, LZ4, LZMA, LZO, Z, Z, TAZ, TZ, TLZ, TXZ</strong> — всего 20+ форматов.</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-2">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                ❓ Нужно ли устанавливать дополнительные программы?
+            </h3>
+            <p style="color:#4a5a6a;">Для работы с RAR и 7z архивами требуется установить <strong>unrar</strong> и <strong>7z</strong>. На Linux/macOS это можно сделать через менеджер пакетов. На Windows они обычно устанавливаются автоматически.</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-3">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                ❓ Как часто обновляется программа?
+            </h3>
+            <p style="color:#4a5a6a;">Обновления выходят <strong>каждые 2-4 недели</strong>. Включают новые функции, исправления багов и обновление API. Следите за анонсами в Telegram.</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-4">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                ❓ Можно ли использовать PornHab на сервере?
+            </h3>
+            <p style="color:#4a5a6a;">Да, программа работает на любой ОС с Python 3.8+. Рекомендуется использовать <strong>screen</strong> или <strong>tmux</strong> для фонового запуска.</p>
+        </div>
+
+        <div class="card animate-fadeUp delay-5">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                ❓ Что делать, если функция не работает?
+            </h3>
+            <ul>
+                <li>Проверьте, установлены ли все библиотеки (команда для установки выше)</li>
+                <li>Проверьте API ключи (меню 143) — многие функции требуют ключей</li>
+                <li>Проверьте интернет-соединение</li>
+                <li>Попробуйте перезапустить программу</li>
+                <li>Свяжитесь с нами в Telegram, если проблема не решается</li>
+            </ul>
+        </div>
+
+        <div class="card animate-fadeUp delay-5" style="background:#f0f7ff; border-color:#d2dce8;">
+            <h3>
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                ❓ Безопасно ли использовать PornHab?
+            </h3>
+            <p style="color:#4a5a6a;">Да, программа работает локально и не передает данные третьим лицам. Все API запросы выполняются с вашего устройства. Рекомендуется использовать VPN для дополнительной анонимности.</p>
+            <p style="color:#4a5a6a; margin-top:6px;">⚠️ <strong>Важно:</strong> Используйте программу только в законных целях и с согласия владельцев данных.</p>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p><span class="brand">PornHab</span> v6.0.0 — Полная документация</p>
+        <p style="margin-top:4px; font-size:13px; color:#4a5a6a;">© 2025 PornHab Team. Все права защищены.</p>
+        <div class="social-links">
+            <a href="#">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Telegram
+            </a>
+            <a href="#">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="8" y1="16" x2="16" y2="8"/></svg>
+                GitHub
+            </a>
+            <a href="#">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+                Twitter
+            </a>
+        </div>
+        <p style="margin-top:12px; font-size:12px; color:#8a9aa8;">Документация создана @ssaindess и @concole_hack</p>
+    </div>
+</footer>
+
+</body>
+</html>
