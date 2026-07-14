@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DllNire — Документация</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --border: #e8e8f0;
+            --card: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --accent: #4361ee;
+            --accent-light: #eef0ff;
+            --code-bg: #f1f3f5;
+            --scrollbar: #d0d0dd;
+            --nav-bg: rgba(255,255,255,0.92);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --border: #30363d;
+            --card: #161b22;
+            --shadow: 0 4px 20px rgba(0,0,0,0.4);
+            --accent: #58a6ff;
+            --accent-light: #1c2333;
+            --code-bg: #1c2333;
+            --scrollbar: #30363d;
+            --nav-bg: rgba(13,17,23,0.92);
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #f85149;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.7;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 4px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        header {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo svg { width: 36px; height: 36px; }
+        .logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: var(--text);
+        }
+        .logo-text span { color: var(--accent); }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            color: var(--text);
+        }
+        .theme-toggle:hover { background: var(--border); }
+        .theme-toggle svg { width: 20px; height: 20px; }
+        .badge {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: var(--accent-light);
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 14px;
+            transition: 0.2s;
+            position: relative;
+        }
+        nav a:hover { color: var(--accent); }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: 0.2s;
+        }
+        nav a:hover::after { width: 100%; }
+        .hero {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 16px auto 0;
+        }
+        .hero-meta {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .hero-meta span {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .hero-meta strong { color: var(--text); }
+        .section {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+        }
+        .section:first-of-type { border-top: none; }
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .section-desc {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-size: 16px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+        .card-icon svg { width: 24px; height: 24px; }
+        .card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .card .count {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin-top: 8px;
+        }
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'Lato', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            color: var(--text);
+            margin: 12px 0;
+        }
+        .code-block .cmd { color: var(--accent); }
+        .code-block .out { color: var(--text-secondary); }
+        .code-block .key { color: var(--warning); }
+        .code-block .str { color: var(--success); }
+        .inline-code {
+            background: var(--code-bg);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Lato', monospace;
+            font-size: 13px;
+            border: 1px solid var(--border);
+        }
+        .steps {
+            counter-reset: step;
+            padding-left: 0;
+        }
+        .steps li {
+            list-style: none;
+            padding: 12px 0 12px 48px;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+        .steps li:last-child { border-bottom: none; }
+        .steps li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .steps li strong { display: block; font-size: 16px; }
+        .steps li p { color: var(--text-secondary); font-size: 14px; margin-top: 2px; }
+        .footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .footer .authors {
+            margin-top: 8px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .footer .authors span { color: var(--accent); }
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+            background: var(--accent-light);
+            color: var(--accent);
+            margin-right: 4px;
+        }
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .tree {
+            font-family: 'Lato', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        .tree .dir { color: var(--accent); font-weight: 700; }
+        .tree .file { color: var(--text); }
+        .tree .ext { color: var(--warning); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        table th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border);
+            font-weight: 700;
+            color: var(--text);
+        }
+        table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        table tr:hover { background: var(--bg-secondary); }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .status-badge.success { background: var(--success); color: white; }
+        .status-badge.warning { background: var(--warning); color: white; }
+        .status-badge.danger { background: var(--danger); color: white; }
+        .status-badge.info { background: var(--accent); color: white; }
+        .chart-container {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 16px 0;
+        }
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 8px 0;
+        }
+        .chart-bar .label {
+            width: 140px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+        .chart-bar .bar-track {
+            flex: 1;
+            height: 24px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .chart-bar .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            background: linear-gradient(90deg, var(--accent), #7c3aed);
+            width: 0%;
+        }
+        .chart-bar .bar-fill.blue { background: linear-gradient(90deg, #4361ee, #3b82f6); }
+        .chart-bar .bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
+        .chart-bar .bar-fill.orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .chart-bar .bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .chart-bar .bar-fill.purple { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+        .chart-bar .value {
+            width: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .donut-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 16px 0;
+        }
+        .donut {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--accent) 0% 35%,
+                var(--success) 35% 55%,
+                var(--warning) 55% 75%,
+                var(--danger) 75% 100%
+            );
+            position: relative;
+        }
+        .donut::after {
+            content: '';
+            position: absolute;
+            top: 35px;
+            left: 35px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--card);
+        }
+        .donut-label {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .donut-label strong { color: var(--text); display: block; font-size: 20px; }
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .legend-item .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .api-endpoint {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border-left: 3px solid var(--accent);
+            font-size: 14px;
+        }
+        .api-endpoint .method {
+            font-weight: 700;
+            color: var(--accent);
+            margin-right: 12px;
+        }
+        .api-endpoint .path {
+            color: var(--text);
+            font-family: 'Lato', monospace;
+        }
+        .api-endpoint .desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            nav { gap: 12px; }
+            .header-inner { flex-direction: column; align-items: stretch; }
+            .header-actions { justify-content: space-between; }
+            .section-title { font-size: 22px; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .chart-bar .label { width: 100px; font-size: 12px; }
+            .donut-container { flex-direction: column; }
+        }
+        .tree-indent { padding-left: 20px; }
+        .badge-count {
+            background: var(--accent);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(67, 97, 238, 0.2); }
+            to { box-shadow: 0 0 30px rgba(67, 97, 238, 0.4); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo">
+                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="32" height="32" rx="8" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M10 12L18 20L26 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 20L18 28L26 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="18" cy="18" r="2" fill="currentColor"/>
+                    </svg>
+                    <span class="logo-text">Dll<span>Nire</span></span>
+                </a>
+                <div class="header-actions">
+                    <nav>
+                        <a href="#overview">Обзор</a>
+                        <a href="#modules">Модули</a>
+                        <a href="#api">API</a>
+                        <a href="#structure">Структура</a>
+                        <a href="#install">Установка</a>
+                        <a href="#usage">Использование</a>
+                        <a href="#stats">Статистика</a>
+                    </nav>
+                    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Сменить тему">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <span class="badge">v8.0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="hero" id="overview">
+                <h1>DllNire</h1>
+                <p>Многофункциональный фреймворк для тестирования на проникновение с 78 инструментами в одном интерфейсе</p>
+                <div class="hero-meta">
+                    <span>⚡ <strong>78</strong> инструментов</span>
+                    <span>📦 <strong>7</strong> категорий</span>
+                    <span>🛡️ <strong>Кроссплатформенный</strong></span>
+                    <span>🔌 <strong>REST API</strong></span>
+                </div>
+            </section>
+
+            <section class="section" id="modules">
+                <h2 class="section-title">Модули</h2>
+                <p class="section-desc">Все инструменты разделены на 7 категорий для удобной навигации</p>
+                <div class="grid-3">
+                    <div class="card animate-on-scroll">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H5.78a1.65 1.65 0 0 0-1.51 1 1.65 1.65 0 0 0 .33 1.82l.98.99A1.65 1.65 0 0 0 7.1 17h9.8a1.65 1.65 0 0 0 1.51-1l.99-.99z"/></svg>
+                        </div>
+                        <h3>Сетевое сканирование</h3>
+                        <p>Fast Scan, Ultra Scan, SYN Flood, UDP Flood, OS Detect, Ping Sweep, Traceroute, Port Knock</p>
+                        <span class="count">8 инструментов</span>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                        <h3>Аутентификация</h3>
+                        <p>SSH, FTP, MySQL, PostgreSQL, MongoDB, Redis, HTTP Basic, WordPress, Joomla, Drupal</p>
+                        <span class="count">10 инструментов</span>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                        </div>
+                        <h3>Веб-уязвимости</h3>
+                        <p>SQL Injection, XSS, LFI, RFI, SSRF, XXE, Command Injection, NoSQL, GraphQL, CMS Scan</p>
+                        <span class="count">18 инструментов</span>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg>
+                        </div>
+                        <h3>Шеллы и эксплойты</h3>
+                        <p>Reverse Shell, Bind Shell, Web Shell, MSFVenom, Encoded Shell, Obfuscated Shell, Meterpreter</p>
+                        <span class="count">18 инструментов</span>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <h3>Слежка</h3>
+                        <p>Keylogger, Screenshot, Webcam, WiFi Passwords, Process List, Network Connections, System Info</p>
+                        <span class="count">8 инструментов</span>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <h3>Анонимность</h3>
+                        <p>Proxy, Tor, VPN, Change IP, Change MAC, Change DNS, Stealth Mode, Clean Logs</p>
+                        <span class="count">8 инструментов</span>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        </div>
+                        <h3>Форензика и крипто</h3>
+                        <p>Clean Logs, Secure Delete, AES/RSA шифрование, JWT, Hash (MD5/SHA), Base64, XOR, Ransomware</p>
+                        <span class="count">12 инструментов</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="api">
+                <h2 class="section-title">API Конфигурация</h2>
+                <p class="section-desc">REST API для удаленного управления и интеграции</p>
+                
+                <div class="card animate-on-scroll">
+                    <h3>Настройка API</h3>
+                    <div class="code-block">
+                        <span class="cmd"># config/settings.py</span><br>
+                        <span class="key">API_ENABLED</span> = <span class="str">True</span><br>
+                        <span class="key">API_HOST</span> = <span class="str">"0.0.0.0"</span><br>
+                        <span class="key">API_PORT</span> = <span class="str">8080</span><br>
+                        <span class="key">API_SECRET</span> = <span class="str">"your-secret-key"</span><br>
+                        <span class="key">API_TOKEN_EXPIRE</span> = <span class="str">3600</span>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top:16px;">
+                    <div class="card animate-on-scroll">
+                        <h3>Аутентификация</h3>
+                        <div class="api-endpoint">
+                            <span class="method">POST</span>
+                            <span class="path">/api/auth/login</span>
+                            <div class="desc">Получение JWT токена</div>
+                        </div>
+                        <div class="code-block">
+                            <span class="cmd">curl -X POST http://localhost:8080/api/auth/login \\</span><br>
+                            <span class="cmd">  -H "Content-Type: application/json" \\</span><br>
+                            <span class="cmd">  -d '{"username":"admin","password":"admin123"}'</span>
+                        </div>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>Запросы с токеном</h3>
+                        <div class="api-endpoint">
+                            <span class="method">GET</span>
+                            <span class="path">/api/scan</span>
+                            <div class="desc">Запуск сканирования</div>
+                        </div>
+                        <div class="code-block">
+                            <span class="cmd">curl -X GET http://localhost:8080/api/scan \\</span><br>
+                            <span class="cmd">  -H "Authorization: Bearer YOUR_TOKEN" \\</span><br>
+                            <span class="cmd">  -H "Content-Type: application/json" \\</span><br>
+                            <span class="cmd">  -d '{"target":"192.168.1.1","ports":[22,80,443]}'</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card animate-on-scroll" style="margin-top:16px;">
+                    <h3>Доступные эндпоинты</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Метод</th><th>Эндпоинт</th><th>Описание</th><th>Статус</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="status-badge info">POST</span></td>
+                                <td><code>/api/auth/login</code></td>
+                                <td>Аутентификация</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">POST</span></td>
+                                <td><code>/api/auth/refresh</code></td>
+                                <td>Обновление токена</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">POST</span></td>
+                                <td><code>/api/scan</code></td>
+                                <td>Запуск сканирования</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">POST</span></td>
+                                <td><code>/api/bruteforce</code></td>
+                                <td>Запуск брутфорса</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">POST</span></td>
+                                <td><code>/api/web</code></td>
+                                <td>Проверка веб-уязвимостей</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">POST</span></td>
+                                <td><code>/api/shell</code></td>
+                                <td>Генерация шелла</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">GET</span></td>
+                                <td><code>/api/results/{id}</code></td>
+                                <td>Получение результатов</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">GET</span></td>
+                                <td><code>/api/logs</code></td>
+                                <td>Получение логов</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">DELETE</span></td>
+                                <td><code>/api/results/{id}</code></td>
+                                <td>Удаление результатов</td>
+                                <td><span class="status-badge warning">Beta</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-badge info">GET</span></td>
+                                <td><code>/api/status</code></td>
+                                <td>Статус сервера</td>
+                                <td><span class="status-badge success">Active</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card animate-on-scroll" style="margin-top:16px;">
+                    <h3>Пример ответа API</h3>
+                    <div class="code-block">
+                        <span class="out">{</span><br>
+                        <span class="out">  "status": "success",</span><br>
+                        <span class="out">  "data": {</span><br>
+                        <span class="out">    "scan_id": "scan_2024_001",</span><br>
+                        <span class="out">    "target": "192.168.1.1",</span><br>
+                        <span class="out">    "open_ports": [22, 80, 443, 3306],</span><br>
+                        <span class="out">    "os": "Linux/Unix",</span><br>
+                        <span class="out">    "services": {</span><br>
+                        <span class="out">      "22": "SSH",</span><br>
+                        <span class="out">      "80": "HTTP",</span><br>
+                        <span class="out">      "443": "HTTPS",</span><br>
+                        <span class="out">      "3306": "MySQL"</span><br>
+                        <span class="out">    },</span><br>
+                        <span class="out">    "timestamp": "2024-01-15T10:30:00Z"</span><br>
+                        <span class="out">  }</span><br>
+                        <span class="out">}</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="structure">
+                <h2 class="section-title">Структура проекта</h2>
+                <p class="section-desc">Полная организация файлов и директорий</p>
+                
+                <div class="card animate-on-scroll">
+                    <div class="tree">
+                        <span class="dir">dllnire/</span><br>
+                        <span class="tree-indent">├── <span class="dir">core/</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">framework.py</span>  <span class="ext"># Основной фреймворк</span></span><br>
+                        <span class="tree-indent">│   └── <span class="file">__init__.py</span></span><br>
+                        <span class="tree-indent">├── <span class="dir">modules/</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">network.py</span>      <span class="ext"># Сетевое сканирование</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">bruteforce.py</span>   <span class="ext"># Брутфорс</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">web.py</span>          <span class="ext"># Веб-уязвимости</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">shells.py</span>       <span class="ext"># Шеллы</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ransomware.py</span>   <span class="ext"># Ransomware</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">surveillance.py</span> <span class="ext"># Слежка</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">anonymity.py</span>    <span class="ext"># Анонимность</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">persistence.py</span>  <span class="ext"># Персистентность</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">forensics.py</span>    <span class="ext"># Форензика</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">crypto.py</span>       <span class="ext"># Криптография</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">scanner.py</span>      <span class="ext"># Сканер портов</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">exploit.py</span>      <span class="ext"># Эксплойты</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">dos.py</span>          <span class="ext"># DDoS</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">spoof.py</span>        <span class="ext"># Спуфинг</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">sniffer.py</span>      <span class="ext"># Сниффер</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">proxy.py</span>        <span class="ext"># Прокси</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">tor.py</span>          <span class="ext"># Tor</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">vpn.py</span>          <span class="ext"># VPN</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">dns.py</span>          <span class="ext"># DNS</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">dhcp.py</span>         <span class="ext"># DHCP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">arp.py</span>          <span class="ext"># ARP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">icmp.py</span>         <span class="ext"># ICMP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">tcp.py</span>          <span class="ext"># TCP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">udp.py</span>          <span class="ext"># UDP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">http.py</span>         <span class="ext"># HTTP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">https.py</span>        <span class="ext"># HTTPS</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ftp.py</span>          <span class="ext"># FTP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ssh.py</span>          <span class="ext"># SSH</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">telnet.py</span>       <span class="ext"># Telnet</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">smtp.py</span>         <span class="ext"># SMTP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">pop3.py</span>         <span class="ext"># POP3</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">imap.py</span>         <span class="ext"># IMAP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ldap.py</span>         <span class="ext"># LDAP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">snmp.py</span>         <span class="ext"># SNMP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">rdp.py</span>          <span class="ext"># RDP</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">vnc.py</span>          <span class="ext"># VNC</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">socks.py</span>        <span class="ext"># SOCKS</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ssl.py</span>          <span class="ext"># SSL</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">tls.py</span>          <span class="ext"># TLS</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">jwt.py</span>          <span class="ext"># JWT</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">oauth.py</span>        <span class="ext"># OAuth</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">saml.py</span>         <span class="ext"># SAML</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">kerberos.py</span>     <span class="ext"># Kerberos</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ntlm.py</span>         <span class="ext"># NTLM</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">hashcat.py</span>      <span class="ext"># Hashcat</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">john.py</span>         <span class="ext"># John</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">hydra.py</span>        <span class="ext"># Hydra</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">medusa.py</span>       <span class="ext"># Medusa</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ncrack.py</span>       <span class="ext"># Ncrack</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">aircrack.py</span>     <span class="ext"># Aircrack</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">reaver.py</span>       <span class="ext"># Reaver</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">bully.py</span>        <span class="ext"># Bully</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">pixie.py</span>        <span class="ext"># Pixie</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">wifite.py</span>       <span class="ext"># Wifite</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">kismet.py</span>       <span class="ext"># Kismet</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">airodump.py</span>     <span class="ext"># Airodump</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">aireplay.py</span>     <span class="ext"># Aireplay</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">mdk3.py</span>         <span class="ext"># MDK3</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">mdk4.py</span>         <span class="ext"># MDK4</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">bettercap.py</span>    <span class="ext"># Bettercap</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ettercap.py</span>     <span class="ext"># Ettercap</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">mitm.py</span>         <span class="ext"># MITM</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">sslstrip.py</span>     <span class="ext"># SSLStrip</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">dns2proxy.py</span>    <span class="ext"># DNS2Proxy</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">responder.py</span>    <span class="ext"># Responder</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">impacket.py</span>     <span class="ext"># Impacket</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">bloodhound.py</span>   <span class="ext"># BloodHound</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">sharphound.py</span>   <span class="ext"># SharpHound</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">mimikatz.py</span>     <span class="ext"># Mimikatz</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">psexec.py</span>       <span class="ext"># PsExec</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">wmiexec.py</span>      <span class="ext"># WmiExec</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">smbexec.py</span>      <span class="ext"># SmbExec</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">atexec.py</span>        <span class="ext"># AtExec</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">dcomexec.py</span>      <span class="ext"># DcomExec</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">pth.py</span>           <span class="ext"># PassTheHash</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">golden.py</span>        <span class="ext"># Golden Ticket</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">silver.py</span>        <span class="ext"># Silver Ticket</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">skeleton.py</span>      <span class="ext"># Skeleton Key</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">dcsync.py</span>        <span class="ext"># DCSync</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">ntds.py</span>          <span class="ext"># NTDS Dump</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">lsass.py</span>         <span class="ext"># LSASS Dump</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">procdump.py</span>      <span class="ext"># ProcDump</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">meterpreter.py</span>   <span class="ext"># Meterpreter</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">cobalt.py</span>        <span class="ext"># Cobalt Strike</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">empire.py</span>        <span class="ext"># Empire</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">pwn.py</span>           <span class="ext"># Pwn</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">msf.py</span>           <span class="ext"># MSF</span></span><br>
+                        <span class="tree-indent">│   └── <span class="file">__init__.py</span></span><br>
+                        <span class="tree-indent">├── <span class="dir">utils/</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">logger.py</span>        <span class="ext"># Логирование</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">colors.py</span>        <span class="ext"># Цветовая схема</span></span><br>
+                        <span class="tree-indent">│   └── <span class="file">__init__.py</span></span><br>
+                        <span class="tree-indent">├── <span class="dir">database/</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">db.py</span>            <span class="ext"># База данных</span></span><br>
+                        <span class="tree-indent">│   └── <span class="file">__init__.py</span></span><br>
+                        <span class="tree-indent">├── <span class="dir">config/</span></span><br>
+                        <span class="tree-indent">│   ├── <span class="file">settings.py</span>       <span class="ext"># Настройки</span></span><br>
+                        <span class="tree-indent">│   └── <span class="file">api_config.py</span>     <span class="ext"># API настройки</span></span><br>
+                        <span class="tree-indent">├── <span class="dir">logs/</span>                <span class="ext"># Логи</span></span><br>
+                        <span class="tree-indent">├── <span class="dir">data/</span>                <span class="ext"># Данные</span></span><br>
+                        <span class="tree-indent">├── <span class="dir">tests/</span>               <span class="ext"># Тесты</span></span><br>
+                        <span class="tree-indent">├── <span class="dir">assets/</span>              <span class="ext"># Ресурсы</span></span><br>
+                        <span class="tree-indent">├── <span class="file">requirements.txt</span>      <span class="ext"># Зависимости</span></span><br>
+                        <span class="tree-indent">├── <span class="file">setup.py</span>            <span class="ext"># Установка</span></span><br>
+                        <span class="tree-indent">├── <span class="file">main.py</span>             <span class="ext"># Точка входа</span></span><br>
+                        <span class="tree-indent">└── <span class="file">README.md</span></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="install">
+                <h2 class="section-title">Установка</h2>
+                <p class="section-desc">Быстрая установка и запуск DllNire</p>
+                <div class="card animate-on-scroll">
+                    <h3>Требования</h3>
+                    <p>Python 3.8 или выше, pip</p>
+                    <div class="code-block">
+                        <span class="cmd">git clone https://github.com/dllnire/dllnire.git</span><br>
+                        <span class="cmd">cd dllnire</span><br>
+                        <span class="cmd">pip install -r requirements.txt</span><br>
+                        <span class="cmd">python main.py</span>
+                    </div>
+                    <p style="margin-top:12px;">Или одной командой:</p>
+                    <div class="code-block">
+                        <span class="cmd">pip install -r requirements.txt && python main.py</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="usage">
+                <h2 class="section-title">Использование</h2>
+                <p class="section-desc">Навигация по меню и основные команды</p>
+                <div class="card animate-on-scroll">
+                    <h3>Запуск</h3>
+                    <div class="code-block">
+                        <span class="cmd">python main.py</span>
+                    </div>
+                    <h3 style="margin-top:16px;">Навигация</h3>
+                    <div class="code-block">
+                        <span class="out">[+] Select: 1    # Быстрое сканирование</span><br>
+                        <span class="out">[+] Target: 192.168.1.1</span><br>
+                        <span class="out">[+] Open ports: [22, 80, 443]</span>
+                    </div>
+                    <h3 style="margin-top:16px;">Полная атака</h3>
+                    <div class="code-block">
+                        <span class="out">[+] Select: 68   # Full Attack</span><br>
+                        <span class="out">[+] Target: 192.168.1.1</span><br>
+                        <span class="out">[*] Fast scanning...</span><br>
+                        <span class="out">[+] Ports: [22, 80, 443]</span><br>
+                        <span class="out">[*] SSH brute...</span><br>
+                        <span class="out">[+] SSH: {'user': 'root', 'password': 'password123'}</span><br>
+                        <span class="out">[*] Web scanning...</span><br>
+                        <span class="out">[+] SQL: {'vuln': True}</span><br>
+                        <span class="out">[*] OS detect...</span><br>
+                        <span class="out">[+] OS: Linux/Unix</span><br>
+                        <span class="out">[+] Full attack complete!</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="stats">
+                <h2 class="section-title">Статистика</h2>
+                <p class="section-desc">Распределение инструментов по категориям</p>
+                
+                <div class="grid-2">
+                    <div class="card animate-on-scroll">
+                        <h3>Количество инструментов</h3>
+                        <div class="chart-container" style="padding:0;border:none;">
+                            <div class="chart-bar">
+                                <span class="label">Сетевое сканирование</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill blue" style="width:10%;" data-width="10">10%</div>
+                                </div>
+                                <span class="value">8</span>
+                            </div>
+                            <div class="chart-bar">
+                                <span class="label">Аутентификация</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill green" style="width:13%;" data-width="13">13%</div>
+                                </div>
+                                <span class="value">10</span>
+                            </div>
+                            <div class="chart-bar">
+                                <span class="label">Веб-уязвимости</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill purple" style="width:23%;" data-width="23">23%</div>
+                                </div>
+                                <span class="value">18</span>
+                            </div>
+                            <div class="chart-bar">
+                                <span class="label">Шеллы и эксплойты</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill orange" style="width:23%;" data-width="23">23%</div>
+                                </div>
+                                <span class="value">18</span>
+                            </div>
+                            <div class="chart-bar">
+                                <span class="label">Слежка</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill red" style="width:10%;" data-width="10">10%</div>
+                                </div>
+                                <span class="value">8</span>
+                            </div>
+                            <div class="chart-bar">
+                                <span class="label">Анонимность</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill blue" style="width:10%;" data-width="10">10%</div>
+                                </div>
+                                <span class="value">8</span>
+                            </div>
+                            <div class="chart-bar">
+                                <span class="label">Форензика и крипто</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill green" style="width:15%;" data-width="15">15%</div>
+                                </div>
+                                <span class="value">12</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>Распределение</h3>
+                        <div class="donut-container">
+                            <div class="donut"></div>
+                            <div class="legend">
+                                <div class="legend-item">
+                                    <span class="dot" style="background:var(--accent);"></span>
+                                    Сетевое сканирование (8)
+                                </div>
+                                <div class="legend-item">
+                                    <span class="dot" style="background:var(--success);"></span>
+                                    Аутентификация (10)
+                                </div>
+                                <div class="legend-item">
+                                    <span class="dot" style="background:#7c3aed;"></span>
+                                    Веб-уязвимости (18)
+                                </div>
+                                <div class="legend-item">
+                                    <span class="dot" style="background:var(--warning);"></span>
+                                    Шеллы и эксплойты (18)
+                                </div>
+                                <div class="legend-item">
+                                    <span class="dot" style="background:var(--danger);"></span>
+                                    Слежка (8)
+                                </div>
+                                <div class="legend-item">
+                                    <span class="dot" style="background:#3b82f6;"></span>
+                                    Анонимность (8)
+                                </div>
+                                <div class="legend-item">
+                                    <span class="dot" style="background:#34d399;"></span>
+                                    Форензика и крипто (12)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-3" style="margin-top:16px;">
+                    <div class="card animate-on-scroll glow" style="text-align:center;">
+                        <h2 style="font-size:36px;color:var(--accent);">78</h2>
+                        <p style="color:var(--text-secondary);">Всего инструментов</p>
+                    </div>
+                    <div class="card animate-on-scroll glow" style="text-align:center;">
+                        <h2 style="font-size:36px;color:var(--success);">7</h2>
+                        <p style="color:var(--text-secondary);">Категорий</p>
+                    </div>
+                    <div class="card animate-on-scroll glow" style="text-align:center;">
+                        <h2 style="font-size:36px;color:var(--warning);">100%</h2>
+                        <p style="color:var(--text-secondary);">Покрытие</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Быстрый старт</h2>
+                <p class="section-desc">Пошаговая инструкция для новичков</p>
+                <div class="card animate-on-scroll">
+                    <ol class="steps">
+                        <li>
+                            <strong>Клонируйте репозиторий</strong>
+                            <p>git clone https://github.com/dllnire/dllnire.git</p>
+                        </li>
+                        <li>
+                            <strong>Установите зависимости</strong>
+                            <p>pip install -r requirements.txt</p>
+                        </li>
+                        <li>
+                            <strong>Запустите фреймворк</strong>
+                            <p>python main.py</p>
+                        </li>
+                        <li>
+                            <strong>Выберите инструмент</strong>
+                            <p>Введите номер нужного инструмента и следуйте инструкциям</p>
+                        </li>
+                        <li>
+                            <strong>Анализируйте результаты</strong>
+                            <p>Все результаты сохраняются в базу данных и логи</p>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Зависимости</h2>
+                <p class="section-desc">Основные библиотеки, необходимые для работы</p>
+                <div class="grid-2">
+                    <div class="card animate-on-scroll">
+                        <h3>Основные</h3>
+                        <p>cryptography ≥ 41.0.0</p>
+                        <p>requests ≥ 2.31.0</p>
+                        <p>paramiko ≥ 3.3.0</p>
+                        <p>pynput ≥ 1.7.6</p>
+                        <p>pyautogui ≥ 0.9.54</p>
+                        <p>psutil ≥ 5.9.5</p>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>Дополнительные</h3>
+                        <p>pymongo ≥ 4.5.0</p>
+                        <p>redis ≥ 5.0.0</p>
+                        <p>mysql-connector-python ≥ 8.1.0</p>
+                        <p>psycopg2-binary ≥ 2.9.8</p>
+                        <p>opencv-python ≥ 4.8.0</p>
+                        <p>pyaudio ≥ 0.2.11</p>
+                    </div>
+                </div>
+                <div class="card animate-on-scroll" style="margin-top:16px;">
+                    <div class="code-block">
+                        <span class="cmd">pip install -r requirements.txt</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Лицензия</h2>
+                <p class="section-desc">Проект распространяется под лицензией MIT</p>
+                <div class="card animate-on-scroll">
+                    <p style="font-size:14px;color:var(--text-secondary);">
+                        MIT License<br><br>
+                        Copyright (c) 2024 DllNire<br><br>
+                        Данное программное обеспечение предоставляется бесплатно любому лицу, получающему копию данного программного обеспечения и сопутствующей документации, для использования без ограничений.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 <a href="#">DllNire</a> — Advanced Penetration Testing Framework</p>
+            <div class="authors">
+                by <span>@ssaindess</span> & <span>@concole_hack</span>
+            </div>
+            <p style="margin-top:8px;font-size:13px;color:var(--text-secondary);">
+                ⚡ 78 инструментов · 🛡️ 7 категорий · 🌍 Кроссплатформенный · 🔌 REST API
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+
+        (function() {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        const barFills = document.querySelectorAll('.bar-fill');
+        barFills.forEach((bar, index) => {
+            setTimeout(() => {
+                const width = bar.getAttribute('data-width') || '0';
+                bar.style.width = width + '%';
+            }, 300 + index * 100);
+        });
+    </script>
+</body>
+</html>

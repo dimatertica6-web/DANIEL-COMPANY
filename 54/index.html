@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика конфиденциальности — DllNire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --border: #e8e8f0;
+            --card: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --accent: #4361ee;
+            --accent-light: #eef0ff;
+            --code-bg: #f1f3f5;
+            --scrollbar: #d0d0dd;
+            --nav-bg: rgba(255,255,255,0.92);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --text: #e6edf3;
+            --text-secondary: #8b949e;
+            --border: #30363d;
+            --card: #161b22;
+            --shadow: 0 4px 20px rgba(0,0,0,0.4);
+            --accent: #58a6ff;
+            --accent-light: #1c2333;
+            --code-bg: #1c2333;
+            --scrollbar: #30363d;
+            --nav-bg: rgba(13,17,23,0.92);
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #f85149;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.8;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 4px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+        header {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo svg { width: 36px; height: 36px; }
+        .logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: var(--text);
+        }
+        .logo-text span { color: var(--accent); }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            color: var(--text);
+        }
+        .theme-toggle:hover { background: var(--border); }
+        .theme-toggle svg { width: 20px; height: 20px; }
+        .badge {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: var(--accent-light);
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 400;
+            font-size: 14px;
+            transition: 0.2s;
+            position: relative;
+        }
+        nav a:hover { color: var(--accent); }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: 0.2s;
+        }
+        nav a:hover::after { width: 100%; }
+        .page-header {
+            padding: 40px 0 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+        .section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .section:last-child { border-bottom: none; }
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .section-desc {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+        .card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 16px 0 8px;
+        }
+        .card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .list-dot {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 4px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .list-dot::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .list-dot strong { color: var(--text); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin: 12px 0;
+        }
+        table th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border);
+            font-weight: 700;
+            color: var(--text);
+        }
+        table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        table tr:hover { background: var(--bg-secondary); }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .status-badge.green { background: var(--success); }
+        .status-badge.yellow { background: var(--warning); }
+        .status-badge.red { background: var(--danger); }
+        .status-badge.blue { background: var(--accent); }
+        .chart-container {
+            padding: 8px 0;
+        }
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 6px 0;
+        }
+        .chart-bar .label {
+            width: 160px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+        .chart-bar .bar-track {
+            flex: 1;
+            height: 22px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .chart-bar .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            width: 0%;
+        }
+        .chart-bar .bar-fill.blue { background: linear-gradient(90deg, #4361ee, #3b82f6); }
+        .chart-bar .bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
+        .chart-bar .bar-fill.orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .chart-bar .bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .chart-bar .bar-fill.purple { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+        .chart-bar .value {
+            width: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .donut-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 16px 0;
+        }
+        .donut {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--accent) 0% 10%,
+                var(--success) 10% 23%,
+                #7c3aed 23% 46%,
+                var(--warning) 46% 69%,
+                var(--danger) 69% 79%,
+                #3b82f6 79% 89%,
+                #34d399 89% 100%
+            );
+            position: relative;
+            flex-shrink: 0;
+        }
+        .donut::after {
+            content: '100%';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--text);
+            background: var(--card);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .legend-item .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            color: var(--text);
+            margin: 12px 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.6;
+        }
+        .code-block .key { color: var(--warning); }
+        .code-block .str { color: var(--success); }
+        .code-block .cmd { color: var(--accent); }
+        .footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .footer .authors {
+            margin-top: 8px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .footer .authors span { color: var(--accent); }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(67, 97, 238, 0.1); }
+            to { box-shadow: 0 0 30px rgba(67, 97, 238, 0.25); }
+        }
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+            background: var(--accent-light);
+            color: var(--accent);
+            margin-right: 4px;
+        }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 28px; }
+            nav { gap: 12px; }
+            .header-inner { flex-direction: column; align-items: stretch; }
+            .header-actions { justify-content: space-between; }
+            .section-title { font-size: 22px; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .chart-bar .label { width: 100px; font-size: 12px; }
+            .donut-container { flex-direction: column; }
+            .chart-bar { flex-wrap: wrap; }
+            .chart-bar .label { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="32" height="32" rx="8" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M10 12L18 20L26 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 20L18 28L26 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="18" cy="18" r="2" fill="currentColor"/>
+                    </svg>
+                    <span class="logo-text">Dll<span>Nire</span></span>
+                </a>
+                <div class="header-actions">
+                    <nav>
+                        <a href="index.html#overview">Обзор</a>
+                        <a href="index.html#modules">Модули</a>
+                        <a href="index.html#api">API</a>
+                        <a href="index.html#structure">Структура</a>
+                        <a href="index.html#install">Установка</a>
+                        <a href="privacy.html">Конфиденциальность</a>
+                    </nav>
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <span class="badge">v8.0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>Политика конфиденциальности</h1>
+                <p>DllNire — Advanced Penetration Testing Framework</p>
+            </div>
+
+            <section class="section">
+                <div class="card animate-on-scroll">
+                    <h2 style="font-size:22px;font-weight:700;">1. Общие положения</h2>
+                    <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты информации, получаемой при использовании программного обеспечения DllNire. Мы уважаем вашу конфиденциальность и обязуемся защищать ваши данные.</p>
+                    <div class="grid-2" style="margin-top:16px;">
+                        <div>
+                            <h4>📅 Дата вступления в силу</h4>
+                            <p>1 января 2024 года</p>
+                        </div>
+                        <div>
+                            <h4>🏢 Ответственная сторона</h4>
+                            <p>DllNire Development Team</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">2. Собираемые данные</h2>
+                <p class="section-desc">Мы собираем минимум данных, необходимых для работы инструмента</p>
+                <div class="grid-2">
+                    <div class="card animate-on-scroll">
+                        <h3>📊 Технические данные</h3>
+                        <div class="list-dot">IP-адрес (только для целей сканирования)</div>
+                        <div class="list-dot">Порты и сервисы целевых систем</div>
+                        <div class="list-dot">Результаты сканирований и атак</div>
+                        <div class="list-dot">Время и дата операций</div>
+                        <div class="list-dot">Версия используемого ПО</div>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>👤 Пользовательские данные</h3>
+                        <div class="list-dot">Имя пользователя (при настройке)</div>
+                        <div class="list-dot">Настройки и конфигурации</div>
+                        <div class="list-dot">Логи действий в рамках сессии</div>
+                        <div class="list-dot">Сохраненные результаты тестов</div>
+                        <div class="list-dot"><span class="tag">По желанию</span> Email для обратной связи</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">3. Использование данных</h2>
+                <p class="section-desc">Как и для чего мы используем собранную информацию</p>
+                <div class="card animate-on-scroll">
+                    <h3>Цели обработки</h3>
+                    <div class="grid-2">
+                        <div>
+                            <div class="list-dot"><strong>Обеспечение работы</strong> — выполнение функций инструмента</div>
+                            <div class="list-dot"><strong>Улучшение продукта</strong> — анализ использования</div>
+                            <div class="list-dot"><strong>Техническая поддержка</strong> — решение проблем</div>
+                        </div>
+                        <div>
+                            <div class="list-dot"><strong>Безопасность</strong> — защита от несанкционированного доступа</div>
+                            <div class="list-dot"><strong>Аудит</strong> — ведение логов для проверки действий</div>
+                            <div class="list-dot"><strong>Статистика</strong> — анонимная агрегация данных</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card animate-on-scroll" style="margin-top:16px;">
+                    <h3>Распределение использования данных</h3>
+                    <div class="chart-container">
+                        <div class="chart-bar">
+                            <span class="label">Обеспечение работы</span>
+                            <div class="bar-track"><div class="bar-fill blue" data-width="35"></div></div>
+                            <span class="value">35%</span>
+                        </div>
+                        <div class="chart-bar">
+                            <span class="label">Улучшение продукта</span>
+                            <div class="bar-track"><div class="bar-fill green" data-width="25"></div></div>
+                            <span class="value">25%</span>
+                        </div>
+                        <div class="chart-bar">
+                            <span class="label">Безопасность</span>
+                            <div class="bar-track"><div class="bar-fill purple" data-width="20"></div></div>
+                            <span class="value">20%</span>
+                        </div>
+                        <div class="chart-bar">
+                            <span class="label">Техподдержка</span>
+                            <div class="bar-track"><div class="bar-fill orange" data-width="12"></div></div>
+                            <span class="value">12%</span>
+                        </div>
+                        <div class="chart-bar">
+                            <span class="label">Статистика</span>
+                            <div class="bar-track"><div class="bar-fill red" data-width="8"></div></div>
+                            <span class="value">8%</span>
+                        </div>
+                    </div>
+                    <div class="donut-container" style="margin-top:16px;">
+                        <div class="donut"></div>
+                        <div class="legend">
+                            <div class="legend-item"><span class="dot" style="background:#4361ee;"></span>Обеспечение работы (35%)</div>
+                            <div class="legend-item"><span class="dot" style="background:#10b981;"></span>Улучшение продукта (25%)</div>
+                            <div class="legend-item"><span class="dot" style="background:#7c3aed;"></span>Безопасность (20%)</div>
+                            <div class="legend-item"><span class="dot" style="background:#f59e0b;"></span>Техподдержка (12%)</div>
+                            <div class="legend-item"><span class="dot" style="background:#ef4444;"></span>Статистика (8%)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">4. Хранение и защита данных</h2>
+                <p class="section-desc">Как мы защищаем вашу информацию</p>
+                <div class="grid-2">
+                    <div class="card animate-on-scroll">
+                        <h3>🔒 Методы защиты</h3>
+                        <div class="list-dot">Шифрование данных при передаче (TLS/SSL)</div>
+                        <div class="list-dot">Шифрование данных при хранении (AES-256)</div>
+                        <div class="list-dot">Аутентификация и авторизация</div>
+                        <div class="list-dot">Регулярное обновление безопасности</div>
+                        <div class="list-dot">Изолированное хранение логов</div>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>⏱️ Сроки хранения</h3>
+                        <div class="list-dot"><strong>Результаты сканирований</strong> — до 30 дней</div>
+                        <div class="list-dot"><strong>Логи действий</strong> — до 7 дней</div>
+                        <div class="list-dot"><strong>Конфигурации</strong> — до удаления пользователем</div>
+                        <div class="list-dot"><strong>Данные пользователя</strong> — до отзыва согласия</div>
+                        <div class="list-dot"><span class="tag">По умолчанию</span> Автоматическая очистка</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">5. Статистика использования</h2>
+                <p class="section-desc">Аналитика работы инструментов DllNire</p>
+                <div class="card animate-on-scroll">
+                    <h3>Популярность функций (за последние 30 дней)</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Функция</th><th>Количество запросов</th><th>Доля</th><th>Статус</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fast Scan</td>
+                                <td>12,847</td>
+                                <td>28%</td>
+                                <td><span class="status-badge green">Активно</span></td>
+                            </tr>
+                            <tr>
+                                <td>SQL Injection</td>
+                                <td>8,231</td>
+                                <td>18%</td>
+                                <td><span class="status-badge green">Активно</span></td>
+                            </tr>
+                            <tr>
+                                <td>SSH Bruteforce</td>
+                                <td>6,543</td>
+                                <td>14%</td>
+                                <td><span class="status-badge green">Активно</span></td>
+                            </tr>
+                            <tr>
+                                <td>Reverse Shell</td>
+                                <td>4,982</td>
+                                <td>11%</td>
+                                <td><span class="status-badge yellow">Средне</span></td>
+                            </tr>
+                            <tr>
+                                <td>Keylogger</td>
+                                <td>3,124</td>
+                                <td>7%</td>
+                                <td><span class="status-badge yellow">Средне</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ransomware</td>
+                                <td>1,876</td>
+                                <td>4%</td>
+                                <td><span class="status-badge blue">Тест</span></td>
+                            </tr>
+                            <tr>
+                                <td>XSS</td>
+                                <td>5,672</td>
+                                <td>12%</td>
+                                <td><span class="status-badge green">Активно</span></td>
+                            </tr>
+                            <tr>
+                                <td>Прочие функции</td>
+                                <td>2,725</td>
+                                <td>6%</td>
+                                <td><span class="status-badge blue">Разное</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">6. Права пользователя</h2>
+                <p class="section-desc">Ваши права в отношении ваших данных</p>
+                <div class="grid-3">
+                    <div class="card animate-on-scroll">
+                        <h3>📖 Доступ</h3>
+                        <p>Вы можете запросить копию ваших данных в любой момент</p>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>✏️ Изменение</h3>
+                        <p>Вы можете исправить неточные данные о себе</p>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>🗑️ Удаление</h3>
+                        <p>Вы можете запросить полное удаление ваших данных</p>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>⛔ Отказ</h3>
+                        <p>Вы можете отказаться от сбора необязательных данных</p>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>📤 Экспорт</h3>
+                        <p>Вы можете экспортировать свои данные в удобном формате</p>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>🔒 Ограничение</h3>
+                        <p>Вы можете ограничить обработку данных</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">7. Передача данных третьим лицам</h2>
+                <p class="section-desc">Мы не передаем ваши данные третьим лицам, за исключением случаев, предусмотренных законом</p>
+                <div class="card animate-on-scroll">
+                    <h3>Исключения</h3>
+                    <div class="list-dot">По требованию правоохранительных органов</div>
+                    <div class="list-dot">Для защиты прав и безопасности DllNire</div>
+                    <div class="list-dot">С вашего явного согласия</div>
+                    <div class="list-dot">Анонимизированные данные для статистики</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">8. Безопасность данных</h2>
+                <p class="section-desc">Технические меры защиты</p>
+                <div class="grid-2">
+                    <div class="card animate-on-scroll">
+                        <h3>🛡️ Технические меры</h3>
+                        <div class="list-dot">Шифрование данных (AES-256)</div>
+                        <div class="list-dot">Защита от DDoS-атак</div>
+                        <div class="list-dot">Регулярный аудит безопасности</div>
+                        <div class="list-dot">Двухфакторная аутентификация</div>
+                        <div class="list-dot">Автоматическое обновление</div>
+                    </div>
+                    <div class="card animate-on-scroll">
+                        <h3>📋 Организационные меры</h3>
+                        <div class="list-dot">Политика минимальных привилегий</div>
+                        <div class="list-dot">Обучение персонала</div>
+                        <div class="list-dot">План реагирования на инциденты</div>
+                        <div class="list-dot">Регулярное резервное копирование</div>
+                        <div class="list-dot">Соглашения о конфиденциальности</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">9. Cookies и трекеры</h2>
+                <p class="section-desc">Использование cookies в DllNire</p>
+                <div class="card animate-on-scroll">
+                    <h3>Типы используемых cookies</h3>
+                    <table>
+                        <thead>
+                            <tr><th>Тип</th><th>Цель</th><th>Срок хранения</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Сессионные</td>
+                                <td>Поддержание сессии пользователя</td>
+                                <td>До закрытия браузера</td>
+                            </tr>
+                            <tr>
+                                <td>Настройки</td>
+                                <td>Сохранение предпочтений</td>
+                                <td>30 дней</td>
+                            </tr>
+                            <tr>
+                                <td>Аналитические</td>
+                                <td>Сбор анонимной статистики</td>
+                                <td>365 дней</td>
+                            </tr>
+                            <tr>
+                                <td>Безопасности</td>
+                                <td>Защита от CSRF-атак</td>
+                                <td>Сессионные</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">10. Контакты</h2>
+                <p class="section-desc">Как с нами связаться по вопросам конфиденциальности</p>
+                <div class="card animate-on-scroll">
+                    <div class="grid-2">
+                        <div>
+                            <h3>📧 Email</h3>
+                            <p><a href="mailto:privacy@dllnire.io" style="color:var(--accent);text-decoration:none;">privacy@dllnire.io</a></p>
+                        </div>
+                        <div>
+                            <h3>🔗 GitHub</h3>
+                            <p><a href="https://github.com/dllnire/dllnire" style="color:var(--accent);text-decoration:none;">github.com/dllnire/dllnire</a></p>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;">
+                        <h3>⏱️ Время ответа</h3>
+                        <p>Мы отвечаем на все запросы в течение 48 часов</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">11. Изменения в политике</h2>
+                <p class="section-desc">Мы оставляем за собой право обновлять данную политику</p>
+                <div class="card animate-on-scroll">
+                    <h3>История изменений</h3>
+                    <div class="list-dot"><strong>01.01.2024</strong> — Первоначальная версия</div>
+                    <div class="list-dot"><strong>15.03.2024</strong> — Добавлен раздел о cookies</div>
+                    <div class="list-dot"><strong>01.06.2024</strong> — Обновлены сроки хранения данных</div>
+                    <div class="list-dot"><strong>01.09.2024</strong> — Добавлены графики и таблицы</div>
+                    <div class="list-dot"><span class="tag">Актуально</span> Версия 4.0 от 01.12.2024</div>
+                </div>
+            </section>
+
+            <section class="section" style="border-bottom:none;">
+                <div class="card animate-on-scroll" style="background:var(--accent-light);border-color:var(--accent);">
+                    <h3 style="color:var(--accent);">✅ Согласие</h3>
+                    <p style="color:var(--text-secondary);">
+                        Используя DllNire, вы соглашаетесь с условиями настоящей Политики конфиденциальности. 
+                        Если вы не согласны с каким-либо пунктом, пожалуйста, не используйте наше программное обеспечение.
+                    </p>
+                    <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;">
+                        <span class="tag">Согласен</span>
+                        <span class="tag">Принято</span>
+                        <span class="tag">Обновлено 01.12.2024</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 <a href="index.html">DllNire</a> — Advanced Penetration Testing Framework</p>
+            <div class="authors">by <span>@ssaindess</span> & <span>@concole_hack</span></div>
+            <p style="margin-top:8px;font-size:13px;color:var(--text-secondary);">
+                ⚡ 78 инструментов · 🛡️ 7 категорий · 🌍 Кроссплатформенный · 🔌 REST API
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+
+        (function() {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        const barFills = document.querySelectorAll('.bar-fill');
+        barFills.forEach((bar, index) => {
+            setTimeout(() => {
+                const width = bar.getAttribute('data-width') || '0';
+                bar.style.width = width + '%';
+            }, 300 + index * 100);
+        });
+    </script>
+</body>
+</html>
