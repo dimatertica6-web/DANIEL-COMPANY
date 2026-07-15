@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика конфиденциальности · RfiMain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f2f4f8;
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            color: #1a1a1a;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 48px;
+            border: 1px solid #d0d5dd;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 24px 16px; }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 20px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-weight: 600;
+            font-size: 28px;
+            letter-spacing: -0.02em;
+            color: #000000;
+        }
+
+        .badge {
+            background: #e8eaed;
+            padding: 4px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1a1a1a;
+            border: 1px solid #b0b8c4;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .intro-card {
+            background: #f5f6f8;
+            padding: 18px 24px;
+            margin-bottom: 32px;
+            border-left: 4px solid #000000;
+            font-size: 15px;
+            color: #1a1a1a;
+            border: 1px solid #d0d5dd;
+            border-left-width: 4px;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section h2 {
+            font-weight: 600;
+            font-size: 20px;
+            color: #000000;
+            border-bottom: 1px solid #d0d5dd;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        .section p {
+            font-size: 15px;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .section ul {
+            padding-left: 24px;
+            margin-bottom: 12px;
+        }
+
+        .section ul li {
+            font-size: 15px;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .pill {
+            background: #e8eaed;
+            padding: 2px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #1a1a1a;
+            border: 1px solid #b0b8c4;
+            display: inline-block;
+            margin: 2px 4px 2px 0;
+            white-space: nowrap;
+        }
+
+        .hr-light {
+            border: none;
+            border-top: 2px solid #1a1a1a;
+            margin: 24px 0 16px;
+        }
+
+        .footer-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #4a4a4a;
+            font-size: 13px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+        }
+
+        .mono {
+            font-family: 'SF Mono', monospace;
+            background: #eceef2;
+            padding: 2px 14px;
+            font-size: 12px;
+            color: #1a1a1a;
+            border: 1px solid #d0d5dd;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <rect x="2" y="2" width="32" height="32" stroke="#000000" stroke-width="2.5"/>
+            <path d="M10 18l6 6 10-10" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="18" cy="18" r="5" fill="#000000" fill-opacity="0.08" stroke="#000000" stroke-width="2"/>
+        </svg>
+        <h1>Политика конфиденциальности</h1>
+        <span class="badge">RfiMain · OSINT Framework</span>
+    </div>
+
+    <div class="intro-card">
+        <strong>Дата вступления в силу:</strong> 14 июля 2026 г.
+    </div>
+
+    <div class="section">
+        <h2>1. Общие положения</h2>
+        <p>Настоящая Политика конфиденциальности регулирует сбор, обработку и хранение персональных данных пользователей при использовании OSINT-фреймворка RfiMain (далее — «Сервис»).</p>
+        <p>Используя Сервис, вы соглашаетесь с условиями настоящей Политики. Если вы не согласны с условиями, пожалуйста, прекратите использование Сервиса.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Какие данные мы собираем</h2>
+        <ul>
+            <li><strong>Данные пользователя Telegram:</strong> ID, username, имя, фамилия (предоставляются Telegram при авторизации).</li>
+            <li><strong>История запросов:</strong> тип запроса, данные запроса, результат, время выполнения, источник.</li>
+            <li><strong>Цели и отчеты:</strong> сохраненные пользователем цели, созданные отчеты.</li>
+            <li><strong>Технические данные:</strong> IP-адрес, время доступа, тип устройства, версия браузера.</li>
+            <li><strong>Данные кэша:</strong> результаты API-запросов для ускорения работы (хранятся ограниченное время).</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Как мы используем данные</h2>
+        <ul>
+            <li>Обеспечение работы Сервиса (обработка запросов, кэширование).</li>
+            <li>Улучшение качества работы (аналитика, статистика).</li>
+            <li>Предоставление персонализированных функций (сохранение целей, отчетов).</li>
+            <li>Обеспечение безопасности (защита от злоупотреблений, спама).</li>
+            <li>Уведомления о статусе задач и обновлениях Сервиса.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. Хранение данных</h2>
+        <p>Данные хранятся в защищенной SQLite-базе данных на сервере. Доступ к базе данных ограничен и осуществляется только через авторизованные сервисы.</p>
+        <ul>
+            <li>История запросов хранится бессрочно для обеспечения работы Сервиса.</li>
+            <li>Кэш API-запросов хранится ограниченное время (по умолчанию 1–24 часа).</li>
+            <li>Данные пользователя хранятся до момента удаления аккаунта.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>5. Передача данных третьим лицам</h2>
+        <p>Сервис использует внешние API для выполнения запросов (AbuseIPDB, VirusTotal, ipinfo, WhoisXML, Etherscan и др.). При выполнении запросов передаются следующие данные:</p>
+        <ul>
+            <li>IP-адрес, домен, email, телефон, URL, хеш, адрес кошелька.</li>
+            <li>Результаты запросов могут передаваться в кэш для оптимизации.</li>
+        </ul>
+        <p>Сервис не передает персональные данные пользователей (ID, username) третьим лицам, за исключением случаев, предусмотренных законодательством.</p>
+    </div>
+
+    <div class="section">
+        <h2>6. Безопасность</h2>
+        <p>Мы принимаем следующие меры для защиты данных:</p>
+        <ul>
+            <li>Шифрование соединений через HTTPS.</li>
+            <li>Использование прокси-серверов для анонимизации запросов.</li>
+            <li>Ограничение доступа к базе данных.</li>
+            <li>Регулярное обновление зависимостей и компонентов.</li>
+        </ul>
+        <p>Однако, никакой метод передачи данных через интернет не является абсолютно безопасным, и мы не можем гарантировать 100% защиту.</p>
+    </div>
+
+    <div class="section">
+        <h2>7. Права пользователей</h2>
+        <ul>
+            <li><strong>Доступ:</strong> вы можете получить доступ к своим данным через команды бота (/stats, /targets, /report).</li>
+            <li><strong>Изменение:</strong> вы можете обновить свои данные через Telegram.</li>
+            <li><strong>Удаление:</strong> вы можете запросить удаление своих данных, обратившись к администратору.</li>
+            <li><strong>Отказ от уведомлений:</strong> вы можете отключить уведомления через настройки бота.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>8. Cookies и трекеры</h2>
+        <p>Сервис не использует cookies и сторонние трекеры. Вся аналитика основана на внутренних данных (история запросов, события).</p>
+    </div>
+
+    <div class="section">
+        <h2>9. Изменения в Политике</h2>
+        <p>Мы оставляем за собой право вносить изменения в настоящую Политику. Актуальная версия всегда доступна по ссылке. Изменения вступают в силу с момента публикации.</p>
+    </div>
+
+    <div class="section">
+        <h2>10. Контакты</h2>
+        <p>По вопросам, связанным с политикой конфиденциальности, вы можете связаться с администратором:</p>
+        <ul>
+            <li>Telegram: <a href="https://t.me/test_userinfo" style="color:#000000;text-decoration:underline;">@test_userinfo</a></li>
+            <li>ID администратора: 5198913957 (основной) / 8945457416 (альтернативный)</li>
+        </ul>
+    </div>
+
+    <hr class="hr-light">
+
+    <div class="footer-meta">
+        <span>RfiMain · 1.py</span>
+        <span class="mono">2026 · OSINT Framework</span>
+        <span>Политика конфиденциальности</span>
+    </div>
+
+</div>
+</body>
+</html>
