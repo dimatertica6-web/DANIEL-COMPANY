@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRT Framework — Документация</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    .logo svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: #4b5563;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      color: #1a1a1a;
+    }
+
+    .nav-links a.active {
+      color: #2563eb;
+    }
+
+    .github-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f3f4f6;
+      padding: 6px 12px;
+      border-radius: 6px;
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    .github-link:hover {
+      background: #e5e7eb;
+    }
+
+    .mobile-menu {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #1a1a1a;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero {
+      padding: 4rem 0;
+      text-align: center;
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero .subtitle {
+      font-size: 1.25rem;
+      color: #4b5563;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn.primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn.primary:hover {
+      background: #1d4ed8;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn.secondary {
+      background: #f3f4f6;
+      color: #1a1a1a;
+    }
+
+    .btn.secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 4rem;
+      justify-content: center;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .section {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      padding: 2rem;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      transition: all 0.3s;
+    }
+
+    .card:hover {
+      border-color: #2563eb;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: #4b5563;
+      font-size: 0.95rem;
+    }
+
+    .code-block {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    .code-block pre {
+      color: #e5e7eb;
+      font-family: "Courier New", monospace;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .code-block code {
+      color: #e5e7eb;
+    }
+
+    .content {
+      display: none;
+      padding: 2rem 0;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    .content h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 2rem 0 1rem;
+    }
+
+    .content h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .content p {
+      color: #4b5563;
+      margin: 0.5rem 0;
+    }
+
+    .content ul,
+    .content ol {
+      margin: 0.5rem 0 1rem 1.5rem;
+      color: #4b5563;
+    }
+
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    .content th,
+    .content td {
+      padding: 0.75rem 1rem;
+      border: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    .content th {
+      background: #f8fafc;
+      font-weight: 600;
+    }
+
+    .content td {
+      color: #4b5563;
+    }
+
+    .content a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .content a:hover {
+      text-decoration: underline;
+    }
+
+    .page-header {
+      padding: 2rem 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    .page-header p {
+      color: #4b5563;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      background: #f8fafc;
+      padding: 3rem 0 1rem;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 2rem;
+      padding: 0 2rem;
+    }
+
+    .footer-section h4 {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #1a1a1a;
+    }
+
+    .footer-section a {
+      display: block;
+      color: #4b5563;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+
+    .footer-section a:hover {
+      color: #1a1a1a;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.85rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid #e5e7eb;
+        gap: 1rem;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-stats {
+        gap: 2rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 200px;
+        text-align: center;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo" onclick="showPage('home')">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#2563eb" />
+          <text x="16" y="22" font-family="Arial" font-size="18" font-weight="bold" fill="white"
+            text-anchor="middle">D</text>
+        </svg>
+        <span>DRT Framework</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a class="active" onclick="showPage('home')">Главная</a>
+        <a onclick="showPage('getting-started')">Начало</a>
+        <a onclick="showPage('installation')">Установка</a>
+        <a onclick="showPage('usage')">Использование</a>
+        <a onclick="showPage('ddos')">DDoS</a>
+        <a onclick="showPage('bomber')">Бомбер</a>
+        <a onclick="showPage('visual')">Визуал</a>
+        <a onclick="showPage('optimizer')">Оптимизатор</a>
+        <a onclick="showPage('api')">API</a>
+        <a onclick="showPage('faq')">FAQ</a>
+        <a href="https://github.com" target="_blank" class="github-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+    </div>
+  </nav>
+  <div class="container">
+    <div id="home" class="content active">
+      <section class="hero">
+        <h1>DRT Framework</h1>
+        <p class="subtitle">Мощный фреймворк для DDoS-атак, бомбинга и визуализации</p>
+        <div class="hero-buttons">
+          <button class="btn primary" onclick="showPage('getting-started')">Начать</button>
+          <button class="btn secondary" onclick="showPage('installation')">Установка</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-number">23</span><span class="stat-label">Сервисов бомбера</span></div>
+          <div class="stat"><span class="stat-number">9</span><span class="stat-label">Методов атак</span></div>
+          <div class="stat"><span class="stat-number">40+</span><span class="stat-label">SVG иконок</span></div>
+          <div class="stat"><span class="stat-number">6</span><span class="stat-label">Алгоритмов оптимизации</span>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <h2 class="section-title">Ключевые возможности</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>DDoS-атаки</h3>
+            <p>9 мощных методов: TCP, UDP, HTTP, HTTPS, SYN, ACK, ICMP, DNS, Slowloris</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📱</div>
+            <h3>Бомбинг телефона</h3>
+            <p>23 сервиса: SMS, Call, WhatsApp, Telegram, Viber, Instagram, Facebook, TikTok, Twitter, VK, Discord</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎨</div>
+            <h3>Визуальный модуль</h3>
+            <p>Дашборды в реальном времени, графики, анимации и метрики производительности</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">⚙️</div>
+            <h3>Оптимизатор</h3>
+            <p>Оптимизация потоков, сети, пакетов, пропускной способности и задержки</p>
+          </div>
+        </div>
+      </section>
+      <section class="section" style="background:#f8fafc;border-radius:12px;padding:2rem;">
+        <h2 class="section-title">Быстрый старт</h2>
+        <div class="code-block">
+          <pre><code># Установка зависимостей
+pip install -r requirements.txt
+
+# Запуск фреймворка
+cd drt
+python main.py
+
+# Запуск тестов
+cd tests
+python run_tests.py
+
+# Генерация иконок
+cd icons
+python manager.py</code></pre>
+        </div>
+      </section>
+    </div>
+    <div id="getting-started" class="content">
+      <div class="page-header">
+        <h1>Начало работы</h1>
+        <p>Быстрое знакомство с DRT Framework</p>
+      </div>
+      <h2>Обзор</h2>
+      <p>DRT Framework — это комплексный фреймворк для DDoS-атак и бомбинга с визуальным модулем и оптимизатором.</p>
+      <h2>Требования</h2>
+      <ul>
+        <li>Python 3.8 или выше</li>
+        <li>pip</li>
+        <li>Git (опционально)</li>
+      </ul>
+      <h2>Структура проекта</h2>
+      <div class="code-block">
+        <pre><code>drt/
+├── attacks/          # Методы DDoS-атак
+├── bomber/           # Сервисы бомбинга
+├── core/             # Основная функциональность
+├── optimizer/        # Оптимизация производительности
+├── visual/           # Визуальный модуль
+├── config/           # Конфигурационные файлы
+├── utils/            # Вспомогательные функции
+└── main.py           # Точка входа</code></pre>
+      </div>
+      <h2>Далее</h2>
+      <ul>
+        <li><a onclick="showPage('installation')">Инструкция по установке</a></li>
+        <li><a onclick="showPage('usage')">Руководство по использованию</a></li>
+        <li><a onclick="showPage('api')">Справочник API</a></li>
+      </ul>
+    </div>
+    <div id="installation" class="content">
+      <div class="page-header">
+        <h1>Установка</h1>
+        <p>Пошаговая инструкция по установке</p>
+      </div>
+      <h2>Системные требования</h2>
+      <ul>
+        <li>Python 3.8+</li>
+        <li>pip 20.0+</li>
+        <li>4GB RAM</li>
+        <li>1GB свободного места</li>
+      </ul>
+      <h2>Установка из GitHub</h2>
+      <div class="code-block">
+        <pre><code>git clone https://github.com/yourusername/drt.git
+cd drt
+pip install -r requirements.txt</code></pre>
+      </div>
+      <h2>Установка зависимостей</h2>
+      <div class="code-block">
+        <pre><code># Основные зависимости
+pip install rich requests scapy phonenumbers
+
+# Дополнительные зависимости
+pip install psutil netifaces pyfiglet
+
+# Для разработки
+pip install pytest pytest-cov pytest-xdist</code></pre>
+      </div>
+      <h2>Проверка установки</h2>
+      <div class="code-block">
+        <pre><code>python -c "import drt; print(drt.__version__)"</code></pre>
+      </div>
+    </div>
+    <div id="usage" class="content">
+      <div class="page-header">
+        <h1>Использование</h1>
+        <p>Как использовать DRT Framework</p>
+      </div>
+      <h2>Командная строка</h2>
+      <div class="code-block">
+        <pre><code>python main.py --target 192.168.1.1 --mode ddos --method tcp
+
+python main.py --target +79001234567 --mode bomber --method sms
+
+python main.py --optimize</code></pre>
+      </div>
+      <h2>Интерактивное меню</h2>
+      <div class="code-block">
+        <pre><code>1. DDoS-атака
+2. Бомбинг
+3. Бомбинг телефона
+4. Визуальный модуль
+5. Оптимизатор
+6. Статистика
+99. Остановить всё
+0. Выход</code></pre>
+      </div>
+      <h2>Python API</h2>
+      <div class="code-block">
+        <pre><code>from core.manager import Manager
+
+manager = Manager()
+manager.start_ddos("192.168.1.1", "tcp", 100, 60)
+
+from bomber.sms import SMSBomber
+bomber = SMSBomber()
+bomber.execute("+79001234567", 10, {})</code></pre>
+      </div>
+    </div>
+    <div id="ddos" class="content">
+      <div class="page-header">
+        <h1>DDoS-атаки</h1>
+        <p>9 мощных методов атак</p>
+      </div>
+      <h2>Доступные методы</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Метод</th>
+            <th>Описание</th>
+            <th>Протокол</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TCP</td>
+            <td>TCP flood атака</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>UDP</td>
+            <td>UDP flood атака</td>
+            <td>UDP</td>
+          </tr>
+          <tr>
+            <td>HTTP</td>
+            <td>HTTP GET flood</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>HTTPS</td>
+            <td>HTTPS GET flood</td>
+            <td>TLS</td>
+          </tr>
+          <tr>
+            <td>SYN</td>
+            <td>SYN flood атака</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>ACK</td>
+            <td>ACK flood атака</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td>ICMP</td>
+            <td>ICMP echo flood</td>
+            <td>ICMP</td>
+          </tr>
+          <tr>
+            <td>DNS</td>
+            <td>DNS amplification</td>
+            <td>UDP</td>
+          </tr>
+          <tr>
+            <td>Slowloris</td>
+            <td>Медленная HTTP атака</td>
+            <td>TCP</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2>Пример использования</h2>
+      <div class="code-block">
+        <pre><code>from core.manager import Manager
+
+manager = Manager()
+manager.start_ddos("target.com", "tcp", 100, 60)</code></pre>
+      </div>
+    </div>
+    <div id="bomber" class="content">
+      <div class="page-header">
+        <h1>Бомбинг</h1>
+        <p>23 сервиса для бомбинга</p>
+      </div>
+      <h2>Доступные сервисы</h2>
+      <ul>
+        <li>SMS Bomber</li>
+        <li>Call Bomber</li>
+        <li>WhatsApp Bomber</li>
+        <li>Telegram Bomber</li>
+        <li>Viber Bomber</li>
+        <li>Instagram Bomber</li>
+        <li>Facebook Bomber</li>
+        <li>TikTok Bomber</li>
+        <li>Twitter Bomber</li>
+        <li>VK Bomber</li>
+        <li>Discord Bomber</li>
+        <li>Snapchat Bomber</li>
+        <li>LinkedIn Bomber</li>
+        <li>Pinterest Bomber</li>
+        <li>Reddit Bomber</li>
+        <li>Zoom Bomber</li>
+        <li>Teams Bomber</li>
+        <li>Slack Bomber</li>
+        <li>Signal Bomber</li>
+        <li>Skype Bomber</li>
+      </ul>
+      <h2>Пример использования</h2>
+      <div class="code-block">
+        <pre><code>from bomber.sms import SMSBomber
+
+bomber = SMSBomber()
+bomber.execute("+79001234567", 10, {})</code></pre>
+      </div>
+    </div>
+    <div id="visual" class="content">
+      <div class="page-header">
+        <h1>Визуальный модуль</h1>
+        <p>Дашборды и графики в реальном времени</p>
+      </div>
+      <h2>Компоненты</h2>
+      <ul>
+        <li>Дашборд в реальном времени</li>
+        <li>Монитор атак</li>
+        <li>Живые графики</li>
+        <li>Графики статистики</li>
+        <li>Графики производительности</li>
+        <li>Анимации спиннеров</li>
+        <li>Анимации прогресса</li>
+      </ul>
+      <h2>Пример использования</h2>
+      <div class="code-block">
+        <pre><code>from visual.manager import VisualManager
+
+visual = VisualManager()
+visual.show_dashboard(stats, attacks)
+visual.show_attack_monitor(attack_data)</code></pre>
+      </div>
+    </div>
+    <div id="optimizer" class="content">
+      <div class="page-header">
+        <h1>Оптимизатор</h1>
+        <p>Модуль оптимизации производительности</p>
+      </div>
+      <h2>Алгоритмы оптимизации</h2>
+      <ul>
+        <li>Оптимизация потоков</li>
+        <li>Оптимизация сети</li>
+        <li>Оптимизация пакетов</li>
+        <li>Оптимизация пропускной способности</li>
+        <li>Оптимизация задержки</li>
+        <li>Оптимизация множественных целей</li>
+      </ul>
+      <h2>Пример использования</h2>
+      <div class="code-block">
+        <pre><code>from optimizer.manager import OptimizerManager
+
+optimizer = OptimizerManager()
+optimizer.optimize_all()</code></pre>
+      </div>
+    </div>
+    <div id="api" class="content">
+      <div class="page-header">
+        <h1>API Справочник</h1>
+        <p>Полная документация API</p>
+      </div>
+      <h2>Core</h2>
+      <h3>Manager</h3>
+      <div class="code-block">
+        <pre><code>class Manager:
+    def start_ddos(target, method, threads, duration)
+    def start_bomber(target, method, threads, count)
+    def stop_all()</code></pre>
+      </div>
+      <h3>Engine</h3>
+      <div class="code-block">
+        <pre><code>class Engine:
+    def run_attack(method, target, port, duration, stats)
+    def run_bomber(btype, target, count, stats)</code></pre>
+      </div>
+      <h2>Attacks</h2>
+      <div class="code-block">
+        <pre><code>class TCPAttack:
+    def execute(target, port, duration, stats)
+
+class UDPAttack:
+    def execute(target, port, duration, stats)</code></pre>
+      </div>
+      <h2>Bomber</h2>
+      <div class="code-block">
+        <pre><code>class SMSBomber:
+    def execute(phone, count, stats)
+
+class CallBomber:
+    def execute(phone, count, stats)</code></pre>
+      </div>
+      <h2>Visual</h2>
+      <div class="code-block">
+        <pre><code>class VisualManager:
+    def show_dashboard(stats, attacks)
+    def show_attack_monitor(data)
+    def show_stats_chart(data)</code></pre>
+      </div>
+      <h2>Optimizer</h2>
+      <div class="code-block">
+        <pre><code>class OptimizerManager:
+    def optimize_all()
+    def optimize_threads()
+    def optimize_network()
+    def optimize_packets()</code></pre>
+      </div>
+    </div>
+    <div id="faq" class="content">
+      <div class="page-header">
+        <h1>FAQ</h1>
+        <p>Часто задаваемые вопросы</p>
+      </div>
+      <h3>Что такое DRT Framework?</h3>
+      <p>DRT Framework — это комплексный фреймворк для DDoS-атак и бомбинга с визуальным модулем и оптимизатором.</p>
+      <h3>Какие методы атак поддерживаются?</h3>
+      <p>TCP, UDP, HTTP, HTTPS, SYN, ACK, ICMP, DNS, Slowloris.</p>
+      <h3>Какие сервисы бомбинга доступны?</h3>
+      <p>SMS, Call, WhatsApp, Telegram, Viber, Instagram, Facebook, TikTok, Twitter, VK, Discord и другие.</p>
+      <h3>Есть ли визуальный модуль?</h3>
+      <p>Да, дашборды в реальном времени, графики, анимации и метрики производительности.</p>
+      <h3>Как оптимизировать производительность?</h3>
+      <p>Используйте модуль оптимизатора для оптимизации потоков, сети, пакетов, пропускной способности и задержки.</p>
+      <h3>Кроссплатформенный ли фреймворк?</h3>
+      <p>Да, работает на Windows, macOS и Linux.</p>
+      <h3>Есть ли документация на русском?</h3>
+      <p>Да, вся документация представлена на русском языке.</p>
+      <h3>Как запустить тесты?</h3>
+      <div class="code-block">
+        <pre><code>cd tests
+python run_tests.py --unit
+python run_tests.py --integration
+python run_tests.py --coverage</code></pre>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>DRT Framework</h4>
+        <p>Мощный фреймворк для DDoS-атак, бомбинга и визуализации</p>
+      </div>
+      <div class="footer-section">
+        <h4>Разделы</h4>
+        <a onclick="showPage('getting-started')">Начало работы</a>
+        <a onclick="showPage('installation')">Установка</a>
+        <a onclick="showPage('usage')">Использование</a>
+        <a onclick="showPage('api')">API</a>
+      </div>
+      <div class="footer-section">
+        <h4>Модули</h4>
+        <a onclick="showPage('ddos')">DDoS</a>
+        <a onclick="showPage('bomber')">Бомбер</a>
+        <a onclick="showPage('visual')">Визуал</a>
+        <a onclick="showPage('optimizer')">Оптимизатор</a>
+      </div>
+      <div class="footer-section">
+        <h4>Сообщество</h4>
+        <a href="https://github.com/DANIEL45690/Devilux" target="_blank">GitHub</a>
+        <a href="#">Discord</a>
+        <a href="#">Telegram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 DRT Framework. Все права защищены.</span>
+    </div>
+  </footer>
+  <script>
+    function toggleMenu () {
+      document.getElementById('navLinks').classList.toggle('open')
+    }
+
+    function showPage (page) {
+      document.querySelectorAll('.content').forEach(el => el.classList.remove('active'))
+      document.getElementById(page).classList.add('active')
+
+      document.querySelectorAll('.nav-links a').forEach(el => el.classList.remove('active'))
+      document.querySelectorAll('.nav-links a').forEach(el => {
+        if (el.textContent.trim().toLowerCase() === page.replace('-', ' ')) {
+          el.classList.add('active')
+        }
+      })
+
+      document.getElementById('navLinks').classList.remove('open')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const hash = window.location.hash.replace('#', '')
+      if (hash && document.getElementById(hash)) {
+        showPage(hash)
+      }
+    })
+
+    window.addEventListener('popstate', function () {
+      const hash = window.location.hash.replace('#', '')
+      if (hash && document.getElementById(hash)) {
+        showPage(hash)
+      }
+    });
+  </script>
+</body>
+
+</html>
