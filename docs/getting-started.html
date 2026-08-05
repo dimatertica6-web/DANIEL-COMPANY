@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - ERASER v13.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <rect x="3" y="3" width="30" height="30" rx="8" stroke="currentColor" stroke-width="2.5" />
+                    <path d="M11 11L25 25M25 11L11 25" stroke="currentColor" stroke-width="2.5" />
+                    <circle cx="18" cy="18" r="7" stroke="currentColor" stroke-width="2.5" />
+                </svg>
+                <span>ERASER</span>
+                <span class="nav-version">v13.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="getting-started.html" class="active">Start</a>
+                <a href="modules.html">Modules</a>
+                <a href="api.html">API</a>
+                <a href="security.html">Security</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <div class="nav-search">
+                <input type="text" placeholder="Search docs..." id="searchInput">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2" />
+                    <path d="M14 14L19 19" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Getting Started</h1>
+                <p>Complete installation and configuration guide for 2026</p>
+            </div>
+
+            <div class="doc-section">
+                <h2>System Requirements</h2>
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Minimum</th>
+                            <th>Recommended</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Operating System</td>
+                            <td>Kali Linux / Ubuntu 22.04</td>
+                            <td>Kali Linux 2026+</td>
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            <td>4 GB</td>
+                            <td>16 GB+</td>
+                        </tr>
+                        <tr>
+                            <td>Storage</td>
+                            <td>10 GB</td>
+                            <td>50 GB+ SSD</td>
+                        </tr>
+                        <tr>
+                            <td>CPU</td>
+                            <td>2 cores</td>
+                            <td>8 cores+</td>
+                        </tr>
+                        <tr>
+                            <td>Network</td>
+                            <td>Internet access</td>
+                            <td>High-speed fiber</td>
+                        </tr>
+                        <tr>
+                            <td>WSL2 (Windows)</td>
+                            <td>WSL2 + Ubuntu 22.04</td>
+                            <td>WSL2 + Kali Linux</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="doc-section">
+                <h2>Installation Steps</h2>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Clone Repository</h3>
+                        <div class="code-block">
+                            <pre><code>git clone https://github.com/yourusername/eraser.git
+cd eraser</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Install Dependencies</h3>
+                        <div class="code-block">
+                            <pre><code>sudo apt-get update
+sudo apt-get install -y build-essential g++ make cmake \
+    libssl-dev libcurl4-openssl-dev libpcap-dev \
+    libsqlite3-dev libjsoncpp-dev libtinyxml2-dev \
+    libyaml-cpp-dev libboost-all-dev libgpgme-dev \
+    libargon2-dev libscrypt-dev libxml2-dev libxslt1-dev \
+    uuid-dev libsystemd-dev libudev-dev zlib1g-dev \
+    libpq-dev libmysqlclient-dev libmariadb-dev \
+    libsndfile1-dev libasound2-dev</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Compile Project</h3>
+                        <div class="code-block">
+                            <pre><code>make clean
+make</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Run ERASER</h3>
+                        <div class="code-block">
+                            <pre><code>./eraser
+# For root privileges (recommended)
+sudo ./eraser</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2>First Run Guide</h2>
+                <div class="tip">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                        <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    <div>
+                        <strong>Quick Tip:</strong> After launching, you'll see a menu with 200+ functions.
+                        Enter the function number and press Enter to execute.
+                    </div>
+                </div>
+                <div class="tip">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                        <path d="M12 8V12M12 16H12.01" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    <div>
+                        <strong>Pro Tip:</strong> Use <code>sudo ./eraser</code> for full functionality
+                        (network scanning, MAC changing, etc.)
+                    </div>
+                </div>
+                <div class="warning">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2L2 20H22L12 2Z" stroke="currentColor" stroke-width="2" />
+                        <path d="M12 9V13M12 17H12.01" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    <div>
+                        <strong>Legal Notice:</strong> Use this tool only for authorized testing and educational
+                        purposes.
+                        Unauthorized use is prohibited by law.
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2>Common Commands</h2>
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>./eraser</code></td>
+                            <td>Start ERASER framework</td>
+                        </tr>
+                        <tr>
+                            <td><code>sudo ./eraser</code></td>
+                            <td>Start with root privileges</td>
+                        </tr>
+                        <tr>
+                            <td><code>make clean</code></td>
+                            <td>Remove compiled files</td>
+                        </tr>
+                        <tr>
+                            <td><code>make</code></td>
+                            <td>Compile the project</td>
+                        </tr>
+                        <tr>
+                            <td><code>Ctrl+C</code></td>
+                            <td>Exit ERASER</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="2" y="2" width="24" height="24" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M9 9L19 19M19 9L9 19" stroke="currentColor" stroke-width="2" />
+                    <circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>ERASER v13.0</span>
+                <span class="footer-year">2026</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/yourusername/eraser">GitHub</a>
+                <a href="https://t.me/eraser_chat">Telegram</a>
+                <a href="mailto:support@eraser.io">Email</a>
+                <a href="changelog.html">Changelog</a>
+            </div>
+            <div class="footer-copy">
+                <span>© 2026 ERASER Team. MIT License</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

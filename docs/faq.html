@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - ERASER v13.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <rect x="3" y="3" width="30" height="30" rx="8" stroke="currentColor" stroke-width="2.5" />
+                    <path d="M11 11L25 25M25 11L11 25" stroke="currentColor" stroke-width="2.5" />
+                    <circle cx="18" cy="18" r="7" stroke="currentColor" stroke-width="2.5" />
+                </svg>
+                <span>ERASER</span>
+                <span class="nav-version">v13.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="getting-started.html">Start</a>
+                <a href="modules.html">Modules</a>
+                <a href="api.html">API</a>
+                <a href="security.html">Security</a>
+                <a href="faq.html" class="active">FAQ</a>
+            </div>
+            <div class="nav-search">
+                <input type="text" placeholder="Search..." id="searchInput">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2" />
+                    <path d="M14 14L19 19" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>❓ Frequently Asked Questions</h1>
+                <p>Answers to the most common questions about ERASER</p>
+            </div>
+
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is ERASER?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ERASER is a comprehensive cyber security framework that combines 200+ modules for anonymity,
+                            cryptography, scanning, exploitation, networking, forensics, and optimization in one tool.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I install ERASER?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Clone the repository, install dependencies, and compile:</p>
+                        <div class="code-block">
+                            <pre><code>git clone https://github.com/yourusername/eraser.git
+cd eraser
+make clean
+make
+./eraser</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What are the system requirements?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Minimum: Kali Linux/Ubuntu 22.04, 4GB RAM, 10GB storage, 2 cores. Recommended: Kali Linux
+                            2026+, 16GB RAM, 50GB SSD, 8 cores.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is ERASER free to use?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! ERASER is completely free and open-source under the MIT License. You can use, modify,
+                            and distribute it freely.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I enable anonymity features?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use the menu options: 51 (rotateUserAgent), 52 (rotateProxy), 53 (enableTor), 54 (enableVPN),
+                            55 (enableStealth).</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I use ERASER on Windows?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ERASER is designed for Linux, but works on Windows via WSL2 (Windows Subsystem for Linux)
+                            with Kali or Ubuntu.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I update ERASER?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Pull the latest changes and recompile:</p>
+                        <div class="code-block">
+                            <pre><code>git pull
+make clean
+make</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What cryptographic algorithms are supported?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>AES-256, RSA-4096, SHA-256, GPG, JWT, SSL/TLS, MD5, Base64, XOR, and post-quantum algorithms.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I create a backdoor?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use option 108 (backdoor create) and enter LHOST and LPORT. The backdoor will be created as
+                            backdoor.exe.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is ERASER legal to use?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>ERASER is legal for educational purposes and authorized penetration testing. Unauthorized use
+                            is prohibited by law.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I report a bug?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Create an Issue on GitHub with detailed description, steps to reproduce, and system
+                            information.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I contribute to ERASER?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Fork the repository, create a branch, make your changes, and submit a Pull Request. All
+                            contributions are welcome.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I clear logs and history?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use option 55 (clear logs), 80 (clear logs), or 81 (history -c). Also option 78 (stealth)
+                            enables full stealth mode.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is the difference between Tor and VPN?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tor routes through multiple nodes for anonymity but is slower. VPN encrypts all traffic and
+                            is faster. Both can be used together.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I restore a backup?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Use option 119 (file recover) for file recovery, or the backup module if you created backups
+                            with the system.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is there a GUI version?</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Currently ERASER is CLI-based only. A web GUI is planned for version 13.0.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="2" y="2" width="24" height="24" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M9 9L19 19M19 9L9 19" stroke="currentColor" stroke-width="2" />
+                    <circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>ERASER v13.0</span>
+                <span class="footer-year">2026</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/yourusername/eraser">GitHub</a>
+                <a href="https://t.me/eraser_chat">Telegram</a>
+                <a href="mailto:support@eraser.io">Email</a>
+                <a href="changelog.html">Changelog</a>
+            </div>
+            <div class="footer-copy">
+                <span>© 2026 ERASER Team. MIT License</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(function (question) {
+            question.addEventListener('click', function () {
+                const item = this.parentElement;
+                const answer = item.querySelector('.faq-answer');
+                const svg = this.querySelector('svg');
+                const isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(function (el) {
+                    el.classList.remove('open');
+                    el.querySelector('.faq-answer').style.display = 'none';
+                    el.querySelector('.faq-question svg').style.transform = 'rotate(0deg)';
+                });
+                if (!isOpen) {
+                    item.classList.add('open');
+                    answer.style.display = 'block';
+                    svg.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+        document.querySelectorAll('.faq-item:first-child .faq-question').forEach(function (q) {
+            q.click();
+        });
+    </script>
+    <style>
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            background: var(--bg-card);
+        }
+
+        .faq-item:hover {
+            border-color: var(--blue);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-secondary);
+        }
+
+        .faq-question svg {
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 24px 24px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.8;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .faq-answer .code-block {
+            max-width: 100%;
+            margin: 12px 0;
+        }
+
+        .faq-item.open {
+            border-color: var(--blue);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .faq-item.open .faq-question {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .faq-item.open .faq-question svg {
+            color: var(--blue);
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+
+</html>

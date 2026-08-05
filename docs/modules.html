@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modules - ERASER v13.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <rect x="3" y="3" width="30" height="30" rx="8" stroke="currentColor" stroke-width="2.5" />
+                    <path d="M11 11L25 25M25 11L11 25" stroke="currentColor" stroke-width="2.5" />
+                    <circle cx="18" cy="18" r="7" stroke="currentColor" stroke-width="2.5" />
+                </svg>
+                <span>ERASER</span>
+                <span class="nav-version">v13.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="getting-started.html">Start</a>
+                <a href="modules.html" class="active">Modules</a>
+                <a href="api.html">API</a>
+                <a href="security.html">Security</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <div class="nav-search">
+                <input type="text" placeholder="Search modules..." id="searchInput">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2" />
+                    <path d="M14 14L19 19" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Modules Library</h1>
+                <p>Complete reference of all 200+ modules</p>
+                <div class="module-stats">
+                    <span>Total: 200+</span>
+                    <span>Categories: 8</span>
+                    <span>Updated: 2026</span>
+                </div>
+            </div>
+
+            <div class="module-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="anonymity">🕵️ Anonymity</button>
+                <button class="filter-btn" data-filter="crypto">🔐 Crypto</button>
+                <button class="filter-btn" data-filter="scanning">🔍 Scanning</button>
+                <button class="filter-btn" data-filter="exploit">💣 Exploit</button>
+                <button class="filter-btn" data-filter="network">🌐 Network</button>
+                <button class="filter-btn" data-filter="forensic">🔬 Forensic</button>
+                <button class="filter-btn" data-filter="optimization">⚡ Optimization</button>
+            </div>
+
+            <div class="modules-grid" id="modulesGrid">
+                <div class="module-card" data-category="anonymity">
+                    <span class="module-number">#51</span>
+                    <h3>rotateUserAgent</h3>
+                    <p>Rotates browser User-Agent string for anonymity</p>
+                    <div class="module-tags">
+                        <span class="tag">anonymity</span>
+                        <span class="tag">browser</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="anonymity">
+                    <span class="module-number">#52</span>
+                    <h3>rotateProxy</h3>
+                    <p>Rotates proxy server for IP masking</p>
+                    <div class="module-tags">
+                        <span class="tag">anonymity</span>
+                        <span class="tag">proxy</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="anonymity">
+                    <span class="module-number">#53</span>
+                    <h3>enableTor</h3>
+                    <p>Enables Tor network for anonymous routing</p>
+                    <div class="module-tags">
+                        <span class="tag">anonymity</span>
+                        <span class="tag">tor</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="anonymity">
+                    <span class="module-number">#54</span>
+                    <h3>enableVPN</h3>
+                    <p>Enables VPN connection for secure browsing</p>
+                    <div class="module-tags">
+                        <span class="tag">anonymity</span>
+                        <span class="tag">vpn</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="anonymity">
+                    <span class="module-number">#55</span>
+                    <h3>enableStealth</h3>
+                    <p>Enables stealth mode (clears logs, hides activity)</p>
+                    <div class="module-tags">
+                        <span class="tag">anonymity</span>
+                        <span class="tag">stealth</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="crypto">
+                    <span class="module-number">#40</span>
+                    <h3>md5Hash</h3>
+                    <p>Generates MD5 hash from input text</p>
+                    <div class="module-tags">
+                        <span class="tag">crypto</span>
+                        <span class="tag">hash</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="crypto">
+                    <span class="module-number">#41</span>
+                    <h3>sha256Hash</h3>
+                    <p>Generates SHA-256 hash from input text</p>
+                    <div class="module-tags">
+                        <span class="tag">crypto</span>
+                        <span class="tag">hash</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="crypto">
+                    <span class="module-number">#42</span>
+                    <h3>base64Encode</h3>
+                    <p>Encodes text to Base64 format</p>
+                    <div class="module-tags">
+                        <span class="tag">crypto</span>
+                        <span class="tag">encoding</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="crypto">
+                    <span class="module-number">#43</span>
+                    <h3>base64Decode</h3>
+                    <p>Decodes Base64 to plain text</p>
+                    <div class="module-tags">
+                        <span class="tag">crypto</span>
+                        <span class="tag">decoding</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="crypto">
+                    <span class="module-number">#46</span>
+                    <h3>aesEncrypt</h3>
+                    <p>Encrypts data using AES-256 algorithm</p>
+                    <div class="module-tags">
+                        <span class="tag">crypto</span>
+                        <span class="tag">aes</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="scanning">
+                    <span class="module-number">#5</span>
+                    <h3>portScanner</h3>
+                    <p>Scans ports on target system</p>
+                    <div class="module-tags">
+                        <span class="tag">scanning</span>
+                        <span class="tag">network</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="scanning">
+                    <span class="module-number">#7</span>
+                    <h3>nmapScan</h3>
+                    <p>Full Nmap scan with version detection</p>
+                    <div class="module-tags">
+                        <span class="tag">scanning</span>
+                        <span class="tag">nmap</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="scanning">
+                    <span class="module-number">#11</span>
+                    <h3>subdomainScan</h3>
+                    <p>Enumerates subdomains of a domain</p>
+                    <div class="module-tags">
+                        <span class="tag">scanning</span>
+                        <span class="tag">subdomain</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="scanning">
+                    <span class="module-number">#149</span>
+                    <h3>vulnScanner</h3>
+                    <p>Scans for known vulnerabilities</p>
+                    <div class="module-tags">
+                        <span class="tag">scanning</span>
+                        <span class="tag">vulnerability</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="exploit">
+                    <span class="module-number">#12</span>
+                    <h3>sqlInjection</h3>
+                    <p>Tests for SQL injection vulnerabilities</p>
+                    <div class="module-tags">
+                        <span class="tag">exploit</span>
+                        <span class="tag">sql</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="exploit">
+                    <span class="module-number">#13</span>
+                    <h3>xssPayloads</h3>
+                    <p>Tests for XSS vulnerabilities</p>
+                    <div class="module-tags">
+                        <span class="tag">exploit</span>
+                        <span class="tag">xss</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="exploit">
+                    <span class="module-number">#14</span>
+                    <h3>reverseShells</h3>
+                    <p>Generates reverse shell payloads</p>
+                    <div class="module-tags">
+                        <span class="tag">exploit</span>
+                        <span class="tag">shell</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="exploit">
+                    <span class="module-number">#27</span>
+                    <h3>msfconsole</h3>
+                    <p>Launches Metasploit Framework</p>
+                    <div class="module-tags">
+                        <span class="tag">exploit</span>
+                        <span class="tag">metasploit</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="network">
+                    <span class="module-number">#21</span>
+                    <h3>c2Server</h3>
+                    <p>Starts Command & Control server</p>
+                    <div class="module-tags">
+                        <span class="tag">network</span>
+                        <span class="tag">c2</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="network">
+                    <span class="module-number">#40</span>
+                    <h3>netcat</h3>
+                    <p>Netcat networking utility</p>
+                    <div class="module-tags">
+                        <span class="tag">network</span>
+                        <span class="tag">utility</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="network">
+                    <span class="module-number">#41</span>
+                    <h3>tcpdump</h3>
+                    <p>Network traffic analyzer</p>
+                    <div class="module-tags">
+                        <span class="tag">network</span>
+                        <span class="tag">sniffer</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="forensic">
+                    <span class="module-number">#69</span>
+                    <h3>forensic</h3>
+                    <p>Forensic analysis tools</p>
+                    <div class="module-tags">
+                        <span class="tag">forensic</span>
+                        <span class="tag">analysis</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="forensic">
+                    <span class="module-number">#70</span>
+                    <h3>steganography</h3>
+                    <p>Steganography detection and analysis</p>
+                    <div class="module-tags">
+                        <span class="tag">forensic</span>
+                        <span class="tag">stego</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="forensic">
+                    <span class="module-number">#119</span>
+                    <h3>fileRecover</h3>
+                    <p>Recovers deleted files</p>
+                    <div class="module-tags">
+                        <span class="tag">forensic</span>
+                        <span class="tag">recovery</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="optimization">
+                    <span class="module-number">#49</span>
+                    <h3>aptUpdate</h3>
+                    <p>Updates package lists</p>
+                    <div class="module-tags">
+                        <span class="tag">optimization</span>
+                        <span class="tag">system</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="optimization">
+                    <span class="module-number">#50</span>
+                    <h3>aptUpgrade</h3>
+                    <p>Upgrades all packages</p>
+                    <div class="module-tags">
+                        <span class="tag">optimization</span>
+                        <span class="tag">system</span>
+                    </div>
+                </div>
+                <div class="module-card" data-category="optimization">
+                    <span class="module-number">#79</span>
+                    <h3>cleanup</h3>
+                    <p>Cleans temporary files</p>
+                    <div class="module-tags">
+                        <span class="tag">optimization</span>
+                        <span class="tag">cleanup</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="2" y="2" width="24" height="24" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M9 9L19 19M19 9L9 19" stroke="currentColor" stroke-width="2" />
+                    <circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>ERASER v13.0</span>
+                <span class="footer-year">2026</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/yourusername/eraser">GitHub</a>
+                <a href="https://t.me/eraser_chat">Telegram</a>
+                <a href="mailto:support@eraser.io">Email</a>
+                <a href="changelog.html">Changelog</a>
+            </div>
+            <div class="footer-copy">
+                <span>© 2026 ERASER Team. MIT License</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
