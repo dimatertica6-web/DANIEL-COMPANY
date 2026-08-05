@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security - ERASER v13.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <rect x="3" y="3" width="30" height="30" rx="8" stroke="currentColor" stroke-width="2.5" />
+                    <path d="M11 11L25 25M25 11L11 25" stroke="currentColor" stroke-width="2.5" />
+                    <circle cx="18" cy="18" r="7" stroke="currentColor" stroke-width="2.5" />
+                </svg>
+                <span>ERASER</span>
+                <span class="nav-version">v13.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="getting-started.html">Start</a>
+                <a href="modules.html">Modules</a>
+                <a href="api.html">API</a>
+                <a href="security.html" class="active">Security</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <div class="nav-search">
+                <input type="text" placeholder="Search security..." id="searchInput">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2" />
+                    <path d="M14 14L19 19" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>Security Guide</h1>
+                <p>Best practices for secure usage</p>
+            </div>
+
+            <div class="doc-section">
+                <h2>Security Principles</h2>
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <div class="principle-icon">🛡️</div>
+                        <h3>Defense in Depth</h3>
+                        <p>Multiple layers of security for maximum protection</p>
+                    </div>
+                    <div class="principle-card">
+                        <div class="principle-icon">🔐</div>
+                        <h3>Zero Trust</h3>
+                        <p>Never trust, always verify</p>
+                    </div>
+                    <div class="principle-card">
+                        <div class="principle-icon">📊</div>
+                        <h3>Least Privilege</h3>
+                        <p>Minimal access for maximum security</p>
+                    </div>
+                    <div class="principle-card">
+                        <div class="principle-icon">🔄</div>
+                        <h3>Regular Auditing</h3>
+                        <p>Continuous security monitoring and improvement</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2>Best Practices</h2>
+                <div class="practice-item">
+                    <h3>1. Use Virtual Environment</h3>
+                    <p>Always run ERASER in an isolated environment (VM, container, or dedicated machine)</p>
+                    <div class="code-block">
+                        <pre><code># Docker example
+docker run -it --rm eraservm:latest</code></pre>
+                    </div>
+                </div>
+                <div class="practice-item">
+                    <h3>2. Enable Anonymity Features</h3>
+                    <p>Use Tor, VPN, and proxy chains for anonymous operations</p>
+                    <div class="code-block">
+                        <pre><code># Enable Tor
+./eraser -> 53 (enableTor)
+
+# Enable VPN
+./eraser -> 54 (enableVPN)</code></pre>
+                    </div>
+                </div>
+                <div class="practice-item">
+                    <h3>3. Regular Updates</h3>
+                    <p>Keep the framework and dependencies updated</p>
+                    <div class="code-block">
+                        <pre><code>git pull
+make clean
+make</code></pre>
+                    </div>
+                </div>
+                <div class="practice-item">
+                    <h3>4. Secure Configuration</h3>
+                    <p>Use strong passwords and encryption keys</p>
+                    <div class="code-block">
+                        <pre><code># Generate secure key
+./eraser -> 48 (generateKey)</code></pre>
+                    </div>
+                </div>
+                <div class="practice-item">
+                    <h3>5. Log and Monitor</h3>
+                    <p>Enable logging and monitoring for security auditing</p>
+                    <div class="code-block">
+                        <pre><code># Enable logging
+export ERASER_LOG=1
+./eraser 2>&1 | tee eraser.log</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2>Security Features</h2>
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Encryption</td>
+                            <td>AES-256, RSA-4096, GPG</td>
+                            <td><span class="status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Anonymous Routing</td>
+                            <td>Tor, VPN, Proxy Chains</td>
+                            <td><span class="status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Secure Storage</td>
+                            <td>Encrypted config and data</td>
+                            <td><span class="status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Integrity Checks</td>
+                            <td>File integrity verification</td>
+                            <td><span class="status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Audit Logging</td>
+                            <td>Complete action logging</td>
+                            <td><span class="status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Stealth Mode</td>
+                            <td>Hide activity and clear traces</td>
+                            <td><span class="status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Post-Quantum Crypto</td>
+                            <td>Quantum-resistant algorithms</td>
+                            <td><span class="status-beta">Beta</span></td>
+                        </tr>
+                        <tr>
+                            <td>AI Threat Detection</td>
+                            <td>Machine learning for threat detection</td>
+                            <td><span class="status-beta">Beta</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="doc-section">
+                <h2>Threat Model</h2>
+                <div class="threat-grid">
+                    <div class="threat-card">
+                        <h3>Network Threats</h3>
+                        <ul>
+                            <li>MITM attacks - mitigated by TLS/SSL</li>
+                            <li>Packet sniffing - mitigated by encryption</li>
+                            <li>Traffic analysis - mitigated by Tor/VPN</li>
+                        </ul>
+                    </div>
+                    <div class="threat-card">
+                        <h3>System Threats</h3>
+                        <ul>
+                            <li>Privilege escalation - mitigated by sandboxing</li>
+                            <li>Memory attacks - mitigated by ASLR/DEP</li>
+                            <li>File system attacks - mitigated by encryption</li>
+                        </ul>
+                    </div>
+                    <div class="threat-card">
+                        <h3>Application Threats</h3>
+                        <ul>
+                            <li>Code injection - mitigated by input validation</li>
+                            <li>Buffer overflow - mitigated by security checks</li>
+                            <li>Race conditions - mitigated by synchronization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-section">
+                <h2>Responsible Disclosure</h2>
+                <div class="disclosure-info">
+                    <p>If you discover a security vulnerability, please report it responsibly:</p>
+                    <ul>
+                        <li>Email: <a href="mailto:security@eraser.io">security@eraser.io</a></li>
+                        <li>PGP Key: <a href="https://keyserver.ubuntu.com/pgp-keys">0xERASER</a></li>
+                        <li>We offer bug bounties for valid security findings</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="2" y="2" width="24" height="24" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M9 9L19 19M19 9L9 19" stroke="currentColor" stroke-width="2" />
+                    <circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>ERASER v13.0</span>
+                <span class="footer-year">2026</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/yourusername/eraser">GitHub</a>
+                <a href="https://t.me/eraser_chat">Telegram</a>
+                <a href="mailto:support@eraser.io">Email</a>
+                <a href="changelog.html">Changelog</a>
+            </div>
+            <div class="footer-copy">
+                <span>© 2026 ERASER Team. MIT License</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

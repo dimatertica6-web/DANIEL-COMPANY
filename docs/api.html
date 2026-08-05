@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - ERASER v13.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                    <rect x="3" y="3" width="30" height="30" rx="8" stroke="currentColor" stroke-width="2.5" />
+                    <path d="M11 11L25 25M25 11L11 25" stroke="currentColor" stroke-width="2.5" />
+                    <circle cx="18" cy="18" r="7" stroke="currentColor" stroke-width="2.5" />
+                </svg>
+                <span>ERASER</span>
+                <span class="nav-version">v13.0</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="getting-started.html">Start</a>
+                <a href="modules.html">Modules</a>
+                <a href="api.html" class="active">API</a>
+                <a href="security.html">Security</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <div class="nav-search">
+                <input type="text" placeholder="Search API..." id="searchInput">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2" />
+                    <path d="M14 14L19 19" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1>API Reference</h1>
+                <p>Complete API documentation for developers</p>
+            </div>
+
+            <div class="api-sidebar">
+                <div class="api-nav">
+                    <h3>Core</h3>
+                    <a href="#core-framework">Framework</a>
+                    <a href="#core-utils">Utilities</a>
+                    <a href="#core-colors">Colors</a>
+                </div>
+                <div class="api-nav">
+                    <h3>Modules</h3>
+                    <a href="#module-anonymity">Anonymity</a>
+                    <a href="#module-crypto">Crypto</a>
+                    <a href="#module-scanner">Scanner</a>
+                    <a href="#module-exploit">Exploit</a>
+                    <a href="#module-network">Network</a>
+                    <a href="#module-forensic">Forensic</a>
+                </div>
+            </div>
+
+            <div class="api-content">
+                <section id="core-framework">
+                    <h2>Core Framework</h2>
+                    <div class="api-item">
+                        <h3>Framework::init()</h3>
+                        <p>Initializes the ERASER framework</p>
+                        <div class="code-block">
+                            <pre><code>bool Framework::init(int argc, char** argv);</code></pre>
+                        </div>
+                        <div class="api-params">
+                            <h4>Parameters</h4>
+                            <ul>
+                                <li><code>argc</code> - Argument count</li>
+                                <li><code>argv</code> - Argument vector</li>
+                            </ul>
+                            <h4>Returns</h4>
+                            <p><code>true</code> on success, <code>false</code> on failure</p>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Framework::run()</h3>
+                        <p>Runs the main framework loop</p>
+                        <div class="code-block">
+                            <pre><code>void Framework::run();</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Framework::shutdown()</h3>
+                        <p>Shuts down the framework</p>
+                        <div class="code-block">
+                            <pre><code>void Framework::shutdown();</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="core-utils">
+                    <h2>Utilities</h2>
+                    <div class="api-item">
+                        <h3>Utils::getLocalIP()</h3>
+                        <p>Returns the local IP address</p>
+                        <div class="code-block">
+                            <pre><code>std::string Utils::getLocalIP();</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Utils::getPublicIP()</h3>
+                        <p>Returns the public IP address</p>
+                        <div class="code-block">
+                            <pre><code>std::string Utils::getPublicIP();</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Utils::getMAC()</h3>
+                        <p>Returns the MAC address</p>
+                        <div class="code-block">
+                            <pre><code>std::string Utils::getMAC();</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Utils::execCmd()</h3>
+                        <p>Executes a system command</p>
+                        <div class="code-block">
+                            <pre><code>std::string Utils::execCmd(const std::string& cmd);</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="module-anonymity">
+                    <h2>Anonymity Module</h2>
+                    <div class="api-item">
+                        <h3>Anonymity::rotateUserAgent()</h3>
+                        <p>Rotates the User-Agent string</p>
+                        <div class="code-block">
+                            <pre><code>void Anonymity::rotateUserAgent();</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Anonymity::enableTor()</h3>
+                        <p>Enables Tor network</p>
+                        <div class="code-block">
+                            <pre><code>bool Anonymity::enableTor();</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Anonymity::changeMAC()</h3>
+                        <p>Changes the MAC address</p>
+                        <div class="code-block">
+                            <pre><code>bool Anonymity::changeMAC(const std::string& iface);</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="module-crypto">
+                    <h2>Crypto Module</h2>
+                    <div class="api-item">
+                        <h3>Crypto::aesEncrypt()</h3>
+                        <p>Encrypts data using AES-256</p>
+                        <div class="code-block">
+                            <pre><code>std::string Crypto::aesEncrypt(const std::string& data, const std::string& key);</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Crypto::aesDecrypt()</h3>
+                        <p>Decrypts AES-256 encrypted data</p>
+                        <div class="code-block">
+                            <pre><code>std::string Crypto::aesDecrypt(const std::string& data, const std::string& key);</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Crypto::sha256Hash()</h3>
+                        <p>Generates SHA-256 hash</p>
+                        <div class="code-block">
+                            <pre><code>std::string Crypto::sha256Hash(const std::string& data);</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="module-scanner">
+                    <h2>Scanner Module</h2>
+                    <div class="api-item">
+                        <h3>Scanner::scanPorts()</h3>
+                        <p>Scans ports on a target</p>
+                        <div class="code-block">
+                            <pre><code>void Scanner::scanPorts(const std::string& target, int start, int end);</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Scanner::subdomainScan()</h3>
+                        <p>Enumerates subdomains</p>
+                        <div class="code-block">
+                            <pre><code>void Scanner::subdomainScan(const std::string& domain);</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="module-exploit">
+                    <h2>Exploit Module</h2>
+                    <div class="api-item">
+                        <h3>Exploit::sqlInjection()</h3>
+                        <p>Tests for SQL injection</p>
+                        <div class="code-block">
+                            <pre><code>void Exploit::sqlInjection();</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Exploit::reverseShell()</h3>
+                        <p>Generates reverse shell</p>
+                        <div class="code-block">
+                            <pre><code>void Exploit::reverseShell();</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="module-network">
+                    <h2>Network Module</h2>
+                    <div class="api-item">
+                        <h3>Network::c2Server()</h3>
+                        <p>Starts C2 server</p>
+                        <div class="code-block">
+                            <pre><code>void Network::c2Server(int port = 4444);</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Network::traceroute()</h3>
+                        <p>Traces network route</p>
+                        <div class="code-block">
+                            <pre><code>void Network::traceroute(const std::string& target);</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="module-forensic">
+                    <h2>Forensic Module</h2>
+                    <div class="api-item">
+                        <h3>Forensic::analyze()</h3>
+                        <p>Performs forensic analysis</p>
+                        <div class="code-block">
+                            <pre><code>void Forensic::analyze();</code></pre>
+                        </div>
+                    </div>
+                    <div class="api-item">
+                        <h3>Forensic::recover()</h3>
+                        <p>Recovers deleted files</p>
+                        <div class="code-block">
+                            <pre><code>void Forensic::recover();</code></pre>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="2" y="2" width="24" height="24" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M9 9L19 19M19 9L9 19" stroke="currentColor" stroke-width="2" />
+                    <circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>ERASER v13.0</span>
+                <span class="footer-year">2026</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/yourusername/eraser">GitHub</a>
+                <a href="https://t.me/eraser_chat">Telegram</a>
+                <a href="mailto:support@eraser.io">Email</a>
+                <a href="changelog.html">Changelog</a>
+            </div>
+            <div class="footer-copy">
+                <span>© 2026 ERASER Team. MIT License</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
