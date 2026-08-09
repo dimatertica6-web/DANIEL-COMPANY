@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commands — RERONRF BOT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 10 L22 10 L22 22 L10 22 L10 10Z" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 16 L22 16" stroke="currentColor" stroke-width="2" />
+                    <path d="M16 10 L16 22" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>RERONRF</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="modules.html">Modules</a></li>
+                <li><a href="commands.html" class="active">Commands</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="docs">
+        <h1>Commands</h1>
+        <p class="lead">Complete list of all bot commands.</p>
+
+        <section>
+            <h2>OSINT Commands</h2>
+            <div class="command-table">
+                <div class="command-row"><code>/username [nick]</code><span>Search username across 35+ platforms</span>
+                </div>
+                <div class="command-row"><code>/phone [number]</code><span>Phone number OSINT (geo, operator)</span>
+                </div>
+                <div class="command-row"><code>/email [address]</code><span>Email breach check + MX records</span></div>
+                <div class="command-row"><code>/domain [domain]</code><span>Domain WHOIS + DNS information</span></div>
+                <div class="command-row"><code>/ip [address]</code><span>IP geo, WHOIS, open ports</span></div>
+                <div class="command-row"><code>/geoip [ip]</code><span>Detailed geolocation</span></div>
+                <div class="command-row"><code>/mac [mac]</code><span>MAC address vendor lookup</span></div>
+                <div class="command-row"><code>/reputation [ip]</code><span>IP reputation check</span></div>
+                <div class="command-row"><code>/torcheck [ip]</code><span>Check if IP is Tor exit node</span></div>
+                <div class="command-row"><code>/socialfind [name]</code><span>Social media profile finder</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Scan Commands</h2>
+            <div class="command-table">
+                <div class="command-row"><code>/portscan [host] [ports]</code><span>Scan open ports on host</span></div>
+                <div class="command-row"><code>/subdomain [domain]</code><span>Scan subdomains</span></div>
+                <div class="command-row"><code>/dns [domain]</code><span>DNS reconnaissance</span></div>
+                <div class="command-row"><code>/ssl [domain]</code><span>SSL certificate check</span></div>
+                <div class="command-row"><code>/reverse [ip]</code><span>Reverse IP lookup</span></div>
+                <div class="command-row"><code>/cve [keyword]</code><span>CVE vulnerability search</span></div>
+                <div class="command-row"><code>/sqlscan [url]</code><span>SQL injection scanner</span></div>
+                <div class="command-row"><code>/xss [url]</code><span>XSS vulnerability scanner</span></div>
+                <div class="command-row"><code>/banner [host] [ports]</code><span>Banner grabbing</span></div>
+                <div class="command-row"><code>/zonetransfer [domain]</code><span>DNS zone transfer test</span></div>
+                <div class="command-row"><code>/urlscan [url]</code><span>URL phishing scanner</span></div>
+                <div class="command-row"><code>/hostsearch [query]</code><span>Host/IP search</span></div>
+                <div class="command-row"><code>/certsearch [domain]</code><span>Certificate transparency search</span>
+                </div>
+                <div class="command-row"><code>/dirbrute [url]</code><span>Directory bruteforce</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Attack Commands</h2>
+            <div class="command-table">
+                <div class="command-row"><code>/ddos [url] [threads] [duration]</code><span>Start DDoS attack</span>
+                </div>
+                <div class="command-row"><code>/sms [phone] [count]</code><span>SMS bomber</span></div>
+                <div class="command-row"><code>/emailhack [email]</code><span>Gmail brute-force</span></div>
+                <div class="command-row"><code>/instahack [username]</code><span>Instagram brute-force</span></div>
+                <div class="command-row"><code>/sshbrute [host] [user] [passfile]</code><span>SSH brute-force</span>
+                </div>
+                <div class="command-row"><code>/ftpbrute [host] [user] [passfile]</code><span>FTP brute-force</span>
+                </div>
+                <div class="command-row"><code>/stop [id]</code><span>Stop active attacks</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Network Commands</h2>
+            <div class="command-table">
+                <div class="command-row"><code>/networkscan [network]</code><span>Network scanner</span></div>
+                <div class="command-row"><code>/pingsweep [network]</code><span>Ping sweep</span></div>
+                <div class="command-row"><code>/telegram [phone]</code><span>Check Telegram registration</span></div>
+                <div class="command-row"><code>/whatsapp [phone]</code><span>Check WhatsApp registration</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Crypto Commands</h2>
+            <div class="command-table">
+                <div class="command-row"><code>/btc [address]</code><span>Bitcoin wallet info</span></div>
+                <div class="command-row"><code>/eth [address]</code><span>Ethereum wallet info</span></div>
+                <div class="command-row"><code>/hashcheck [hash]</code><span>Malicious hash check</span></div>
+                <div class="command-row"><code>/leakcheck [password]</code><span>Password leak check</span></div>
+                <div class="command-row"><code>/tempemail</code><span>Generate temporary email</span></div>
+                <div class="command-row"><code>/passstrength [password]</code><span>Password strength check</span></div>
+                <div class="command-row"><code>/genpass [length] [count]</code><span>Generate secure passwords</span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Web Commands</h2>
+            <div class="command-table">
+                <div class="command-row"><code>/headers [url]</code><span>HTTP headers analyzer</span></div>
+                <div class="command-row"><code>/status [url]</code><span>Website status monitor</span></div>
+                <div class="command-row"><code>/wayback [url]</code><span>Wayback Machine lookup</span></div>
+                <div class="command-row"><code>/cache [url]</code><span>Website cache viewer</span></div>
+                <div class="command-row"><code>/tech [url]</code><span>Technology detector</span></div>
+                <div class="command-row"><code>/secheaders [url]</code><span>Security headers checker</span></div>
+                <div class="command-row"><code>/clone [url]</code><span>Website clone detector</span></div>
+                <div class="command-row"><code>/backlinks [url]</code><span>Backlink checker</span></div>
+                <div class="command-row"><code>/robots [url]</code><span>Robots.txt analyzer</span></div>
+                <div class="command-row"><code>/sitemap [url]</code><span>Sitemap finder</span></div>
+                <div class="command-row"><code>/httpmethods [url]</code><span>HTTP methods tester</span></div>
+                <div class="command-row"><code>/waf [url]</code><span>WAF/Cloudflare detector</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>System Commands</h2>
+            <div class="command-table">
+                <div class="command-row"><code>/start</code><span>Start the bot</span></div>
+                <div class="command-row"><code>/help</code><span>Show help menu</span></div>
+                <div class="command-row"><code>/status</code><span>Check bot status</span></div>
+                <div class="command-row"><code>/sysinfo</code><span>System information</span></div>
+                <div class="command-row"><code>/ping</code><span>Ping the bot</span></div>
+                <div class="command-row"><code>/echo [text]</code><span>Echo message</span></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 RERONRF BOT — by @concole_hack</p>
+            <p>Version 8.0.0</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

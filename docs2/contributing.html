@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributing — RERONRF BOT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 10 L22 10 L22 22 L10 22 L10 10Z" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 16 L22 16" stroke="currentColor" stroke-width="2" />
+                    <path d="M16 10 L16 22" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>RERONRF</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="modules.html">Modules</a></li>
+                <li><a href="commands.html">Commands</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="docs">
+        <h1>Contributing</h1>
+        <p class="lead">How to contribute to RERONRF BOT.</p>
+
+        <section>
+            <h2>Guidelines</h2>
+            <ul>
+                <li>Follow PEP 8 style guide</li>
+                <li>Write tests for new features</li>
+                <li>Update documentation</li>
+                <li>Keep modules independent</li>
+                <li>No external API dependencies</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Adding a New Module</h2>
+            <div class="code-block">
+                <pre><code>mkdir new_module
+touch new_module/__init__.py
+touch new_module/main.py
+touch new_module/engine.py</code></pre>
+            </div>
+            <p>Update <code>main.py</code> imports:</p>
+            <div class="code-block">
+                <pre><code>from new_module import *</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Adding a New Command</h2>
+            <p>Add to <code>handlers/command_handlers.py</code>:</p>
+            <div class="code-block">
+                <pre><code>@bot.message_handler(commands=['newcmd'])
+def new_cmd(message):
+    bot.reply_to(message, "New command executed")</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Testing</h2>
+            <div class="code-block">
+                <pre><code>python -m pytest tests/
+python scripts/test.py</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Pull Request Process</h2>
+            <ol>
+                <li>Fork the repository</li>
+                <li>Create a feature branch</li>
+                <li>Make your changes</li>
+                <li>Run tests</li>
+                <li>Submit PR</li>
+            </ol>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 RERONRF BOT — by @concole_hack</p>
+            <p>Version 8.0.0</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

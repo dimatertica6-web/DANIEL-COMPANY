@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security — RERONRF BOT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 10 L22 10 L22 22 L10 22 L10 10Z" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 16 L22 16" stroke="currentColor" stroke-width="2" />
+                    <path d="M16 10 L16 22" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>RERONRF</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="modules.html">Modules</a></li>
+                <li><a href="commands.html">Commands</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="docs">
+        <h1>Security</h1>
+        <p class="lead">Security features and best practices.</p>
+
+        <section>
+            <h2>Authentication</h2>
+            <ul>
+                <li>Admin-only commands via ADMIN_ID</li>
+                <li>JWT token authentication for API</li>
+                <li>Session management</li>
+                <li>2FA support</li>
+                <li>Biometric auth support</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Encryption</h2>
+            <ul>
+                <li>AES-256 encryption</li>
+                <li>RSA key pairs</li>
+                <li>PGP encryption</li>
+                <li>Fernet symmetric encryption</li>
+                <li>PBKDF2 key derivation</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Rate Limiting</h2>
+            <ul>
+                <li>Per-user rate limits</li>
+                <li>Per-IP rate limits</li>
+                <li>Per-endpoint rate limits</li>
+                <li>Sliding window algorithm</li>
+                <li>Token bucket algorithm</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Input Validation</h2>
+            <ul>
+                <li>SQL injection prevention</li>
+                <li>XSS prevention</li>
+                <li>Command injection prevention</li>
+                <li>Path traversal prevention</li>
+                <li>File upload validation</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Audit Logging</h2>
+            <ul>
+                <li>All admin actions logged</li>
+                <li>User access logs</li>
+                <li>Security events logged</li>
+                <li>Failed login attempts logged</li>
+                <li>Configuration changes logged</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 RERONRF BOT — by @concole_hack</p>
+            <p>Version 8.0.0</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
