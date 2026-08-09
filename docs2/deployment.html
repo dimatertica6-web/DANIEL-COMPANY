@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment — RERONRF BOT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 10 L22 10 L22 22 L10 22 L10 10Z" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 16 L22 16" stroke="currentColor" stroke-width="2" />
+                    <path d="M16 10 L16 22" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>RERONRF</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="modules.html">Modules</a></li>
+                <li><a href="commands.html">Commands</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="deployment.html" class="active">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="docs">
+        <h1>Deployment</h1>
+        <p class="lead">Deploy RERONRF BOT to production.</p>
+
+        <section>
+            <h2>VPS Deployment</h2>
+            <p>Recommended for 24/7 operation.</p>
+            <div class="code-block">
+                <pre><code>sudo apt update && sudo apt upgrade -y
+sudo apt install python3 python3-pip git -y
+git clone https://github.com/yourusername/RERONRF_BOT.git
+cd RERONRF_BOT
+pip install -r requirements.txt</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Systemd Service</h2>
+            <p>Create a systemd service for auto-restart.</p>
+            <div class="code-block">
+                <pre><code>sudo nano /etc/systemd/system/reronrf.service</code></pre>
+            </div>
+            <div class="code-block">
+                <pre><code>[Unit]
+Description=RERONRF BOT
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/path/to/RERONRF_BOT
+ExecStart=/usr/bin/python3 bot.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+            </div>
+            <div class="code-block">
+                <pre><code>sudo systemctl daemon-reload
+sudo systemctl enable reronrf
+sudo systemctl start reronrf</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Supervisor Deployment</h2>
+            <div class="code-block">
+                <pre><code>sudo apt install supervisor -y
+sudo nano /etc/supervisor/conf.d/reronrf.conf</code></pre>
+            </div>
+            <div class="code-block">
+                <pre><code>[program:reronrf]
+command=python3 /path/to/RERONRF_BOT/bot.py
+directory=/path/to/RERONRF_BOT
+user=root
+autostart=true
+autorestart=true
+stdout_logfile=/path/to/RERONRF_BOT/logs/bot.log
+stderr_logfile=/path/to/RERONRF_BOT/logs/error.log</code></pre>
+            </div>
+            <div class="code-block">
+                <pre><code>sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start reronrf</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Docker Deployment</h2>
+            <div class="code-block">
+                <pre><code>docker build -t reronrf .
+docker run -d --name reronrf --restart always reronrf</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Screen Deployment</h2>
+            <div class="code-block">
+                <pre><code>screen -S reronrf
+cd /path/to/RERONRF_BOT
+python bot.py
+# Ctrl+A, D to detach</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Nohup Deployment</h2>
+            <div class="code-block">
+                <pre><code>nohup python bot.py > logs/bot.log 2>&1 &</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Heroku Deployment</h2>
+            <div class="code-block">
+                <pre><code>heroku create reronrf-bot
+heroku config:set BOT_TOKEN=your_token
+heroku config:set ADMIN_ID=your_id
+git push heroku main</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Monitoring</h2>
+            <ul>
+                <li><code>systemctl status reronrf</code> — Check service status</li>
+                <li><code>supervisorctl status reronrf</code> — Check supervisor status</li>
+                <li><code>docker logs reronrf</code> — View Docker logs</li>
+                <li><code>tail -f logs/bot.log</code> — View bot logs</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 RERONRF BOT — by @concole_hack</p>
+            <p>Version 8.0.0</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

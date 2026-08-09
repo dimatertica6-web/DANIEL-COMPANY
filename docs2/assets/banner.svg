@@ -1,0 +1,10 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300">
+    <rect width="1200" height="300" fill="#f8f8f8"/>
+    <text x="600" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#1a1a1a">RERONRF BOT</text>
+    <text x="600" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#666">Ultimate Security Toolkit</text>
+    <text x="600" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#888">43 Modules · 90+ Commands · Zero API Dependencies</text>
+    <circle cx="150" cy="150" r="40" fill="none" stroke="#e0e0e0" stroke-width="2"/>
+    <circle cx="1050" cy="150" r="40" fill="none" stroke="#e0e0e0" stroke-width="2"/>
+    <line x1="600" y1="50" x2="600" y2="250" stroke="#e0e0e0" stroke-width="1"/>
+</svg>

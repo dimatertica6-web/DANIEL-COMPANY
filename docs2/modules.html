@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modules — RERONRF BOT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 10 L22 10 L22 22 L10 22 L10 10Z" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 16 L22 16" stroke="currentColor" stroke-width="2" />
+                    <path d="M16 10 L16 22" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>RERONRF</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="modules.html" class="active">Modules</a></li>
+                <li><a href="commands.html">Commands</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="docs">
+        <h1>Modules</h1>
+        <p class="lead">43 modules organized by functionality.</p>
+
+        <section>
+            <h2>Core Modules</h2>
+            <div class="module-grid">
+                <div class="module-card">
+                    <h3>core</h3>
+                    <p>Core engines: DOX, Scan, Attack, OSINT, Crypto, Network</p>
+                </div>
+                <div class="module-card">
+                    <h3>handlers</h3>
+                    <p>Telegram command handlers and callback processors</p>
+                </div>
+                <div class="module-card">
+                    <h3>modules</h3>
+                    <p>Business logic modules for each feature</p>
+                </div>
+                <div class="module-card">
+                    <h3>services</h3>
+                    <p>Service layer for bot, database, cache, auth</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Utility Modules</h2>
+            <div class="module-grid">
+                <div class="module-card">
+                    <h3>utils</h3>
+                    <p>Helpers, validators, formatters, decorators</p>
+                </div>
+                <div class="module-card">
+                    <h3>database</h3>
+                    <p>Database connection, queries, models, migrations</p>
+                </div>
+                <div class="module-card">
+                    <h3>cache</h3>
+                    <p>Memory, file, and Redis caching</p>
+                </div>
+                <div class="module-card">
+                    <h3>config</h3>
+                    <p>Configuration management and settings</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Security Modules</h2>
+            <div class="module-grid">
+                <div class="module-card">
+                    <h3>crypto</h3>
+                    <p>Encryption, hashing, JWT, OTP, PGP</p>
+                </div>
+                <div class="module-card">
+                    <h3>password_system</h3>
+                    <p>Password management, 2FA, biometric auth</p>
+                </div>
+                <div class="module-card">
+                    <h3>anonymity</h3>
+                    <p>Proxy, Tor, VPN, fingerprint masking</p>
+                </div>
+                <div class="module-card">
+                    <h3>watermark</h3>
+                    <p>Text, image, audio, video watermarking</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Advanced Modules</h2>
+            <div class="module-grid">
+                <div class="module-card">
+                    <h3>analytics</h3>
+                    <p>Metrics, trends, predictions, dashboards</p>
+                </div>
+                <div class="module-card">
+                    <h3>monitoring</h3>
+                    <p>System, bot, alert monitoring</p>
+                </div>
+                <div class="module-card">
+                    <h3>automation</h3>
+                    <p>Rules, triggers, workflows, scheduling</p>
+                </div>
+                <div class="module-card">
+                    <h3>backup</h3>
+                    <p>Backup, recovery, compression, encryption</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Full Module List</h2>
+            <ul class="module-list">
+                <li><code>analytics</code> <span>— Data analysis and visualization</span></li>
+                <li><code>anonymity</code> <span>— Privacy and anonymity tools</span></li>
+                <li><code>antiplagiarism</code> <span>— Content similarity detection</span></li>
+                <li><code>api</code> <span>— REST API endpoints</span></li>
+                <li><code>automation</code> <span>— Automated workflows</span></li>
+                <li><code>backup</code> <span>— Backup and recovery</span></li>
+                <li><code>broadcast</code> <span>— Message broadcasting</span></li>
+                <li><code>cache</code> <span>— Caching system</span></li>
+                <li><code>config</code> <span>— Configuration management</span></li>
+                <li><code>core</code> <span>— Core engines</span></li>
+                <li><code>crossplatform</code> <span>— Cross-platform compatibility</span></li>
+                <li><code>crypto</code> <span>— Cryptography</span></li>
+                <li><code>database</code> <span>— Database operations</span></li>
+                <li><code>demo</code> <span>— Demo and sample data</span></li>
+                <li><code>deploy</code> <span>— Deployment tools</span></li>
+                <li><code>export</code> <span>— Data export</span></li>
+                <li><code>handlers</code> <span>— Telegram handlers</span></li>
+                <li><code>installer</code> <span>— Installation tools</span></li>
+                <li><code>launcher</code> <span>— Launch and process management</span></li>
+                <li><code>localization</code> <span>— Multi-language support</span></li>
+                <li><code>middlewares</code> <span>— Middleware components</span></li>
+                <li><code>mirrors</code> <span>— Mirroring and sync</span></li>
+                <li><code>models</code> <span>— Data models</span></li>
+                <li><code>modules</code> <span>— Feature modules</span></li>
+                <li><code>monitoring</code> <span>— Monitoring system</span></li>
+                <li><code>optimization</code> <span>— Optimization tools</span></li>
+                <li><code>password_system</code> <span>— Password management</span></li>
+                <li><code>ratelimit</code> <span>— Rate limiting</span></li>
+                <li><code>rcon</code> <span>— RCON protocol</span></li>
+                <li><code>scheduler</code> <span>— Task scheduling</span></li>
+                <li><code>scripts</code> <span>— Utility scripts</span></li>
+                <li><code>searcher</code> <span>— Search engine</span></li>
+                <li><code>services</code> <span>— Service layer</span></li>
+                <li><code>tests</code> <span>— Test suite</span></li>
+                <li><code>utils</code> <span>— Utilities</span></li>
+                <li><code>visuals</code> <span>— Visualization</span></li>
+                <li><code>watermark</code> <span>— Watermarking</span></li>
+                <li><code>webhook</code> <span>— Webhook server</span></li>
+                <li><code>websocket</code> <span>— WebSocket server</span></li>
+                <li><code>grpc_server</code> <span>— gRPC server</span></li>
+                <li><code>task_queue</code> <span>— Task queue</span></li>
+                <li><code>uninstaller</code> <span>— Uninstallation tools</span></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 RERONRF BOT — by @concole_hack</p>
+            <p>Version 8.0.0</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

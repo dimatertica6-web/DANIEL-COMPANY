@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started — RERONRF BOT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 10 L22 10 L22 22 L10 22 L10 10Z" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 16 L22 16" stroke="currentColor" stroke-width="2" />
+                    <path d="M16 10 L16 22" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>RERONRF</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="getting-started.html" class="active">Getting Started</a></li>
+                <li><a href="modules.html">Modules</a></li>
+                <li><a href="commands.html">Commands</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="docs">
+        <h1>Getting Started</h1>
+        <p class="lead">Install and run RERONRF BOT in minutes.</p>
+
+        <section>
+            <h2>Prerequisites</h2>
+            <ul>
+                <li>Python 3.10 or higher</li>
+                <li>Telegram Bot Token (from <a href="https://t.me/botfather">@BotFather</a>)</li>
+                <li>Git (optional)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Installation</h2>
+            <div class="code-block">
+                <pre><code>git clone https://github.com/yourusername/RERONRF_BOT.git
+cd RERONRF_BOT
+pip install -r requirements.txt</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Configuration</h2>
+            <p>Create a <code>.env</code> file in the root directory:</p>
+            <div class="code-block">
+                <pre><code>BOT_TOKEN=your_bot_token_here
+ADMIN_ID=your_telegram_id</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Running the Bot</h2>
+            <div class="code-block">
+                <pre><code>python main.py</code></pre>
+            </div>
+            <p>Or start the bot directly:</p>
+            <div class="code-block">
+                <pre><code>python bot.py</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>First Commands</h2>
+            <p>Once the bot is running, send these commands in Telegram:</p>
+            <ul>
+                <li><code>/start</code> — Initialize the bot</li>
+                <li><code>/help</code> — Show all commands</li>
+                <li><code>/status</code> — Check bot status</li>
+                <li><code>/sysinfo</code> — System information</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 RERONRF BOT — by @concole_hack</p>
+            <p>Version 8.0.0</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

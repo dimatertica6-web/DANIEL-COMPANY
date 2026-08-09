@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration — RERONRF BOT</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 10 L22 10 L22 22 L10 22 L10 10Z" stroke="currentColor" stroke-width="2" />
+                    <path d="M10 16 L22 16" stroke="currentColor" stroke-width="2" />
+                    <path d="M16 10 L16 22" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>RERONRF</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="modules.html">Modules</a></li>
+                <li><a href="commands.html">Commands</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="deployment.html">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="docs">
+        <h1>Configuration</h1>
+        <p class="lead">Configure RERONRF BOT for your environment.</p>
+
+        <section>
+            <h2>Environment Variables</h2>
+            <div class="code-block">
+                <pre><code># Telegram
+BOT_TOKEN=your_bot_token
+ADMIN_ID=your_telegram_id
+
+# Debug
+DEBUG=False
+LOG_LEVEL=INFO
+
+# Limits
+MAX_THREADS=150
+DEFAULT_DDOS_THREADS=50
+DEFAULT_DDOS_DURATION=30
+RATE_LIMIT_CALLS=20
+RATE_LIMIT_PERIOD=60
+
+# Database
+DB_PATH=data.db
+REDIS_URL=redis://localhost:6379/0
+MONGO_URI=mongodb://localhost:27017/
+
+# Cache
+CACHE_TTL=300
+
+# API
+API_TIMEOUT=10
+USER_AGENT_ROTATE=True
+PROXY_ENABLED=False
+PROXY_URL=socks5://127.0.0.1:9050</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Config Files</h2>
+            <p>Additional configuration files in <code>config/</code>:</p>
+            <ul>
+                <li><code>settings.py</code> — Main settings</li>
+                <li><code>constants.py</code> — Constants</li>
+                <li><code>database.py</code> — Database settings</li>
+                <li><code>logging.py</code> — Logging settings</li>
+                <li><code>security.py</code> — Security settings</li>
+                <li><code>rate_limit.py</code> — Rate limit settings</li>
+                <li><code>cache.py</code> — Cache settings</li>
+                <li><code>api.py</code> — API settings</li>
+                <li><code>bot.py</code> — Bot settings</li>
+                <li><code>webhook.py</code> — Webhook settings</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Data Files</h2>
+            <p>JSON data files in <code>data/</code>:</p>
+            <ul>
+                <li><code>users.json</code> — Users data</li>
+                <li><code>scans.json</code> — Scans data</li>
+                <li><code>attacks.json</code> — Attacks data</li>
+                <li><code>reports.json</code> — Reports data</li>
+                <li><code>history.json</code> — History data</li>
+                <li><code>settings.json</code> — Settings data</li>
+                <li><code>config.json</code> — Config data</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Customization</h2>
+            <p>Modify <code>config/settings.py</code> to customize:</p>
+            <ul>
+                <li>Bot name and version</li>
+                <li>Default limits</li>
+                <li>Feature flags</li>
+                <li>Logging levels</li>
+                <li>API endpoints</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 RERONRF BOT — by @concole_hack</p>
+            <p>Version 8.0.0</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
