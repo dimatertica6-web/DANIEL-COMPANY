@@ -1,0 +1,181 @@
+:root {
+    --color-primary: #0f0f0f;
+    --color-secondary: #1a1a1a;
+    --color-accent: #e4eaf5;
+    --color-success: #1e3f31;
+    --color-danger: #4a2e2e;
+    --color-warning: #8a7a3a;
+    --color-info: #2a4a6a;
+}
+
+.theme-dark {
+    --color-black: #fcfcfc;
+    --color-white: #0f0f0f;
+    --color-gray-100: #1a1a1a;
+    --color-gray-200: #2a2a2a;
+    --color-gray-300: #3a3a3a;
+    --color-gray-400: #888;
+    --color-gray-500: #aaa;
+}
+
+.theme-dark body {
+    background: #0f0f0f;
+    color: #fcfcfc;
+}
+
+.theme-dark .card {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+.theme-dark .chip {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+    color: #ddd;
+}
+
+.theme-dark .chip--region {
+    background: #1a2a3a;
+    border-color: #2a3a4a;
+}
+
+.theme-dark .owner-card {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+.theme-dark .mini-stat {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+.theme-dark .stat-list__label {
+    color: #aaa;
+}
+
+.theme-dark .stat-list__item {
+    border-color: #2a2a2a;
+}
+
+.theme-dark .badge {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+    color: #ddd;
+}
+
+.theme-dark .clan-detail-grid>div {
+    border-color: #2a2a2a;
+}
+
+.theme-dark .info-row {
+    border-color: #2a2a2a;
+}
+
+.theme-dark .footer {
+    border-color: #2a2a2a;
+}
+
+.theme-dark .header {
+    border-color: #2a2a2a;
+}
+
+.theme-dark .hero {
+    border-color: #2a2a2a;
+}
+
+.theme-dark .owner-big {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+.theme-dark .mono {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+}
+
+.theme-dark .highlight {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+}
+
+.theme-dark .nav-links a {
+    color: #aaa;
+}
+
+.theme-dark .nav-links a:hover {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+.theme-dark .nav-links a.active {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+.theme-dark .subtitle {
+    color: #aaa;
+}
+
+.theme-dark .owner-name {
+    color: #fff;
+}
+
+.theme-dark .owner-label {
+    color: #aaa;
+}
+
+.theme-dark .clan-detail-grid span:first-child {
+    color: #aaa;
+}
+
+.theme-dark .muted {
+    color: #666;
+}
+
+.theme-dark .site-footer {
+    color: #aaa;
+    border-color: #2a2a2a;
+}
+
+.theme-dark .page-content p {
+    color: #aaa;
+}
+
+.theme-dark .sidebar {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+.theme-dark .sidebar__title {
+    border-color: #2a2a2a;
+    color: #fff;
+}
+
+.theme-dark .modal__content {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+.theme-dark .modal__close {
+    color: #888;
+}
+
+.theme-dark .modal__close:hover {
+    color: #fff;
+}
+
+.theme-dark .info-row strong {
+    color: #fff;
+}
+
+.theme-dark .ally-status {
+    background: #1a2a1a;
+    color: #8aba8a;
+    border-color: #2a4a2a;
+}
+
+.theme-dark .ally-status--enemy {
+    background: #2a1a1a;
+    color: #ba8a8a;
+    border-color: #4a2a2a;
+}

@@ -1,0 +1,11 @@
+{
+    "nav": [
+        {"id": "home", "label": "Главная", "active": true},
+        {"id": "clan", "label": "Клан", "active": false},
+        {"id": "members", "label": "Участники", "active": false},
+        {"id": "alliances", "label": "Союз", "active": false},
+        {"id": "about", "label": "О нас", "active": false},
+        {"id": "region", "label": "Регион", "active": false},
+        {"id": "archive", "label": "Архив", "active": false}
+    ]
+}

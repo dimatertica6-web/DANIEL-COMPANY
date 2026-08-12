@@ -1,0 +1,18 @@
+{
+    "site": {
+        "name": "Малосольны",
+        "description": "Клан в регионе ewe",
+        "language": "ru",
+        "theme": "light"
+    },
+    "features": {
+        "animations": true,
+        "dark_mode": true,
+        "notifications": false
+    },
+    "meta": {
+        "author": "@concole_hack",
+        "year": "2024-2026",
+        "version": "1.0.0"
+    }
+}

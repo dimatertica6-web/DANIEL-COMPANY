@@ -1,0 +1,12 @@
+{
+    "members": [
+        {"id": 1, "name": "itz_GRom_2014", "role": "owner", "joined": "2024"},
+        {"id": 2, "name": "Egor470", "role": "member", "joined": "2024"},
+        {"id": 3, "name": "FoodMaster1233", "role": "member", "joined": "2025"},
+        {"id": 4, "name": "egor4ik_pvpp", "role": "member", "joined": "2025"},
+        {"id": 5, "name": "programm_inc", "role": "moderator", "joined": "2024"},
+        {"id": 6, "name": "s1mple_580fps", "role": "member", "joined": "2026"}
+    ],
+    "total": 6,
+    "max": 20
+}

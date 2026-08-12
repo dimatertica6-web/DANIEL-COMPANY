@@ -1,0 +1,11 @@
+{
+    "pages": [
+        {"id": "home", "title": "Главная", "url": "pages/home.html", "icon": "home"},
+        {"id": "clan", "title": "Клан", "url": "pages/clan.html", "icon": "clan"},
+        {"id": "members", "title": "Участники", "url": "pages/members.html", "icon": "users"},
+        {"id": "alliances", "title": "Союз", "url": "pages/alliances.html", "icon": "alliance"},
+        {"id": "about", "title": "О нас", "url": "pages/about.html", "icon": "about"},
+        {"id": "region", "title": "Регион", "url": "pages/region.html", "icon": "region"},
+        {"id": "archive", "title": "Архив", "url": "pages/archive.html", "icon": "archive"}
+    ]
+}
