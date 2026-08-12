@@ -1,0 +1,14 @@
+{
+    "region": {
+        "name": "ewe",
+        "type": "cuboid",
+        "priority": 0,
+        "bounds": {
+            "from": [-5331, 36, -6144],
+            "to": [-5250, 82, -6110]
+        },
+        "size": 134890,
+        "flags": [],
+        "status": "active"
+    }
+}
