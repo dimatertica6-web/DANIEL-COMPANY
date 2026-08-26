@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RickAndMorty · клан /s2</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #fafafa;
+      font-family: 'JetBrains Mono', monospace;
+      color: #1e1e1e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .clan-card {
+      max-width: 1400px;
+      width: 100%;
+      background: #ffffff;
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.04), 0 8px 24px -8px rgba(0,0,0,0.02);
+      padding: 4rem 3.5rem;
+      transition: box-shadow 0.2s;
+      border: 1px solid #f0f0f0;
+    }
+    .clan-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo-svg {
+      width: 64px;
+      height: 64px;
+      transition: transform 0.25s ease;
+    }
+    .logo-svg:hover {
+      transform: scale(1.04) rotate(-2deg);
+    }
+    .clan-title {
+      font-size: 2.6rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1e1e1e 0%, #3a3a3a 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .clan-badge {
+      display: flex;
+      gap: 0.5rem;
+      background: #f0f0f0;
+      padding: 0.6rem 1.4rem 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 440;
+      color: #1e1e1e;
+      align-items: center;
+      transition: background 0.2s;
+      border: 1px solid #e8e8e8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .clan-badge svg {
+      width: 24px;
+      height: 24px;
+      opacity: 0.7;
+    }
+    .clan-badge:hover {
+      background: #e8e8e8;
+    }
+    .clan-location {
+      background: #1e1e1e;
+      color: #ffffff;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 400;
+      border: 1px solid #1e1e1e;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      margin: 4rem 0 3rem;
+    }
+    .feature-item {
+      background: #f8f8f8;
+      padding: 2.2rem 1.6rem 2rem;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px solid #f0f0f0;
+    }
+    .feature-item:hover {
+      background: #ffffff;
+      border-color: #d0d0d0;
+      box-shadow: 0 12px 28px -12px rgba(0,0,0,0.04);
+      transform: translateY(-4px);
+    }
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 1.2rem;
+      color: #1e1e1e;
+      transition: transform 0.25s ease;
+    }
+    .feature-item:hover .feature-icon {
+      transform: scale(1.04);
+    }
+    .feature-item h3 {
+      font-weight: 500;
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .feature-item p {
+      color: #3a3a3a;
+      font-size: 1rem;
+      opacity: 0.7;
+      font-weight: 300;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.6;
+    }
+    .feature-item .desc-more {
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      opacity: 0.55;
+      line-height: 1.5;
+      font-weight: 300;
+    }
+    .members-section {
+      background: #f5f5f5;
+      padding: 2rem 2.5rem;
+      margin: 3.5rem 0 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.2s;
+      border: 1px solid #ececec;
+    }
+    .members-avatars {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .avatar-svg {
+      width: 52px;
+      height: 52px;
+      background: white;
+      padding: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
+      border: 1px solid #eaeaea;
+    }
+    .avatar-svg:hover {
+      transform: scale(1.05);
+      border-color: #b0b0b0;
+    }
+    .member-count {
+      font-weight: 420;
+      color: #222;
+      background: white;
+      padding: 0.4rem 1.5rem;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      border: 1px solid #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .cta-button {
+      background: #1e1e1e;
+      color: white;
+      border: none;
+      padding: 0.9rem 2.6rem;
+      font-weight: 450;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid #1e1e1e;
+      letter-spacing: 0.01em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .cta-button svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      transition: transform 0.25s ease;
+    }
+    .cta-button:hover {
+      background: #ffffff;
+      color: #1e1e1e;
+      border-color: #1e1e1e;
+      transform: scale(0.97);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .cta-button:hover svg {
+      transform: translateX(4px);
+    }
+    .footer-links {
+      display: flex;
+      justify-content: flex-end;
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #eaeaea;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      text-decoration: none;
+      color: #2a2a2a;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.6;
+      transition: opacity 0.2s, transform 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 300;
+    }
+    .footer-links a:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+    .footer-links svg {
+      width: 22px;
+      height: 22px;
+    }
+    .info-text-block {
+      margin: 2.5rem 0 1.5rem;
+      padding: 1.8rem 2rem;
+      background: #f8f8f8;
+      border: 1px solid #ececec;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .info-text-block p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      opacity: 0.75;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+    }
+    .info-text-block strong {
+      font-weight: 500;
+      opacity: 0.95;
+    }
+    .code-stats {
+      background: #1e1e1e;
+      color: #f0f0f0;
+      padding: 1.2rem 2rem;
+      margin: 2rem 0 1.5rem;
+      border: 1px solid #2a2a2a;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .code-stats span {
+      font-weight: 300;
+      letter-spacing: 0.03em;
+    }
+    .code-stats .highlight {
+      font-weight: 500;
+      color: #ffffff;
+      background: #2a2a2a;
+      padding: 0.2rem 0.8rem;
+      border: 1px solid #3a3a3a;
+    }
+    .transition-log {
+      margin: 1.5rem 0 2rem;
+      padding: 1.5rem 2rem;
+      background: #f5f5f5;
+      border: 1px solid #e8e8e8;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.2rem;
+    }
+    .transition-log .log-entry {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 0.6rem 0.8rem;
+      background: #ffffff;
+      border-left: 3px solid #1e1e1e;
+      opacity: 0.7;
+      font-weight: 300;
+    }
+    .transition-log .log-entry strong {
+      font-weight: 500;
+      opacity: 0.9;
+    }
+    .location-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .manifesto-block {
+      margin: 2rem 0 2.5rem;
+      padding: 2rem 2.5rem;
+      background: #fafafa;
+      border: 1px solid #ececec;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .manifesto-block .manifesto-item {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      opacity: 0.7;
+      font-weight: 300;
+      padding: 0.4rem 0;
+    }
+    .manifesto-block .manifesto-item strong {
+      font-weight: 500;
+      opacity: 0.95;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .extra-text {
+      margin: 1.8rem 0;
+      padding: 1.5rem 2rem;
+      background: #f5f5f5;
+      border: 1px solid #e8e8e8;
+      columns: 2 280px;
+      column-gap: 2.5rem;
+    }
+    .extra-text p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      opacity: 0.65;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      break-inside: avoid;
+    }
+    @media (max-width: 640px) {
+      .clan-card { padding: 2rem 1.2rem; }
+      .clan-header { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+      .clan-badge { align-self: flex-start; }
+      .members-section { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+      .cta-button { width: 100%; justify-content: center; }
+      .footer-links { justify-content: center; }
+      .info-text-block { grid-template-columns: 1fr; padding: 1.2rem; }
+      .code-stats { flex-direction: column; gap: 0.8rem; align-items: flex-start; }
+      .transition-log { grid-template-columns: 1fr; }
+      .location-header { flex-direction: column; align-items: flex-start; }
+      .manifesto-block { grid-template-columns: 1fr; padding: 1.2rem; }
+      .extra-text { columns: 1; }
+    }
+    .animate-float {
+      animation: floatUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .delay-1 { animation-delay: 0.05s; }
+    .delay-2 { animation-delay: 0.12s; }
+    .delay-3 { animation-delay: 0.2s; }
+    .delay-4 { animation-delay: 0.28s; }
+    .delay-5 { animation-delay: 0.36s; }
+    .delay-6 { animation-delay: 0.44s; }
+    .delay-7 { animation-delay: 0.52s; }
+    .delay-8 { animation-delay: 0.6s; }
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translateY(16px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+<div class="clan-card">
+
+  <div class="clan-header animate-float delay-1">
+    <div class="logo-area">
+      <svg class="logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="40" height="40" stroke="#1e1e1e" stroke-width="1.4" stroke-dasharray="2 2" />
+        <path d="M24 6 L24 42 M6 24 L42 24" stroke="#1e1e1e" stroke-width="1.2" stroke-dasharray="1 3" />
+        <rect x="16" y="16" width="16" height="16" stroke="#1e1e1e" stroke-width="1.6" />
+        <rect x="22" y="22" width="4" height="4" fill="#1e1e1e" />
+        <path d="M12 12 L18 18 M36 12 L30 18 M12 36 L18 30 M36 36 L30 30" stroke="#1e1e1e" stroke-width="1.2" />
+        <path d="M24 8 L24 14 M24 34 L24 40 M8 24 L14 24 M34 24 L40 24" stroke="#1e1e1e" stroke-width="1.2" />
+      </svg>
+      <span class="clan-title">RickAndMorty</span>
+    </div>
+    <div class="location-header">
+      <div class="clan-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+        <span>клан · 2026</span>
+      </div>
+      <div class="clan-location">/s2 · сектор 2</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="feature-item animate-float delay-2">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
+        <path d="M12 2v5" />
+      </svg>
+      <h3>Порталы /s2</h3>
+      <p>межвселенские переходы</p>
+      <div class="desc-more">Открываем проходы в параллельные реальности, где каждый шаг — это новое измерение. Сектор 2 — наш главный хаб. Более 200 задокументированных переходов.</div>
+    </div>
+    <div class="feature-item animate-float delay-3">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" />
+        <path d="M8 12h8" />
+        <path d="M12 8v8" />
+      </svg>
+      <h3>Измерения</h3>
+      <p>бесконечные миры</p>
+      <div class="desc-more">Мы исследуем бесконечное множество вселенных, каждая со своими законами физики и времени. Сектор 2 — точка отсчёта для 47 известных измерений.</div>
+    </div>
+    <div class="feature-item animate-float delay-4">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" />
+        <circle cx="8" cy="12" r="2" />
+        <circle cx="16" cy="12" r="2" />
+        <path d="M12 4v2" />
+      </svg>
+      <h3>Клан /s2</h3>
+      <p>20+ активных агентов</p>
+      <div class="desc-more">Наша команда объединяет лучших межгалактических исследователей и учёных из разных уголков мультивселенной. База — сектор 2. Ежедневно 12+ активных переходов.</div>
+    </div>
+    <div class="feature-item animate-float delay-5">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" />
+        <path d="M8 8l8 8M16 8l-8 8" />
+      </svg>
+      <h3>Защита</h3>
+      <p>межгалактический код</p>
+      <div class="desc-more">Мы разработали протоколы безопасности, которые защищают наши порталы от вторжений и временных парадоксов. Сектор 2 — неприступен. 99.7% успешных переходов.</div>
+    </div>
+  </div>
+
+  <div class="code-stats animate-float delay-3">
+    <span>└─ кодовая база клана /s2</span>
+    <span class="highlight">4 000+ строк</span>
+    <span>└─ ядро · v1.2.7</span>
+    <span>└─ 47 переходов за цикл</span>
+    <span>└─ 12 активных порталов</span>
+  </div>
+
+  <div class="transition-log animate-float delay-4">
+    <div class="log-entry"><strong>⟳ 23:14:01</strong> переход C-137 → /s2</div>
+    <div class="log-entry"><strong>⟳ 23:12:44</strong> синхронизация портала #7</div>
+    <div class="log-entry"><strong>⟳ 23:09:12</strong> агент Morty · вход в /s2</div>
+    <div class="log-entry"><strong>⟳ 23:07:33</strong> протокол защиты активирован</div>
+    <div class="log-entry"><strong>⟳ 23:05:19</strong> измерение X9-4 · стабилизация</div>
+    <div class="log-entry"><strong>⟳ 23:02:08</strong> портал /s2 → измерение 304</div>
+    <div class="log-entry"><strong>⟳ 22:58:44</strong> рекалибровка гравитации</div>
+    <div class="log-entry"><strong>⟳ 22:55:12</strong> агент Rick · вход</div>
+  </div>
+
+  <div class="manifesto-block animate-float delay-5">
+    <div class="manifesto-item">
+      <strong>└─ манифест /s2</strong>
+      Мы — клан RickAndMorty, базирующийся в секторе 2. Наша цель — исследование мультивселенной и создание безопасных межпространственных переходов. Мы верим, что знание — это ключ к пониманию бесконечности. Каждый портал, открытый нами, приближает нас к разгадке устройства реальности. Сектор 2 стал нашим домом, где мы документируем каждый переход, каждое измерение и каждую аномалию.
+    </div>
+    <div class="manifesto-item">
+      <strong>└─ принципы</strong>
+      Мы не вмешиваемся в ход событий, мы наблюдаем и учимся. Наш кодекс основан на уважении к каждому измерению и его обитателям. Мы отвергаем хаос и стремимся к порядку. Сектор 2 — это не просто локация, это состояние ума. Каждый агент клана несёт ответственность за свои действия и за сохранность временных линий.
+    </div>
+    <div class="manifesto-item">
+      <strong>└─ технологии /s2</strong>
+      Наша инфраструктура включает более 4000 строк оптимизированного кода, управляющего порталами, системами безопасности и стабилизации. Мы используем квантовые алгоритмы для расчёта траекторий и синхронизации с временными линиями. Каждый переход требует точного расчёта и многослойной проверки. Мы гордимся своей архитектурой, которая обеспечивает 99.7% успешных переходов.
+    </div>
+  </div>
+
+  <div class="info-text-block animate-float delay-4">
+    <p><strong>▸ Хроники клана /s2</strong><br>Основан в 2015 году группой энтузиастов, одержимых идеей путешествий между измерениями. Сегодня клан RickAndMorty — это интеллектуальное сообщество, объединяющее физиков, инженеров и просто фанатов анимационного сериала. Наш главный хаб находится в секторе 2 ( /s2 ), где сосредоточены все наши исследовательские мощности. За 11 лет мы задокументировали более 200 переходов и открыли 47 стабильных измерений.</p>
+    <p><strong>▸ Миссия сектора 2</strong><br>Мы стремимся к пониманию мультивселенной через призму науки и творчества. Наши проекты включают моделирование порталов, изучение альтернативных реальностей и создание безопасных межпространственных переходов. Сектор 2 — это наш дом, где каждый переход документируется и анализируется. Мы также занимаемся разработкой протоколов защиты от временных парадоксов.</p>
+    <p><strong>▸ Кодекс /s2</strong><br>Уважение к каждому измерению, ответственность за свои действия и стремление к знаниям — вот три столпа, на которых держится наш клан. Мы не вмешиваемся в ход событий, мы лишь наблюдаем и учимся. Сектор 2 — это центр нашей вселенной. Мы отвергаем хаос и стремимся к порядку. Каждый агент клана несёт ответственность за свои действия и за сохранность временных линий.</p>
+    <p><strong>▸ Технологии /s2</strong><br>Наша инфраструктура включает более 4000 строк оптимизированного кода, управляющего порталами и системами безопасности. Каждый переход требует точного расчёта и синхронизации с временными линиями. Мы гордимся своей архитектурой. В разработке — новый протокол стабилизации для переходов в неизведанные измерения. Планируется расширение клана до 50 агентов к 2027 году.</p>
+  </div>
+
+  <div class="extra-text animate-float delay-6">
+    <p><strong>▸ Архив переходов /s2</strong><br>За последний месяц клан совершил 142 успешных перехода в различные измерения. Наиболее активные направления: измерение C-137 (23 перехода), измерение X9-4 (17 переходов), измерение 304 (12 переходов). Среднее время стабилизации портала — 4.7 секунды. Максимальная зафиксированная дистанция — 12.8 световых лет за один переход.</p>
+    <p><strong>▸ Исследовательские проекты</strong><br>В настоящее время ведутся разработки в области квантовой телепортации и временной синхронизации. Проект "Кротовая нора" предполагает создание постоянного портала между сектором 2 и измерением C-137. Проект "Стабилизатор" направлен на снижение временной погрешности при переходах. Уже достигнута точность 99.7%.</p>
+    <p><strong>▸ Сообщество /s2</strong><br>В клане состоят 28 активных агентов из 7 различных измерений. Еженедельно проводятся собрания для обмена опытом и обсуждения новых открытий. В 2025 году было принято 6 новых агентов. Мы открыты для сотрудничества с другими кланами и исследовательскими группами, разделяющими наши ценности.</p>
+    <p><strong>▸ Планы развития</strong><br>До конца 2026 года планируется увеличить код базу до 6000 строк, внедрить новый алгоритм стабилизации и расширить количество поддерживаемых порталов до 24. Также в планах — создание открытой документации для исследователей и публикация ежегодного отчёта о деятельности клана. Сектор 2 продолжает расти и развиваться.</p>
+    <p><strong>▸ Безопасность /s2</strong><br>Система защиты сектора 2 включает трёхуровневую аутентификацию, шифрование межпространственных сигналов и протоколы экстренного закрытия порталов. За 2025 год зафиксировано 0 попыток несанкционированного вторжения. Мы регулярно обновляем наши системы и проводим аудит безопасности.</p>
+    <p><strong>▸ Вклад в науку</strong><br>Клан RickAndMorty /s2 опубликовал 17 научных статей по межпространственной физике, 3 патента на технологии стабилизации порталов и 2 открытых программных комплекса для моделирования переходов. Наши исследования цитируются в ведущих межгалактических научных журналах.</p>
+  </div>
+
+  <div class="members-section animate-float delay-3">
+    <div class="members-avatars">
+      <svg class="avatar-svg" viewBox="0 0 40 40" fill="none" stroke="#1e1e1e" stroke-width="1.2">
+        <rect x="8" y="8" width="24" height="24" stroke="currentColor" />
+        <circle cx="20" cy="20" r="6" stroke="currentColor" />
+        <path d="M12 12 L16 16 M28 12 L24 16 M12 28 L16 24 M28 28 L24 24" stroke="currentColor" />
+      </svg>
+      <svg class="avatar-svg" viewBox="0 0 40 40" fill="none" stroke="#1e1e1e" stroke-width="1.2">
+        <rect x="8" y="8" width="24" height="24" stroke="currentColor" />
+        <path d="M12 24 L28 24 M16 12 L24 12" stroke="currentColor" />
+        <circle cx="20" cy="20" r="4" stroke="currentColor" />
+      </svg>
+      <svg class="avatar-svg" viewBox="0 0 40 40" fill="none" stroke="#1e1e1e" stroke-width="1.2">
+        <rect x="8" y="8" width="24" height="24" stroke="currentColor" />
+        <rect x="14" y="14" width="12" height="12" stroke="currentColor" />
+        <path d="M12 12 L18 18 M28 12 L22 18 M12 28 L18 22 M28 28 L22 22" stroke="currentColor" />
+      </svg>
+      <svg class="avatar-svg" viewBox="0 0 40 40" fill="none" stroke="#1e1e1e" stroke-width="1.2">
+        <rect x="8" y="8" width="24" height="24" stroke="currentColor" />
+        <circle cx="20" cy="16" r="5" stroke="currentColor" />
+        <path d="M12 30 L28 30" stroke="currentColor" />
+        <path d="M16 22 L24 22" stroke="currentColor" />
+      </svg>
+      <span class="member-count">+8</span>
+    </div>
+    <button class="cta-button" id="joinButton">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" />
+        <path d="M12 8v8M8 12h8" />
+      </svg>
+      Вступить в клан /s2
+    </button>
+  </div>
+
+  <div class="footer-links">
+    <a href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" />
+        <path d="M8 8l8 8M16 8l-8 8" />
+      </svg>
+      Вселенные /s2
+    </a>
+    <a href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 4v2M12 18v2M4 12h2M18 12h2" />
+      </svg>
+      Рик & Морти
+    </a>
+    <a href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" />
+        <path d="M8 12h8" />
+        <path d="M12 8v8" />
+      </svg>
+      Измерение C-137
+    </a>
+    <a href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M8 8l8 8M16 8l-8 8" />
+      </svg>
+      Архив /s2
+    </a>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const joinBtn = document.getElementById('joinButton');
+    if (joinBtn) {
+      joinBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const originalText = this.innerHTML;
+        this.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" />
+            <path d="M8 12l3 3 6-6" />
+          </svg>
+          Принято! /s2
+        `;
+        this.style.background = '#1e1e1e';
+        this.style.color = '#ffffff';
+        this.style.borderColor = '#1e1e1e';
+        this.style.transform = 'scale(0.96)';
+        setTimeout(() => {
+          this.innerHTML = originalText;
+          this.style.background = '#1e1e1e';
+          this.style.color = '#ffffff';
+          this.style.borderColor = '#1e1e1e';
+          this.style.transform = 'scale(1)';
+        }, 1800);
+      });
+    }
+    const logo = document.querySelector('.logo-svg');
+    if (logo) {
+      logo.addEventListener('mouseenter', () => {
+        logo.style.transition = 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
