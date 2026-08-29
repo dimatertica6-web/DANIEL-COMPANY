@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1mple · Core</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="8" y="12" width="32" height="24" rx="3" stroke="#0e1625" />
+            <path
+              d="M8 24 L18 30 L30 18 L40 26"
+              stroke="#0e1625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="14" cy="18" r="2.5" stroke="#0e1625" />
+          </svg>
+          <h1>S1mple</h1>
+          <span>v6.0</span>
+        </div>
+        <div class="badge">
+          <a href="../index.html">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M4 4L20 20M20 4L4 20" />
+            </svg>
+            docs
+          </a>
+          <a href="#">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+              />
+              <path d="M12 6v6l4 2" />
+            </svg>
+            modules
+          </a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="sidebar">
+          <nav>
+            <ul>
+              <li class="category">core</li>
+              <li><a href="core.html" class="active">core · engine</a></li>
+              <li class="category">attacks</li>
+              <li><a href="attacks.html">attacks (42)</a></li>
+              <li class="category">recon &amp; scan</li>
+              <li><a href="reconnaissance.html">reconnaissance</a></li>
+              <li><a href="full_scan.html">full_scan</a></li>
+              <li><a href="api_scanner.html">api_scanner</a></li>
+              <li><a href="wordpress_scanner.html">wordpress_scanner</a></li>
+              <li class="category">persistence &amp; stealth</li>
+              <li><a href="persistence.html">persistence</a></li>
+              <li><a href="stealth.html">stealth</a></li>
+              <li><a href="anti_forensics.html">anti_forensics</a></li>
+              <li class="category">c2 &amp; botnet</li>
+              <li><a href="botnet.html">botnet</a></li>
+              <li><a href="p2p.html">p2p</a></li>
+              <li class="category">data &amp; exfil</li>
+              <li><a href="data_harvester.html">data_harvester</a></li>
+              <li><a href="site_downloader.html">site_downloader</a></li>
+              <li><a href="site_crawler.html">site_crawler</a></li>
+              <li class="category">utility</li>
+              <li><a href="encryption.html">encryption</a></li>
+              <li><a href="obfuscation.html">obfuscation</a></li>
+              <li><a href="optimizer.html">optimizer</a></li>
+              <li><a href="monitoring.html">monitoring</a></li>
+              <li><a href="backup.html">backup</a></li>
+              <li><a href="config.html">config</a></li>
+              <li><a href="visual.html">visual</a></li>
+              <li><a href="cross_platform.html">cross_platform</a></li>
+              <li><a href="anonymity.html">anonymity</a></li>
+              <li><a href="parser.html">parser</a></li>
+              <li><a href="exploits.html">exploits</a></li>
+              <li><a href="user_agents.html">user_agents</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <section class="module-section" id="core">
+            <h2>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4l3 3" />
+              </svg>
+              Core
+            </h2>
+            <div class="desc">
+              Heart of the framework — engine, crypto, network, c2, exploits,
+              persistence, and more.
+            </div>
+            <div class="module-grid">
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 8v8M8 12h8" /></svg
+                  >engine
+                </div>
+                <div class="path">core/engine.py</div>
+                <div class="desc-full">
+                  The main orchestration layer. Initializes all subsystems,
+                  manages the attack lifecycle, dispatches tasks to threads, and
+                  coordinates between C2, network, and persistence modules.
+                  Provides a unified API for the entire framework.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M9 9l6 6M15 9l-6 6" /></svg
+                  >crypto
+                </div>
+                <div class="path">core/crypto.py</div>
+                <div class="desc-full">
+                  Symmetric (AES-GCM) and asymmetric (RSA-OAEP) encryption,
+                  secure key derivation (PBKDF2), hashing (SHA-256/512), and
+                  random number generation. Used for C2 traffic, configuration
+                  encryption, and payload obfuscation.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 4h16v16H4z" />
+                    <path d="M8 8h8v8H8z" /></svg
+                  >c2
+                </div>
+                <div class="path">core/c2.py</div>
+                <div class="desc-full">
+                  Command &amp; Control server supporting 38 built-in commands.
+                  Handles client authentication, command queuing, job
+                  scheduling, and real-time status reporting. Implements a
+                  custom protocol over TCP/TLS with built-in heartbeat and
+                  keep-alive.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                      d="M19.4 15a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H5.78a1.65 1.65 0 0 0-1.51 1 1.65 1.65 0 0 0 .33 1.82l6.22 6.22a1.65 1.65 0 0 0 2.36 0z"
+                    /></svg
+                  >persistence
+                </div>
+                <div class="path">core/persistence.py</div>
+                <div class="desc-full">
+                  Unified interface for Windows (Registry, Services, Scheduled
+                  Tasks), Linux (cron, systemd, rc.local, LD_PRELOAD), and macOS
+                  (launchd, StartupItems). Provides install, remove, and check
+                  methods with stealth options.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" />
+                    <path d="M3 12v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6" /></svg
+                  >exploits
+                </div>
+                <div class="path">core/exploits.py</div>
+                <div class="desc-full">
+                  Registry and loader for 28 exploits including Log4j
+                  (CVE-2021-44228), Spring4Shell (CVE-2022-22965), Struts2, and
+                  WebLogic. Each exploit is dynamically loaded and executed
+                  against a target with configurable payloads.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" />
+                    <path d="M12 8v4l3 3" /></svg
+                  >network
+                </div>
+                <div class="path">core/network.py</div>
+                <div class="desc-full">
+                  Low-level networking: raw socket creation, packet crafting
+                  (IP/TCP/UDP/ICMP), checksum calculation, spoofing, and
+                  interface management. Supports both IPv4 and IPv6 with full
+                  control over headers and options.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 S1mple · Documentation v6.0</span>
+            <span>core module</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

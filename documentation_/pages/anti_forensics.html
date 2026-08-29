@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1mple · Anti-Forensics</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="8" y="12" width="32" height="24" rx="3" stroke="#0e1625" />
+            <path
+              d="M8 24 L18 30 L30 18 L40 26"
+              stroke="#0e1625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="14" cy="18" r="2.5" stroke="#0e1625" />
+          </svg>
+          <h1>S1mple</h1>
+          <span>v6.0</span>
+        </div>
+        <div class="badge">
+          <a href="../index.html">docs</a>
+          <a href="#">modules</a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="sidebar">
+          <nav>
+            <ul>
+              <li class="category">core</li>
+              <li><a href="core.html">core · engine</a></li>
+              <li class="category">attacks</li>
+              <li><a href="attacks.html">attacks (42)</a></li>
+              <li class="category">recon &amp; scan</li>
+              <li><a href="reconnaissance.html">reconnaissance</a></li>
+              <li><a href="full_scan.html">full_scan</a></li>
+              <li><a href="api_scanner.html">api_scanner</a></li>
+              <li><a href="wordpress_scanner.html">wordpress_scanner</a></li>
+              <li class="category">persistence &amp; stealth</li>
+              <li><a href="persistence.html">persistence</a></li>
+              <li><a href="stealth.html">stealth</a></li>
+              <li>
+                <a href="anti_forensics.html" class="active">anti_forensics</a>
+              </li>
+              <li class="category">c2 &amp; botnet</li>
+              <li><a href="botnet.html">botnet</a></li>
+              <li><a href="p2p.html">p2p</a></li>
+              <li class="category">data &amp; exfil</li>
+              <li><a href="data_harvester.html">data_harvester</a></li>
+              <li><a href="site_downloader.html">site_downloader</a></li>
+              <li><a href="site_crawler.html">site_crawler</a></li>
+              <li class="category">utility</li>
+              <li><a href="encryption.html">encryption</a></li>
+              <li><a href="obfuscation.html">obfuscation</a></li>
+              <li><a href="optimizer.html">optimizer</a></li>
+              <li><a href="monitoring.html">monitoring</a></li>
+              <li><a href="backup.html">backup</a></li>
+              <li><a href="config.html">config</a></li>
+              <li><a href="visual.html">visual</a></li>
+              <li><a href="cross_platform.html">cross_platform</a></li>
+              <li><a href="anonymity.html">anonymity</a></li>
+              <li><a href="parser.html">parser</a></li>
+              <li><a href="exploits.html">exploits</a></li>
+              <li><a href="user_agents.html">user_agents</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <section class="module-section" id="anti_forensics">
+            <h2>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M4 4h16v16H4z" />
+                <path d="M8 8h8v8H8z" />
+              </svg>
+              Anti-Forensics
+            </h2>
+            <div class="desc">
+              Disk wiping, file shredding, log wiping, metadata removal,
+              timestomping.
+            </div>
+            <div class="module-grid">
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >disk_wiper
+                </div>
+                <div class="path">anti_forensics/disk_wiper.py</div>
+                <div class="desc-full">
+                  Overwrites free disk space with random data patterns (DoD,
+                  Gutmann, zeroes) to prevent recovery of deleted files.
+                  Supports multiple passes and verification. Can wipe entire
+                  partitions with secure erase commands.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >file_shredder
+                </div>
+                <div class="path">anti_forensics/file_shredder.py</div>
+                <div class="desc-full">
+                  Securely deletes files by overwriting with random data
+                  multiple times, then renaming and truncating. Prevents file
+                  carving and forensic recovery. Implements multiple shredding
+                  patterns including DoD 5220.22-M and Gutmann.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >log_wiper
+                </div>
+                <div class="path">anti_forensics/log_wiper.py</div>
+                <div class="desc-full">
+                  Clears system logs (Windows Event Log, Linux syslog, auth.log)
+                  and application logs. Can selectively remove entries based on
+                  timestamps or patterns. Implements event log clearing with
+                  audit policy bypass.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >timestomper
+                </div>
+                <div class="path">anti_forensics/timestomper.py</div>
+                <div class="desc-full">
+                  Modifies file timestamps (MAC timestamps) to decouple activity
+                  from actual times. Can set timestamps to arbitrary dates or
+                  copy from other files. Implements timestomping for directories
+                  and files in bulk.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >metadata_remover
+                </div>
+                <div class="path">anti_forensics/metadata_remover.py</div>
+                <div class="desc-full">
+                  Removes metadata from files including EXIF data, document
+                  properties, and file system extended attributes. Supports
+                  batch processing for common file types (images, documents,
+                  archives).
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 S1mple · Documentation v6.0</span>
+            <span>anti_forensics module — evidence destruction</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1mple · Persistence</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="8" y="12" width="32" height="24" rx="3" stroke="#0e1625" />
+            <path
+              d="M8 24 L18 30 L30 18 L40 26"
+              stroke="#0e1625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="14" cy="18" r="2.5" stroke="#0e1625" />
+          </svg>
+          <h1>S1mple</h1>
+          <span>v6.0</span>
+        </div>
+        <div class="badge">
+          <a href="../index.html">docs</a>
+          <a href="#">modules</a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="sidebar">
+          <nav>
+            <ul>
+              <li class="category">core</li>
+              <li><a href="core.html">core · engine</a></li>
+              <li class="category">attacks</li>
+              <li><a href="attacks.html">attacks (42)</a></li>
+              <li class="category">recon &amp; scan</li>
+              <li><a href="reconnaissance.html">reconnaissance</a></li>
+              <li><a href="full_scan.html">full_scan</a></li>
+              <li><a href="api_scanner.html">api_scanner</a></li>
+              <li><a href="wordpress_scanner.html">wordpress_scanner</a></li>
+              <li class="category">persistence &amp; stealth</li>
+              <li><a href="persistence.html" class="active">persistence</a></li>
+              <li><a href="stealth.html">stealth</a></li>
+              <li><a href="anti_forensics.html">anti_forensics</a></li>
+              <li class="category">c2 &amp; botnet</li>
+              <li><a href="botnet.html">botnet</a></li>
+              <li><a href="p2p.html">p2p</a></li>
+              <li class="category">data &amp; exfil</li>
+              <li><a href="data_harvester.html">data_harvester</a></li>
+              <li><a href="site_downloader.html">site_downloader</a></li>
+              <li><a href="site_crawler.html">site_crawler</a></li>
+              <li class="category">utility</li>
+              <li><a href="encryption.html">encryption</a></li>
+              <li><a href="obfuscation.html">obfuscation</a></li>
+              <li><a href="optimizer.html">optimizer</a></li>
+              <li><a href="monitoring.html">monitoring</a></li>
+              <li><a href="backup.html">backup</a></li>
+              <li><a href="config.html">config</a></li>
+              <li><a href="visual.html">visual</a></li>
+              <li><a href="cross_platform.html">cross_platform</a></li>
+              <li><a href="anonymity.html">anonymity</a></li>
+              <li><a href="parser.html">parser</a></li>
+              <li><a href="exploits.html">exploits</a></li>
+              <li><a href="user_agents.html">user_agents</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <section class="module-section" id="persistence">
+            <h2>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H5.78a1.65 1.65 0 0 0-1.51 1 1.65 1.65 0 0 0 .33 1.82l6.22 6.22a1.65 1.65 0 0 0 2.36 0z"
+                />
+              </svg>
+              Persistence
+            </h2>
+            <div class="desc">
+              Windows Registry, Services, Tasks; Linux crontab, systemd; macOS
+              launchd.
+            </div>
+            <div class="module-grid">
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2" /></svg
+                  >windows_registry
+                </div>
+                <div class="path">persistence/windows_registry.py</div>
+                <div class="desc-full">
+                  Installs persistence via Run, RunOnce, and Startup folders.
+                  Also supports COM hijacking and scheduled tasks with trigger
+                  conditions. Implements multiple evasion techniques including
+                  registry redirection and alternative data streams.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >windows_service
+                </div>
+                <div class="path">persistence/windows_service.py</div>
+                <div class="desc-full">
+                  Creates Windows services with configurable startup types
+                  (automatic, manual, delayed). Supports service recovery
+                  options and can impersonate legitimate system services.
+                  Implements service DLL hijacking and path interception.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >linux_cron
+                </div>
+                <div class="path">persistence/linux_cron.py</div>
+                <div class="desc-full">
+                  Adds cron jobs for root or user with randomized intervals.
+                  Supports @reboot, hourly, daily, and custom schedules.
+                  Implements cron.d and crontab injection with log suppression.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >linux_systemd
+                </div>
+                <div class="path">persistence/linux_systemd.py</div>
+                <div class="desc-full">
+                  Creates systemd service units with various types (simple,
+                  forking, oneshot). Supports start limits, restart policies,
+                  and environment variables. Can also create timer units for
+                  scheduled execution.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >macos_launchd
+                </div>
+                <div class="path">persistence/macos_launchd.py</div>
+                <div class="desc-full">
+                  Creates LaunchDaemon or LaunchAgent plist files with
+                  auto-restart and keep-alive. Supports root and user-level
+                  installations. Implements start intervals, network
+                  availability triggers, and system event triggers.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 S1mple · Documentation v6.0</span>
+            <span>persistence module — Windows/Linux/macOS persistence</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

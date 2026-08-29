@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1mple · Data Harvester</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="8" y="12" width="32" height="24" rx="3" stroke="#0e1625" />
+            <path
+              d="M8 24 L18 30 L30 18 L40 26"
+              stroke="#0e1625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="14" cy="18" r="2.5" stroke="#0e1625" />
+          </svg>
+          <h1>S1mple</h1>
+          <span>v6.0</span>
+        </div>
+        <div class="badge">
+          <a href="../index.html">docs</a>
+          <a href="#">modules</a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="sidebar">
+          <nav>
+            <ul>
+              <li class="category">core</li>
+              <li><a href="core.html">core · engine</a></li>
+              <li class="category">attacks</li>
+              <li><a href="attacks.html">attacks (42)</a></li>
+              <li class="category">recon &amp; scan</li>
+              <li><a href="reconnaissance.html">reconnaissance</a></li>
+              <li><a href="full_scan.html">full_scan</a></li>
+              <li><a href="api_scanner.html">api_scanner</a></li>
+              <li><a href="wordpress_scanner.html">wordpress_scanner</a></li>
+              <li class="category">persistence &amp; stealth</li>
+              <li><a href="persistence.html">persistence</a></li>
+              <li><a href="stealth.html">stealth</a></li>
+              <li><a href="anti_forensics.html">anti_forensics</a></li>
+              <li class="category">c2 &amp; botnet</li>
+              <li><a href="botnet.html">botnet</a></li>
+              <li><a href="p2p.html">p2p</a></li>
+              <li class="category">data &amp; exfil</li>
+              <li>
+                <a href="data_harvester.html" class="active">data_harvester</a>
+              </li>
+              <li><a href="site_downloader.html">site_downloader</a></li>
+              <li><a href="site_crawler.html">site_crawler</a></li>
+              <li class="category">utility</li>
+              <li><a href="encryption.html">encryption</a></li>
+              <li><a href="obfuscation.html">obfuscation</a></li>
+              <li><a href="optimizer.html">optimizer</a></li>
+              <li><a href="monitoring.html">monitoring</a></li>
+              <li><a href="backup.html">backup</a></li>
+              <li><a href="config.html">config</a></li>
+              <li><a href="visual.html">visual</a></li>
+              <li><a href="cross_platform.html">cross_platform</a></li>
+              <li><a href="anonymity.html">anonymity</a></li>
+              <li><a href="parser.html">parser</a></li>
+              <li><a href="exploits.html">exploits</a></li>
+              <li><a href="user_agents.html">user_agents</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <section class="module-section" id="data_harvester">
+            <h2>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M4 4h16v16H4z" />
+                <path d="M8 8h8v8H8z" />
+              </svg>
+              Data Harvester
+            </h2>
+            <div class="desc">
+              Credentials, cookies, tokens, emails, forms, API keys, source code
+              extraction.
+            </div>
+            <div class="module-grid">
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >credential_harvester
+                </div>
+                <div class="path">data_harvester/credential_harvester.py</div>
+                <div class="desc-full">
+                  Extracts login credentials from forms, basic auth headers, and
+                  in-memory data. Captures both plaintext and hashed passwords.
+                  Supports automatic detection of login forms and credential
+                  fields using DOM analysis and pattern matching.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >cookie_harvester
+                </div>
+                <div class="path">data_harvester/cookie_harvester.py</div>
+                <div class="desc-full">
+                  Steals session cookies, tokens, and other browser storage
+                  data. Decodes and parses JWT tokens, extracting claims and
+                  metadata. Supports harvesting from HTTP headers, browser
+                  storage, and network traffic interception.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >api_key_harvester
+                </div>
+                <div class="path">data_harvester/api_key_harvester.py</div>
+                <div class="desc-full">
+                  Searches for API keys and secrets in source code,
+                  configuration files, and environment variables. Uses regex
+                  patterns for AWS, Google, Stripe, GitHub, and 50+ other
+                  services. Implements entropy-based detection for unknown key
+                  formats.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >email_harvester
+                </div>
+                <div class="path">data_harvester/email_harvester.py</div>
+                <div class="desc-full">
+                  Extracts email addresses from HTML, text, and source code.
+                  Implements validation and deduplication of harvested
+                  addresses. Supports extraction from mailto links, plain text,
+                  and JavaScript variables.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >source_code_harvester
+                </div>
+                <div class="path">data_harvester/source_code_harvester.py</div>
+                <div class="desc-full">
+                  Downloads and analyzes source code files from websites and
+                  repositories. Extracts comments, documentation, and sensitive
+                  data embedded in code. Supports automatic detection of code
+                  snippets and pastebin-style content.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 S1mple · Documentation v6.0</span>
+            <span>data_harvester module — data extraction</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

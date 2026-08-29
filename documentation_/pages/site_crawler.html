@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1mple · Site Crawler</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="8" y="12" width="32" height="24" rx="3" stroke="#0e1625" />
+            <path
+              d="M8 24 L18 30 L30 18 L40 26"
+              stroke="#0e1625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="14" cy="18" r="2.5" stroke="#0e1625" />
+          </svg>
+          <h1>S1mple</h1>
+          <span>v6.0</span>
+        </div>
+        <div class="badge">
+          <a href="../index.html">docs</a>
+          <a href="#">modules</a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="sidebar">
+          <nav>
+            <ul>
+              <li class="category">core</li>
+              <li><a href="core.html">core · engine</a></li>
+              <li class="category">attacks</li>
+              <li><a href="attacks.html">attacks (42)</a></li>
+              <li class="category">recon &amp; scan</li>
+              <li><a href="reconnaissance.html">reconnaissance</a></li>
+              <li><a href="full_scan.html">full_scan</a></li>
+              <li><a href="api_scanner.html">api_scanner</a></li>
+              <li><a href="wordpress_scanner.html">wordpress_scanner</a></li>
+              <li class="category">persistence &amp; stealth</li>
+              <li><a href="persistence.html">persistence</a></li>
+              <li><a href="stealth.html">stealth</a></li>
+              <li><a href="anti_forensics.html">anti_forensics</a></li>
+              <li class="category">c2 &amp; botnet</li>
+              <li><a href="botnet.html">botnet</a></li>
+              <li><a href="p2p.html">p2p</a></li>
+              <li class="category">data &amp; exfil</li>
+              <li><a href="data_harvester.html">data_harvester</a></li>
+              <li><a href="site_downloader.html">site_downloader</a></li>
+              <li>
+                <a href="site_crawler.html" class="active">site_crawler</a>
+              </li>
+              <li class="category">utility</li>
+              <li><a href="encryption.html">encryption</a></li>
+              <li><a href="obfuscation.html">obfuscation</a></li>
+              <li><a href="optimizer.html">optimizer</a></li>
+              <li><a href="monitoring.html">monitoring</a></li>
+              <li><a href="backup.html">backup</a></li>
+              <li><a href="config.html">config</a></li>
+              <li><a href="visual.html">visual</a></li>
+              <li><a href="cross_platform.html">cross_platform</a></li>
+              <li><a href="anonymity.html">anonymity</a></li>
+              <li><a href="parser.html">parser</a></li>
+              <li><a href="exploits.html">exploits</a></li>
+              <li><a href="user_agents.html">user_agents</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <section class="module-section" id="site_crawler">
+            <h2>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v8M8 12h8" />
+              </svg>
+              Site Crawler
+            </h2>
+            <div class="desc">
+              Recursive crawling, link extraction, meta extraction, and sitemap
+              generation.
+            </div>
+            <div class="module-grid">
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2" /></svg
+                  >crawler
+                </div>
+                <div class="path">site_crawler/crawler.py</div>
+                <div class="desc-full">
+                  Recursive web crawler with configurable depth,
+                  parallelization, and politeness. Extracts all URLs, forms, and
+                  navigation structures. Implements robots.txt parsing and
+                  respects crawl delays. Supports breadth-first and depth-first
+                  traversal strategies.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >link_extractor
+                </div>
+                <div class="path">site_crawler/link_extractor.py</div>
+                <div class="desc-full">
+                  Intelligent link extraction from HTML and JavaScript. Extracts
+                  href, src, data-*, and custom attributes. Detects and handles
+                  dynamic links loaded via AJAX and JavaScript rendering.
+                  Supports extraction from SPA frameworks.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >sitemap_generator
+                </div>
+                <div class="path">site_crawler/sitemap_generator.py</div>
+                <div class="desc-full">
+                  Generates XML sitemap with priority, change frequency, and
+                  last modification dates. Can also create HTML sitemap for user
+                  navigation. Supports large sites with automatic pagination and
+                  compression.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >meta_extractor
+                </div>
+                <div class="path">site_crawler/meta_extractor.py</div>
+                <div class="desc-full">
+                  Extracts meta tags, Open Graph data, and structured data from
+                  pages. Supports JSON-LD, Microdata, and RDFa formats.
+                  Generates comprehensive metadata reports for SEO analysis and
+                  content discovery.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 S1mple · Documentation v6.0</span>
+            <span>site_crawler module — web crawling</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

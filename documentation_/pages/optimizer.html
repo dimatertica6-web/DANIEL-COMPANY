@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1mple · Optimizer</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="8" y="12" width="32" height="24" rx="3" stroke="#0e1625" />
+            <path
+              d="M8 24 L18 30 L30 18 L40 26"
+              stroke="#0e1625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="14" cy="18" r="2.5" stroke="#0e1625" />
+          </svg>
+          <h1>S1mple</h1>
+          <span>v6.0</span>
+        </div>
+        <div class="badge">
+          <a href="../index.html">docs</a>
+          <a href="#">modules</a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="sidebar">
+          <nav>
+            <ul>
+              <li class="category">core</li>
+              <li><a href="core.html">core · engine</a></li>
+              <li class="category">attacks</li>
+              <li><a href="attacks.html">attacks (42)</a></li>
+              <li class="category">recon &amp; scan</li>
+              <li><a href="reconnaissance.html">reconnaissance</a></li>
+              <li><a href="full_scan.html">full_scan</a></li>
+              <li><a href="api_scanner.html">api_scanner</a></li>
+              <li><a href="wordpress_scanner.html">wordpress_scanner</a></li>
+              <li class="category">persistence &amp; stealth</li>
+              <li><a href="persistence.html">persistence</a></li>
+              <li><a href="stealth.html">stealth</a></li>
+              <li><a href="anti_forensics.html">anti_forensics</a></li>
+              <li class="category">c2 &amp; botnet</li>
+              <li><a href="botnet.html">botnet</a></li>
+              <li><a href="p2p.html">p2p</a></li>
+              <li class="category">data &amp; exfil</li>
+              <li><a href="data_harvester.html">data_harvester</a></li>
+              <li><a href="site_downloader.html">site_downloader</a></li>
+              <li><a href="site_crawler.html">site_crawler</a></li>
+              <li class="category">utility</li>
+              <li><a href="encryption.html">encryption</a></li>
+              <li><a href="obfuscation.html">obfuscation</a></li>
+              <li><a href="optimizer.html" class="active">optimizer</a></li>
+              <li><a href="monitoring.html">monitoring</a></li>
+              <li><a href="backup.html">backup</a></li>
+              <li><a href="config.html">config</a></li>
+              <li><a href="visual.html">visual</a></li>
+              <li><a href="cross_platform.html">cross_platform</a></li>
+              <li><a href="anonymity.html">anonymity</a></li>
+              <li><a href="parser.html">parser</a></li>
+              <li><a href="exploits.html">exploits</a></li>
+              <li><a href="user_agents.html">user_agents</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <section class="module-section" id="optimizer">
+            <h2>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v8M8 12h8" />
+              </svg>
+              Optimizer
+            </h2>
+            <div class="desc">
+              Thread pooling, memory/network/performance optimization, and cache
+              management.
+            </div>
+            <div class="module-grid">
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2" /></svg
+                  >thread_pool
+                </div>
+                <div class="path">optimizer/thread_pool.py</div>
+                <div class="desc-full">
+                  Dynamic thread pool with work stealing, overload protection,
+                  and priority scheduling. Automatically adjusts pool size based
+                  on system load. Implements thread lifecycle management and
+                  graceful shutdown with task completion guarantees.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >cache_manager
+                </div>
+                <div class="path">optimizer/cache_manager.py</div>
+                <div class="desc-full">
+                  LRU and TTL-based caching for DNS responses, HTTP requests,
+                  and computation results. Reduces latency and network overhead.
+                  Implements distributed caching with peer synchronization and
+                  cache invalidation strategies.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >performance
+                </div>
+                <div class="path">optimizer/performance.py</div>
+                <div class="desc-full">
+                  Performance profiling and optimization utilities: CPU, memory,
+                  and I/O monitoring. Provides adaptive backoff and resource
+                  throttling. Implements performance metrics collection and
+                  bottleneck detection with recommendations.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >resource_monitor
+                </div>
+                <div class="path">optimizer/resource_monitor.py</div>
+                <div class="desc-full">
+                  Real-time resource monitoring with alerting and auto-scaling
+                  capabilities. Tracks CPU, memory, disk I/O, and network usage.
+                  Can automatically adjust thread counts, connection limits, and
+                  cache sizes based on available resources.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 S1mple · Documentation v6.0</span>
+            <span>optimizer module — performance optimization</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

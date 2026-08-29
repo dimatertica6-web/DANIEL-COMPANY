@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1mple · Reconnaissance</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="8" y="12" width="32" height="24" rx="3" stroke="#0e1625" />
+            <path
+              d="M8 24 L18 30 L30 18 L40 26"
+              stroke="#0e1625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="14" cy="18" r="2.5" stroke="#0e1625" />
+          </svg>
+          <h1>S1mple</h1>
+          <span>v6.0</span>
+        </div>
+        <div class="badge">
+          <a href="../index.html">docs</a>
+          <a href="#">modules</a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="sidebar">
+          <nav>
+            <ul>
+              <li class="category">core</li>
+              <li><a href="core.html">core · engine</a></li>
+              <li class="category">attacks</li>
+              <li><a href="attacks.html">attacks (42)</a></li>
+              <li class="category">recon &amp; scan</li>
+              <li>
+                <a href="reconnaissance.html" class="active">reconnaissance</a>
+              </li>
+              <li><a href="full_scan.html">full_scan</a></li>
+              <li><a href="api_scanner.html">api_scanner</a></li>
+              <li><a href="wordpress_scanner.html">wordpress_scanner</a></li>
+              <li class="category">persistence &amp; stealth</li>
+              <li><a href="persistence.html">persistence</a></li>
+              <li><a href="stealth.html">stealth</a></li>
+              <li><a href="anti_forensics.html">anti_forensics</a></li>
+              <li class="category">c2 &amp; botnet</li>
+              <li><a href="botnet.html">botnet</a></li>
+              <li><a href="p2p.html">p2p</a></li>
+              <li class="category">data &amp; exfil</li>
+              <li><a href="data_harvester.html">data_harvester</a></li>
+              <li><a href="site_downloader.html">site_downloader</a></li>
+              <li><a href="site_crawler.html">site_crawler</a></li>
+              <li class="category">utility</li>
+              <li><a href="encryption.html">encryption</a></li>
+              <li><a href="obfuscation.html">obfuscation</a></li>
+              <li><a href="optimizer.html">optimizer</a></li>
+              <li><a href="monitoring.html">monitoring</a></li>
+              <li><a href="backup.html">backup</a></li>
+              <li><a href="config.html">config</a></li>
+              <li><a href="visual.html">visual</a></li>
+              <li><a href="cross_platform.html">cross_platform</a></li>
+              <li><a href="anonymity.html">anonymity</a></li>
+              <li><a href="parser.html">parser</a></li>
+              <li><a href="exploits.html">exploits</a></li>
+              <li><a href="user_agents.html">user_agents</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <section class="module-section" id="reconnaissance">
+            <h2>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v8M8 12h8" />
+              </svg>
+              Reconnaissance
+            </h2>
+            <div class="desc">
+              Passive &amp; active reconnaissance, OSINT, fingerprinting.
+            </div>
+            <div class="module-grid">
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >port_scanner
+                </div>
+                <div class="path">reconnaissance/port_scanner.py</div>
+                <div class="desc-full">
+                  TCP and UDP port scanning with SYN, CONNECT, and FIN scans.
+                  Supports range and list modes, service detection via banner
+                  grabbing, and OS fingerprinting. Implements stealth scanning
+                  techniques with randomized delays and decoy packets.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >subdomain_scanner
+                </div>
+                <div class="path">reconnaissance/subdomain_scanner.py</div>
+                <div class="desc-full">
+                  Brute-force and dictionary-based subdomain discovery with
+                  wildcard detection. Uses DNS resolution and can perform zone
+                  transfers. Supports concurrent queries and rate limiting.
+                  Includes wordlists for common subdomains and custom bruteforce
+                  patterns.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >dns_scanner
+                </div>
+                <div class="path">reconnaissance/dns_scanner.py</div>
+                <div class="desc-full">
+                  Comprehensive DNS enumeration: A, AAAA, MX, NS, SOA, TXT,
+                  CNAME, and SPF records. Performs reverse DNS lookups and
+                  DNSSEC validation. Can detect DNS cache poisoning
+                  vulnerabilities and misconfigured resolvers.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >whois_scanner
+                </div>
+                <div class="path">reconnaissance/whois_scanner.py</div>
+                <div class="desc-full">
+                  WHOIS lookup for domain registration, nameservers,
+                  creation/expiry dates, and registrant information. Caches
+                  results to avoid rate limits. Supports both IPv4 and IPv6
+                  WHOIS servers with automatic fallback.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >vulnerability_scanner
+                </div>
+                <div class="path">reconnaissance/vulnerability_scanner.py</div>
+                <div class="desc-full">
+                  CVE-based vulnerability scanner using a local database with
+                  over 100,000+ entries. Checks for known vulnerabilities in
+                  services, frameworks, and CMS versions. Generates detailed
+                  reports with CVSS scores and remediation steps.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >technology_scanner
+                </div>
+                <div class="path">reconnaissance/technology_scanner.py</div>
+                <div class="desc-full">
+                  Fingerprint web technologies: server headers, JavaScript
+                  libraries, frameworks, CMS, and analytics. Uses a large
+                  signature database with pattern matching and machine learning
+                  classification for accurate identification of over 500
+                  technologies.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 S1mple · Documentation v6.0</span>
+            <span>reconnaissance module — OSINT & fingerprinting</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

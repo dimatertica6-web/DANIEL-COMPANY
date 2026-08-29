@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1mple · Attacks</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../script.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
+            <rect x="8" y="12" width="32" height="24" rx="3" stroke="#0e1625" />
+            <path
+              d="M8 24 L18 30 L30 18 L40 26"
+              stroke="#0e1625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="14" cy="18" r="2.5" stroke="#0e1625" />
+          </svg>
+          <h1>S1mple</h1>
+          <span>v6.0</span>
+        </div>
+        <div class="badge">
+          <a href="../index.html">docs</a>
+          <a href="#">modules</a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <aside class="sidebar">
+          <nav>
+            <ul>
+              <li class="category">core</li>
+              <li><a href="core.html">core · engine</a></li>
+              <li class="category">attacks</li>
+              <li><a href="attacks.html" class="active">attacks (42)</a></li>
+              <li class="category">recon &amp; scan</li>
+              <li><a href="reconnaissance.html">reconnaissance</a></li>
+              <li><a href="full_scan.html">full_scan</a></li>
+              <li><a href="api_scanner.html">api_scanner</a></li>
+              <li><a href="wordpress_scanner.html">wordpress_scanner</a></li>
+              <li class="category">persistence &amp; stealth</li>
+              <li><a href="persistence.html">persistence</a></li>
+              <li><a href="stealth.html">stealth</a></li>
+              <li><a href="anti_forensics.html">anti_forensics</a></li>
+              <li class="category">c2 &amp; botnet</li>
+              <li><a href="botnet.html">botnet</a></li>
+              <li><a href="p2p.html">p2p</a></li>
+              <li class="category">data &amp; exfil</li>
+              <li><a href="data_harvester.html">data_harvester</a></li>
+              <li><a href="site_downloader.html">site_downloader</a></li>
+              <li><a href="site_crawler.html">site_crawler</a></li>
+              <li class="category">utility</li>
+              <li><a href="encryption.html">encryption</a></li>
+              <li><a href="obfuscation.html">obfuscation</a></li>
+              <li><a href="optimizer.html">optimizer</a></li>
+              <li><a href="monitoring.html">monitoring</a></li>
+              <li><a href="backup.html">backup</a></li>
+              <li><a href="config.html">config</a></li>
+              <li><a href="visual.html">visual</a></li>
+              <li><a href="cross_platform.html">cross_platform</a></li>
+              <li><a href="anonymity.html">anonymity</a></li>
+              <li><a href="parser.html">parser</a></li>
+              <li><a href="exploits.html">exploits</a></li>
+              <li><a href="user_agents.html">user_agents</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <main class="main">
+          <section class="module-section" id="attacks">
+            <h2>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+              Attacks
+              <span style="font-weight: 400; font-size: 1rem; color: #4b5a72"
+                >42 modes</span
+              >
+            </h2>
+            <div class="desc">
+              Layer 3/4/7 flood attacks, amplification, and protocol abuse.
+            </div>
+            <div class="module-grid">
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >http_flood
+                </div>
+                <div class="path">attacks/http_flood.py</div>
+                <div class="desc-full">
+                  HTTP/1.1 and HTTP/2 GET/POST flood with randomized headers,
+                  User-Agents, and query parameters. Supports keep-alive,
+                  pipelining, and proxy rotation. Can target specific paths and
+                  use cookies.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >udp_flood
+                </div>
+                <div class="path">attacks/udp_flood.py</div>
+                <div class="desc-full">
+                  High-volume UDP flood with spoofed source IP and port. Can
+                  target specific ports with custom payloads. Works over IPv4
+                  and IPv6 with configurable packet size and rate limiting.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >syn_flood
+                </div>
+                <div class="path">attacks/syn_flood.py</div>
+                <div class="desc-full">
+                  Classic TCP SYN flood with fully spoofed IPs. Uses raw sockets
+                  to send SYN packets with random source ports and sequence
+                  numbers. Bypasses SYN cookies with randomized timestamps.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >icmp_flood
+                </div>
+                <div class="path">attacks/icmp_flood.py</div>
+                <div class="desc-full">
+                  ICMP echo request (ping) flood with spoofed source addresses.
+                  Can use fragmented packets and custom payload sizes. Effective
+                  against misconfigured networks.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >dns_amp
+                </div>
+                <div class="path">attacks/dns_amp.py</div>
+                <div class="desc-full">
+                  DNS amplification using ANY/CH/TXT queries with spoofed
+                  source. Leverages open resolvers to amplify traffic by a
+                  factor of 50-100x. Includes list of public resolvers.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /></svg
+                  >slowloris
+                </div>
+                <div class="path">attacks/slowloris.py</div>
+                <div class="desc-full">
+                  Slowloris attack keeping many connections open with partial
+                  HTTP headers. Uses randomized intervals, connection pooling,
+                  and proxy chaining to exhaust server resources.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >ntp_amp
+                </div>
+                <div class="path">attacks/ntp_amp.py</div>
+                <div class="desc-full">
+                  NTP monlist amplification with pre-fetched list of vulnerable
+                  servers. Achieves amplification factors of 200-500x. Uses
+                  spoofed UDP packets with randomized transaction IDs.
+                </div>
+              </div>
+              <div class="module-card">
+                <div class="name">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 12h4l2-3 3 3 3-3 2 3h4" /></svg
+                  >ssdp_amp
+                </div>
+                <div class="path">attacks/ssdp_amp.py</div>
+                <div class="desc-full">
+                  SSDP reflection using UPnP discovery requests. Exploits
+                  misconfigured devices to amplify traffic up to 30x. Supports
+                  both IPv4 and IPv6.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 0.5rem;
+                font-size: 0.8rem;
+                color: #5b6a82;
+                padding-left: 0.2rem;
+              "
+            >
+              + ack_flood, fin_flood, xmas_flood, ipv6_flood, h2_flood,
+              quic_flood, websocket_flood, and 30+ more.
+            </div>
+          </section>
+
+          <footer class="footer">
+            <span>© 2026 S1mple · Documentation v6.0</span>
+            <span>attacks module — 42 attack vectors</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
