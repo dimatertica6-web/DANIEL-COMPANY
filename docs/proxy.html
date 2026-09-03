@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proxy - GlanderIO</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo"
+          ><svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect
+              x="2"
+              y="2"
+              width="28"
+              height="28"
+              stroke="white"
+              stroke-width="2"
+            />
+            <path
+              d="M8 8L24 24M8 24L24 8"
+              stroke="white"
+              stroke-width="2"
+            /></svg
+          ><span>GlanderIO</span></a
+        >
+        <div class="nav-links">
+          <a href="index.html">Home</a
+          ><a href="getting-started.html">Getting Started</a
+          ><a href="modules.html">Modules</a><a href="api.html">API</a
+          ><a href="examples.html">Examples</a
+          ><a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <div class="main-with-sidebar">
+      <aside class="sidebar">
+        <div class="section-title">Documentation</div>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="installation.html">Installation</a>
+        <a href="configuration.html">Configuration</a>
+        <a href="usage.html">Usage</a>
+        <a href="cli.html">CLI Commands</a>
+        <div class="section-title">Modules</div>
+        <a href="scanner.html">Scanner</a>
+        <a href="exploits.html">Exploits</a>
+        <a href="telemetry.html">Telemetry</a>
+        <a href="gui.html">GUI</a>
+        <a href="installer.html">Installer</a>
+        <a href="proxy.html" class="active">Proxy</a>
+        <div class="section-title">Development</div>
+        <a href="contributing.html">Contributing</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="license.html">License</a>
+      </aside>
+      <div class="docs-container">
+        <h1>Proxy Module</h1>
+        <h2>Overview</h2>
+        <p>
+          Proxy management with support for HTTP, HTTPS, SOCKS4, SOCKS5, and
+          TOR.
+        </p>
+        <h2>Features</h2>
+        <ul>
+          <li>Proxy pool management</li>
+          <li>Proxy rotation</li>
+          <li>Proxy validation</li>
+          <li>Geolocation support</li>
+          <li>Anonymity classification</li>
+          <li>Proxy chain building</li>
+        </ul>
+        <h2>Usage</h2>
+        <pre><code>from proxy.engine import ProxyEngine
+
+proxy = ProxyEngine()
+proxy.add("192.168.1.1", 8080)
+best = proxy.get_best()
+print(best.host, best.port)</code></pre>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <p>Made by <strong>Lamskov Daniel</strong></p>
+        <p class="footer-meta">GlanderIO v3.0 &mdash; Security Framework</p>
+      </div>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>

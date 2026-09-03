@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форум отзывов – GlanderIO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8f8f8;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            padding: 50px 55px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            border: 1px solid #eaeaea;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 28px;
+            border-bottom: 1px solid #eaeaea;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: #1a1a1a;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #888888;
+            margin-top: 6px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .number {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .stat-item .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #999999;
+        }
+
+        .review-form {
+            background: #fafafa;
+            padding: 24px 28px;
+            border: 1px solid #eaeaea;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .review-form:focus-within {
+            border-color: #1a1a1a;
+            background: #ffffff;
+        }
+
+        .review-form .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .review-form .form-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .review-form label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666666;
+            margin-bottom: 4px;
+        }
+
+        .review-form input,
+        .review-form textarea,
+        .review-form select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d0d0d0;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .review-form input:focus,
+        .review-form textarea:focus,
+        .review-form select:focus {
+            border-color: #1a1a1a;
+        }
+
+        .review-form textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .review-form .rating-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .review-form .rating-group label {
+            margin-right: 4px;
+        }
+
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #d0d0d0;
+            transition: color 0.2s ease, transform 0.2s ease;
+            padding: 0 2px;
+        }
+
+        .star-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .star-btn.active {
+            color: #f5a623;
+        }
+
+        .star-btn.active:hover {
+            transform: scale(1.1);
+        }
+
+        .submit-btn {
+            padding: 10px 32px;
+            background: #1a1a1a;
+            color: #ffffff;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.15s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .submit-btn:hover {
+            background: #333333;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.97);
+        }
+
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .review-card {
+            padding: 20px 24px;
+            border: 1px solid #eaeaea;
+            background: #fafafa;
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        .review-card:nth-child(1) { animation-delay: 0.05s; }
+        .review-card:nth-child(2) { animation-delay: 0.10s; }
+        .review-card:nth-child(3) { animation-delay: 0.15s; }
+        .review-card:nth-child(4) { animation-delay: 0.20s; }
+        .review-card:nth-child(5) { animation-delay: 0.25s; }
+        .review-card:nth-child(6) { animation-delay: 0.30s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .review-card .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .review-card .review-author {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1a1a1a;
+        }
+
+        .review-card .review-date {
+            font-size: 12px;
+            color: #aaaaaa;
+        }
+
+        .review-card .review-stars {
+            color: #f5a623;
+            font-size: 16px;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .review-card .review-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444444;
+            margin-bottom: 4px;
+        }
+
+        .review-card .review-version {
+            font-size: 12px;
+            color: #bbbbbb;
+        }
+
+        .review-card .review-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .review-card .review-actions button {
+            background: none;
+            border: none;
+            font-size: 13px;
+            color: #888888;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            padding: 0;
+        }
+
+        .review-card .review-actions button:hover {
+            color: #1a1a1a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #999999;
+        }
+
+        .empty-state svg {
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            text-align: center;
+            font-size: 12px;
+            color: #aaaaaa;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 14px 24px;
+            background: #1a1a1a;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 24px 18px;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .stats {
+                gap: 16px;
+            }
+            .review-form {
+                padding: 16px;
+            }
+            .review-form .form-row {
+                flex-direction: column;
+            }
+            .review-form .form-group {
+                min-width: auto;
+            }
+            .review-card {
+                padding: 16px;
+            }
+            .review-card .review-header {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 10px;
+            }
+            .container {
+                padding: 16px 12px;
+            }
+            .stat-item .number {
+                font-size: 18px;
+            }
+            .review-form .rating-group {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Отзывы о GlanderIO</h1>
+        <p>Оставьте свой отзыв о программном продукте</p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="number" id="totalReviews">0</div>
+            <div class="label">Всего отзывов</div>
+        </div>
+        <div class="stat-item">
+            <div class="number" id="avgRating">0.0</div>
+            <div class="label">Средняя оценка</div>
+        </div>
+        <div class="stat-item">
+            <div class="number" id="fiveStarCount">0</div>
+            <div class="label">★★★★★</div>
+        </div>
+    </div>
+
+    <div class="review-form" id="reviewForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="reviewName">Имя</label>
+                <input type="text" id="reviewName" placeholder="Ваше имя" required>
+            </div>
+            <div class="form-group">
+                <label for="reviewVersion">Версия GlanderIO</label>
+                <select id="reviewVersion">
+                    <option value="3.0.0">3.0.0</option>
+                    <option value="2.5.0">2.5.0</option>
+                    <option value="2.0.0">2.0.0</option>
+                    <option value="1.0.0">1.0.0</option>
+                    <option value="other">Другая</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group" style="flex:2;">
+                <label for="reviewText">Отзыв</label>
+                <textarea id="reviewText" placeholder="Напишите ваш отзыв о GlanderIO..." required></textarea>
+            </div>
+        </div>
+        <div class="form-row" style="align-items:center;">
+            <div class="form-group" style="flex:1;">
+                <label>Оценка</label>
+                <div class="rating-group">
+                    <button class="star-btn" data-value="1">★</button>
+                    <button class="star-btn" data-value="2">★</button>
+                    <button class="star-btn" data-value="3">★</button>
+                    <button class="star-btn" data-value="4">★</button>
+                    <button class="star-btn" data-value="5">★</button>
+                    <span style="font-size:13px; color:#999999; margin-left:8px;" id="ratingLabel">0</span>
+                </div>
+            </div>
+            <div class="form-group" style="flex:0 0 auto;">
+                <button class="submit-btn" id="submitReview">Оставить отзыв</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviews-list" id="reviewsList">
+        <div class="empty-state" id="emptyState">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#cccccc" stroke-width="1.5">
+                <rect x="6" y="10" width="36" height="28" rx="2"/>
+                <line x1="12" y1="18" x2="36" y2="18"/>
+                <line x1="12" y1="24" x2="30" y2="24"/>
+                <line x1="12" y1="30" x2="34" y2="30"/>
+            </svg>
+            <p>Пока нет отзывов. Будьте первым!</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 GlanderIO — Форум отзывов. Все отзывы принадлежат их авторам.
+    </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    (function() {
+        'use strict';
+
+        let reviews = [];
+        let selectedRating = 0;
+
+        const stars = document.querySelectorAll('.star-btn');
+        const ratingLabel = document.getElementById('ratingLabel');
+        const reviewsList = document.getElementById('reviewsList');
+        const emptyState = document.getElementById('emptyState');
+        const totalReviewsEl = document.getElementById('totalReviews');
+        const avgRatingEl = document.getElementById('avgRating');
+        const fiveStarCountEl = document.getElementById('fiveStarCount');
+
+        const reviewName = document.getElementById('reviewName');
+        const reviewText = document.getElementById('reviewText');
+        const reviewVersion = document.getElementById('reviewVersion');
+        const submitBtn = document.getElementById('submitReview');
+        const toast = document.getElementById('toast');
+
+        let toastTimeout = null;
+
+        function loadReviews() {
+            try {
+                const data = localStorage.getItem('glander_reviews');
+                if (data) {
+                    reviews = JSON.parse(data);
+                }
+            } catch (e) {
+                reviews = [];
+            }
+            if (!reviews || !Array.isArray(reviews)) {
+                reviews = [];
+            }
+        }
+
+        function saveReviews() {
+            try {
+                localStorage.setItem('glander_reviews', JSON.stringify(reviews));
+            } catch (e) {}
+        }
+
+        function renderReviews() {
+            reviewsList.innerHTML = '';
+            emptyState.style.display = 'none';
+
+            if (reviews.length === 0) {
+                reviewsList.appendChild(emptyState);
+                emptyState.style.display = 'block';
+                updateStats();
+                return;
+            }
+
+            const sorted = [...reviews].reverse();
+
+            sorted.forEach((review, index) => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+
+                const starsFull = '★'.repeat(Math.min(review.rating || 0, 5));
+                const starsEmpty = '☆'.repeat(Math.max(0, 5 - (review.rating || 0)));
+
+                const date = review.date ? new Date(review.date).toLocaleDateString('ru-RU') : '';
+
+                card.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-author">${escapeHtml(review.name || 'Аноним')}</span>
+                        <span class="review-date">${date}</span>
+                    </div>
+                    <div class="review-stars">${starsFull}<span style="color:#d0d0d0;">${starsEmpty}</span></div>
+                    <div class="review-text">${escapeHtml(review.text || '')}</div>
+                    <div class="review-version">Версия: ${escapeHtml(review.version || '—')}</div>
+                    <div class="review-actions">
+                        <button data-index="${reviews.length - 1 - index}" class="like-btn">👍 Полезно</button>
+                        <button data-index="${reviews.length - 1 - index}" class="delete-btn">🗑 Удалить</button>
+                    </div>
+                `;
+
+                reviewsList.appendChild(card);
+            });
+
+            updateStats();
+
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.index);
+                    if (!isNaN(idx) && idx >= 0 && idx < reviews.length) {
+                        if (confirm('Удалить этот отзыв?')) {
+                            reviews.splice(idx, 1);
+                            saveReviews();
+                            renderReviews();
+                            showToast('Отзыв удалён');
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const idx = parseInt(this.dataset.index);
+                    if (!isNaN(idx) && idx >= 0 && idx < reviews.length) {
+                        if (!reviews[idx].likes) {
+                            reviews[idx].likes = 0;
+                        }
+                        reviews[idx].likes += 1;
+                        saveReviews();
+                        renderReviews();
+                        showToast('Спасибо за оценку!');
+                    }
+                });
+            });
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function updateStats() {
+            const total = reviews.length;
+            totalReviewsEl.textContent = total;
+
+            if (total === 0) {
+                avgRatingEl.textContent = '0.0';
+                fiveStarCountEl.textContent = '0';
+                return;
+            }
+
+            let sum = 0;
+            let fiveStar = 0;
+            reviews.forEach(r => {
+                const rating = Math.min(Math.max(r.rating || 0, 0), 5);
+                sum += rating;
+                if (rating === 5) fiveStar++;
+            });
+
+            const avg = sum / total;
+            avgRatingEl.textContent = avg.toFixed(1);
+            fiveStarCountEl.textContent = fiveStar;
+        }
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        function initStars() {
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = parseInt(this.dataset.value);
+                    if (isNaN(value)) return;
+                    selectedRating = value;
+                    stars.forEach(s => {
+                        const v = parseInt(s.dataset.value);
+                        if (v <= value) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                    ratingLabel.textContent = value;
+                });
+
+                star.addEventListener('mouseenter', function() {
+                    const value = parseInt(this.dataset.value);
+                    stars.forEach(s => {
+                        const v = parseInt(s.dataset.value);
+                        if (v <= value) {
+                            s.style.transform = 'scale(1.15)';
+                        }
+                    });
+                });
+
+                star.addEventListener('mouseleave', function() {
+                    stars.forEach(s => {
+                        s.style.transform = 'scale(1)';
+                    });
+                });
+            });
+        }
+
+        function submitReview() {
+            const name = reviewName.value.trim() || 'Аноним';
+            const text = reviewText.value.trim();
+            const version = reviewVersion.value;
+
+            if (!text) {
+                showToast('Пожалуйста, напишите текст отзыва');
+                reviewText.focus();
+                return;
+            }
+
+            if (selectedRating === 0) {
+                showToast('Пожалуйста, поставьте оценку');
+                return;
+            }
+
+            const review = {
+                name: name,
+                text: text,
+                version: version,
+                rating: selectedRating,
+                date: new Date().toISOString(),
+                likes: 0
+            };
+
+            reviews.push(review);
+            saveReviews();
+            renderReviews();
+
+            reviewName.value = '';
+            reviewText.value = '';
+            selectedRating = 0;
+            stars.forEach(s => s.classList.remove('active'));
+            ratingLabel.textContent = '0';
+
+            showToast('Отзыв успешно добавлен! Спасибо!');
+        }
+
+        loadReviews();
+        renderReviews();
+        initStars();
+
+        submitBtn.addEventListener('click', submitReview);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                submitReview();
+            }
+        });
+
+        console.log('GlanderIO — Форум отзывов загружен. Версия 3.0.0');
+        console.log('Разработчик: Ламсков Даниэль Даниилович');
+        console.log('Компания: Daniel_company');
+
+    })();
+</script>
+
+</body>
+</html>

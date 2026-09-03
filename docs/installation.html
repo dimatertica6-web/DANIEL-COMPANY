@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Installation - GlanderIO</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo"
+          ><svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect
+              x="2"
+              y="2"
+              width="28"
+              height="28"
+              stroke="white"
+              stroke-width="2"
+            />
+            <path
+              d="M8 8L24 24M8 24L24 8"
+              stroke="white"
+              stroke-width="2"
+            /></svg
+          ><span>GlanderIO</span></a
+        >
+        <div class="nav-links">
+          <a href="index.html">Home</a
+          ><a href="getting-started.html">Getting Started</a
+          ><a href="modules.html">Modules</a><a href="api.html">API</a
+          ><a href="examples.html">Examples</a
+          ><a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <div class="main-with-sidebar">
+      <aside class="sidebar">
+        <div class="section-title">Documentation</div>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="installation.html" class="active">Installation</a>
+        <a href="configuration.html">Configuration</a>
+        <a href="usage.html">Usage</a>
+        <a href="cli.html">CLI Commands</a>
+        <div class="section-title">Modules</div>
+        <a href="scanner.html">Scanner</a>
+        <a href="exploits.html">Exploits</a>
+        <a href="telemetry.html">Telemetry</a>
+        <a href="gui.html">GUI</a>
+        <a href="installer.html">Installer</a>
+        <div class="section-title">Development</div>
+        <a href="contributing.html">Contributing</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="license.html">License</a>
+      </aside>
+      <div class="docs-container">
+        <h1>Installation</h1>
+        <h2>System Requirements</h2>
+        <table>
+          <tr>
+            <th>Requirement</th>
+            <th>Minimum</th>
+          </tr>
+          <tr>
+            <td>Python</td>
+            <td>3.9+</td>
+          </tr>
+          <tr>
+            <td>RAM</td>
+            <td>4 GB</td>
+          </tr>
+          <tr>
+            <td>Storage</td>
+            <td>2 GB</td>
+          </tr>
+          <tr>
+            <td>OS</td>
+            <td>Windows/Linux/macOS</td>
+          </tr>
+        </table>
+        <h2>Quick Install</h2>
+        <pre><code># Clone repository
+git clone https://github.com/yourusername/glanderio.git
+cd glanderio
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Verify installation
+python -c "import core; print('OK')"</code></pre>
+        <h2>Installation Options</h2>
+        <h3>1. Full Installation</h3>
+        <pre><code>python installer.py --full</code></pre>
+        <h3>2. Minimal Installation</h3>
+        <pre><code>python installer.py --minimal</code></pre>
+        <h3>3. Development Installation</h3>
+        <pre><code>pip install -e .</code></pre>
+        <h2>Dependencies</h2>
+        <p>
+          Main dependencies: <code>requests</code>, <code>beautifulsoup4</code>,
+          <code>cryptography</code>, <code>flask</code>, <code>pyqt6</code>,
+          <code>sqlalchemy</code>
+        </p>
+        <h2>Verify Installation</h2>
+        <pre><code>python run.py --help</code></pre>
+        <div class="note">
+          <strong>Note:</strong> For GUI support, ensure PyQt6 is properly
+          installed.
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <p>Made by <strong>Lamskov Daniel</strong></p>
+        <p class="footer-meta">GlanderIO v3.0 &mdash; Security Framework</p>
+      </div>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>

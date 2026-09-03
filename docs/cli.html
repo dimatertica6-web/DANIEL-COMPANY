@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLI Commands - GlanderIO</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo"
+          ><svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect
+              x="2"
+              y="2"
+              width="28"
+              height="28"
+              stroke="white"
+              stroke-width="2"
+            />
+            <path
+              d="M8 8L24 24M8 24L24 8"
+              stroke="white"
+              stroke-width="2"
+            /></svg
+          ><span>GlanderIO</span></a
+        >
+        <div class="nav-links">
+          <a href="index.html">Home</a
+          ><a href="getting-started.html">Getting Started</a
+          ><a href="modules.html">Modules</a><a href="api.html">API</a
+          ><a href="examples.html">Examples</a
+          ><a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <div class="main-with-sidebar">
+      <aside class="sidebar">
+        <div class="section-title">Documentation</div>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="installation.html">Installation</a>
+        <a href="configuration.html">Configuration</a>
+        <a href="usage.html">Usage</a>
+        <a href="cli.html" class="active">CLI Commands</a>
+        <div class="section-title">Modules</div>
+        <a href="scanner.html">Scanner</a>
+        <a href="exploits.html">Exploits</a>
+        <a href="telemetry.html">Telemetry</a>
+        <a href="gui.html">GUI</a>
+        <a href="installer.html">Installer</a>
+        <div class="section-title">Development</div>
+        <a href="contributing.html">Contributing</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="license.html">License</a>
+      </aside>
+      <div class="docs-container">
+        <h1>CLI Commands</h1>
+        <h2>run.py</h2>
+        <table>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>-u, --url</td>
+            <td>Target URL</td>
+          </tr>
+          <tr>
+            <td>-o, --output</td>
+            <td>Output directory</td>
+          </tr>
+          <tr>
+            <td>-f, --format</td>
+            <td>Output format (json/csv/html)</td>
+          </tr>
+          <tr>
+            <td>-v, --verbose</td>
+            <td>Verbose output</td>
+          </tr>
+          <tr>
+            <td>-t, --threads</td>
+            <td>Number of threads</td>
+          </tr>
+          <tr>
+            <td>--timeout</td>
+            <td>Request timeout</td>
+          </tr>
+          <tr>
+            <td>--proxy</td>
+            <td>Proxy URL</td>
+          </tr>
+          <tr>
+            <td>--tor</td>
+            <td>Use TOR</td>
+          </tr>
+        </table>
+        <h2>exploits.py</h2>
+        <table>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>-u, --url</td>
+            <td>Target URL</td>
+          </tr>
+          <tr>
+            <td>-m, --module</td>
+            <td>Exploit module (xss,sqli,rce,lfi,rfi,csrf,ssrf,xxe)</td>
+          </tr>
+          <tr>
+            <td>-p, --payload</td>
+            <td>Custom payload</td>
+          </tr>
+          <tr>
+            <td>--list</td>
+            <td>List all modules</td>
+          </tr>
+        </table>
+        <h2>installer.py</h2>
+        <table>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>-i, --install</td>
+            <td>Install package</td>
+          </tr>
+          <tr>
+            <td>-u, --uninstall</td>
+            <td>Uninstall package</td>
+          </tr>
+          <tr>
+            <td>-l, --list</td>
+            <td>List installed packages</td>
+          </tr>
+          <tr>
+            <td>--update</td>
+            <td>Update package</td>
+          </tr>
+        </table>
+        <h2>telemetry.py</h2>
+        <table>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>--start</td>
+            <td>Start server</td>
+          </tr>
+          <tr>
+            <td>--stop</td>
+            <td>Stop server</td>
+          </tr>
+          <tr>
+            <td>--status</td>
+            <td>Server status</td>
+          </tr>
+          <tr>
+            <td>--port</td>
+            <td>Custom port</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <p>Made by <strong>Lamskov Daniel</strong></p>
+        <p class="footer-meta">GlanderIO v3.0 &mdash; Security Framework</p>
+      </div>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>

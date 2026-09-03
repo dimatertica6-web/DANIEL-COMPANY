@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuration - GlanderIO</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo"
+          ><svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect
+              x="2"
+              y="2"
+              width="28"
+              height="28"
+              stroke="white"
+              stroke-width="2"
+            />
+            <path
+              d="M8 8L24 24M8 24L24 8"
+              stroke="white"
+              stroke-width="2"
+            /></svg
+          ><span>GlanderIO</span></a
+        >
+        <div class="nav-links">
+          <a href="index.html">Home</a
+          ><a href="getting-started.html">Getting Started</a
+          ><a href="modules.html">Modules</a><a href="api.html">API</a
+          ><a href="examples.html">Examples</a
+          ><a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <div class="main-with-sidebar">
+      <aside class="sidebar">
+        <div class="section-title">Documentation</div>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="installation.html">Installation</a>
+        <a href="configuration.html" class="active">Configuration</a>
+        <a href="usage.html">Usage</a>
+        <a href="cli.html">CLI Commands</a>
+        <div class="section-title">Modules</div>
+        <a href="scanner.html">Scanner</a>
+        <a href="exploits.html">Exploits</a>
+        <a href="telemetry.html">Telemetry</a>
+        <a href="gui.html">GUI</a>
+        <a href="installer.html">Installer</a>
+        <div class="section-title">Development</div>
+        <a href="contributing.html">Contributing</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="license.html">License</a>
+      </aside>
+      <div class="docs-container">
+        <h1>Configuration</h1>
+        <h2>Config Files</h2>
+        <p>GlanderIO uses YAML/JSON configuration files:</p>
+        <pre><code>config.yaml                # Main configuration
+proxy.yaml                 # Proxy settings
+logger.yaml                # Logging configuration
+database.yaml              # Database settings</code></pre>
+        <h2>Main Config Example</h2>
+        <pre><code>project:
+  name: GlanderIO
+  version: 3.0.0
+
+core:
+  mode: production
+  debug: false
+  max_workers: 100
+  timeout: 300
+
+modules:
+  enabled:
+    scanner: true
+    exploits: true
+    telemetry: true</code></pre>
+        <h2>Environment Variables</h2>
+        <table>
+          <tr>
+            <th>Variable</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>GLANDER_DEBUG</td>
+            <td>Enable debug mode</td>
+          </tr>
+          <tr>
+            <td>GLANDER_LOG_LEVEL</td>
+            <td>Log level (DEBUG/INFO/WARNING/ERROR)</td>
+          </tr>
+          <tr>
+            <td>GLANDER_OUTPUT_DIR</td>
+            <td>Output directory</td>
+          </tr>
+        </table>
+        <h2>CLI Overrides</h2>
+        <pre><code>python run.py --config custom.yaml --debug</code></pre>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <p>Made by <strong>Lamskov Daniel</strong></p>
+        <p class="footer-meta">GlanderIO v3.0 &mdash; Security Framework</p>
+      </div>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>

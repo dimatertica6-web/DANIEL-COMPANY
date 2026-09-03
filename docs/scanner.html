@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scanner Module - GlanderIO</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo"
+          ><svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect
+              x="2"
+              y="2"
+              width="28"
+              height="28"
+              stroke="white"
+              stroke-width="2"
+            />
+            <path
+              d="M8 8L24 24M8 24L24 8"
+              stroke="white"
+              stroke-width="2"
+            /></svg
+          ><span>GlanderIO</span></a
+        >
+        <div class="nav-links">
+          <a href="index.html">Home</a
+          ><a href="getting-started.html">Getting Started</a
+          ><a href="modules.html">Modules</a><a href="api.html">API</a
+          ><a href="examples.html">Examples</a
+          ><a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <div class="main-with-sidebar">
+      <aside class="sidebar">
+        <div class="section-title">Documentation</div>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="installation.html">Installation</a>
+        <a href="configuration.html">Configuration</a>
+        <a href="usage.html">Usage</a>
+        <a href="cli.html">CLI Commands</a>
+        <div class="section-title">Modules</div>
+        <a href="scanner.html" class="active">Scanner</a>
+        <a href="exploits.html">Exploits</a>
+        <a href="telemetry.html">Telemetry</a>
+        <a href="gui.html">GUI</a>
+        <a href="installer.html">Installer</a>
+        <div class="section-title">Development</div>
+        <a href="contributing.html">Contributing</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="license.html">License</a>
+      </aside>
+      <div class="docs-container">
+        <h1>Scanner Module</h1>
+        <h2>Overview</h2>
+        <p>
+          Full-site scanning engine with technology detection, vulnerability
+          assessment, and data extraction.
+        </p>
+        <h2>Features</h2>
+        <ul>
+          <li>DNS lookup and WHOIS</li>
+          <li>robots.txt parsing</li>
+          <li>Sitemap extraction</li>
+          <li>SSL/TLS information</li>
+          <li>Technology detection (CMS, frameworks, servers)</li>
+          <li>Subdomain enumeration</li>
+          <li>Port scanning</li>
+          <li>Cookie gathering</li>
+          <li>Full site crawling</li>
+          <li>Hidden directory discovery</li>
+          <li>Sensitive file detection</li>
+          <li>Backup file scanning</li>
+          <li>Admin panel discovery</li>
+          <li>API endpoint discovery</li>
+          <li>GraphQL endpoint detection</li>
+          <li>CMS enumeration</li>
+          <li>Email extraction</li>
+          <li>Security header analysis</li>
+        </ul>
+        <h2>Usage</h2>
+        <pre><code>from run import GlanderMain
+
+scanner = GlanderMain("https://target.com")
+results = scanner.run()
+
+# Access results
+print(results["total_pages"])
+print(results["technologies"])
+print(results["subdomains"])</code></pre>
+        <h2>Configuration</h2>
+        <pre><code># config.yaml
+scanner:
+  max_pages: 1000
+  max_threads: 50
+  timeout: 30
+  deep_scan: true</code></pre>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <p>Made by <strong>Lamskov Daniel</strong></p>
+        <p class="footer-meta">GlanderIO v3.0 &mdash; Security Framework</p>
+      </div>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>

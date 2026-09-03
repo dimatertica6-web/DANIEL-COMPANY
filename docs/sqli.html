@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQLi Exploit - GlanderIO</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo"
+          ><svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect
+              x="2"
+              y="2"
+              width="28"
+              height="28"
+              stroke="white"
+              stroke-width="2"
+            />
+            <path
+              d="M8 8L24 24M8 24L24 8"
+              stroke="white"
+              stroke-width="2"
+            /></svg
+          ><span>GlanderIO</span></a
+        >
+        <div class="nav-links">
+          <a href="index.html">Home</a
+          ><a href="getting-started.html">Getting Started</a
+          ><a href="modules.html">Modules</a><a href="api.html">API</a
+          ><a href="examples.html">Examples</a
+          ><a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <div class="main-with-sidebar">
+      <aside class="sidebar">
+        <div class="section-title">Documentation</div>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="installation.html">Installation</a>
+        <a href="configuration.html">Configuration</a>
+        <a href="usage.html">Usage</a>
+        <a href="cli.html">CLI Commands</a>
+        <div class="section-title">Modules</div>
+        <a href="scanner.html">Scanner</a>
+        <a href="exploits.html">Exploits</a>
+        <a href="xss.html">XSS</a>
+        <a href="sqli.html" class="active">SQLi</a>
+        <a href="rce.html">RCE</a>
+        <a href="lfi.html">LFI</a>
+        <a href="rfi.html">RFI</a>
+        <a href="csrf.html">CSRF</a>
+        <a href="ssrf.html">SSRF</a>
+        <a href="xxe.html">XXE</a>
+        <a href="telemetry.html">Telemetry</a>
+        <a href="gui.html">GUI</a>
+        <a href="installer.html">Installer</a>
+        <div class="section-title">Development</div>
+        <a href="contributing.html">Contributing</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="license.html">License</a>
+      </aside>
+      <div class="docs-container">
+        <h1>SQL Injection Exploit Module</h1>
+        <h2>Description</h2>
+        <p>
+          SQL Injection exploitation with error-based, union-based, and
+          time-based detection.
+        </p>
+        <h2>Payloads</h2>
+        <pre><code>' OR '1'='1
+' OR '1'='1' --
+admin' --
+1' UNION SELECT NULL--
+1 AND 1=1
+1 AND 1=2</code></pre>
+        <h2>Usage</h2>
+        <pre><code>from exploits.sqli_exploit import SQLiExploit
+
+sqli = SQLiExploit()
+result = sqli.execute("https://target.com/product?id=1")
+if result["vulnerable"]:
+    print(f"SQLi found! DB Type: {result['db_type']}")</code></pre>
+        <h2>Detection Methods</h2>
+        <ul>
+          <li>Error-based detection</li>
+          <li>Union-based detection</li>
+          <li>Time-based blind detection</li>
+          <li>Boolean-based blind detection</li>
+        </ul>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <p>Made by <strong>Lamskov Daniel</strong></p>
+        <p class="footer-meta">GlanderIO v3.0 &mdash; Security Framework</p>
+      </div>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>

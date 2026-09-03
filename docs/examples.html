@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examples - GlanderIO</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo"
+          ><svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect
+              x="2"
+              y="2"
+              width="28"
+              height="28"
+              stroke="white"
+              stroke-width="2"
+            />
+            <path
+              d="M8 8L24 24M8 24L24 8"
+              stroke="white"
+              stroke-width="2"
+            /></svg
+          ><span>GlanderIO</span></a
+        >
+        <div class="nav-links">
+          <a href="index.html">Home</a
+          ><a href="getting-started.html">Getting Started</a
+          ><a href="modules.html">Modules</a><a href="api.html">API</a
+          ><a href="examples.html" class="active">Examples</a
+          ><a href="https://github.com" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </nav>
+    <div class="main-with-sidebar">
+      <aside class="sidebar">
+        <div class="section-title">Documentation</div>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="installation.html">Installation</a>
+        <a href="configuration.html">Configuration</a>
+        <a href="usage.html">Usage</a>
+        <a href="cli.html">CLI Commands</a>
+        <div class="section-title">Modules</div>
+        <a href="scanner.html">Scanner</a>
+        <a href="exploits.html">Exploits</a>
+        <a href="telemetry.html">Telemetry</a>
+        <a href="gui.html">GUI</a>
+        <a href="installer.html">Installer</a>
+        <div class="section-title">Development</div>
+        <a href="contributing.html">Contributing</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="license.html">License</a>
+      </aside>
+      <div class="docs-container">
+        <h1>Examples</h1>
+        <h2>Example 1: Full Website Scan</h2>
+        <pre><code>from run import GlanderMain
+
+scanner = GlanderMain(target_url="https://example.com")
+results = scanner.run()
+print(f"Found {results['total_pages']} pages")
+print(f"Vulnerabilities: XSS={results['total_xss']}, SQLi={results['total_sqli']}")</code></pre>
+        <h2>Example 2: Run XSS Exploit</h2>
+        <pre><code>from exploits.xss_exploit import XSSExploit
+
+xss = XSSExploit()
+result = xss.execute("https://example.com/search?q=test")
+if result["vulnerable"]:
+    print("XSS vulnerability found!")
+    print(f"Payload: {result['payloads'][0]}")</code></pre>
+        <h2>Example 3: Start Telemetry Server</h2>
+        <pre><code>from telemetry.engine import TelemetryEngine
+
+server = TelemetryEngine()
+server.start()
+print("Telemetry server running on port 5555")
+# Send data
+server.collector.process({"user": "test", "action": "scan"})</code></pre>
+        <h2>Example 4: Local Storage</h2>
+        <pre><code>from local_storage.engine import LocalStorageEngine
+
+storage = LocalStorageEngine()
+storage.start()
+storage.db.insert({"name": "John", "age": 30})
+data = storage.db.get_all()
+print(data)</code></pre>
+        <h2>Example 5: Authentication</h2>
+        <pre><code>from auth.engine import AuthEngine
+
+auth = AuthEngine()
+auth.initialize()
+result = auth.create_user("testuser", "SecurePass123!")
+if result["success"]:
+    token = auth.authenticate("testuser", "SecurePass123!")
+    print(f"Token: {token}")</code></pre>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <p>Made by <strong>Lamskov Daniel</strong></p>
+        <p class="footer-meta">GlanderIO v3.0 &mdash; Security Framework</p>
+      </div>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>
