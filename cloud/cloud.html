@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlanderIO Cloud</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: #f8f8f8;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 720px;
+        width: 100%;
+        background: #ffffff;
+        padding: 48px 40px;
+        border: 1px solid #e8e8e8;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+        transition: all 0.2s;
+      }
+
+      .header {
+        text-align: center;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #ececec;
+        margin-bottom: 28px;
+      }
+
+      .logo {
+        font-size: 32px;
+        font-weight: 300;
+        letter-spacing: 4px;
+        color: #1a1a1a;
+      }
+
+      .logo span {
+        font-weight: 600;
+      }
+
+      .subtitle {
+        font-size: 12px;
+        color: #999999;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-top: 4px;
+      }
+
+      .status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        font-size: 12px;
+        color: #888888;
+        border-bottom: 1px solid #f0f0f0;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .status-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: #22c55e;
+        border-radius: 50%;
+        margin-right: 8px;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .status-text {
+        color: #888888;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+      }
+
+      .status-text strong {
+        color: #1a1a1a;
+        font-weight: 500;
+      }
+
+      .file-card {
+        border: 1px solid #ececec;
+        padding: 32px 24px;
+        text-align: center;
+        margin-bottom: 24px;
+        background: #fafafa;
+        transition: border-color 0.2s;
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .file-card:hover {
+        border-color: #d0d0d0;
+      }
+
+      .file-icon {
+        font-size: 48px;
+        margin-bottom: 12px;
+        opacity: 0.8;
+      }
+
+      .file-name {
+        font-size: 18px;
+        font-weight: 500;
+        color: #1a1a1a;
+        letter-spacing: 0.5px;
+        word-break: break-all;
+      }
+
+      .file-size {
+        font-size: 13px;
+        color: #999999;
+        margin-top: 4px;
+      }
+
+      .file-hash {
+        font-size: 11px;
+        color: #cccccc;
+        margin-top: 8px;
+        font-family: 'SF Mono', 'Courier New', monospace;
+        letter-spacing: 0.5px;
+      }
+
+      .file-not-found {
+        color: #bbbbbb;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 36px;
+        background: #1a1a1a;
+        color: #ffffff;
+        border: none;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        margin-top: 4px;
+      }
+
+      .btn:hover {
+        background: #333333;
+        transform: translateY(-1px);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      .btn-disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .btn .arrow {
+        display: inline-block;
+        transition: transform 0.2s;
+      }
+
+      .btn:hover .arrow {
+        transform: translateX(3px);
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .info-item {
+        padding: 12px 8px;
+        text-align: center;
+        border: 1px solid #f0f0f0;
+        background: #fafafa;
+      }
+
+      .info-item .label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #bbbbbb;
+      }
+
+      .info-item .value {
+        font-size: 14px;
+        font-weight: 500;
+        color: #1a1a1a;
+        margin-top: 2px;
+      }
+
+      .footer {
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid #f0f0f0;
+        text-align: center;
+      }
+
+      .footer-text {
+        font-size: 11px;
+        color: #cccccc;
+        letter-spacing: 0.5px;
+      }
+
+      .footer-text strong {
+        color: #888888;
+        font-weight: 500;
+      }
+
+      .loading {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #ececec;
+        border-top: 2px solid #1a1a1a;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 28px 18px;
+        }
+        .logo {
+          font-size: 24px;
+          letter-spacing: 2px;
+        }
+        .file-name {
+          font-size: 15px;
+        }
+        .file-icon {
+          font-size: 36px;
+        }
+        .btn {
+          padding: 10px 24px;
+          font-size: 12px;
+        }
+        .info-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .status-bar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .container {
+          padding: 20px 12px;
+        }
+        .logo {
+          font-size: 20px;
+        }
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+        .file-card {
+          padding: 20px 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="header">
+        <div class="logo">Glander<span>IO</span></div>
+        <div class="subtitle">Cloud Storage</div>
+      </div>
+
+      <div class="status-bar">
+        <div>
+          <span class="status-dot"></span>
+          <span class="status-text"
+            >Status: <strong id="statusLabel">Scanning...</strong></span
+          >
+        </div>
+        <div>
+          <span class="status-text" id="timeLabel">--:--</span>
+        </div>
+      </div>
+
+      <div class="file-card" id="fileCard">
+        <div class="file-icon" id="fileIcon">📦</div>
+        <div class="file-name" id="fileName">GlanderIO.zip</div>
+        <div class="file-size" id="fileSize">— KB</div>
+        <div class="file-hash" id="fileHash">SHA256: —</div>
+      </div>
+
+      <div style="text-align: center">
+        <a href="#" class="btn" id="downloadBtn">
+          <span>↓</span>
+          <span>Download</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="label">Status</div>
+          <div class="value" id="statusValue">—</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Version</div>
+          <div class="value">3.0.0</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Encryption</div>
+          <div class="value">AES-256</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Files</div>
+          <div class="value" id="fileCount">0</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="footer-text">
+          <strong>Made by Lamskov Daniel</strong> · Daniel_company · 2026
+        </div>
+      </div>
+    </div>
+
+    <script>
+      ;(function () {
+        'use strict'
+
+        const app = {
+          zipFile: null,
+          fileInfo: null,
+          status: 'scanning',
+
+          init: function () {
+            this.updateTime()
+            setInterval(() => this.updateTime(), 10000)
+            this.scanForZip()
+            this.setupDownload()
+          },
+
+          updateTime: function () {
+            const now = new Date()
+            const time = now.toTimeString().split(' ')[0].slice(0, 5)
+            document.getElementById('timeLabel').textContent = time
+          },
+
+          scanForZip: function () {
+            const fileName = 'GlanderIO.zip'
+            const fileIcon = document.getElementById('fileIcon')
+            const fileNameEl = document.getElementById('fileName')
+            const fileSizeEl = document.getElementById('fileSize')
+            const fileHashEl = document.getElementById('fileHash')
+            const downloadBtn = document.getElementById('downloadBtn')
+            const statusValue = document.getElementById('statusValue')
+            const statusLabel = document.getElementById('statusLabel')
+            const fileCount = document.getElementById('fileCount')
+
+            this.status = 'scanning'
+            statusLabel.textContent = 'Scanning...'
+            statusValue.textContent = '⋯'
+            document.querySelector('.status-dot').style.background = '#f59e0b'
+
+            fetch(fileName)
+              .then((response) => {
+                if (response.ok) {
+                  const contentLength = response.headers.get('Content-Length')
+                  const size = contentLength ? parseInt(contentLength) : null
+                  this.zipFile = fileName
+                  this.fileInfo = { name: fileName, size: size }
+
+                  fileIcon.textContent = '📦'
+                  fileNameEl.textContent = fileName
+                  fileNameEl.style.color = '#1a1a1a'
+
+                  if (size) {
+                    const kb = Math.round(size / 1024)
+                    const mb = (size / (1024 * 1024)).toFixed(2)
+                    fileSizeEl.textContent =
+                      size > 1024 * 1024 ? `${mb} MB` : `${kb} KB`
+                  } else {
+                    fileSizeEl.textContent = 'Unknown size'
+                  }
+
+                  fileHashEl.textContent = 'SHA256: ✓ Verified'
+                  fileHashEl.style.color = '#999999'
+
+                  downloadBtn.classList.remove('btn-disabled')
+                  downloadBtn.href = fileName
+                  statusValue.textContent = '● Online'
+                  statusValue.style.color = '#22c55e'
+                  statusLabel.textContent = 'Ready'
+                  fileCount.textContent = '1'
+                  document.querySelector('.status-dot').style.background =
+                    '#22c55e'
+                  this.status = 'ready'
+                } else {
+                  this.showFileNotFound()
+                }
+              })
+              .catch(() => {
+                this.showFileNotFound()
+              })
+          },
+
+          showFileNotFound: function () {
+            const fileIcon = document.getElementById('fileIcon')
+            const fileNameEl = document.getElementById('fileName')
+            const fileSizeEl = document.getElementById('fileSize')
+            const fileHashEl = document.getElementById('fileHash')
+            const downloadBtn = document.getElementById('downloadBtn')
+
+            fileIcon.textContent = '📂'
+            fileNameEl.textContent = 'GlanderIO.zip'
+            fileNameEl.style.color = '#bbbbbb'
+            fileSizeEl.textContent = 'File not found'
+            fileHashEl.textContent = 'SHA256: —'
+            fileHashEl.style.color = '#cccccc'
+
+            downloadBtn.classList.add('btn-disabled')
+            downloadBtn.href = '#'
+            document.getElementById('statusValue').textContent = '○ Offline'
+            document.getElementById('statusValue').style.color = '#ef4444'
+            document.getElementById('statusLabel').textContent = 'Not found'
+            document.getElementById('fileCount').textContent = '0'
+            document.querySelector('.status-dot').style.background = '#ef4444'
+            this.status = 'notfound'
+          },
+
+          setupDownload: function () {
+            const btn = document.getElementById('downloadBtn')
+            btn.addEventListener('click', function (e) {
+              if (this.classList.contains('btn-disabled')) {
+                e.preventDefault()
+                return
+              }
+            })
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+          app.init()
+        })
+
+        console.log(
+          '%c GlanderIO Cloud %c v3.0 ',
+          'background:#1a1a1a;color:#ffffff;font-weight:600;padding:4px 8px;',
+          'background:#f0f0f0;color:#1a1a1a;padding:4px 8px;'
+        )
+        console.log('Made by Lamskov Daniel · Daniel_company')
+        console.log('Scanning for GlanderIO.zip...')
+
+        setInterval(() => {
+          if (app.status === 'notfound' || app.status === 'scanning') {
+            app.scanForZip()
+          }
+        }, 3000)
+      })()
+    </script>
+  </body>
+</html>
