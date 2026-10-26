@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Правила DexLand</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #111111;
+        --text-light: #666666;
+        --border: #eaeaea;
+        --border-hover: #111111;
+        --accent: #111111;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Oswald", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        max-width: 900px;
+        width: 100%;
+      }
+
+      header {
+        margin-bottom: 40px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 36px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        color: var(--text-light);
+        font-weight: 300;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
+        flex-wrap: wrap;
+      }
+
+      .tab-btn {
+        font-family: "Oswald", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: none;
+        border: none;
+        color: var(--text-light);
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .tab-btn:hover {
+        color: var(--text);
+      }
+
+      .tab-btn.active {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .tab-btn.active::after {
+        content: "";
+        position: absolute;
+        bottom: -11px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--accent);
+      }
+
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .accordion-item {
+        border: 1px solid var(--border);
+        margin-bottom: 10px;
+        border-radius: 4px;
+        overflow: hidden;
+        transition: border-color 0.3s ease;
+      }
+
+      .accordion-item:hover {
+        border-color: var(--border-hover);
+      }
+
+      .accordion-header {
+        padding: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 400;
+        user-select: none;
+        background: var(--bg);
+      }
+
+      .accordion-header .num {
+        font-weight: 500;
+        margin-right: 15px;
+        color: var(--text-light);
+      }
+
+      .accordion-header .icon {
+        font-size: 24px;
+        font-weight: 300;
+        transition: transform 0.3s ease;
+        line-height: 1;
+      }
+
+      .accordion-item.active .accordion-header .icon {
+        transform: rotate(45deg);
+      }
+
+      .accordion-body {
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.3s ease-out,
+          padding 0.3s ease;
+        background-color: #fafafa;
+        color: var(--text-light);
+        font-family: sans-serif;
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .accordion-item.active .accordion-body {
+        max-height: 1000px;
+        padding: 0 20px 20px 55px;
+      }
+
+      .accordion-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .accordion-body .punishment {
+        display: inline-block;
+        background: #f0f0f0;
+        color: var(--text);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 500;
+        margin-top: 5px;
+      }
+
+      .footer {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 28px;
+        }
+        .tab-btn {
+          font-size: 12px;
+          padding: 8px 12px;
+        }
+        .accordion-header {
+          font-size: 16px;
+          padding: 15px;
+        }
+        .accordion-item.active .accordion-body {
+          padding: 0 15px 15px 45px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>DexLand</h1>
+        <div class="subtitle">Официальные правила сервера</div>
+      </header>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('general')">
+          Общие положения
+        </button>
+        <button class="tab-btn" onclick="openTab('account')">
+          Аккаунт и безопасность
+        </button>
+        <button class="tab-btn" onclick="openTab('prohibitions')">
+          Запреты и наказания
+        </button>
+        <button class="tab-btn" onclick="openTab('chat')">Правила чата</button>
+      </div>
+
+      <!-- Вкладка 1: Общие положения -->
+      <div id="general" class="tab-content active">
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">1.1</span> Незнание правил</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Незнание правил
+            <strong>не освобождает вас от ответственности</strong>.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">1.2</span> Согласие с правилами</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Регистрируясь на сервере, вы автоматически соглашаетесь со всеми
+            правилами, предоставленными в этом списке, а также с правами и
+            обязанностями, описанными ниже.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">1.3</span> Передача аккаунта</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Передача или продажа аккаунтов сторонним лицам
+            <strong>строго запрещена</strong>.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">1.4</span> Изменение правил</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Администрация оставляет за собой право в одностороннем порядке
+            изменять текущие правила без предварительного уведомления
+            пользователей (уведомление публикуется в группе VK).
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">1.5</span> Управление проектом</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Администрация ведёт управление игровыми процессами и всем проектом
+            исключительно по своему усмотрению.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">1.6</span> Окончательное решение</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Так как не всегда удаётся определить нарушение правил пользователем,
+            <strong
+              >окончательное решение остаётся за Администраторами
+              проекта</strong
+            >.
+          </div>
+        </div>
+      </div>
+
+      <!-- Вкладка 2: Аккаунт и безопасность -->
+      <div id="account" class="tab-content">
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">2.1</span> Ответственность за пароль</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Игрок полностью отвечает за надёжность своего пароля и доступа к
+            аккаунту.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">2.2</span> Равенство игроков</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Игроки, имеющие различные привилегии на сервере, ничем не отличаются
+            от обычных игроков, кроме самих привилегий, и
+            <strong>полностью подчиняются правилам проекта</strong>.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">2.3</span> Неактивность</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            В случае отсутствия игрока более
+            <strong>3 календарных месяцев</strong>, все его данные (постройки,
+            аккаунт и др.) могут быть удалены без оповещения.
+            <em>(Если у вас есть донат — ничего не пропадёт)</em>.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">2.4</span> Проверка на читы</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Только персонал проекта имеет право вызывать игроков на проверку на
+            использование читов.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">2.5</span> Запрещённая информация</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Игроку строго запрещается любым способом (чат, книги, картинки и
+            др.) распространять информацию, нарушающую законодательство
+            Российской Федерации.
+          </div>
+        </div>
+      </div>
+
+      <!-- Вкладка 3: Запреты и наказания -->
+      <div id="prohibitions" class="tab-content">
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.1</span> Читы и чит-модификации</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Использование или хранение чит-клиентов, чит-модификаций, отказ от
+            проверки или признание. <br />
+            <span class="punishment">Наказание: Перманентный бан аккаунта</span
+            ><br />
+            <em
+              >За некоторые моды (Автокликер, FreeCam, ElytraSwap, ArmorHotSwap,
+              AutoFish, invMove, AutoTotem, Макросы, Autorespawn, SpeedCrystals,
+              AutoAttack и т.д.) срок бана может составлять 30 дней.</em
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.2</span> Обход наказания</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Обход наказания, выданного модератором или администратором. Создание
+            нового аккаунта также считается обходом. <br />
+            <span class="punishment"
+              >Наказание: Бан до 30 дней / Перманентный бан</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.3</span> Подстрекательство</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Подстрекательство игроков на нарушение правил сервера. <br />
+            <span class="punishment">Наказание: Временный мут до 3 часов</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.4</span> Упоминание родных</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Упоминание родных в оскорбительной форме. <br />
+            <span class="punishment">Наказание: Временный мут до 3 часов</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.5</span> Оскорбление модерации</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Оскорбление и провокация модерации. <br />
+            <span class="punishment">Наказание: Временный бан до 1 дня</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.6</span> Флуд и спам</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Флуд, спам, оскорбление игроков, капс, попрошайничество в чате или
+            ЛС. <br />
+            <span class="punishment">Наказание: Временный мут до 20 минут</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.7</span> Кража аккаунта</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Передача, кража или продажа аккаунта сторонним лицам. <br />
+            <span class="punishment">Наказание: Перманентный бан аккаунта</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.8</span> Необоснованное наказание</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Необоснованное наказание игроков. <br />
+            <em
+              >За мут/кик без причины или доказательств — блокировка аккаунта на
+              2 часа.</em
+            ><br />
+            <em
+              >За бан без причины или доказательств — блокировка аккаунта на 8
+              часов.</em
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.9</span> Оскорбление проекта</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Оскорбление проекта или администрации проекта. <br />
+            <span class="punishment"
+              >Наказание: Блокировка аккаунта на срок до 7 дней</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.10</span> Введение в заблуждение</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Введение в заблуждение администрации или модерации проекта. <br />
+            <em
+              >За подделку скриншотов или сообщений — блокировка аккаунта на 2
+              дня.</em
+            ><br />
+            <em
+              >За бан или мут несуществующих аккаунтов — блокировка аккаунта на
+              1 час.</em
+            ><br />
+            <em
+              >За обман или подстрекательство на проверку — временный мут до 3
+              дней.</em
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.11</span> Уязвимости сервера</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Использование уязвимостей сервера (багов, дюпов). <br />
+            <span class="punishment"
+              >Наказание: Блокировка аккаунта от 2 дней до перманентного</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.12</span> Выдача себя за персонал</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Выдача себя за администрацию или модерацию проекта. <br />
+            <span class="punishment"
+              >Наказание: Блокировка аккаунта до 2 дней</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.13</span> Оскорбительные ники</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Использование никнеймов, префиксов и названий кланов, которые
+            оскорбляют участников проекта, содержат названия читов или других
+            серверов. <br />
+            <span class="punishment"
+              >Наказание: Предупредительный кик / Блокировка аккаунта на 2
+              дня</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.14</span> Реклама других проектов</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Реклама других проектов. <br />
+            <span class="punishment"
+              >Наказание: Блокировка аккаунта перманентно / по IP</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.15</span> Продажа игровых ценностей</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Сделки, связанные с продажей игровых ценностей за реальные деньги.
+            <br />
+            <span class="punishment"
+              >Наказание: Блокировка аккаунта перманентно / по IP</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.16</span> Лаг-машины</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Установка объектов для создания лагов на сервере. <br />
+            <span class="punishment"
+              >Наказание: Предупреждение, блокировка аккаунта до 7 дней</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">3.17</span> Многочисленные нарушения</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Многочисленное нарушение правил проекта или вредительство. <br />
+            <span class="punishment"
+              >Наказание: Блокировка аккаунта на срок от 7 дней до
+              перманентного</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Вкладка 4: Правила чата -->
+      <div id="chat" class="tab-content">
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div>
+              <span class="num">4.1</span> Оскорбительные префиксы и ники
+            </div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Оскорбительные, провокационные префиксы, суффиксы, изменённые ники
+            или названия кланов. <br />
+            <span class="punishment">Наказание: /warn, Бан до 8 часов</span
+            ><br />
+            <em
+              >Создание нового аккаунта с оскорбительным ником — бан
+              навсегда.</em
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.2</span> Гриферство</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Гриферство (выше премиума). <br />
+            <span class="punishment">Наказание: Бан на 5 часов</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.3</span> Подстрекательство в чате</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Подстрекательство игроков на нарушение правил, в том числе
+            провокация. <br />
+            <span class="punishment"
+              >Наказание: Предупреждение, мут на 2 часа</span
+            ><br />
+            <em
+              >В случае грубых нарушений модератор может выдать мут без
+              предварительного предупреждения.</em
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.4</span> Неприличные постройки</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Неприличные постройки или постройки, портящие архитектуру карты
+            (оскорбительные, застройка чужих регионов, лаг-машины). <br />
+            <span class="punishment"
+              >Наказание: Снос постройки + бан на 2 дня</span
+            ><br />
+            <em>Сюда же относятся арты и постройки с контентом 18+.</em>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.5</span> Зазывание на ловушки</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Зазывание игроков на ловушки (выше премиума). <br />
+            <span class="punishment"
+              >Наказание: Бан на 30 минут + удаление ловушки</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.6</span> Флуд, оскорбления, капс</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Флуд, оскорбление, капс, угрозы, провокация, попрошайничество в
+            любом виде чата (ЛС, глобал, локал, админ-чат). <br />
+            <span class="punishment">Наказание: /warn, мут до 1 часа</span
+            ><br />
+            <em
+              >В случае грубых оскорблений мут может быть выдан без
+              предварительного предупреждения.</em
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.7</span> Взлом аккаунтов</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Продажа, передача или попытка взлома аккаунтов. <br />
+            <span class="punishment"
+              >Наказание: Перманентный бан / Бан по IP</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.8</span> Препятствие игре</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Препятствие нормальной игре. <br />
+            <span class="punishment"
+              >Наказание: /warn, /kick или /jail, бан на 1 час</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.9</span> Некорректное наказание</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Необоснованное или некорректное наказание игроков. <br />
+            <span class="punishment">Наказание: Бан на 8 часов</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.10</span> Оскорбление проекта</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Оскорбление проекта и его администрации. <br />
+            <span class="punishment">Наказание: Бан на 2 дня</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.11</span> Межнациональная рознь</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Разжигание межнациональной розни. <br />
+            <span class="punishment"
+              >Наказание: Предупреждение, мут на 3 часа — бан до 7 дней</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div>
+              <span class="num">4.12</span> Введение в заблуждение админов
+            </div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Введение в заблуждение администрацию или модерацию (подделка
+            скриншотов). <br />
+            <span class="punishment">Наказание: Бан на 2 дня</span><br />
+            <em
+              >Выдавать наказание за это нарушение могут только модераторы и
+              администраторы.</em
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.13</span> Помеха модерации</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Помеха работе модерации. <br />
+            <span class="punishment"
+              >Наказание: /warn, /jail, бан до 2 дней</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.14</span> Выдача за персонал</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Выдача себя за персонал или администрацию. <br />
+            <span class="punishment"
+              >Наказание: Предупреждение, бан до 5 дней</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.15</span> Корысть доната</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Использование возможностей доната в корыстных целях (в ПвП, полёте и
+            т.п., выдача некорректных ников). <br />
+            <span class="punishment"
+              >Наказание: Предупреждение, бан до 2 дней</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.16</span> Реклама</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Реклама других проектов в любом виде. <br />
+            <span class="punishment"
+              >Наказание: Перманентный бан / Бан по IP</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.17</span> Продажа сторонних ресурсов</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Продажа сторонних ресурсов (аккаунтов других игр, лицензий и т.д.).
+            <br />
+            <span class="punishment">Наказание: Мут на 2 часа</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.18</span> Мошенничество</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Мошенничество и сделки, связанные с продажей игровых ценностей за
+            реальные деньги. <br />
+            <span class="punishment"
+              >Наказание: Перманентный бан / Бан по IP</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.19</span> Читы</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Использование читов. <br />
+            <span class="punishment">Наказание: Бан на 30 дней</span><br />
+            <em
+              >Игрокам запрещено вызывать других игроков на проверку читов — бан
+              на 1 день.</em
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.20</span> Разбан нарушителя</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Разбан или размут нарушителя. <br />
+            <span class="punishment">Наказание: Бан на 8 часов</span><br />
+            <em>Снятие корректных варнов — бан на 1 час.</em>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.21</span> Некорректный мут/кик</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Некорректный мут, кик, варн или jail. <br />
+            <span class="punishment">Наказание: Бан на 1 час</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.22</span> Порча спавна</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Порча, изменение или снос спавна, в том числе его поджигание. <br />
+            <span class="punishment"
+              >Наказание: Перманентный бан / Снятие доната</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.23</span> Подделка сообщений</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Подделка сообщений. <br />
+            <span class="punishment">Наказание: Бан от 2 до 5 дней</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.24</span> Оскорбление семьи</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Затрагивание в оскорбительной форме семьи, родных, национальности,
+            языка или религий. <br />
+            <span class="punishment"
+              >Наказание: Мут на 6 часов; в грубой форме — на 12 часов</span
+            ><br />
+            <em>Степень грубости определяется модератором.</em>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.25</span> Оскорбление модерации</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Оскорбление модерации. <br />
+            <span class="punishment">Наказание: Мут на 3 часа</span><br />
+            <em>Провокация: сначала варн, после — бан до 5 часов.</em>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.26</span> Обход мута</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Обход мута через /warn, твинк-аккаунты и т.д. <br />
+            <span class="punishment">Наказание: Бан на 5 часов</span>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.27</span> Вредительство</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Вредительство, дезинформация, многочисленные нарушения правил.
+            <br />
+            <span class="punishment"
+              >Наказание: Бан до 7 дней, для чата — мут до 3 дней / Снятие
+              доната</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div>
+              <span class="num">4.28</span> Разглашение личной информации
+            </div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Намеренное разглашение личной информации, включая адреса,
+            фотографии, данные родителей, IP-адреса и номера телефонов. <br />
+            <span class="punishment"
+              >Наказание: Предупредительный бан до 10 дней, далее — бан
+              навсегда</span
+            >
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div><span class="num">4.29</span> Накрутка клана</div>
+            <div class="icon">+</div>
+          </div>
+          <div class="accordion-body">
+            Нечестные методы продвижения клана — массовая рассылка приглашений
+            без просьбы, накрутка статистики убийств и участников для повышения
+            КДР. <br />
+            <span class="punishment"
+              >Наказание: Предупреждение, блокировка аккаунта до 3 дней, при
+              повторных — удаление клана</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        &copy; Dexland x Daniel_company. Официальные правила с dexland.org
+      </div>
+    </div>
+
+    <script>
+      function openTab(tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        event.currentTarget.classList.add("active");
+      }
+
+      function toggleAccordion(element) {
+        var parent = element.parentElement;
+        var allItems = parent.parentElement.querySelectorAll(".accordion-item");
+        allItems.forEach(function (item) {
+          if (item !== parent && item.classList.contains("active")) {
+            item.classList.remove("active");
+          }
+        });
+        parent.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

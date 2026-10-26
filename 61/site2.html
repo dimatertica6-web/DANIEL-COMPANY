@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Клан programmers | Официальный портал</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-soft: #f8f8f8;
+            --text: #1a1a1a;
+            --text-light: #666666;
+            --border: #e0e0e0;
+            --accent: #111111;
+            --font-main: 'Oswald', sans-serif;
+            --font-text: Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-text);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        h1, h2, h3, h4, h5, h6, nav a, .logo, button {
+            font-family: var(--font-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            font-weight: 300;
+            color: var(--text-light);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--text);
+        }
+
+        .hero {
+            max-width: 1000px;
+            margin: 100px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 500;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border: 1px solid var(--accent);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--accent);
+        }
+
+        .section {
+            padding: 100px 20px;
+        }
+
+        .section-alt {
+            background-color: var(--bg-soft);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 60px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .text-block h3 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .text-block p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .card {
+            background: var(--bg);
+            padding: 40px 30px;
+            border: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+        }
+
+        .card h4 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .rules-list {
+            list-style: none;
+            counter-reset: custom-counter;
+        }
+
+        .rules-list li {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+            color: var(--text-light);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .rules-list li::before {
+            counter-increment: custom-counter;
+            content: counter(custom-counter) ".";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-family: var(--font-main);
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .rules-list strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 5px;
+            font-family: var(--font-main);
+            font-size: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .apply-box {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .apply-box p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+            font-family: var(--font-main);
+            font-size: 14px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 40px;
+            }
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">PROGRAMMERS<span>CLAN</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#about">О Клане</a></li>
+                    <li><a href="#structure">Структура</a></li>
+                    <li><a href="#rules">Устав</a></li>
+                    <li><a href="#join">Вступление</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Дисциплина. Стратегия. Результат.</h1>
+        <p>Добро пожаловать на официальный портал клана programmers. Мы — организованное сообщество на сервере Dexland, нацеленное на доминирование в игровой экономике и PvP-сегменте. Наш успех строится на жесткой субординации, взаимовыручке и строгом соблюдении внутренних регламентов.</p>
+        <a href="#join" class="btn">Подать заявку</a>
+    </section>
+
+    <section id="about" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">О Клане</h2>
+            <div class="grid-2">
+                <div class="text-block">
+                    <h3>Наша философия</h3>
+                    <p>Клан programmers — это не просто список игроков. Это корпоративная структура внутри игрового мира. Мы рассматриваем Minecraft как платформу для стратегического планирования, управления ресурсами и командного взаимодействия. Каждый участник клана является ценным активом, чья эффективность напрямую влияет на общее благосостояние команды.</p>
+                    <p>Мы категорически отвергаем токсичность, анархию и хаотичную игру. В наших рядах приветствуется хладнокровие, аналитический склад ума и готовность подчиняться общим интересам ради достижения глобальных целей. Вступление в клан — это принятие ответственности не только за себя, но и за репутацию всего сообщества.</p>
+                </div>
+                <div class="text-block">
+                    <h3>Наши цели</h3>
+                    <p>Основной вектор развития клана направлен на установление экономического контроля и защиту интересов участников. Мы развиваем инфраструктуру, строим защищенные базы, контролируем торговые точки и обеспечиваем безопасность наших членов от внешней агрессии.</p>
+                    <p>Мы не стремимся к бессмысленным конфликтам, однако любая угроза нашим активам или участникам встречает организованный и жесткий отпор. Внешняя политика клана строго централизована: все дипломатические и военные решения принимаются исключительно руководством на основе тщательного анализа обстановки на сервере.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="structure" class="section">
+        <div class="container">
+            <h2 class="section-title">Иерархия и Структура</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h4>Владелец (Owner)</h4>
+                    <p>Абсолютная власть в клане. Принимает ключевые стратегические решения, определяет вектор развития, объявляет войны и заключает союзы. Обладает правом вето на любые инициативы и правом исключения любого участника без объяснения причин.</p>
+                </div>
+                <div class="card">
+                    <h4>Офицеры (Officers)</h4>
+                    <p>Административный аппарат. Осуществляют контроль за повседневной деятельностью клана, занимаются распределением ресурсов, проводят проверки активности участников и курируют внутренние проекты. Офицеры подчиняются напрямую Владельцу.</p>
+                </div>
+                <div class="card">
+                    <h4>Участники (Members)</h4>
+                    <p>Основная боевая и экономическая единица клана. Обязуются соблюдать Устав, участвовать в клановых мероприятиях, защищать территории и сдавать установленную ренту. Имеют право на защиту и поддержку со стороны клана.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rules" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Ключевые положения Устава</h2>
+            <div class="grid-2">
+                <ul class="rules-list">
+                    <li>
+                        <strong>Единоначалие и субординация</strong>
+                        Приказы Владельца и Офицеров обязательны к беспрекословному исполнению. Оспаривание решений руководства в момент выполнения задач строго запрещено. Иерархия должна соблюдаться неукоснительно.
+                    </li>
+                    <li>
+                        <strong>Абсолютная лояльность</strong>
+                        Передача внутренней информации (координаты баз, секретные коды, стратегии, логистика) третьим лицам или врагам карается пожизненным баном без права на апелляцию. Слив данных приравнивается к предательству.
+                    </li>
+                    <li>
+                        <strong>Неприкосновенность имущества</strong>
+                        Воровство, скам (мошенничество) и гриффинг строго запрещены как внутри Клана, так и за его пределами. Все финансовые и ресурсные споры решаются исключительно через руководство.
+                    </li>
+                    <li>
+                        <strong>Дисциплина в коммуникации</strong>
+                        Токсичное поведение, провокации и необоснованная агрессия в чате или голосовых каналах недопустимы. Общение ведется в уважительном и деловом тоне. Репутация клана превыше личных амбиций.
+                    </li>
+                </ul>
+                <ul class="rules-list">
+                    <li>
+                        <strong>Экономическая прозрачность</strong>
+                        Прибыль от совместных вылазок и ивентов распределяется исключительно по вкладу каждого участника. Использование общего склада не по назначению является нарушением и влечет штрафные санкции.
+                    </li>
+                    <li>
+                        <strong>Защита персональных данных</strong>
+                        Личная информация участников (Discord, IP-адреса, финансы) и внутренние каналы связи не подлежат разглашению за пределами Клана. Безопасность данных — приоритет.
+                    </li>
+                    <li>
+                        <strong>Обязательная активность</strong>
+                        Отсутствие в игре или в каналах связи более 7 дней без предварительного предупреждения руководства влечет за собой автоматическое исключение из Клана. Неактивность тормозит развитие.
+                    </li>
+                    <li>
+                        <strong>Централизованная внешняя политика</strong>
+                        Объявление войн, заключение союзов и любые дипломатические переговоры ведутся исключительно Владельцем Клана. Самостоятельные договоры с другими кланами запрещены.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="join" class="section">
+        <div class="container">
+            <div class="apply-box">
+                <h2 class="section-title" style="margin-bottom: 30px;">Как вступить в клан</h2>
+                <p>Клан programmers предъявляет высокие требования к кандидатам. Мы ищем зрелых, дисциплинированных и активных игроков, готовых работать в команде. Ваша игровая статистика важна, но ваша адекватность и лояльность стоят на первом месте.</p>
+                <div class="text-block" style="text-align: left; margin-bottom: 40px; background: var(--bg-soft); padding: 30px; border: 1px solid var(--border);">
+                    <h3 style="margin-bottom: 15px;">Требования к кандидатам:</h3>
+                    <p style="margin-bottom: 10px;">— Возраст от 14 лет (приоритет отдается более взрослым игрокам).</p>
+                    <p style="margin-bottom: 10px;">— Наличие микрофона и установленного Discord для оперативной связи.</p>
+                    <p style="margin-bottom: 10px;">— Базовые знания механик Minecraft и понимание экономики сервера Dexland.</p>
+                    <p style="margin-bottom: 10px;">— Отсутствие активных блокировок (банов/мутов) на проекте.</p>
+                    <p style="margin-bottom: 10px;">— Готовность проходить испытательный срок и выполнять поручения Офицеров.</p>
+                </div>
+                <p>Для подачи заявки свяжитесь с руководством клана на сервере Dexland (через ЛС) или вступите в наш официальный Discord-сервер. Ваша заявка будет рассмотрена в порядке очереди. Помните, что незнание Устава не освобождает от ответственности.</p>
+                <a href="#" class="btn" style="margin-top: 20px;">Связаться с нами</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2024 Клан programmers. Dexland Project. Все права защищены.
+    </footer>
+
+</body>
+</html>
