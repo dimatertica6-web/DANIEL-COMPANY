@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartBots — Обратная связь</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#fff;color:#111;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid #eee;z-index:100}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.02em}
+.logo svg{width:26px;height:26px}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:14px;color:#555;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:#111}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;transition:all .2s;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn-primary{background:#111;color:#fff}
+.btn-primary:hover{background:#333}
+.btn-outline{border-color:#e5e5e5;background:#fff;color:#111}
+.btn-outline:hover{border-color:#111}
+.btn svg{width:16px;height:16px}
+.hero{padding:80px 0 48px;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,.06) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
+.hero h1 span{color:#2563eb}
+.hero p{font-size:17px;color:#666;max-width:560px;margin:0 auto}
+.layout{display:grid;grid-template-columns:1fr 340px;gap:48px;padding-bottom:100px;align-items:start}
+.form-card{border:1px solid #eee;border-radius:18px;padding:40px;background:#fff}
+.form-card h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
+.form-card > p{color:#666;font-size:14px;margin-bottom:32px}
+.field{margin-bottom:24px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:#111}
+.field label .req{color:#2563eb}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid #e5e5e5;border-radius:10px;font-size:14px;font-family:inherit;color:#111;background:#fff;transition:all .2s;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#111;box-shadow:0 0 0 3px rgba(0,0,0,.04)}
+.field input::placeholder,.field textarea::placeholder{color:#aaa}
+.field textarea{resize:vertical;min-height:120px}
+.field .hint{font-size:12px;color:#999;margin-top:6px}
+.rating{display:flex;gap:8px}
+.rating input{display:none}
+.rating label{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border:1px solid #e5e5e5;border-radius:10px;cursor:pointer;transition:all .2s;font-size:12px;color:#888}
+.rating label svg{width:20px;height:20px;stroke:#bbb;transition:all .2s}
+.rating label:hover{border-color:#ddd}
+.rating input:checked + label{border-color:#111;background:#fafafa;color:#111}
+.rating input:checked + label svg{stroke:#111}
+.checkbox{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#666;cursor:pointer}
+.checkbox input{width:auto;margin-top:3px;accent-color:#111}
+.form-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.form-actions .btn{flex:1;justify-content:center;min-width:160px;padding:13px 20px}
+.success-msg{display:none;padding:16px;border-radius:10px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:14px;margin-bottom:24px;align-items:center;gap:10px}
+.success-msg.show{display:flex}
+.success-msg svg{width:18px;height:18px;flex-shrink:0}
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:20px}
+.side-card{border:1px solid #eee;border-radius:14px;padding:24px}
+.side-card h3{font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.side-card h3 svg{width:16px;height:16px;stroke:#666}
+.side-card p{font-size:13px;color:#666;line-height:1.6}
+.side-card a.link{display:flex;align-items:center;gap:10px;padding:10px 0;font-size:13px;color:#555;transition:color .2s;border-bottom:1px solid #f5f5f5}
+.side-card a.link:last-child{border-bottom:none}
+.side-card a.link:hover{color:#111}
+.side-card a.link svg{width:16px;height:16px;stroke:#888;flex-shrink:0}
+.channels{display:flex;flex-direction:column;gap:10px}
+.channel{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #eee;border-radius:10px;transition:all .2s;font-size:13px;font-weight:500}
+.channel:hover{border-color:#ddd;background:#fafafa}
+.channel svg{width:18px;height:18px;stroke:#111;flex-shrink:0}
+.channel .ch-desc{font-size:11px;color:#999;font-weight:400;display:block}
+.faq-mini{border-top:1px solid #eee;padding-top:20px;margin-top:4px}
+.faq-mini summary{font-size:13px;font-weight:500;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:8px 0;color:#555}
+.faq-mini summary::-webkit-details-marker{display:none}
+.faq-mini summary::after{content:'+';font-size:16px;color:#aaa;transition:transform .2s}
+.faq-mini[open] summary::after{transform:rotate(45deg)}
+.faq-mini p{font-size:12px;color:#888;padding:4px 0 8px;line-height:1.6}
+footer{border-top:1px solid #eee;padding:48px 0 32px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand p{font-size:13px;color:#888;margin-top:12px;max-width:280px;line-height:1.6}
+.footer-col h4{font-size:13px;font-weight:600;margin-bottom:14px;color:#111}
+.footer-col a{display:block;font-size:13px;color:#888;margin-bottom:10px;transition:color .2s}
+.footer-col a:hover{color:#111}
+.footer-bottom{border-top:1px solid #eee;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:#aaa}
+@media(max-width:900px){
+.layout{grid-template-columns:1fr;gap:32px}
+.sidebar{position:static}
+.form-card{padding:28px}
+}
+@media(max-width:768px){
+.nav-links{display:none}
+.hero{padding:56px 0 40px}
+.footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+.rating label{font-size:11px;padding:10px 2px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<nav class="container nav">
+<a href="#" class="logo">
+<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1.5"/><circle cx="8.5" cy="14" r="1"/><circle cx="15.5" cy="14" r="1"/><path d="M9 17h6"/></svg>
+SmartBots
+</a>
+<div class="nav-links">
+<a href="#">Главная</a>
+<a href="#">Возможности</a>
+<a href="#">Установка</a>
+<a href="#">Команды</a>
+<a href="#" class="active">Обратная связь</a>
+</div>
+<a href="#" class="btn btn-primary">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+Скачать
+</a>
+</nav>
+</header>
+
+<main>
+<section class="hero">
+<div class="container">
+<h1>Обратная <span>связь</span></h1>
+<p>Нашли баг, есть идея или просто хотите поделиться впечатлениями? Заполните форму — мы читаем каждое сообщение.</p>
+</div>
+</section>
+
+<div class="container">
+<div class="layout">
+
+<div class="form-card">
+<h2>Отправить сообщение</h2>
+<p>Поля, отмеченные <span style="color:#2563eb">*</span>, обязательны для заполнения.</p>
+
+<div class="success-msg" id="successMsg">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами, если потребуется.
+</div>
+
+<form id="feedbackForm" novalidate>
+<div class="field">
+<label for="name">Имя <span class="req">*</span></label>
+<input type="text" id="name" name="name" placeholder="Как к вам обращаться?" required>
+</div>
+
+<div class="field">
+<label for="email">Email <span class="req">*</span></label>
+<input type="email" id="email" name="email" placeholder="you@example.com" required>
+<div class="hint">Нужен только для ответа. Мы не передаём его третьим лицам.</div>
+</div>
+
+<div class="field">
+<label for="type">Тип обращения <span class="req">*</span></label>
+<select id="type" name="type" required>
+<option value="" disabled selected>Выберите тему</option>
+<option value="bug">Сообщить о баге</option>
+<option value="idea">Предложить идею</option>
+<option value="question">Задать вопрос</option>
+<option value="review">Оставить отзыв</option>
+<option value="other">Другое</option>
+</select>
+</div>
+
+<div class="field">
+<label>Оценка мода <span class="req">*</span></label>
+<div class="rating">
+<input type="radio" id="r1" name="rating" value="1" required>
+<label for="r1">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+1
+</label>
+<input type="radio" id="r2" name="rating" value="2">
+<label for="r2">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+2
+</label>
+<input type="radio" id="r3" name="rating" value="3">
+<label for="r3">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+3
+</label>
+<input type="radio" id="r4" name="rating" value="4">
+<label for="r4">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+4
+</label>
+<input type="radio" id="r5" name="rating" value="5">
+<label for="r5">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+5
+</label>
+</div>
+</div>
+
+<div class="field">
+<label for="version">Версия Minecraft</label>
+<input type="text" id="version" name="version" placeholder="Например, 1.21.1">
+</div>
+
+<div class="field">
+<label for="subject">Тема <span class="req">*</span></label>
+<input type="text" id="subject" name="subject" placeholder="Кратко опишите суть обращения" required>
+</div>
+
+<div class="field">
+<label for="message">Сообщение <span class="req">*</span></label>
+<textarea id="message" name="message" placeholder="Опишите проблему или идею как можно подробнее. Для багов укажите шаги воспроизведения." required minlength="10"></textarea>
+<div class="hint">Минимум 10 символов.</div>
+</div>
+
+<label class="checkbox">
+<input type="checkbox" id="consent" name="consent" required>
+<span>Я согласен на обработку персональных данных и получение ответа на указанный email.</span>
+</label>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-primary">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+Отправить
+</button>
+<button type="reset" class="btn btn-outline">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+Сбросить
+</button>
+</div>
+</form>
+</div>
+
+<aside class="sidebar">
+<div class="side-card">
+<h3>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+Другие каналы
+</h3>
+<div class="channels">
+<a href="#" class="channel">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+<span>GitHub Issues<span class="ch-desc">Баг-репорты и код</span></span>
+</a>
+<a href="#" class="channel">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+<span>Discord<span class="ch-desc">Сообщество и помощь</span></span>
+</a>
+<a href="#" class="channel">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+<span>Email<span class="ch-desc">support@smartbots.dev</span></span>
+</a>
+</div>
+</div>
+
+<div class="side-card">
+<h3>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+Время ответа
+</h3>
+<p>Обычно мы отвечаем в течение <strong style="color:#111">1–2 рабочих дней</strong>. Сообщения о критических багах обрабатываются в первую очередь.</p>
+</div>
+
+<div class="side-card">
+<h3>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+Частые вопросы
+</h3>
+<details class="faq-mini">
+<summary>Где посмотреть логи?</summary>
+<p>Логи находятся в папке <code>.minecraft/logs/latest.log</code>. Приложите их к сообщению о баге.</p>
+</details>
+<details class="faq-mini">
+<summary>Как воспроизвести баг?</summary>
+<p>Опишите шаги по порядку: что вы сделали, что ожидали и что произошло на самом деле.</p>
+</details>
+<details class="faq-mini">
+<summary>Можно ли предложить функцию?</summary>
+<p>Конечно. Выберите тип «Предложить идею» и опишите, как функция должна работать.</p>
+</details>
+<details class="faq-mini">
+<summary>Отвечаете ли вы на все сообщения?</summary>
+<p>Мы читаем всё, но отвечаем в первую очередь на сообщения, требующие уточнений.</p>
+</details>
+</div>
+</aside>
+
+</div>
+</div>
+</main>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div class="footer-brand">
+<a href="#" class="logo">
+<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1.5"/><circle cx="8.5" cy="14" r="1"/><circle cx="15.5" cy="14" r="1"/><path d="M9 17h6"/></svg>
+SmartBots
+</a>
+<p>Умные боты с искусственным интеллектом для Minecraft Java Edition.</p>
+</div>
+<div class="footer-col">
+<h4>Мод</h4>
+<a href="#">Возможности</a>
+<a href="#">Скриншоты</a>
+<a href="#">Установка</a>
+<a href="#">Команды</a>
+</div>
+<div class="footer-col">
+<h4>Ресурсы</h4>
+<a href="#">Документация</a>
+<a href="#">GitHub</a>
+<a href="#">Discord</a>
+<a href="#">Modrinth</a>
+</div>
+<div class="footer-col">
+<h4>Поддержка</h4>
+<a href="#">FAQ</a>
+<a href="#">Обратная связь</a>
+<a href="#">Сообщить о баге</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 SmartBots. Не является официальным продуктом Minecraft.</span>
+<span>Не одобрено Mojang Studios и не связано с ними.</span>
+</div>
+</div>
+</footer>
+
+<script>
+const form=document.getElementById('feedbackForm');
+const success=document.getElementById('successMsg');
+form.addEventListener('submit',e=>{
+e.preventDefault();
+if(!form.checkValidity()){form.reportValidity();return;}
+success.classList.add('show');
+success.scrollIntoView({behavior:'smooth',block:'center'});
+form.reset();
+setTimeout(()=>success.classList.remove('show'),6000);
+});
+</script>
+</body>
+</html>
